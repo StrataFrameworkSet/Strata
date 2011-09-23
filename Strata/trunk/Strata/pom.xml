@@ -1,0 +1,90 @@
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  	<modelVersion>4.0.0</modelVersion>
+
+  	<groupId>strata</groupId>
+  	<artifactId>Strata</artifactId>
+  	<packaging>pom</packaging>
+  	<version>1.0</version>
+  	<name>Strata</name>
+  	<url>http://maven.apache.org</url>
+  	
+  	<build>
+  		<sourceDirectory>${project.basedir}/java/src/subsystems</sourceDirectory>
+  		<testSourceDirectory>${project.basedir}/java/src/tests</testSourceDirectory>
+  		<outputDirectory>${project.basedir}/java/build</outputDirectory>
+  		<directory>${project.basedir}/lib</directory>
+    	<finalName>${project.artifactId}-${project.version}</finalName>
+    	<testOutputDirectory>${project.basedir}/java/build</testOutputDirectory>
+  		
+  		<plugins>
+      		<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-compiler-plugin</artifactId>
+        		<version>2.3.2</version>
+        		<configuration>
+          			<source>6</source>
+          			<target>6</target>
+        		</configuration>
+      		</plugin>
+      		<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-javadoc-plugin</artifactId>
+        		<version>2.8</version>
+        		<configuration>
+           			<tags>
+            			<tag>
+              				<name>conventions</name>
+              				<placement>t</placement>
+              				<head>Naming Conventions:</head>
+            			</tag>
+            			<tag>
+              				<name>precondition</name>
+              				<placement>m</placement>
+              				<head>Precondition:</head>
+            			</tag>
+            			<tag>
+              				<name>postcondition</name>
+              				<placement>m</placement>
+              				<head>Postcondition:</head>
+            			</tag>
+          			</tags>
+          			<groups>
+          				<group>
+              				<title>Strata Interactor</title>
+               				<packages>strata1.interactor*</packages>
+            			</group>		
+          				<group>
+              				<title>Strata Integrator</title>
+               				<packages>strata1.integrator*</packages>
+            			</group>		
+          				<group>
+              				<title>Strata Inspector</title>
+               				<packages>strata1.inspector*</packages>
+            			</group>		
+          				<group>
+              				<title>Strata Entity</title>
+               				<packages>strata1.entity*</packages>
+            			</group>		
+          				<group>
+              				<title>Strata Common</title>
+               				<packages>strata1.common*</packages>
+            			</group>		
+          			</groups>
+        		</configuration>
+      		</plugin>
+    	</plugins>
+  	</build>
+  	  	
+  	<modules>
+		<module>../StrataCommon</module>
+		<module>../StrataIntegrator</module>
+		<module>../StrataInteractor</module>
+		<module>../StrataInspector</module>
+		<module>../StrataEntity</module>
+	</modules>  	
+	
+</project>

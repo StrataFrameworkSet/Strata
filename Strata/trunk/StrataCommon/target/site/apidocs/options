@@ -1,0 +1,30 @@
+-classpath
+'C:/Users/John/Workspaces/Strata/StrataCommon/java/build;C:/Tools/Java/1.6.22-se/jre6/lib/ext/localedata.jar;C:/Users/John/.m2/repository/org/springframework/spring-beans/3.0.6.RELEASE/spring-beans-3.0.6.RELEASE.jar;C:/Tools/Java/1.6.22-se/jre6/lib/rt.jar;C:/Users/John/.m2/repository/org/springframework/spring-core/3.0.6.RELEASE/spring-core-3.0.6.RELEASE.jar;C:/Users/John/.m2/repository/org/springframework/spring-asm/3.0.6.RELEASE/spring-asm-3.0.6.RELEASE.jar;C:/Users/John/.m2/repository/org/springframework/spring-context-support/3.0.6.RELEASE/spring-context-support-3.0.6.RELEASE.jar;C:/Users/John/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar;C:/Users/John/.m2/repository/junit/junit/4.9/junit-4.9.jar;C:/Users/John/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar;C:/Users/John/.m2/repository/org/springframework/spring-aop/3.0.6.RELEASE/spring-aop-3.0.6.RELEASE.jar;C:/Tools/Java/1.6.22-se/jre6/lib/jsse.jar;C:/Users/John/.m2/repository/org/quartz-scheduler/quartz/2.0.2/quartz-2.0.2.jar;C:/Users/John/.m2/repository/javax/time/jsr-310-ri/20100212/jsr-310-ri-20100212.jar;C:/Users/John/.m2/repository/org/springframework/spring-expression/3.0.6.RELEASE/spring-expression-3.0.6.RELEASE.jar;C:/Users/John/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar;C:/Users/John/.m2/repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar;C:/Tools/Java/1.6.22-se/jre6/lib/resources.jar;C:/Tools/Java/1.6.22-se/jre6/lib/ext/sunjce_provider.jar;C:/Tools/Java/1.6.22-se/jre6/lib/jce.jar;C:/Users/John/.m2/repository/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar;C:/Tools/Java/1.6.22-se/jre6/lib/charsets.jar;C:/Users/John/.m2/repository/org/springframework/spring-context/3.0.6.RELEASE/spring-context-3.0.6.RELEASE.jar;C:/Tools/Java/1.6.22-se/jre6/lib/ext/dnsns.jar;C:/Users/John/.m2/repository/javax/transaction/jta/1.1/jta-1.1.jar'
+-encoding
+'Cp1252'
+-protected
+-sourcepath
+'C:/Users/John/Workspaces/Strata/StrataCommon/java/src/subsystems'
+-author
+-bottom
+'Copyright &#169; 2011. All Rights Reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/John/Workspaces/Strata/StrataCommon/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'StrataCommon 1.0 API'
+-linkoffline
+'http://download.oracle.com/javase/6/docs/api' 'C:/Users/John/Workspaces/Strata/StrataCommon/lib/javadoc-bundle-options'
+-tag
+"conventions:t:Naming Conventions:"
+-tag
+"precondition:m:Precondition:"
+-tag
+"postcondition:m:Postcondition:"
+-use
+-version
+-windowtitle
+'StrataCommon 1.0 API'
