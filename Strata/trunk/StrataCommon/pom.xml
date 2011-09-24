@@ -12,10 +12,8 @@
     	<relativePath>../Strata</relativePath>
   	</parent>
   	
-  	<groupId>strata</groupId>
   	<artifactId>StrataCommon</artifactId>
   	<packaging>jar</packaging>
-  	<version>1.0</version>
   	<name>StrataCommon</name>
   	<url>http://maven.apache.org</url>
   	
