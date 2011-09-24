@@ -25,6 +25,7 @@
 package strata1.common.utility;
 
 import static org.junit.Assert.*;
+import strata1.common.money.Money;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,8 @@ import org.junit.Test;
  */
 public class SingletonProxyTest
 {
-
+    private CopyableObject itsExpected;
+    
     /************************************************************************
      *  
      *
@@ -47,6 +49,8 @@ public class SingletonProxyTest
     @Before
     public void setUp() throws Exception
     {
+        itsExpected = new CopyableObject( "TestSingleton",23,3.5 );
+        SingletonProxy.setInstance( CopyableObject.class,itsExpected );
     }
 
     /************************************************************************
@@ -57,30 +61,8 @@ public class SingletonProxyTest
     @After
     public void tearDown() throws Exception
     {
-    }
-
-    /**
-     * Test method for {@link strata1.common.utility.SingletonProxy#SingletonProxy(java.lang.Object)}.
-     */
-    @Test
-    public void testSingletonProxy()
-    {
-    }
-
-    /**
-     * Test method for {@link strata1.common.utility.SingletonProxy#invoke(java.lang.Object, java.lang.reflect.Method, java.lang.Object[])}.
-     */
-    @Test
-    public void testInvoke()
-    {
-    }
-
-    /**
-     * Test method for {@link strata1.common.utility.SingletonProxy#isSame(java.lang.Object)}.
-     */
-    @Test
-    public void testIsSame()
-    {
+        SingletonProxy.clearInstance( CopyableObject.class );
+        itsExpected = null;
     }
 
     /**
@@ -89,6 +71,10 @@ public class SingletonProxyTest
     @Test
     public void testSetInstance()
     {
+        Money expected = new Money( 23.57 );
+        SingletonProxy.setInstance( Money.class,expected );
+        
+        assertEquals( expected,SingletonProxy.getInstance( Money.class ) );
     }
 
     /**
@@ -97,6 +83,7 @@ public class SingletonProxyTest
     @Test
     public void testClearInstance()
     {
+        SingletonProxy.clearInstance( CopyableObject.class );
     }
 
     /**
@@ -105,6 +92,10 @@ public class SingletonProxyTest
     @Test
     public void testGetInstance()
     {
+        Money expected = new Money( 23.57 );
+        SingletonProxy.setInstance( Money.class,expected );
+        
+        assertEquals( expected,SingletonProxy.getInstance( Money.class ) );
     }
 
 }

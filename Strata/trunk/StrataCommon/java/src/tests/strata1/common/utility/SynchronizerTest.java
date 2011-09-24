@@ -66,6 +66,7 @@ class SynchronizerTest
     @Test
     public void testLockForReading()
     {
+        assertEquals( "","" );
     }
 
     /**
