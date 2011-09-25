@@ -12,10 +12,8 @@
     	<relativePath>../Strata</relativePath>
   	</parent>
   	
-  	<groupId>strata</groupId>
   	<artifactId>StrataInspector</artifactId>
   	<packaging>jar</packaging>
-  	<version>1.0</version>
   	<name>StrataInspector</name>
   	<url>http://maven.apache.org</url>
   	
