@@ -41,8 +41,9 @@ import java.io.*;
  */
 public 
 class Money
-	implements 	Copyable,
-				Serializable
+	implements 	
+	    Copyable,
+		Serializable
 {
 	private static final long serialVersionUID = 0;
 	

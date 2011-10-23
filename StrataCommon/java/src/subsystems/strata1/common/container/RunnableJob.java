@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	SpringComponentManager.java
+// # File Name:	RunnableJob.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -18,83 +18,60 @@
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataInteractor
+// #			General Public License along with the StrataCommon
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.springplatform;
+package strata1.common.container;
 
-
-import strata1.common.platform.ComponentManager;
-
-import org.springframework.context.*;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 
 /**
- * {@code ComponentManager} adapter for 
- * Spring {@code ApplicationContext}s.
  * 
  * @author 		
- *     Sapientia Systems 
+ *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class SpringComponentManager
-	implements ComponentManager
+class RunnableJob 
+	implements Job
 {
-	private ConfigurableApplicationContext itsContext;
+	private Runnable itsTask;
 	
 	/************************************************************************
-	 * Creates a new {@code SpringComponentManager}. 
+	 * Creates a new {@code RunnableJob}. 
 	 *
-	 * @param context
 	 */
 	public 
-	SpringComponentManager(ConfigurableApplicationContext context)
+	RunnableJob()
 	{
-		super();
-		itsContext = context;
+		itsTask = null;
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
 	 */
+	@Override
 	public void 
-	open()
+	execute(JobExecutionContext context) 
+		throws JobExecutionException
 	{
-		itsContext.start();
+		 itsTask.run();
 	}
 
 	/************************************************************************
-	 * {@inheritDoc} 
+	 *  
+	 *
+	 * @param task
 	 */
-	public void 
-	refresh()
+	public void
+	setTask(Runnable task)
 	{
-		itsContext.refresh();
+		itsTask = task;
 	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	public void 
-	close()
-	{
-		itsContext.stop();
-		itsContext.close();
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	public 
-	<T> T 
-	getComponent(Class<T> componentClass,String componentName)
-	{
-		return componentClass.cast( itsContext.getBean( componentName ) );
-	}
-
-
 }
 
 

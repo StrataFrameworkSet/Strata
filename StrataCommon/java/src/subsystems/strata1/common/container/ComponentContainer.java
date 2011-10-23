@@ -22,10 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.platform;
+package strata1.common.container;
 
 /**
- * Adapter interface for finding components in component registries 
+ * Adapter interface for managing components in component registries 
  * or application contexts.
  * 
  * @author 		
@@ -34,38 +34,70 @@ package strata1.common.platform;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ComponentManager
+interface ComponentContainer
 {
 	/************************************************************************
-	 * Opens the {@code ComponentManager} and makes it 
+	 * Opens the {@code ComponentContainer} and makes it 
 	 * ready to find components. 
 	 */
 	public void 
 	open();
 	
 	/************************************************************************
-	 * Refreshes the components referenced by the {@code ComponentManager}. 
+	 * Refreshes the components referenced by the {@code ComponentContainer}. 
 	 */
 	public void 
 	refresh();
 	
 	/************************************************************************
-	 * Closes the {@code ComponentManager} by releasing 
+	 * Closes the {@code ComponentContainer} by releasing 
 	 * its references to components. 
 	 */
 	public void 
 	close();
 	
 	/************************************************************************
-	 * Gets a component with the specificed class and name. 
+	 * Registers a definition of a component  
+	 * with the {@code ComponentContainer}.
 	 *
-	 * @param <T>				component class
-	 * @param componentClass	class of the component being found
-	 * @param componentName		name of the component being found
-	 * @return
+	 * @param definition   definition of the component being registered
+	 */
+	public void
+	registerDefinition(ComponentDefinition definition);
+	
+    /************************************************************************
+     * Registers an instance of a component with the 
+     * {@code ComponentContainer} under the specified name.
+     *
+     * @param <T>           component class
+     * @param instanceName  name of the instance being registered
+     * @param instance      component instance being registered
+     */
+    public <T> void
+    registerInstance(String instanceName,T instance);
+    
+	/************************************************************************
+	 * Gets a component with the specified class and name. 
+	 *
+	 * @param  <T>			   component class
+	 * @param  componentClass  class of the instance being found
+	 * @param  componentName   name of the component being found
+	 * @return component instance 
 	 */
 	public <T> T 
 	getComponent(Class<T> componentClass,String componentName);
+	
+    /************************************************************************
+     * Queries the {@code ComponentContainer} if it has 
+     * a component with the specified class and name. 
+     *
+     * @param  <T>             component class
+     * @param  componentClass  class of the instance being found
+     * @param  componentName   name of the component being found
+     * @return component instance 
+     */
+	public <T> boolean
+	hasComponent(Class<T> componentClass,String componentName);
 }
 
 
