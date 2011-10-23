@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	RunnableJob.java
+// # File Name:	ComponentScope.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.platform;
-
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+package strata1.common.container;
 
 /**
  * 
@@ -36,43 +32,10 @@ import org.quartz.JobExecutionException;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class RunnableJob 
-	implements Job
+enum ComponentScope
 {
-	private Runnable itsTask;
-	
-	/************************************************************************
-	 * Creates a new {@code RunnableJob}. 
-	 *
-	 */
-	public 
-	RunnableJob()
-	{
-		itsTask = null;
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public void 
-	execute(JobExecutionContext context) 
-		throws JobExecutionException
-	{
-		 itsTask.run();
-	}
-
-	/************************************************************************
-	 *  
-	 *
-	 * @param task
-	 */
-	public void
-	setTask(Runnable task)
-	{
-		itsTask = task;
-	}
+    SINGLETON,
+    PROTOTYPE
 }
-
 
 // ##########################################################################
