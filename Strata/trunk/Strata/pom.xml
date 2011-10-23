@@ -55,6 +55,10 @@
           			</tags>
           			<groups>
           				<group>
+              				<title>Strata Initializer</title>
+               				<packages>strata1.initializer*</packages>
+            			</group>		
+          				<group>
               				<title>Strata Interactor</title>
                				<packages>strata1.interactor*</packages>
             			</group>		
@@ -86,6 +90,7 @@
 		<module>../StrataInteractor</module>
 		<module>../StrataInspector</module>
 		<module>../StrataEntity</module>
+		<module>../StrataInitializer</module>
 	</modules>  	
 	
 </project>
