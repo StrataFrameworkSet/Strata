@@ -12,9 +12,9 @@
     	<relativePath>../Strata</relativePath>
   	</parent>
   	
-  	<artifactId>StrataInteractor</artifactId>
+  	<artifactId>StrataInitializer</artifactId>
   	<packaging>jar</packaging>
-  	<name>StrataInteractor</name>
+  	<name>StrataInitializer</name>
   	<url>http://maven.apache.org</url>
   	
   	<dependencies>
