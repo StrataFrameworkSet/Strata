@@ -34,9 +34,7 @@ package strata1.interactor.view;
 public abstract 
 class AbstractView<A> 
 	implements View
-{
-
-	
+{	
 
 }
 
