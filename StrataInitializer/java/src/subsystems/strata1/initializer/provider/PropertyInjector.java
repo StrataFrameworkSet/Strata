@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	PropertyInjectorManager.java
+// # File Name:	PropertyInjector.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.container;
-
-import java.util.List;
+package strata1.initializer.provider;
 
 /**
  * 
@@ -34,22 +32,19 @@ import java.util.List;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface PropertyInjectorManager
+interface PropertyInjector
 {
     public void
-    insertInjector(PropertyInjector injector);
+    setPropertyName(String propertyName);
     
-    public void
-    removeInjector(PropertyInjector injector);
+    public void 
+    setPropertyValue(String componentName);
     
-    public PropertyInjector
-    getInjector(String propertyName);
+    public String
+    getPropertyName();
     
-    public List<PropertyInjector>
-    getInjectors();
-    
-    public boolean
-    hasInjector(String propertyName);
+    public String
+    getPropertyValue();
 }
 
 // ##########################################################################

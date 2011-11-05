@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ComponentContainer.java
+// # File Name:	ContainerProvider.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.container;
+package strata1.initializer.provider;
 
 /**
  * Adapter interface for managing components in component registries 
@@ -34,23 +34,23 @@ package strata1.common.container;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ComponentContainer
+interface ContainerProvider
 {
 	/************************************************************************
-	 * Opens the {@code ComponentContainer} and makes it 
+	 * Opens the {@code ContainerProvider} and makes it 
 	 * ready to find components. 
 	 */
 	public void 
 	open();
 	
 	/************************************************************************
-	 * Refreshes the components referenced by the {@code ComponentContainer}. 
+	 * Refreshes the components referenced by the {@code ContainerProvider}. 
 	 */
 	public void 
 	refresh();
 	
 	/************************************************************************
-	 * Closes the {@code ComponentContainer} by releasing 
+	 * Closes the {@code ContainerProvider} by releasing 
 	 * its references to components. 
 	 */
 	public void 
@@ -58,7 +58,7 @@ interface ComponentContainer
 	
 	/************************************************************************
 	 * Registers a definition of a component  
-	 * with the {@code ComponentContainer}.
+	 * with the {@code ContainerProvider}.
 	 *
 	 * @param definition   definition of the component being registered
 	 */
@@ -67,7 +67,7 @@ interface ComponentContainer
 	
     /************************************************************************
      * Registers an instance of a component with the 
-     * {@code ComponentContainer} under the specified name.
+     * {@code ContainerProvider} under the specified name.
      *
      * @param <T>           component class
      * @param instanceName  name of the instance being registered
@@ -79,25 +79,25 @@ interface ComponentContainer
 	/************************************************************************
 	 * Gets a component with the specified class and name. 
 	 *
-	 * @param  <T>			   component class
-	 * @param  componentClass  class of the instance being found
-	 * @param  componentName   name of the component being found
+	 * @param  <T>			  component class
+	 * @param  componentClass class of the instance being found
+	 * @param  instanceName   name of the component being found
 	 * @return component instance 
 	 */
 	public <T> T 
-	getComponent(Class<T> componentClass,String componentName);
+	getInstance(Class<T> componentClass,String instanceName);
 	
     /************************************************************************
-     * Queries the {@code ComponentContainer} if it has 
+     * Queries the {@code ContainerProvider} if it has 
      * a component with the specified class and name. 
      *
-     * @param  <T>             component class
-     * @param  componentClass  class of the instance being found
-     * @param  componentName   name of the component being found
-     * @return component instance 
+     * @param  <T>            component class
+     * @param  componentClass class of the instance being found
+     * @param  instanceName   name of the component being found
+     * @return true if provider has the specified instance 
      */
 	public <T> boolean
-	hasComponent(Class<T> componentClass,String componentName);
+	hasInstance(Class<T> componentClass,String instanceName);
 }
 
 

@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.container;
+package strata1.initializer.provider;
 
 
 /**
@@ -35,36 +35,92 @@ package strata1.common.container;
 public 
 interface ComponentDefinition
 {
+    /************************************************************************
+     *  
+     *
+     * @param componentName
+     */
     public void
     setComponentName(String componentName);
     
+    /************************************************************************
+     *  
+     *
+     * @param componentType
+     */
     public void
     setComponentType(Class<?> componentType);
 
+    /************************************************************************
+     *  
+     *
+     * @param interfaceType
+     * @param implementationType
+     */
     public void
     setComponentType(Class<?> interfaceType,Class<?> implementationType);
    
+    /************************************************************************
+     *  
+     *
+     * @param injector
+     */
     public void
     setConstructorInjector(ConstructorInjector injector);
     
+    /************************************************************************
+     *  
+     *
+     * @param scope
+     */
     public void
     setScope(ComponentScope scope);
     
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public String
     getComponentName();
     
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public Class<?> 
     getComponentType();
     
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public ConstructorInjector
     getConstructorInjector();
     
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public PropertyInjectorManager
     getPropertyInjectorManager();
     
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public ComponentScope
     getScope();
     
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public boolean
     hasConstructorInjector();
 }

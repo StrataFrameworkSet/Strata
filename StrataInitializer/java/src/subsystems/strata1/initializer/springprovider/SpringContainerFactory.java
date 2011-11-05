@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ConstructorInjector.java
+// # File Name:	SpringContainerFactory.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,12 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.container;
+package strata1.initializer.springprovider;
 
-import java.util.List;
+import strata1.initializer.provider.AbstractContainerFactory;
+import strata1.initializer.provider.ContainerProvider;
+import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 
 /**
  * 
@@ -33,15 +36,41 @@ import java.util.List;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface ConstructorInjector
-    extends Injector
+public class SpringContainerFactory
+    extends AbstractContainerFactory
 {
-    public void
-    setConstructorValues(List<String> componentNames);
-    
-    public List<String>
-    getConstructorValues();
+
+    /************************************************************************
+     * Creates a new {@code SpringContainerFactory}. 
+     *
+     */
+    public 
+    SpringContainerFactory() {}
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ContainerProvider 
+    createComponentContainer()
+    {
+        
+        return 
+            new SpringContainerProvider(new GenericApplicationContext());
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ContainerProvider 
+    createComponentContainer(String resourceLocation)
+    {
+        return 
+            new SpringContainerProvider(
+                new GenericXmlApplicationContext(resourceLocation));
+    }
+
 }
 
 // ##########################################################################

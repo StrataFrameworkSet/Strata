@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	Bootstrapper.java
+// # File Name:	ServerContainer.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.bootstrap;
+package strata1.initializer.server;
+
+import strata1.initializer.combined.CombinedContainer;
+import strata1.entity.repository.Repository;;
 
 /**
  * 
@@ -32,10 +35,11 @@ package strata1.initializer.bootstrap;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface Bootstrapper
+interface ServerContainer
+    extends CombinedContainer
 {
-    public void
-    run();
+    public <R extends Repository> R
+    getRepository(Class<R> repositoryType,String name);
 }
 
 

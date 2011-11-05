@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	SpringComponentContainer.java
+// # File Name:	SpringContainerProvider.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,15 +22,14 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.springcontainer;
+package strata1.initializer.springprovider;
 
-
-import strata1.common.container.ComponentContainer;
-import strata1.common.container.ComponentDefinition;
-import strata1.common.container.ComponentScope;
-import strata1.common.container.ConstructorInjector;
-import strata1.common.container.PropertyInjector;
-import strata1.common.container.PropertyInjectorManager;
+import strata1.initializer.provider.ComponentDefinition;
+import strata1.initializer.provider.ComponentScope;
+import strata1.initializer.provider.ConstructorInjector;
+import strata1.initializer.provider.ContainerProvider;
+import strata1.initializer.provider.PropertyInjector;
+import strata1.initializer.provider.PropertyInjectorManager;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
@@ -55,18 +54,18 @@ import java.util.List;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class SpringComponentContainer
-	implements ComponentContainer
+class SpringContainerProvider
+	implements ContainerProvider
 {
 	private GenericApplicationContext itsContext;
 	
 	/************************************************************************
-	 * Creates a new {@code SpringComponentContainer}. 
+	 * Creates a new {@code SpringContainerProvider}. 
 	 *
 	 * @param context
 	 */
 	public 
-	SpringComponentContainer(GenericApplicationContext context)
+	SpringContainerProvider(GenericApplicationContext context)
 	{
 		super();
 		itsContext = context;
@@ -164,23 +163,23 @@ class SpringComponentContainer
     /************************************************************************
 	 * {@inheritDoc} 
 	 */
-	public 
-	<T> T 
-	getComponent(Class<T> componentClass,String componentName)
+    @Override
+	public <T> T 
+	getInstance(Class<T> componentClass,String instanceName)
 	{
-		return componentClass.cast( itsContext.getBean( componentName ) );
+		return componentClass.cast( itsContext.getBean( instanceName ) );
 	}
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <T>boolean 
-    hasComponent(Class<T> componentClass,String componentName)
+    public <T> boolean 
+    hasInstance(Class<T> componentClass,String instanceName)
     {
         try
         {
-            return itsContext.isTypeMatch( componentName,componentClass );
+            return itsContext.isTypeMatch( instanceName,componentClass );
         }
         catch (NoSuchBeanDefinitionException e)
         {
