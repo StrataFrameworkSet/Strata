@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	RegionFactory.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,22 +22,26 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.view;
+package strata1.interactor.region;
 
 /**
  * 
  * @author 		
- *     Sapientia Systems 
+ *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract 
-class AbstractView<A> 
-	implements View
+public 
+interface RegionFactory
 {
-
-	
-
+    public void 
+    setManager(RegionManager manager);
+    
+    public RegionManager
+    getManager();
+    
+    public Region
+    createRegion(String regionName);
 }
 
 

@@ -32,13 +32,13 @@ package strata1.interactor.view;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface View<A>
+interface View
 {
-	public void
-	setProcessor(ActionProcessor<A> processor);
-	
-	public void
-	sendAction(A action);
+    public void 
+    show();
+    
+    public void
+    hide();
 }
 
 

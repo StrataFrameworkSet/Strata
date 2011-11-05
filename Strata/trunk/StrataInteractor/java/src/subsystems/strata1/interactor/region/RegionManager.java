@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	RegionFactoryObserver.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,23 +22,28 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.view;
+package strata1.interactor.region;
+
+import strata1.interactor.view.View;
 
 /**
  * 
  * @author 		
- *     Sapientia Systems 
+ *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract 
-class AbstractView<A> 
-	implements View
+public 
+interface RegionManager
 {
-
-	
-
+    public void
+    registerViewWithRegion(String regionName,View view);
+    
+    public boolean
+    hasRegion(String regionName);
+    
+    public void
+    onCreateRegion(Region region);
 }
-
 
 // ##########################################################################

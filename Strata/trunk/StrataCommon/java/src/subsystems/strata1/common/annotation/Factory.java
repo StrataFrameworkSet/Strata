@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	Injector.java
+// # File Name:	Factory.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.container;
+package strata1.common.annotation;
 
 /**
  * 
@@ -31,10 +31,6 @@ package strata1.common.container;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface Injector
-{
-
-}
+public @interface Factory {}
 
 // ##########################################################################
