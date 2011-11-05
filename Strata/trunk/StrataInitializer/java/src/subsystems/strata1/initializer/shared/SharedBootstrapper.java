@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	CombinedBootstrapper.java
+// # File Name:	SharedBootstrapper.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.combined;
+package strata1.initializer.shared;
 
 /**
  * 
@@ -32,7 +32,7 @@ package strata1.initializer.combined;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface CombinedBootstrapper
+interface SharedBootstrapper
 {
     public void
     run();

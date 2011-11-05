@@ -24,7 +24,7 @@
 
 package strata1.initializer.server;
 
-import strata1.initializer.combined.CombinedContainer;
+import strata1.initializer.shared.SharedContainer;
 import strata1.entity.repository.Repository;;
 
 /**
@@ -36,7 +36,7 @@ import strata1.entity.repository.Repository;;
  */
 public 
 interface ServerContainer
-    extends CombinedContainer
+    extends SharedContainer
 {
     public <R extends Repository> R
     getRepository(Class<R> repositoryType,String name);
