@@ -24,8 +24,7 @@
 
 package strata1.initializer.client;
 
-import strata1.initializer.combined.CombinedContainer;
-import strata1.interactor.model.Model;
+import strata1.initializer.shared.SharedContainer;
 import strata1.interactor.view.View;
 
 /**
@@ -37,7 +36,7 @@ import strata1.interactor.view.View;
  */
 public 
 interface ClientContainer
-    extends CombinedContainer
+    extends SharedContainer
 {
     public <V extends View> V
     getView(Class<V> viewType,String name);
