@@ -28,6 +28,11 @@
       		<artifactId>StrataEntity</artifactId>
       		<version>1.0</version>
     	</dependency>
+   		<dependency>
+      		<groupId>strata</groupId>
+      		<artifactId>StrataInteractor</artifactId>
+      		<version>1.0</version>
+    	</dependency>
     	
    		<dependency>
       		<groupId>junit</groupId>
