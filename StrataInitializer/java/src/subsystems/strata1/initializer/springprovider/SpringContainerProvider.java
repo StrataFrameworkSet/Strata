@@ -24,12 +24,12 @@
 
 package strata1.initializer.springprovider;
 
-import strata1.initializer.provider.ComponentDefinition;
-import strata1.initializer.provider.ComponentScope;
-import strata1.initializer.provider.ConstructorInjector;
-import strata1.initializer.provider.ContainerProvider;
-import strata1.initializer.provider.PropertyInjector;
-import strata1.initializer.provider.PropertyInjectorManager;
+import strata1.initializer.base.ComponentDefinition;
+import strata1.initializer.base.ComponentScope;
+import strata1.initializer.base.ConstructorInjector;
+import strata1.initializer.base.ContainerProvider;
+import strata1.initializer.base.PropertyInjector;
+import strata1.initializer.base.PropertyInjectorManager;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
