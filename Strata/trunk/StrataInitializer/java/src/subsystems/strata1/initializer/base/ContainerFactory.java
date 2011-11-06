@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	PropertyInjector.java
+// # File Name:	ContainerFactory.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.provider;
+package strata1.initializer.base;
 
 /**
  * 
@@ -32,19 +32,22 @@ package strata1.initializer.provider;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface PropertyInjector
+interface ContainerFactory
 {
-    public void
-    setPropertyName(String propertyName);
+    public ContainerProvider
+    createComponentContainer();
     
-    public void 
-    setPropertyValue(String componentName);
+    public ContainerProvider
+    createComponentContainer(String resourceLocation);
     
-    public String
-    getPropertyName();
+    public ComponentDefinition
+    createComponentDefinition();
     
-    public String
-    getPropertyValue();
+    public ConstructorInjector
+    createConstructorInjector();
+    
+    public PropertyInjector
+    createPropertyInjector();
 }
 
 // ##########################################################################

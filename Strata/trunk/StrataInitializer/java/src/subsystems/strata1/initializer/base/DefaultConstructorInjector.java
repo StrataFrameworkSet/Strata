@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	DefaultPropertyInjector.java
+// # File Name:	DefaultConstructorInjector.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.provider;
+package strata1.initializer.base;
+
+import java.util.List;
 
 /**
  * 
@@ -32,18 +34,18 @@ package strata1.initializer.provider;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class DefaultPropertyInjector
-    implements PropertyInjector
+class DefaultConstructorInjector
+    implements ConstructorInjector
 {
 
     /************************************************************************
-     * Creates a new {@code DefaultPropertyInjector}. 
+     * Creates a new {@code DefaultConstructorInjector}. 
      *
      */
     public 
-    DefaultPropertyInjector()
+    DefaultConstructorInjector() 
     {
-        // TODO Auto-generated constructor stub
+        // TODO Auto-generated method stub
     }
 
     /************************************************************************
@@ -51,7 +53,7 @@ class DefaultPropertyInjector
      */
     @Override
     public void 
-    setPropertyName(String propertyName)
+    setConstructorValues(List<String> componentNames)
     {
         // TODO Auto-generated method stub
 
@@ -61,30 +63,8 @@ class DefaultPropertyInjector
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    setPropertyValue(String componentName)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public String 
-    getPropertyName()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public String 
-    getPropertyValue()
+    public List<String> 
+    getConstructorValues()
     {
         // TODO Auto-generated method stub
         return null;
