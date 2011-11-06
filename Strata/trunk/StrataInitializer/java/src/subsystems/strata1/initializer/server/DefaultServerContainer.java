@@ -26,7 +26,7 @@ package strata1.initializer.server;
 
 import strata1.entity.repository.Repository;
 import strata1.initializer.base.AbstractBaseContainer;
-import strata1.initializer.base.ContainerProvider;
+import strata1.initializer.provider.ContainerProvider;
 
 /**
  * 

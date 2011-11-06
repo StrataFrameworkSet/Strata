@@ -25,6 +25,7 @@
 package strata1.initializer.base;
 
 import strata1.common.annotation.Factory;
+import strata1.initializer.provider.ContainerProvider;
 import strata1.integrator.annotation.Gateway;
 
 /**

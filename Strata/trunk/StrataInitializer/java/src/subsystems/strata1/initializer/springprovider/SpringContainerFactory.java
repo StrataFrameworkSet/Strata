@@ -24,8 +24,8 @@
 
 package strata1.initializer.springprovider;
 
-import strata1.initializer.base.AbstractContainerFactory;
-import strata1.initializer.base.ContainerProvider;
+import strata1.initializer.provider.AbstractContainerFactory;
+import strata1.initializer.provider.ContainerProvider;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
