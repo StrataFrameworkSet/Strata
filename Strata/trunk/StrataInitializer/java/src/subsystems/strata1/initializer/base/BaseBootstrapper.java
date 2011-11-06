@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	SharedContainer.java
+// # File Name:	BaseBootstrapper.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.shared;
+package strata1.initializer.base;
 
 /**
  * 
@@ -32,13 +32,10 @@ package strata1.initializer.shared;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface SharedContainer
+interface BaseBootstrapper
 {
-    public <G> G
-    getGateway(Class<G> gatewayType,String name);
-
-    public <F> F
-    getFactory(Class<F> factoryType,String name);
+    public void
+    run();
 }
 
 

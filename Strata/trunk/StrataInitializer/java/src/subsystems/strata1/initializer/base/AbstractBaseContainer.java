@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	DefaultServerContainer.java
+// # File Name:	AbstractBaseContainer.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,11 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.server;
+package strata1.initializer.base;
 
-import strata1.entity.repository.Repository;
-import strata1.initializer.base.AbstractBaseContainer;
+import strata1.common.annotation.Factory;
 import strata1.initializer.provider.ContainerProvider;
+import strata1.integrator.annotation.Gateway;
 
 /**
  * 
@@ -35,32 +35,63 @@ import strata1.initializer.provider.ContainerProvider;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class DefaultServerContainer
-    extends    AbstractBaseContainer
-    implements ServerContainer
+public abstract 
+class AbstractBaseContainer
+    implements BaseContainer
 {
-    
+    private ContainerProvider itsProvider;
+
     /************************************************************************
-     * Creates a new DefaultServerContainer. 
+     * Creates a new AbstractBaseContainer. 
      *
      */
     public 
-    DefaultServerContainer(ContainerProvider provider)
+    AbstractBaseContainer(ContainerProvider provider)
     {
-        super( provider );
+        itsProvider = provider;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <R extends Repository> R 
-    getRepository(Class<R> repositoryType,String name)
+    public <G> G 
+    getGateway(Class<G> gatewayType,String name)
     {
-        return getProvider().getInstance( repositoryType,name );
+        if ( !gatewayType.isAnnotationPresent( Gateway.class ) )
+            throw 
+                new IllegalArgumentException( 
+                    gatewayType + "is not a gateway.");
+        
+        return itsProvider.getInstance( gatewayType,name );
     }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <F> F 
+    getFactory(Class<F> factoryType,String name)
+    {
+        if ( !factoryType.isAnnotationPresent( Factory.class ) )
+            throw 
+                new IllegalArgumentException( 
+                    factoryType + "is not a factory.");
+        
+        return itsProvider.getInstance( factoryType,name );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    protected ContainerProvider
+    getProvider()
+    {
+        return itsProvider;
+    }
 }
+
 
 // ##########################################################################

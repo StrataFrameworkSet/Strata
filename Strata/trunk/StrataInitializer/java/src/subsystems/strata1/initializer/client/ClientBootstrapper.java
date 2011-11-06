@@ -24,7 +24,7 @@
 
 package strata1.initializer.client;
 
-import strata1.initializer.shared.SharedBootstrapper;
+import strata1.initializer.base.BaseBootstrapper;
 
 /**
  * 
@@ -35,7 +35,7 @@ import strata1.initializer.shared.SharedBootstrapper;
  */
 public 
 interface ClientBootstrapper
-    extends SharedBootstrapper
+    extends BaseBootstrapper
 {
     public void 
     setContainer(ClientContainer container);
