@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ComponentScope.java
+// # File Name:	ConstructorInjector.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.base;
+package strata1.initializer.provider;
+
+import java.util.List;
 
 /**
  * 
@@ -32,10 +34,23 @@ package strata1.initializer.base;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-enum ComponentScope
+interface ConstructorInjector
 {
-    SINGLETON,
-    PROTOTYPE
+    /************************************************************************
+     *  
+     *
+     * @param componentNames
+     */
+    public void
+    setConstructorValues(List<String> componentNames);
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public List<String>
+    getConstructorValues();
 }
 
 // ##########################################################################

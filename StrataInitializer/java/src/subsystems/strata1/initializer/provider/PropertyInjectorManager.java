@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.base;
+package strata1.initializer.provider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
