@@ -34,8 +34,6 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.support.GenericApplicationContext;
-import java.util.ArrayList;
-import java.util.List;
 
 /****************************************************************************
  * {@code ComponentContainer} adapter for 
@@ -106,48 +104,18 @@ class SpringContainerProvider
     public void 
     registerDefinition(ComponentDefinition definition)
     {
-        GenericBeanDefinition      bean = new GenericBeanDefinition();
-        ConstructorInjector        constructor = null;
-        PropertyInjectorManager    properties = null;
-        List<String>               dependencies = new ArrayList<String>();
+        GenericBeanDefinition bean = new GenericBeanDefinition();
         
         bean.setBeanClass( definition.getComponentType() );
-        
-        if ( definition.hasConstructorInjector() )
-            constructor = definition.getConstructorInjector();
-        
-        for (String value:constructor.getConstructorValues())
-        {
-            bean
-                .getConstructorArgumentValues()
-                .addGenericArgumentValue( 
-                    new RuntimeBeanReference(value));
-            
-            dependencies.add( value );
-        }
-        
-        properties = definition.getPropertyInjectorManager();
-        
-        for (PropertyInjector injector:properties.getInjectors())
-        {
-            bean
-                .getPropertyValues()
-                .add( 
-                    injector.getPropertyName(),
-                    new RuntimeBeanReference(
-                        injector.getPropertyValue()));
-            
-            dependencies.add( injector.getPropertyValue() );
-        }
-        
-        bean.setDependsOn( toArray(dependencies) );
+        registerConstructorInjector( definition,bean );
+        registerPropertyInjectors( definition,bean );
         bean.setScope( toString( definition.getScope() ) );
         
         itsContext.registerBeanDefinition( 
             definition.getComponentName(),
             bean );
     }
-    
+
     /************************************************************************
      * {@inheritDoc} 
      */
@@ -190,6 +158,57 @@ class SpringContainerProvider
     /************************************************************************
      *  
      *
+     * @param definition
+     * @param bean
+     */
+    private void 
+    registerConstructorInjector(
+        ComponentDefinition definition,
+        GenericBeanDefinition bean)
+    {
+       ConstructorInjector constructor = null;
+       
+       if ( definition.hasConstructorInjector() )
+            constructor = definition.getConstructorInjector();
+        
+        for (String value:constructor.getConstructorValues())
+        {
+            bean
+                .getConstructorArgumentValues()
+                .addGenericArgumentValue( 
+                    new RuntimeBeanReference(value));
+        }
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param definition
+     * @param bean
+     */
+    private void 
+    registerPropertyInjectors(
+        ComponentDefinition definition,
+        GenericBeanDefinition bean)
+    {
+        PropertyInjectorManager properties = 
+            definition.getPropertyInjectorManager();
+        
+        for (PropertyInjector injector:properties.getInjectors())
+        {
+            bean
+                .getPropertyValues()
+                .add( 
+                    injector.getPropertyName(),
+                    new RuntimeBeanReference(
+                        injector.getPropertyValue()));
+            
+        }
+    }
+
+    /************************************************************************
+     *  
+     *
      * @param scope
      * @return
      */
@@ -207,24 +226,6 @@ class SpringContainerProvider
         default:
             return "unknown";
         }
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @param input
-     * @return
-     */
-    private String[]
-    toArray(List<String> input)
-    {
-        String[] output = new String[input.size()];
-        int      i      = 0;
-        
-        for (String s:input)
-            output[i++] = s;
-        
-        return output;
     }
 }
 
