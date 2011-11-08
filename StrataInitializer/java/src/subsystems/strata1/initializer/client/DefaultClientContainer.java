@@ -27,8 +27,10 @@
 
 package strata1.initializer.client;
 
+import strata1.common.annotation.Factory;
 import strata1.initializer.base.AbstractBaseContainer;
 import strata1.initializer.provider.ContainerProvider;
+import strata1.integrator.annotation.Gateway;
 import strata1.interactor.view.View;
 
 /**
@@ -95,6 +97,19 @@ public class DefaultClientContainer
     {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected boolean
+    isSupportedType(Class<?> type)
+    {
+        return
+            type.isAnnotationPresent( Gateway.class ) ||
+            type.isAnnotationPresent( Factory.class ) ||
+            (View.class).isAssignableFrom( type );
     }
 
 }

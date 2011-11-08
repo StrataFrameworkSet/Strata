@@ -24,6 +24,7 @@
 
 package strata1.initializer.base;
 
+
 /**
  * 
  * @author 		
@@ -34,11 +35,44 @@ package strata1.initializer.base;
 public 
 interface BaseContainer
 {
+    /************************************************************************
+     *  
+     *
+     * @param name
+     * @param instance
+     */
+    public <T> void
+    registerInstance(String name,T instance);
+    
+    /************************************************************************
+     *  
+     *
+     * @param gatewayType
+     * @param name
+     * @return
+     */
     public <G> G
     getGateway(Class<G> gatewayType,String name);
 
+    /************************************************************************
+     *  
+     *
+     * @param factoryType
+     * @param name
+     * @return
+     */
     public <F> F
     getFactory(Class<F> factoryType,String name);
+    
+    /************************************************************************
+     *  
+     *
+     * @param type
+     * @param name
+     * @return
+     */
+    public boolean
+    hasInstance(Class<?> type,String name);
 }
 
 
