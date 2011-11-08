@@ -50,6 +50,23 @@ class AbstractBaseContainer
     {
         itsProvider = provider;
     }
+    
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <T> void 
+    registerInstance(String name,T instance)
+    {
+        Class<?> instanceType = instance.getClass();
+        
+        if ( isSupportedType( instanceType ) )
+            getProvider().registerInstance( name,instance );
+        else
+            throw 
+                new IllegalArgumentException( 
+                    instanceType + " is not a supported type.");    
+    }
 
     /************************************************************************
      * {@inheritDoc} 
@@ -82,6 +99,16 @@ class AbstractBaseContainer
     }
 
     /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    hasInstance(Class<?> type,String name)
+    {
+        return itsProvider.hasInstance( type,name );
+    }
+
+    /************************************************************************
      *  
      *
      * @return
@@ -91,6 +118,15 @@ class AbstractBaseContainer
     {
         return itsProvider;
     }
+    
+    /************************************************************************
+     *  
+     *
+     * @param type
+     * @return
+     */
+    protected abstract boolean
+    isSupportedType(Class<?> type);
 }
 
 

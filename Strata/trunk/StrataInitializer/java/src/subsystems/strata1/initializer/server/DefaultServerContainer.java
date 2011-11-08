@@ -24,9 +24,11 @@
 
 package strata1.initializer.server;
 
+import strata1.common.annotation.Factory;
 import strata1.entity.repository.Repository;
 import strata1.initializer.base.AbstractBaseContainer;
 import strata1.initializer.provider.ContainerProvider;
+import strata1.integrator.annotation.Gateway;
 
 /**
  * 
@@ -59,6 +61,19 @@ class DefaultServerContainer
     getRepository(Class<R> repositoryType,String name)
     {
         return getProvider().getInstance( repositoryType,name );
+    }
+    
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected boolean
+    isSupportedType(Class<?> type)
+    {
+        return
+            type.isAnnotationPresent( Gateway.class ) ||
+            type.isAnnotationPresent( Factory.class ) ||
+            (Repository.class).isAssignableFrom( type );
     }
 
 }
