@@ -21,6 +21,16 @@
   	
   	<dependencies>
    		<dependency>
+      		<groupId>org.fitnesse</groupId>
+      		<artifactId>fitnesse</artifactId>
+      		<version>20050731</version>
+    	</dependency>
+   		<dependency>
+      		<groupId>com.c2.fit</groupId>
+      		<artifactId>fit</artifactId>
+      		<version>1.1</version>
+    	</dependency>
+   		<dependency>
       		<groupId>junit</groupId>
       		<artifactId>junit</artifactId>
       		<version>4.9</version>
