@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.view;
+package strata1.interactor.command;
 
 /**
  * 
@@ -31,9 +31,12 @@ package strata1.interactor.view;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public interface ActionProvider
+public 
+interface Command
 {
-
+	public void 
+	execute()
+	    throws ExecutionException;
 }
 
 

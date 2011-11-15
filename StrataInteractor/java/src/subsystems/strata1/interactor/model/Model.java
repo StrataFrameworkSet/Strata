@@ -24,6 +24,9 @@
 
 package strata1.interactor.model;
 
+import strata1.interactor.event.ChangeEvent;
+import strata1.interactor.event.ChangeEventProcessor;
+
 /**
  * 
  * @author 		
@@ -32,13 +35,13 @@ package strata1.interactor.model;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface Model<U>
+interface Model
 {
 	public void
-	setProcessor(UpdateProcessor<U> processor);
+	setProcessor(ChangeEventProcessor processor);
 	
 	public void
-	notifyUpdate(U update);
+	notifyChange(ChangeEvent event);
 }
 
 

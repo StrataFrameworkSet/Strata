@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	ParameterizedDelegateCommand.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,36 +22,75 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.view;
+package strata1.interactor.command;
 
-import strata1.interactor.command.CommandInvoker;
-import strata1.interactor.event.ChangeEventProcessor;
+import java.lang.reflect.Method;
 
 /**
  * 
  * @author 		
- *     Sapientia Systems 
+ *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface View
-    extends CommandInvoker,
-            ChangeEventProcessor
+class ParameterizedDelegateCommand<T>
+    implements ParameterizedCommand<T>
 {
-    /************************************************************************
-     * Makes a view visible. 
-     *
-     */
-    public void 
-    show();
+    protected Object itsInstance;
+    protected Method itsMethod;
+    protected T      itsInput;
     
     /************************************************************************
-     * Makes a view invisible. 
+     * Creates a new ParameterizedDelegateCommand. 
      *
      */
-    public void
-    hide();
+    public 
+    ParameterizedDelegateCommand()
+    {
+        // TODO Auto-generated constructor stub
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    execute() 
+        throws ExecutionException
+    {
+        try
+        {
+            itsMethod.invoke( itsInstance,getInput() );
+        }
+        catch (Exception e)
+        {
+            throw new ExecutionException( e );
+        }
+        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    setInput(T input)
+    {
+        itsInput = input;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public T 
+    getInput()
+    {
+        return itsInput;
+    }
+
 }
+
 
 // ##########################################################################

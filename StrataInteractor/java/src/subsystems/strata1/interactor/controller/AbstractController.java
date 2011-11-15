@@ -24,9 +24,10 @@
 
 package strata1.interactor.controller;
 
-import strata1.interactor.model.UpdateProcessor;
-import strata1.interactor.view.ActionProcessor;
-
+import strata1.interactor.command.Command;
+import strata1.interactor.command.CommandProvider;
+import strata1.interactor.event.ChangeEvent;
+import strata1.interactor.event.ChangeEventProcessor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,39 +39,38 @@ import java.util.Map;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public abstract 
-class AbstractController<A,U> 
-	implements 	ActionProcessor<A>,
-				UpdateProcessor<U>
+class AbstractController
+	implements 	CommandProvider,
+				ChangeEventProcessor
 {
-	private Map<A,Handler<A>> itsActions;
-	private Map<U,Handler<U>> itsUpdates;
+	private Map<String,Command>                   itsCommands;
+	private Map<ChangeEvent,Handler<ChangeEvent>> itsHandlers;
 	
 	public
 	AbstractController()
 	{
 		super();
-		itsActions = new HashMap<A,Handler<A>>();
-		itsUpdates = new HashMap<U,Handler<U>>();
+		itsCommands = new HashMap<String,Command>();
+		itsHandlers = new HashMap<ChangeEvent,Handler<ChangeEvent>>();
 	}
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see ActionProcessor#processAction(Object)
 	 */
 	@Override
-	public void 
-	processAction(A action)
+	public Command 
+	getCommand(String commandName)
 	{
-		itsActions.get( action ).handle( action );
+		return itsCommands.get( commandName );
 	}
+	
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see UpdateProcessor#processUpdateObject)
 	 */
 	@Override
 	public void 
-	processUpdate(U update)
+	processChange(ChangeEvent event)
 	{
-		itsUpdates.get( update ).handle( update );
+		itsHandlers.get( event ).handle( event );
 	}
 
 	/************************************************************************
@@ -80,9 +80,9 @@ class AbstractController<A,U>
 	 * @param handler
 	 */
 	protected void
-	setAction(A action,Handler<A> handler)
+	setCommand(String commandName,Command command)
 	{
-		itsActions.put( action,handler );
+		itsCommands.put( commandName,command );
 	}
 	
 	/************************************************************************
@@ -92,9 +92,9 @@ class AbstractController<A,U>
 	 * @param handler
 	 */
 	protected void
-	setUpdate(U update,Handler<U> handler)
+	setHandler(ChangeEvent event,Handler<ChangeEvent> handler)
 	{
-		itsUpdates.put( update,handler );
+		itsHandlers.put( event,handler );
 	}
 }
 

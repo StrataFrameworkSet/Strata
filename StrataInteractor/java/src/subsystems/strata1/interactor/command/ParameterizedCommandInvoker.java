@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	ParameterizedCommandInvoker.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,19 +22,32 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.delegate;
+package strata1.interactor.command;
 
 /**
  * 
  * @author 		
- *     Sapientia Systems 
+ *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface Executable
+interface ParameterizedCommandInvoker<T>
 {
-	void execute();
+    public void
+    setCommand(ParameterizedCommand<T> command);
+    
+    public void
+    setParameter(T parameter);
+    
+    public ParameterizedCommand<T>
+    getCommand();
+    
+    public T
+    getParameter();
+    
+    public void
+    invoke();
 }
 
 

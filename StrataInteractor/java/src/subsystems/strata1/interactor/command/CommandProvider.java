@@ -22,10 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.view;
-
-import strata1.interactor.command.CommandInvoker;
-import strata1.interactor.event.ChangeEventProcessor;
+package strata1.interactor.command;
 
 /**
  * 
@@ -35,23 +32,14 @@ import strata1.interactor.event.ChangeEventProcessor;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface View
-    extends CommandInvoker,
-            ChangeEventProcessor
+interface CommandProvider
 {
-    /************************************************************************
-     * Makes a view visible. 
-     *
-     */
-    public void 
-    show();
+    public Command
+    getCommand(String commandName);
     
-    /************************************************************************
-     * Makes a view invisible. 
-     *
-     */
-    public void
-    hide();
+    public boolean
+    hasCommand(String commandName);
 }
+
 
 // ##########################################################################
