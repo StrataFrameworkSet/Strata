@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	ExecutionException.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,36 +22,70 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.view;
-
-import strata1.interactor.command.CommandInvoker;
-import strata1.interactor.event.ChangeEventProcessor;
+package strata1.interactor.command;
 
 /**
  * 
  * @author 		
- *     Sapientia Systems 
+ *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface View
-    extends CommandInvoker,
-            ChangeEventProcessor
+class ExecutionException
+    extends Exception
 {
+    private static final long serialVersionUID = -5131170444977506564L;
+
     /************************************************************************
-     * Makes a view visible. 
+     * Creates a new ExecutionException. 
      *
      */
-    public void 
-    show();
-    
+    public 
+    ExecutionException()
+    {
+        // TODO Auto-generated constructor stub
+    }
+
     /************************************************************************
-     * Makes a view invisible. 
+     * Creates a new ExecutionException. 
      *
+     * @param message
      */
-    public void
-    hide();
+    public 
+    ExecutionException(String message)
+    {
+        super(
+            message );
+        // TODO Auto-generated constructor stub
+    }
+
+    /************************************************************************
+     * Creates a new ExecutionException. 
+     *
+     * @param cause
+     */
+    public 
+    ExecutionException(Throwable cause)
+    {
+        super(
+            cause );
+        // TODO Auto-generated constructor stub
+    }
+
+    /************************************************************************
+     * Creates a new ExecutionException. 
+     *
+     * @param message
+     * @param cause
+     */
+    public 
+    ExecutionException(String message,Throwable cause)
+    {
+        super( message,cause );
+    }
+
 }
+
 
 // ##########################################################################

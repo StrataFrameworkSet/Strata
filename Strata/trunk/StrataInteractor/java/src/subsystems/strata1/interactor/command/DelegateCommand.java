@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	DelegateCommand.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,36 +22,66 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.view;
+package strata1.interactor.command;
 
-import strata1.interactor.command.CommandInvoker;
-import strata1.interactor.event.ChangeEventProcessor;
+import java.lang.reflect.Method;
 
 /**
  * 
  * @author 		
- *     Sapientia Systems 
+ *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface View
-    extends CommandInvoker,
-            ChangeEventProcessor
+class DelegateCommand
+    implements Command
 {
-    /************************************************************************
-     * Makes a view visible. 
-     *
-     */
-    public void 
-    show();
+    protected Object itsInstance;
+    protected Method itsMethod;
     
     /************************************************************************
-     * Makes a view invisible. 
+     * Creates a new DelegateCommand. 
      *
      */
-    public void
-    hide();
+    public 
+    DelegateCommand(Object instance,Method method)
+        throws IllegalArgumentException
+    {
+        if ( 
+            !method
+                .getDeclaringClass()
+                .isAssignableFrom( instance.getClass() ) )
+            throw new IllegalArgumentException();
+        
+        if ( method.getReturnType() != void.class )
+            throw new IllegalArgumentException();
+        
+        if ( method.getParameterTypes().length > 0 )
+            throw new IllegalArgumentException();
+        
+        itsInstance = instance;
+        itsMethod   = method;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    execute()
+        throws ExecutionException
+    {
+        try
+        {
+            itsMethod.invoke( itsInstance );
+        }
+        catch (Exception e)
+        {
+            throw new ExecutionException( e );
+        }
+    }
+
 }
 
 // ##########################################################################

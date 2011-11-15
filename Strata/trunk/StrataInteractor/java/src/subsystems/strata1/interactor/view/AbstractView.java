@@ -24,6 +24,12 @@
 
 package strata1.interactor.view;
 
+import strata1.interactor.command.CommandProvider;
+import strata1.interactor.controller.Handler;
+import strata1.interactor.event.ChangeEvent;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 
  * @author 		
@@ -32,11 +38,61 @@ package strata1.interactor.view;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public abstract 
-class AbstractView<A> 
+class AbstractView
 	implements View
 {	
+    private CommandProvider                       itsProvider;
+    private Map<ChangeEvent,Handler<ChangeEvent>> itsHandlers;
+    
+    public 
+    AbstractView()
+    {
+        itsProvider = null;
+        itsHandlers = new HashMap<ChangeEvent,Handler<ChangeEvent>>();
+    }
+    
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    setProvider(CommandProvider provider)
+    {
+        itsProvider = provider;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public CommandProvider 
+    getProvider()
+    {
+        return itsProvider;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    processChange(ChangeEvent event)
+    {
+        itsHandlers.get( event ).handle( event );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param update
+     * @param handler
+     */
+    protected void
+    setHandler(ChangeEvent event,Handler<ChangeEvent> handler)
+    {
+        itsHandlers.put( event,handler );
+    }
 
 }
-
 
 // ##########################################################################

@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	CommandInvoker.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,36 +22,42 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.view;
-
-import strata1.interactor.command.CommandInvoker;
-import strata1.interactor.event.ChangeEventProcessor;
+package strata1.interactor.command;
 
 /**
  * 
  * @author 		
- *     Sapientia Systems 
+ *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface View
-    extends CommandInvoker,
-            ChangeEventProcessor
+interface CommandInvoker
 {
     /************************************************************************
-     * Makes a view visible. 
+     *  
      *
-     */
-    public void 
-    show();
-    
-    /************************************************************************
-     * Makes a view invisible. 
-     *
+     * @param provider
      */
     public void
-    hide();
+    setProvider(CommandProvider provider);
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public CommandProvider
+    getProvider();
+    
+    /************************************************************************
+     *  
+     *
+     * @param commandName
+     */
+    public void
+    invoke(Command command);
 }
+
 
 // ##########################################################################

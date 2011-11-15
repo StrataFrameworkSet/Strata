@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	ChangeEventProcessor.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,10 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.view;
-
-import strata1.interactor.command.CommandInvoker;
-import strata1.interactor.event.ChangeEventProcessor;
+package strata1.interactor.event;
 
 /**
  * 
@@ -35,23 +32,11 @@ import strata1.interactor.event.ChangeEventProcessor;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface View
-    extends CommandInvoker,
-            ChangeEventProcessor
+interface ChangeEventProcessor
 {
-    /************************************************************************
-     * Makes a view visible. 
-     *
-     */
-    public void 
-    show();
-    
-    /************************************************************************
-     * Makes a view invisible. 
-     *
-     */
-    public void
-    hide();
+	public void
+	processChange(ChangeEvent event);
 }
+
 
 // ##########################################################################

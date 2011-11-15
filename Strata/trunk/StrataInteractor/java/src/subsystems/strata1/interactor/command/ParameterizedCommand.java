@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	ParameterizedCommand.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,18 +22,24 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.delegate;
+package strata1.interactor.command;
 
 /**
  * 
  * @author 		
- *     Sapientia Systems 
+ *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public interface Updatable
+public 
+interface ParameterizedCommand<T>
+    extends Command
 {
-
+    public void
+    setInput(T input);
+    
+    public T
+    getInput();
 }
 
 

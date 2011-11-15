@@ -24,6 +24,9 @@
 
 package strata1.interactor.model;
 
+import strata1.interactor.event.ChangeEvent;
+import strata1.interactor.event.ChangeEventProcessor;
+
 /**
  * 
  * @author 		
@@ -32,18 +35,18 @@ package strata1.interactor.model;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public abstract 
-class AbstractModel<U> 
-	implements Model<U>
+class AbstractModel
+	implements Model
 {
-	protected UpdateProcessor<U> itsProcessor;
+	protected ChangeEventProcessor itsProcessor;
 	
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Model#setProcessor(UpdateProcessor)
+	 * @see Model#setProcessor(ChangeEventProcessor)
 	 */
 	@Override
 	public void 
-	setProcessor(UpdateProcessor<U> processor)
+	setProcessor(ChangeEventProcessor processor)
 	{
 		itsProcessor = processor;
 	}
@@ -54,9 +57,9 @@ class AbstractModel<U>
 	 */
 	@Override
 	public void 
-	notifyUpdate(U update)
+	notifyChange(ChangeEvent event)
 	{
-		itsProcessor.processUpdate( update );
+		itsProcessor.processChange( event );
 	}
 }
 
