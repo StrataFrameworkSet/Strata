@@ -40,8 +40,7 @@ import java.util.Map;
  */
 public abstract 
 class AbstractController
-	implements 	CommandProvider,
-				ChangeEventProcessor
+	implements Controller
 {
 	private Map<String,Command>                   itsCommands;
 	private Map<ChangeEvent,Handler<ChangeEvent>> itsHandlers;
