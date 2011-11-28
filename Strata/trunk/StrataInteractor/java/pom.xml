@@ -16,7 +16,6 @@
   	<groupId>strata.interactor.java</groupId>
   	<artifactId>StrataInteractor</artifactId>
   	<packaging>jar</packaging>
-  	<url>http://maven.apache.org</url>
   	
   	<build>
   		<sourceDirectory>${project.basedir}/src/subsystems</sourceDirectory>
