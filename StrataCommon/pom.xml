@@ -16,7 +16,6 @@
   	<groupId>strata.common</groupId>
   	<artifactId>StrataCommon</artifactId>
   	<packaging>pom</packaging>
-  	<url>http://maven.apache.org</url>
   	  	  	
   	<modules>
 		<module>java</module>

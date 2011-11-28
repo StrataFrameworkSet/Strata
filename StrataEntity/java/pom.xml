@@ -17,8 +17,6 @@
   	<artifactId>StrataEntity</artifactId>
   	<packaging>jar</packaging>
   	
-  	<url>http://maven.apache.org</url>
-  	
   	<build>
   		<sourceDirectory>${project.basedir}/src/subsystems</sourceDirectory>
   		<testSourceDirectory>${project.basedir}/src/tests</testSourceDirectory>

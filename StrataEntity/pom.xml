@@ -16,7 +16,6 @@
   	<groupId>strata.entity</groupId>
   	<artifactId>StrataEntity</artifactId>
   	<packaging>pom</packaging>
-  	<url>http://maven.apache.org</url>
   	  	  	
   	<modules>
 		<module>java</module>
