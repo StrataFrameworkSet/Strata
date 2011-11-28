@@ -9,17 +9,10 @@
   	<artifactId>Strata</artifactId>
   	<packaging>pom</packaging>
   	<version>1.0</version>
-  	<name>Strata</name>
+  	<name>Strata Framework Set</name>
   	<url>http://maven.apache.org</url>
   	
   	<build>
-  		<sourceDirectory>${project.basedir}/java/src/subsystems</sourceDirectory>
-  		<testSourceDirectory>${project.basedir}/java/src/tests</testSourceDirectory>
-  		<outputDirectory>${project.basedir}/java/build</outputDirectory>
-  		<directory>${project.basedir}/lib</directory>
-    	<finalName>${project.artifactId}-${project.version}</finalName>
-    	<testOutputDirectory>${project.basedir}/java/build</testOutputDirectory>
-  		
   		<plugins>
       		<plugin>
         		<groupId>org.apache.maven.plugins</groupId>

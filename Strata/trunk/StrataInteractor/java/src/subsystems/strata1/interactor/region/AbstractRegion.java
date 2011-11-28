@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	HelloWorldApp.java
+// # File Name:	AbstractRegion.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.helloworld;
+package strata1.interactor.region;
 
-import strata1.interactor.app.ModelViewControllerApp;
+import strata1.interactor.view.View;
 
 /**
  * 
@@ -33,48 +33,31 @@ import strata1.interactor.app.ModelViewControllerApp;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class HelloWorldApp
-    implements Runnable
+public abstract 
+class AbstractRegion
+    implements Region
 {
-    HelloWorldModel      itsModel;
-    HelloWorldView       itsView;
-    HelloWorldController itsController;
+    private String itsName;
     
     /************************************************************************
-     * Creates a new HelloWorldApp. 
+     * Creates a new AbstractRegion. 
      *
      */
     public 
-    HelloWorldApp()
+    AbstractRegion(String name)
     {
-        itsModel      = new DefaultHelloWorldModel();
-        itsView       = new SwtHelloWorldView();
-        itsController = new DefaultHelloWorldController(itsModel,itsView);
+        itsName = name;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    run()
+    public String 
+    getName()
     {
-        itsController.start();
+        return itsName;
     }
-
-
-    /************************************************************************
-     *  
-     *
-     * @param args
-     */
-    public static void 
-    main(String[] args)
-    {
-        new HelloWorldApp().run();
-    }
-
 }
 
 

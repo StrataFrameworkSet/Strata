@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	HelloWorldApp.java
+// # File Name:	SwtRegion.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,15 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.helloworld;
+package strata1.interactor.swtregion;
 
-import strata1.interactor.app.ModelViewControllerApp;
+import strata1.interactor.region.AbstractRegion;
+import strata1.interactor.swtview.SwtView;
+import strata1.interactor.view.View;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Widget;
+
 
 /**
  * 
@@ -33,24 +39,21 @@ import strata1.interactor.app.ModelViewControllerApp;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class HelloWorldApp
-    implements Runnable
+public class SwtRegion
+    extends AbstractRegion
 {
-    HelloWorldModel      itsModel;
-    HelloWorldView       itsView;
-    HelloWorldController itsController;
-    
+    private Composite itsImp; 
+
     /************************************************************************
-     * Creates a new HelloWorldApp. 
+     * Creates a new SwtRegion. 
      *
+     * @param name
      */
     public 
-    HelloWorldApp()
+    SwtRegion(Composite parent,String name)
     {
-        itsModel      = new DefaultHelloWorldModel();
-        itsView       = new SwtHelloWorldView();
-        itsController = new DefaultHelloWorldController(itsModel,itsView);
+        super(name);
+        itsImp = new Composite(parent,SWT.NONE);
     }
 
     /************************************************************************
@@ -58,21 +61,18 @@ class HelloWorldApp
      */
     @Override
     public void 
-    run()
+    setView(View view)
     {
-        itsController.start();
     }
 
-
     /************************************************************************
-     *  
-     *
-     * @param args
+     * {@inheritDoc} 
      */
-    public static void 
-    main(String[] args)
+    @Override
+    public View 
+    getView()
     {
-        new HelloWorldApp().run();
+        return null;
     }
 
 }

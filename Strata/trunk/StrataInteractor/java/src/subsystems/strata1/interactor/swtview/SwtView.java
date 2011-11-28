@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	HelloWorldApp.java
+// # File Name:	SwtView.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.helloworld;
+package strata1.interactor.swtview;
 
-import strata1.interactor.app.ModelViewControllerApp;
+import strata1.interactor.view.View;
+import org.eclipse.swt.widgets.Widget;
 
 /**
  * 
@@ -34,47 +35,11 @@ import strata1.interactor.app.ModelViewControllerApp;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class HelloWorldApp
-    implements Runnable
+interface SwtView
+    extends View
 {
-    HelloWorldModel      itsModel;
-    HelloWorldView       itsView;
-    HelloWorldController itsController;
-    
-    /************************************************************************
-     * Creates a new HelloWorldApp. 
-     *
-     */
-    public 
-    HelloWorldApp()
-    {
-        itsModel      = new DefaultHelloWorldModel();
-        itsView       = new SwtHelloWorldView();
-        itsController = new DefaultHelloWorldController(itsModel,itsView);
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    run()
-    {
-        itsController.start();
-    }
-
-
-    /************************************************************************
-     *  
-     *
-     * @param args
-     */
-    public static void 
-    main(String[] args)
-    {
-        new HelloWorldApp().run();
-    }
-
+    public Widget
+    getWidget();
 }
 
 

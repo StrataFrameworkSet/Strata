@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	HelloWorldApp.java
+// # File Name:	DefaultHelloWorldModel.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,7 +24,7 @@
 
 package strata1.interactor.helloworld;
 
-import strata1.interactor.app.ModelViewControllerApp;
+import strata1.interactor.model.AbstractModel;
 
 /**
  * 
@@ -34,45 +34,18 @@ import strata1.interactor.app.ModelViewControllerApp;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class HelloWorldApp
-    implements Runnable
+class DefaultHelloWorldModel
+    extends    AbstractModel
+    implements HelloWorldModel
 {
-    HelloWorldModel      itsModel;
-    HelloWorldView       itsView;
-    HelloWorldController itsController;
-    
+
     /************************************************************************
-     * Creates a new HelloWorldApp. 
+     * Creates a new DefaultHelloWorldModel. 
      *
      */
-    public 
-    HelloWorldApp()
+    public DefaultHelloWorldModel()
     {
-        itsModel      = new DefaultHelloWorldModel();
-        itsView       = new SwtHelloWorldView();
-        itsController = new DefaultHelloWorldController(itsModel,itsView);
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    run()
-    {
-        itsController.start();
-    }
-
-
-    /************************************************************************
-     *  
-     *
-     * @param args
-     */
-    public static void 
-    main(String[] args)
-    {
-        new HelloWorldApp().run();
+        // TODO Auto-generated constructor stub
     }
 
 }

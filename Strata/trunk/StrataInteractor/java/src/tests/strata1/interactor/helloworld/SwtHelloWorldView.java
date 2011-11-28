@@ -25,24 +25,12 @@
 package strata1.interactor.helloworld;
 
 import strata1.interactor.command.Command;
+import strata1.interactor.swtview.SwtView;
 import strata1.interactor.view.AbstractView;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.Widget;
 
 /**
  * 
@@ -54,7 +42,7 @@ import org.eclipse.swt.widgets.ToolItem;
 public 
 class SwtHelloWorldView
     extends    AbstractView
-    implements HelloWorldView
+    implements HelloWorldView, SwtView
 {
     private Display                             itsDisplay;
     private Shell                               itsShell;
@@ -75,6 +63,32 @@ class SwtHelloWorldView
         itsShell.setLayout(new GridLayout(1, false));
     }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void
+    start()
+    {
+        itsShell.open();
+        while (!itsShell.isDisposed()) 
+        {
+            if (!itsDisplay.readAndDispatch()) 
+                itsDisplay.sleep();
+        }
+        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    stop()
+    {
+        itsDisplay.dispose();
+        System.exit( 0 );
+    }
     /************************************************************************
      * {@inheritDoc} 
      */
@@ -102,8 +116,16 @@ class SwtHelloWorldView
     public void 
     invoke(Command command)
     {
-        // TODO Auto-generated method stub
+    }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public Widget 
+    getWidget()
+    {
+        return itsShell;
     }
 
 }

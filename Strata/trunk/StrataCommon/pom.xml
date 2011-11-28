@@ -12,97 +12,14 @@
     	<relativePath>../Strata</relativePath>
   	</parent>
   	
+  	<name>Strata Common Framework</name>
+  	<groupId>strata.common</groupId>
   	<artifactId>StrataCommon</artifactId>
-  	<packaging>jar</packaging>
-  	<name>StrataCommon</name>
+  	<packaging>pom</packaging>
   	<url>http://maven.apache.org</url>
-  	
-  	<dependencies>
-   		<dependency>
-      		<groupId>junit</groupId>
-      		<artifactId>junit</artifactId>
-      		<version>4.9</version>
-    	</dependency>
-    	
-		<dependency>
-    		<groupId>org.quartz-scheduler</groupId>
-    		<artifactId>quartz</artifactId>
-    		<version>2.0.2</version>
-		</dependency>
-		    	
-    	<dependency>
-    		<groupId>org.springframework</groupId>
-    		<artifactId>spring-core</artifactId>
-    		<version>3.0.6.RELEASE</version>
-    	</dependency>
-    	<dependency>
-    		<groupId>org.springframework</groupId>
-    		<artifactId>spring-context-support</artifactId>
-    		<version>3.0.6.RELEASE</version>
-    	</dependency>
-    	
-    	<dependency>
-      		<groupId>javax.time</groupId>
-      		<artifactId>jsr-310-ri</artifactId>
-      		<version>20100212</version>
-    	</dependency>
-    
-		<dependency>
-			<groupId>com.sun</groupId>
-			<artifactId>resources</artifactId>
-    		<version>1.6.22-se</version>
-			<scope>system</scope>
-			<systemPath>${jdk-1.6.home}/jre6/lib/resources.jar</systemPath>
-		</dependency>  	
-		<dependency>
-			<groupId>com.sun</groupId>
-			<artifactId>rt</artifactId>
-    		<version>1.6.22-se</version>
-			<scope>system</scope>
-			<systemPath>${jdk-1.6.home}/jre6/lib/rt.jar</systemPath>
-		</dependency>  	
-		<dependency>
-			<groupId>com.sun</groupId>
-			<artifactId>jsse</artifactId>
-    		<version>1.6.22-se</version>
-			<scope>system</scope>
-			<systemPath>${jdk-1.6.home}/jre6/lib/jsse.jar</systemPath>
-		</dependency>  	
-		<dependency>
-			<groupId>com.sun</groupId>
-			<artifactId>jce</artifactId>
-    		<version>1.6.22-se</version>
-			<scope>system</scope>
-			<systemPath>${jdk-1.6.home}/jre6/lib/jce.jar</systemPath>
-		</dependency>  	
-		<dependency>
-			<groupId>com.sun</groupId>
-			<artifactId>charsets</artifactId>
-    		<version>1.6.22-se</version>
-			<scope>system</scope>
-			<systemPath>${jdk-1.6.home}/jre6/lib/charsets.jar</systemPath>
-		</dependency>  	
-		<dependency>
-			<groupId>com.sun</groupId>
-			<artifactId>dnsns</artifactId>
-    		<version>1.6.22-se</version>
-			<scope>system</scope>
-			<systemPath>${jdk-1.6.home}/jre6/lib/ext/dnsns.jar</systemPath>
-		</dependency>  	
-		<dependency>
-			<groupId>com.sun</groupId>
-			<artifactId>localedata</artifactId>
-    		<version>1.6.22-se</version>
-			<scope>system</scope>
-			<systemPath>${jdk-1.6.home}/jre6/lib/ext/localedata.jar</systemPath>
-		</dependency>  	
-		<dependency>
-			<groupId>com.sun</groupId>
-			<artifactId>sunjce_provider</artifactId>
-    		<version>1.6.22-se</version>
-			<scope>system</scope>
-			<systemPath>${jdk-1.6.home}/jre6/lib/ext/sunjce_provider.jar</systemPath>
-		</dependency>  	
-	</dependencies>
-  	
+  	  	  	
+  	<modules>
+		<module>java</module>
+	</modules>  	
+	
 </project>
