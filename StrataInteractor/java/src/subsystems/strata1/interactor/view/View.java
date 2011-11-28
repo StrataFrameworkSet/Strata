@@ -39,6 +39,12 @@ interface View
     extends CommandInvoker,
             ChangeEventProcessor
 {
+    public void
+    start();
+    
+    public void
+    stop();
+    
     /************************************************************************
      * Makes a view visible. 
      *

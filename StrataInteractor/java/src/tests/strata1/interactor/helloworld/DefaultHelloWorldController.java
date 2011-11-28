@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	HelloWorldApp.java
+// # File Name:	DefaultHelloWorldController.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,7 +24,7 @@
 
 package strata1.interactor.helloworld;
 
-import strata1.interactor.app.ModelViewControllerApp;
+import strata1.interactor.controller.AbstractController;
 
 /**
  * 
@@ -34,23 +34,25 @@ import strata1.interactor.app.ModelViewControllerApp;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class HelloWorldApp
-    implements Runnable
+class DefaultHelloWorldController
+    extends    AbstractController
+    implements HelloWorldController
 {
-    HelloWorldModel      itsModel;
-    HelloWorldView       itsView;
-    HelloWorldController itsController;
+    private HelloWorldModel itsModel;
+    private HelloWorldView  itsView;
     
     /************************************************************************
-     * Creates a new HelloWorldApp. 
+     * Creates a new DefaultHelloWorldController. 
      *
      */
     public 
-    HelloWorldApp()
+    DefaultHelloWorldController(HelloWorldModel model,HelloWorldView view)
     {
-        itsModel      = new DefaultHelloWorldModel();
-        itsView       = new SwtHelloWorldView();
-        itsController = new DefaultHelloWorldController(itsModel,itsView);
+        itsModel = model;
+        itsView  = view;
+        
+        itsModel.setProcessor( this );
+        itsView.setProvider( this );
     }
 
     /************************************************************************
@@ -58,21 +60,19 @@ class HelloWorldApp
      */
     @Override
     public void 
-    run()
+    start()
     {
-        itsController.start();
+        itsView.start();
     }
 
-
     /************************************************************************
-     *  
-     *
-     * @param args
+     * {@inheritDoc} 
      */
-    public static void 
-    main(String[] args)
+    @Override
+    public boolean 
+    hasCommand(String commandName)
     {
-        new HelloWorldApp().run();
+        return false;
     }
 
 }

@@ -52,6 +52,7 @@ class AbstractController
 		itsCommands = new HashMap<String,Command>();
 		itsHandlers = new HashMap<ChangeEvent,Handler<ChangeEvent>>();
 	}
+	
 	/************************************************************************
 	 * {@inheritDoc} 
 	 */
