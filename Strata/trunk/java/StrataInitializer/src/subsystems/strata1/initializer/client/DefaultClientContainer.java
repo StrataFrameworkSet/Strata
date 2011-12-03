@@ -31,6 +31,7 @@ import strata1.common.annotation.Factory;
 import strata1.initializer.base.AbstractBaseContainer;
 import strata1.initializer.provider.ContainerProvider;
 import strata1.integrator.annotation.Gateway;
+import strata1.interactor.controller.Controller;
 import strata1.interactor.view.View;
 
 /**
@@ -59,7 +60,7 @@ public class DefaultClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <V extends View>V 
+    public <V extends View> V 
     getView(Class<V> viewType,String name)
     {
         // TODO Auto-generated method stub
@@ -70,7 +71,7 @@ public class DefaultClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <V>V 
+    public <V> V 
     getViewModel(Class<V> viewModelType,String name)
     {
         // TODO Auto-generated method stub
@@ -81,7 +82,7 @@ public class DefaultClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <C>C 
+    public <C extends Controller> C 
     getController(Class<C> controllerType,String name)
     {
         // TODO Auto-generated method stub
@@ -92,7 +93,7 @@ public class DefaultClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <M>M 
+    public <M> M 
     getModel(Class<M> modelType,String name)
     {
         // TODO Auto-generated method stub

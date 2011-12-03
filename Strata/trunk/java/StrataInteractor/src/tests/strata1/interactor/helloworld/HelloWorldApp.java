@@ -49,7 +49,7 @@ class HelloWorldApp
     HelloWorldApp()
     {
         itsModel      = new DefaultHelloWorldModel();
-        itsView       = new SwtHelloWorldView();
+        itsView       = null; //new SwtHelloWorldView();
         itsController = new DefaultHelloWorldController(itsModel,itsView);
     }
 
