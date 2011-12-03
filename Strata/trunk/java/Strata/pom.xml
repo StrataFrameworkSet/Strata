@@ -9,7 +9,7 @@
   	<artifactId>Strata</artifactId>
   	<packaging>pom</packaging>
   	<version>1.0</version>
-  	<name>Strata Framework Set</name>
+  	<name>Strata Framework Set (java)</name>
   	<url>http://maven.apache.org</url>
   	
   	<build>
