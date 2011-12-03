@@ -25,6 +25,7 @@
 package strata1.initializer.client;
 
 import strata1.initializer.base.BaseContainer;
+import strata1.interactor.controller.Controller;
 import strata1.interactor.view.View;
 
 /**
@@ -44,7 +45,7 @@ interface ClientContainer
     public <V> V
     getViewModel(Class<V> viewModelType,String name);
     
-    public <C> C
+    public <C extends Controller> C
     getController(Class<C> controllerType,String name);
     
     public <M> M
