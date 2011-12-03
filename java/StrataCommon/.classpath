@@ -3,7 +3,5 @@
 	<classpathentry kind="src" path="src/tests"/>
 	<classpathentry kind="src" path="src/subsystems"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.iam.jdt.core.mavenClasspathContainer"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="java/build"/>
 </classpath>
