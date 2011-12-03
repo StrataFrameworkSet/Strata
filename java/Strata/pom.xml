@@ -81,6 +81,7 @@
 		<module>../StrataCommon</module>
 		<module>../StrataIntegrator</module>
 		<module>../StrataInteractor</module>
+		<module>../StrataSwtInteractor</module>
 		<module>../StrataInspector</module>
 		<module>../StrataEntity</module>
 		<module>../StrataInitializer</module>
