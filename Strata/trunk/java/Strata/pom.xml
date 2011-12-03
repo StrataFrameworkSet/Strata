@@ -5,7 +5,7 @@
 
   	<modelVersion>4.0.0</modelVersion>
 
-  	<groupId>strata</groupId>
+  	<groupId>strata.java</groupId>
   	<artifactId>Strata</artifactId>
   	<packaging>pom</packaging>
   	<version>1.0</version>
@@ -79,11 +79,13 @@
   	  	
   	<modules>
 		<module>../StrataCommon</module>
+		<!-- 
 		<module>../StrataIntegrator</module>
 		<module>../StrataInteractor</module>
 		<module>../StrataInspector</module>
 		<module>../StrataEntity</module>
 		<module>../StrataInitializer</module>
+		 -->
 	</modules>  	
 	
 </project>
