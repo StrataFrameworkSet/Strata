@@ -25,6 +25,7 @@
 package strata1.swtinteractor.swtview;
 
 import strata1.interactor.view.View;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 
 /**
@@ -40,6 +41,9 @@ interface SwtView
 {
     public Widget
     getWidget();
+    
+    public Composite
+    getComposite();
 }
 
 

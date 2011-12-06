@@ -24,6 +24,8 @@
 
 package strata1.interactor.region;
 
+import strata1.interactor.view.View;
+
 /**
  * 
  * @author 		
@@ -35,13 +37,10 @@ public
 interface RegionManager
 {
     public void
-    registerViewWithRegion(String regionName,Class<?> view);
+    registerViewWithRegion(String regionName,Class<? extends View> viewType);
     
     public boolean
-    hasRegion(String regionName);
-    
-    public void
-    onCreateRegion(Region region);
+    isRegisteredWithRegion(String regionName);
 }
 
 // ##########################################################################

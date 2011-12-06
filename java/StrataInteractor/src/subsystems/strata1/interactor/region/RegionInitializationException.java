@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	SwtRegion.java
+// # File Name:	RegionInitializationException.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,13 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.swtinteractor.swtregion;
-
-import strata1.interactor.region.AbstractRegion;
-import strata1.interactor.region.RegionInitializationException;
-import strata1.interactor.view.View;
-import org.eclipse.swt.widgets.Composite;
-
+package strata1.interactor.region;
 
 /**
  * 
@@ -37,32 +31,45 @@ import org.eclipse.swt.widgets.Composite;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public class SwtRegion
-    extends AbstractRegion
+public 
+class RegionInitializationException
+    extends Exception
 {
-    private Composite itsImp; 
+
+    private static final long serialVersionUID = -3455140901214551585L;
 
     /************************************************************************
-     * Creates a new SwtRegion. 
+     * Creates a new RegionInitializationException. 
      *
-     * @param name
+     * @param message
      */
     public 
-    SwtRegion(SwtRegionManager manager,String name,Composite parent)
-        throws RegionInitializationException
+    RegionInitializationException(String message)
     {
-        super(name); 
-        itsImp = manager.createComposite( name,parent );
+        super( message );
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * Creates a new RegionInitializationException. 
+     *
+     * @param cause
      */
-    @Override
-    public View 
-    getView()
+    public 
+    RegionInitializationException(Throwable cause)
     {
-        return (View)itsImp;
+        super( cause );
+    }
+
+    /************************************************************************
+     * Creates a new RegionInitializationException. 
+     *
+     * @param message
+     * @param cause
+     */
+    public 
+    RegionInitializationException(String message,Throwable cause)
+    {
+        super( message,cause );
     }
 
 }
