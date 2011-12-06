@@ -36,9 +36,6 @@ import strata1.interactor.view.View;
 public 
 interface Region
 {
-    public void
-    setView(View view);
-
     public String
     getName();
     

@@ -28,6 +28,7 @@ import strata1.interactor.command.Command;
 import strata1.swtinteractor.swtview.SwtView;
 import strata1.interactor.view.AbstractView;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
@@ -124,6 +125,13 @@ class SwtHelloWorldView
     @Override
     public Widget 
     getWidget()
+    {
+        return itsShell;
+    }
+
+    @Override
+    public Composite 
+    getComposite()
     {
         return itsShell;
     }
