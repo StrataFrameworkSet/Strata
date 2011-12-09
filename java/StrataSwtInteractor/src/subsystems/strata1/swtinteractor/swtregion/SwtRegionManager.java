@@ -24,15 +24,14 @@
 
 package strata1.swtinteractor.swtregion;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
+import strata1.swtinteractor.swtview.SwtView;
+import strata1.interactor.region.Region;
 import strata1.interactor.region.RegionInitializationException;
 import strata1.interactor.region.RegionManager;
 import strata1.interactor.view.View;
-import strata1.swtinteractor.swtview.SwtView;
 import org.eclipse.swt.widgets.Composite;
+import java.util.HashMap;
+import java.util.Map;
 
 /****************************************************************************
  * 
@@ -45,6 +44,7 @@ public
 class SwtRegionManager
     implements RegionManager
 {
+    private Map<String,Region>                itsRegions;
     private Map<String,Class<? extends View>> itsViewTypes;
     
     /************************************************************************
@@ -54,7 +54,30 @@ class SwtRegionManager
     public 
     SwtRegionManager()
     {
+        itsRegions   = new HashMap<String,Region>();
         itsViewTypes = new HashMap<String,Class<? extends View>>();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    insertRegion(Region region)
+    {
+        itsRegions.put( region.getName(),region );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    initializeRegions()
+        throws RegionInitializationException
+    {
+       for (Region region:itsRegions.values())
+           region.initializeView();
     }
 
     /************************************************************************
@@ -75,9 +98,22 @@ class SwtRegionManager
      */
     @Override
     public boolean 
-    isRegisteredWithRegion(String regionName)
+    hasRegion(String regionName)
     {
-        return itsViewTypes.containsKey( regionName );
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    isRegisteredWithRegion(String regionName,Class<? extends View> viewType)
+    {
+        return 
+            itsViewTypes.containsKey( regionName ) &&
+            itsViewTypes.get( regionName ).equals( viewType );
     }
 
     /************************************************************************
@@ -88,8 +124,8 @@ class SwtRegionManager
      * @return
      * @throws RegionInitializationException
      */
-    public Composite
-    createComposite(String name,Composite parent) 
+    public SwtView
+    createView(String name,Composite parent) 
         throws RegionInitializationException
     {
         Class<? extends View> viewType = itsViewTypes.get( name );
@@ -100,11 +136,10 @@ class SwtRegionManager
         
         try
         {
-            view = (SwtView)viewType
+            return
+                (SwtView)viewType
                     .getConstructor( Composite.class )
                     .newInstance( parent );
-            
-            return view.getComposite();
         }
         catch(Exception e)
         {

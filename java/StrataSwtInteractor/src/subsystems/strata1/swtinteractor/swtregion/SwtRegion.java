@@ -24,13 +24,15 @@
 
 package strata1.swtinteractor.swtregion;
 
+import strata1.swtinteractor.swtview.SwtView;
 import strata1.interactor.region.AbstractRegion;
 import strata1.interactor.region.RegionInitializationException;
 import strata1.interactor.view.View;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -40,7 +42,9 @@ import org.eclipse.swt.widgets.Composite;
 public class SwtRegion
     extends AbstractRegion
 {
-    private Composite itsImp; 
+    private static SwtRegionManager theirManager;
+    private Composite               itsImp;
+    private SwtView                 itsView;
 
     /************************************************************************
      * Creates a new SwtRegion. 
@@ -48,21 +52,54 @@ public class SwtRegion
      * @param name
      */
     public 
-    SwtRegion(SwtRegionManager manager,String name,Composite parent)
-        throws RegionInitializationException
+    SwtRegion(String name,Composite parent)
     {
         super(name); 
-        itsImp = manager.createComposite( name,parent );
+        itsImp  = new Composite( parent,SWT.NONE );
+        itsView = null;
+        getManager().insertRegion( this );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
+    public void
+    initializeView()
+        throws RegionInitializationException
+    {
+        itsView = getManager().createView( getName(),itsImp );
+    }
+    
+    /************************************************************************
+     * {@inheritDoc} 
+     */
     @Override
-    public View 
+    public SwtView 
     getView()
     {
-        return (View)itsImp;
+        return itsView;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param manager
+     */
+    public static void
+    setManager(SwtRegionManager manager)
+    {
+        theirManager = manager;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public static SwtRegionManager
+    getManager()
+    {
+        return theirManager;
     }
 
 }

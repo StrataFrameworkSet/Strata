@@ -39,8 +39,18 @@ interface RegionManager
     public void
     registerViewWithRegion(String regionName,Class<? extends View> viewType);
     
+    public void
+    insertRegion(Region region);
+    
+    public void
+    initializeRegions()
+        throws RegionInitializationException;
+    
     public boolean
-    isRegisteredWithRegion(String regionName);
+    hasRegion(String regionName);
+    
+    public boolean
+    isRegisteredWithRegion(String regionName,Class<? extends View> viewType);
 }
 
 // ##########################################################################
