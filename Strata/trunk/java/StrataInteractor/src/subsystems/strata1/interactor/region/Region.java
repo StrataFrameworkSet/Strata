@@ -36,6 +36,10 @@ import strata1.interactor.view.View;
 public 
 interface Region
 {
+    public void
+    initializeView()        
+        throws RegionInitializationException;
+
     public String
     getName();
     
