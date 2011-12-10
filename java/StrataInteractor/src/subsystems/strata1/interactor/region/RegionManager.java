@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	RegionFactoryObserver.java
+// # File Name:	RegionManager.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
