@@ -50,7 +50,7 @@ class DefaultHelloWorldController
     {
         itsModel = model;
         itsView  = view;
-        
+       
         itsModel.setProcessor( this );
         itsView.setProvider( this );
     }

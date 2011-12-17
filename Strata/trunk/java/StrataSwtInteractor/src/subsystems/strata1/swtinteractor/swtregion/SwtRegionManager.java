@@ -65,7 +65,7 @@ class SwtRegionManager
     public void 
     insertRegion(Region region)
     {
-        itsRegions.put( region.getName(),region );
+        itsRegions.put( region.getRegionName(),region );
     }
 
     /************************************************************************

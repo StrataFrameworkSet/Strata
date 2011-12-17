@@ -25,7 +25,12 @@
 package strata1.swtinteractor.helloworld;
 
 import strata1.interactor.command.Command;
+import strata1.swtinteractor.swtregion.SwtRegion;
+import strata1.swtinteractor.swtregion.SwtRegionManager;
 import strata1.swtinteractor.swtview.SwtView;
+import strata1.interactor.region.Region;
+import strata1.interactor.region.RegionInitializationException;
+import strata1.interactor.region.RegionManager;
 import strata1.interactor.view.AbstractView;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -45,23 +50,29 @@ class SwtHelloWorldView
     extends    AbstractView
     implements HelloWorldView, SwtView
 {
-    private Display                             itsDisplay;
-    private Shell                               itsShell;
+    private RegionManager  itsRegionManager;
+    private Display        itsDisplay;
+    private Shell          itsShell;
+    private Region         itsGreetingRegion;
 
     /************************************************************************
      * Creates a new SwtHelloWorldView. 
+     * @throws RegionInitializationException 
      *
      */
     public 
-    SwtHelloWorldView()
+    SwtHelloWorldView(RegionManager manager) throws RegionInitializationException
     {
-        super();
-        itsDisplay   = new Display();
-        itsShell     = new Shell( itsDisplay );
+        itsRegionManager = manager;
         
+        itsDisplay   = new Display();
+        
+        itsShell     = new Shell( itsDisplay );
         itsShell.setText("Hello World");
         itsShell.setSize(550, 327);
         itsShell.setLayout(new GridLayout(1, false));
+        
+        itsGreetingRegion = new SwtRegion( "Greeting",itsShell );        
     }
 
     /************************************************************************
@@ -71,6 +82,10 @@ class SwtHelloWorldView
     public void
     start()
     {
+        GreetingView greeting = (GreetingView)itsGreetingRegion.getView();
+        
+        greeting.displayGreeting( "Hello World!" );
+        
         itsShell.open();
         while (!itsShell.isDisposed()) 
         {

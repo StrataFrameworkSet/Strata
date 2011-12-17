@@ -41,7 +41,7 @@ interface Region
         throws RegionInitializationException;
 
     public String
-    getName();
+    getRegionName();
     
     public View
     getView();
