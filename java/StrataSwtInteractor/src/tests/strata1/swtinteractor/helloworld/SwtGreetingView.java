@@ -1,36 +1,38 @@
 // ##########################################################################
-// # File Name:	SwtRegion.java
+// # File Name:	SwtGreetingView.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataInteractor Framework.
+// # License:	This file is part of the StrataSwtInteractor Framework.
 // #
-// #   			The StrataInteractor Framework is free software: you 
+// #   			The StrataSwtInteractor Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataInteractor Framework is distributed in the 
+// #    		The StrataSwtInteractor Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataInteractor
+// #			General Public License along with the StrataSwtInteractor
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.swtinteractor.swtregion;
+package strata1.swtinteractor.helloworld;
 
 import strata1.swtinteractor.swtview.SwtView;
-import strata1.interactor.region.Region;
-import strata1.interactor.region.RegionInitializationException;
-import strata1.interactor.region.RegionManager;
+import strata1.interactor.command.Command;
+import strata1.interactor.command.CommandProvider;
+import strata1.interactor.event.ChangeEvent;
+import strata1.interactor.view.AbstractView;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Widget;
 
 /****************************************************************************
  * 
@@ -39,85 +41,92 @@ import org.eclipse.swt.widgets.Composite;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public class SwtRegion
-    extends    Composite
-    implements Region
+public class SwtGreetingView
+    extends AbstractView
+    implements GreetingView, SwtView
 {
-    private static SwtRegionManager theirManager;
-    private String                  itsName;
-    private SwtView                 itsView;
+    private Label itsGreeting;
+    
+    /************************************************************************
+     * Creates a new {@code SwtGreetingView}. 
+     *
+     */
+    public SwtGreetingView(Composite parent)
+    {
+        itsGreeting = new Label( parent,SWT.NONE );
+    }
 
     /************************************************************************
-     * Creates a new {@code SwtRegion}. 
-     *
-     * @param name
-     * @param parent
+     * {@inheritDoc} 
      */
-    public 
-    SwtRegion(String name,Composite parent)
+    @Override
+    public void start()
     {
-        super( parent,SWT.NONE ); 
-        super.setLayout( new GridLayout(1,false) );
-        itsName = name;
-        itsView = null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void stop()
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void show()
+    {
+        itsGreeting.setVisible( true );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void hide()
+    {
+        itsGreeting.setVisible( false );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void invoke(Command command)
+    {
+        // TODO Auto-generated method stub
         
-        getManager().insertRegion( this );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void
-    initializeView()
-        throws RegionInitializationException
+    public void displayGreeting(String greeting)
     {
-        itsView = getManager().createView( getRegionName(),this );
+        itsGreeting.setText( greeting );
     }
-    
+
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public String 
-    getRegionName()
+    public Widget getWidget()
     {
-        return itsName;
+        return itsGreeting;
     }
-    
+
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public SwtView 
-    getView()
+    public Composite getComposite()
     {
-        return itsView;
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @param manager
-     */
-    public static void
-    setManager(RegionManager manager)
-    {
-        theirManager = (SwtRegionManager)manager;
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public static SwtRegionManager
-    getManager()
-    {
-        return theirManager;
+        return null;
     }
 
 }
-
 
 // ##########################################################################

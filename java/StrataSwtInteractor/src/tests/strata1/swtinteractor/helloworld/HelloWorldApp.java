@@ -24,7 +24,11 @@
 
 package strata1.swtinteractor.helloworld;
 
+import strata1.swtinteractor.swtregion.SwtRegion;
+import strata1.swtinteractor.swtregion.SwtRegionManager;
 import strata1.interactor.app.ModelViewControllerApp;
+import strata1.interactor.region.RegionInitializationException;
+import strata1.interactor.region.RegionManager;
 
 /**
  * 
@@ -37,19 +41,24 @@ public
 class HelloWorldApp
     implements Runnable
 {
+    RegionManager        itsRegionManager;
     HelloWorldModel      itsModel;
     HelloWorldView       itsView;
     HelloWorldController itsController;
     
     /************************************************************************
      * Creates a new HelloWorldApp. 
+     * @throws RegionInitializationException 
      *
      */
     public 
-    HelloWorldApp()
+    HelloWorldApp() throws RegionInitializationException
     {
+        itsRegionManager = new SwtRegionManager();
+        SwtRegion.setManager( itsRegionManager );
+        
         itsModel      = new DefaultHelloWorldModel();
-        itsView       = new SwtHelloWorldView();
+        itsView       = new SwtHelloWorldView(itsRegionManager);
         itsController = new DefaultHelloWorldController(itsModel,itsView);
     }
 
@@ -60,9 +69,17 @@ class HelloWorldApp
     public void 
     run()
     {
-        itsController.start();
+        try
+        {
+            itsRegionManager.registerViewWithRegion( "Greeting",SwtGreetingView.class );
+            itsRegionManager.initializeRegions();
+            itsController.start();
+        }
+        catch(RegionInitializationException e)
+        {
+            e.printStackTrace();
+        }
     }
-
 
     /************************************************************************
      *  
@@ -72,10 +89,16 @@ class HelloWorldApp
     public static void 
     main(String[] args)
     {
-        new HelloWorldApp().run();
+        try
+        {
+            new HelloWorldApp().run();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
 }
-
 
 // ##########################################################################
