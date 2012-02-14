@@ -75,7 +75,8 @@ class FreeMemoryCheckTest
 	}
 
 	/**
-	 * Test method for {@link strata1.inspector.memorydiagnostic.FreeMemoryCheck#FreeMemoryCheck(java.lang.String)}.
+	 * Test method for 
+	 * {@link FreeMemoryCheck#FreeMemoryCheck(String)}.
 	 */
 	@Test
 	public void 
@@ -84,11 +85,14 @@ class FreeMemoryCheckTest
 		itsTarget = new FreeMemoryCheck( "Foo" );
 		
 		assertEquals( 0L,itsTarget.getFreeRange().getMinimumBtyes() );
-		assertEquals( Long.MAX_VALUE,itsTarget.getFreeRange().getMaximumBtyes() );
+		assertEquals( 
+		    Long.MAX_VALUE,
+		    itsTarget.getFreeRange().getMaximumBtyes() );
 	}
 
 	/**
-	 * Test method for {@link strata1.inspector.memorydiagnostic.FreeMemoryCheck#setFreeRange(strata1.inspector.memorydiagnostic.MemoryRange)}.
+	 * Test method for 
+	 * {@link FreeMemoryCheck#setFreeRange(MemoryRange)}.
 	 */
 	@Test
 	public void 
@@ -101,7 +105,8 @@ class FreeMemoryCheckTest
 	}
 
 	/**
-	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticCheck#runDiagnostic(strata1.inspector.diagnostic.DiagnosticResult)}.
+	 * Test method for 
+	 * {@link DiagnosticCheck#runDiagnostic(DiagnosticResult)}.
 	 */
 	@Test
 	public void 

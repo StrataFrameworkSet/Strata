@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	Finder.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -30,7 +30,7 @@ import strata1.common.utility.Copyable;
 import java.util.Collection;
 
 
-/**
+/****************************************************************************
  * Generic interface that participates in the 
  * <a href="{@docRoot}/designpatterns/DomainObjectManager.pdf">
  * RepositoryImp (aka Domain Object Manager)</a> design pattern and declares:
@@ -38,9 +38,9 @@ import java.util.Collection;
  *     <li>an operation for identification</li>
  *     <li>operations for parameterizing the query process</li>
  *     <li>an operation for obtaining the list of domain objects 
- *         retrieved by the query process</li>
+ *         retrieved by the query process.</li>
  * </ul>
- * 
+ * @param <T> - entity type
  * @author 		
  *     Sapientia Systems 
  * @conventions	
@@ -52,9 +52,8 @@ interface Finder<T>
 {
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Copyable#copy()
+	 * @return {@code Finder<T>}
 	 * 
-	 * @return Finder<D>
 	 */
 	@Override
 	public Finder<T>
@@ -65,7 +64,7 @@ interface Finder<T>
 	 *
 	 * @param	name	identifies input parameter
 	 * @param 	input	input parameter value
-	 * @throws 	InvalidFormatException	invalid input to finder
+	 * @throws  InvalidFormatException invalid input to finder.
 	 */
 	public void 
 	setInput(String name,Object input) throws InvalidInputException;

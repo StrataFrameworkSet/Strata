@@ -24,8 +24,12 @@
 
 package strata1.common.utility;
 
-import java.lang.reflect.*;
-import java.util.*;;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A dynamic proxy class that manages singletons for any type.
@@ -44,7 +48,9 @@ class SingletonProxy
 	private Object                    itsInstance;
 	
 	/************************************************************************
-	 * Creates a new SingletonProxy. 
+	 * Creates a new {@code SingletonProxy}. 
+	 *
+	 * @param instance a singleton instance
 	 */
 	protected 
 	SingletonProxy(Object instance)
@@ -58,6 +64,7 @@ class SingletonProxy
 	 * <p>
 	 * {@inheritDoc} 
 	 */
+	@Override
 	public Object 
 	invoke(Object proxy,Method method,Object[] args)
 		throws Throwable

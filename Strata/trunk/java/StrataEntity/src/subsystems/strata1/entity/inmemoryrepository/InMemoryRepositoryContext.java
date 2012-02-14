@@ -24,10 +24,10 @@
 
 package strata1.entity.inmemoryrepository;
 
+import strata1.entity.repository.RepositoryContext;
+import strata1.common.utility.ReadWriteLockSynchronizer;
+import strata1.common.utility.Synchronizer;
 import org.springframework.transaction.PlatformTransactionManager;
-
-import strata1.common.utility.*;
-import strata1.entity.repository.*;
 
 
 /**
@@ -60,8 +60,8 @@ class InMemoryRepositoryContext
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see ManagerContext#getSynchronizer()
 	 */
+    @Override
 	public Synchronizer 
 	getSynchronizer()
 	{
@@ -70,7 +70,6 @@ class InMemoryRepositoryContext
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryContext#getTransactionManager()
 	 */
 	@Override
 	public PlatformTransactionManager 
@@ -81,8 +80,7 @@ class InMemoryRepositoryContext
 	}
 
 	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see ManagerContext#hasActiveTransaction()
+	 *  
 	 */
 	public boolean 
 	hasActiveTransaction()
@@ -99,6 +97,11 @@ class InMemoryRepositoryContext
 		}
 	}
 
+	/************************************************************************
+	 *  
+	 *
+	 * @return
+	 */
 	public InMemoryTransaction 
 	getTransaction()
 	{
@@ -117,7 +120,11 @@ class InMemoryRepositoryContext
 		}
 	}
 	
-	void clearTransaction()
+ 	/************************************************************************
+ 	 *  
+ 	 *
+ 	 */
+ 	void clearTransaction()
 	{
 		itsSynchronizer.lockForWriting();
 		

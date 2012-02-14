@@ -29,6 +29,8 @@ import java.util.Map;
 /**
  * Interface for logical predicates on objects of type T.
  * 
+ * @param <T> target type
+ * 
  * @author 		
  *     Sapientia Systems 
  * @conventions	

@@ -129,7 +129,6 @@ class SwtRegionManager
         throws RegionInitializationException
     {
         Class<? extends View> viewType = itsViewTypes.get( name );
-        SwtView               view     = null;
         
         if ( viewType == null )
             throw new IllegalArgumentException();

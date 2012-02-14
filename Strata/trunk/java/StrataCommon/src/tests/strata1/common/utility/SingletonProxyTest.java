@@ -24,7 +24,6 @@
 
 package strata1.common.utility;
 
-import static org.junit.Assert.*;
 import strata1.common.money.Money;
 import org.junit.After;
 import org.junit.Before;
@@ -37,7 +36,6 @@ import org.junit.Test;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-@SuppressWarnings("unused")
 public class SingletonProxyTest
 {
     private CopyableObject itsExpected;
@@ -67,7 +65,8 @@ public class SingletonProxyTest
     }
 
     /**
-     * Test method for {@link strata1.common.utility.SingletonProxy#setInstance(java.lang.Class, java.lang.Object)}.
+     * Test method for 
+     * {@link SingletonProxy#setInstance(Class,Object)}.
      */
     @Test
     public void testSetInstance()
@@ -79,7 +78,8 @@ public class SingletonProxyTest
     }
 
     /**
-     * Test method for {@link strata1.common.utility.SingletonProxy#clearInstance(java.lang.Class)}.
+     * Test method for 
+     * {@link SingletonProxy#clearInstance(Class)}.
      */
     @Test
     public void testClearInstance()
@@ -88,7 +88,8 @@ public class SingletonProxyTest
     }
 
     /**
-     * Test method for {@link strata1.common.utility.SingletonProxy#getInstance(java.lang.Class)}.
+     * Test method for 
+     * {@link SingletonProxy#getInstance(Class)}.
      */
     @Test
     public void testGetInstance()

@@ -42,7 +42,7 @@ class InMemoryTransactionManager
 {
 	private static final long serialVersionUID = 0;
 	
-	protected InMemoryRepositoryContext itsContext;
+	private InMemoryRepositoryContext itsContext;
 	
 	/************************************************************************
 	 * Creates a new InMemoryTransactionManager. 

@@ -24,14 +24,19 @@
 
 package strata1.entity.hibernaterepository;
 
-import org.springframework.orm.hibernate3.*;
+import strata1.entity.repository.AbstractFinder;
+import strata1.entity.repository.Finder;
+import strata1.entity.repository.InputKeeper;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-import strata1.entity.repository.*;
-
-import java.util.*;
-
-/**
+/****************************************************************************
  * 
+ * @param <T> entity type
  * @author 		
  *     Sapientia Systems 
  * @conventions	
@@ -169,7 +174,8 @@ class HibernateFinder<T>
 				break;
 				
 			case POSITIONAL:
-				itsResult = evaluateQueryWithPositionalInputs( template,keeper );
+				itsResult = 
+				    evaluateQueryWithPositionalInputs( template,keeper );
 				break;
 				
 			default:

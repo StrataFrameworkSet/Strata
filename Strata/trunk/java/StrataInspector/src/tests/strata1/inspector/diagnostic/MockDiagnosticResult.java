@@ -6,7 +6,8 @@
 
 package strata1.inspector.diagnostic;
 
-import java.util.*;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 
@@ -34,9 +35,8 @@ public class MockDiagnosticResult
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see com.capgroup.af.solar.application.DiagnosticResult#beginDiagnostic(com.capgroup.af.solar.application.Diagnostic)
 	 */
-
+	@Override
 	public void 
 	beginDiagnostic(Diagnostic d)
 	{
@@ -47,7 +47,7 @@ public class MockDiagnosticResult
 	/************************************************************************
 	 * {@inheritDoc} 
 	 */
-
+    @Override
 	public void 
 	endDiagnostic(Diagnostic d)
 	{
@@ -67,7 +67,7 @@ public class MockDiagnosticResult
 	/************************************************************************
 	 * {@inheritDoc} 
 	 */
-
+    @Override
 	public void 
 	reportCheckSuccess(Diagnostic d,String msg)
 	{
@@ -77,7 +77,7 @@ public class MockDiagnosticResult
 	/************************************************************************
 	 * {@inheritDoc} 
 	 */
-
+    @Override
 	public void 
 	reportCheckFailure(Diagnostic d,DiagnosticException e)
 	{
@@ -87,7 +87,7 @@ public class MockDiagnosticResult
 	/************************************************************************
 	 * {@inheritDoc} 
 	 */
-
+    @Override
 	public void 
 	reportRecoverySuccess(Diagnostic d,String msg)
 	{
@@ -97,7 +97,7 @@ public class MockDiagnosticResult
 	/************************************************************************
 	 * {@inheritDoc} 
 	 */
-
+    @Override
 	public void 
 	reportRecoveryFailure(Diagnostic d,DiagnosticException e)
 	{
@@ -107,6 +107,7 @@ public class MockDiagnosticResult
 	/************************************************************************
 	 * {@inheritDoc} 
 	 */
+    @Override
 	public void 
 	reportUnknownFailure(Diagnostic d,Exception e)
 	{

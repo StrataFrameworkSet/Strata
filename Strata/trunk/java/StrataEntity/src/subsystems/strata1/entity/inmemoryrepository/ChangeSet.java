@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	ChangeSet.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,9 +24,12 @@
 
 package strata1.entity.inmemoryrepository;
 
-import java.util.*;
+import java.util.Map;
 
-/**
+/****************************************************************************
+ * 
+ * @param <K> key type
+ * @param <T> entity type
  * 
  * @author 		
  *     Sapientia Systems 
@@ -36,21 +39,53 @@ import java.util.*;
 public 
 interface ChangeSet<K,T>
 {
+	/************************************************************************
+	 *  
+	 *
+	 * @param key
+	 * @param object
+	 */
 	public void
 	addToInserted(K key,T object);
 	
+	/************************************************************************
+	 *  
+	 *
+	 * @param key
+	 * @param object
+	 */
 	public void
 	addToUpdated(K key,T object);
 	
+	/************************************************************************
+	 *  
+	 *
+	 * @param key
+	 * @param object
+	 */
 	public void
 	addToRemoved(K key,T object);
 	
+	/************************************************************************
+	 *  
+	 *
+	 * @param storage
+	 */
 	public void
 	applyChanges(Map<K,T> storage);
 	
+	/************************************************************************
+	 *  
+	 *
+	 */
 	public void
 	discardChanges();
 	
+	/************************************************************************
+	 *  
+	 *
+	 * @return
+	 */
 	public boolean
 	hasChanges();
 }

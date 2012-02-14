@@ -6,9 +6,6 @@
 
 package strata1.inspector.diagnostic;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -23,15 +20,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses( {
 	DiagnosticCheckTest.class } )
 public 
-class DiagnosticsSuite
-{
-	public static Test 
-	suite()
-	{
-		return new JUnit4TestAdapter( DiagnosticsSuite.class );
-	}
-
-}
+class DiagnosticsSuite {}
 
 
 // ##########################################################################

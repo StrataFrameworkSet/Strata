@@ -27,10 +27,10 @@ package strata1.inspector.diagnostic;
 import java.util.*;
 
 /**
- * Represents a suite of {@code Diagnostic</code>s that are meant to be 
- * run as a whole or as part of a larger suite. {@code DiagnosticSuite</code> 
+ * Represents a suite of {@code Diagnostic}s that are meant to be 
+ * run as a whole or as part of a larger suite. {@code DiagnosticSuite} 
  * is a <a href="{@docRoot}/designpatterns/pat4c.htm">Composite</a> of 
- * {@code Diagnostic</code>s.
+ * {@code Diagnostic}s.
  * 
  * @author 		
  *     Sapientia Systems 
@@ -57,8 +57,8 @@ class DiagnosticSuite
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Diagnostic#runDiagnostic(DiagnosticResult)
 	 */
+	@Override
 	public void 
 	runDiagnostic(DiagnosticResult result)
 	{

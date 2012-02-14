@@ -35,30 +35,38 @@ public
 class CopyableObject
     implements Copyable
 {
-    private String x;
-    private int    y;
-    private Double z;
+    private String itsX;
+    private int    itsY;
+    private Double itsZ;
     
     /************************************************************************
      * Creates a new {@code CopyableObject}. 
      *
+     * @param a
+     * @param b
+     * @param c
      */
     public 
     CopyableObject(String a,int b,Double c)
     {
         super();
-        x = a;
-        y = b;
-        z = c;
+        itsX = a;
+        itsY = b;
+        itsZ = c;
     }
 
+    /************************************************************************
+     * Creates a new {@code CopyableObject}. 
+     *
+     * @param other
+     */
     public 
     CopyableObject(CopyableObject other)
     {
         super();
-        x = other.x;
-        y = other.y;
-        z = other.z;
+        itsX = other.itsX;
+        itsY = other.itsY;
+        itsZ = other.itsZ;
     }
     
     /************************************************************************
@@ -78,7 +86,7 @@ class CopyableObject
     public int 
     hashCode()
     {
-        return x.hashCode() + y + z.hashCode();
+        return itsX.hashCode() + itsY + itsZ.hashCode();
     }
 
     /************************************************************************
@@ -93,10 +101,19 @@ class CopyableObject
             equals( (CopyableObject)other );
     }
 
+    /************************************************************************
+     *  
+     *
+     * @param other other {@code CopyableObject}
+     * @return true if equals
+     */
     public boolean
     equals(CopyableObject other)
     {
-        return x.equals( other.x ) && (y == other.y) && z.equals( other.z );
+        return 
+            itsX.equals( other.itsX ) && 
+            (itsY == other.itsY) && 
+            itsZ.equals( other.itsZ );
     }
 }
 

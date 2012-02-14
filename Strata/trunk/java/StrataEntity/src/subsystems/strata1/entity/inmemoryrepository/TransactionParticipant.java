@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	TransactionParticipant.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -34,9 +34,17 @@ package strata1.entity.inmemoryrepository;
 public 
 interface TransactionParticipant
 {
+	/************************************************************************
+	 *  
+	 *
+	 */
 	public void
 	applyChanges();
 	
+	/************************************************************************
+	 *  
+	 *
+	 */
 	public void
 	discardChanges();
 }

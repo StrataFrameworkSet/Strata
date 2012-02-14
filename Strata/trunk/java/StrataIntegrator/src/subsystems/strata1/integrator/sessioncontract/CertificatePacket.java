@@ -24,11 +24,12 @@
 
 package strata1.integrator.sessioncontract;
 
-import java.security.cert.*;
+import java.security.cert.Certificate;
 
 /**
  * <a href=
- * "http://java.sun.com/blueprints/corej2eepatterns/Patterns/TransferObject.html">
+ * "http://java.sun.com/
+ * blueprints/corej2eepatterns/Patterns/TransferObject.html">
  * Transport Object</a> for digital certificates.
  * 
  * @author 		

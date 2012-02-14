@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	ChangeSetImp.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,12 +24,16 @@
 
 package strata1.entity.inmemoryrepository;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
+/****************************************************************************
  * Groups together the changes made through an InMemoryRepository
  * during an InMemoryTransaction. Changes refer to domain object insertion,
  * update, and removal.
+ * 
+ * @param <K> key type
+ * @param <T> entity type
  * 
  * @author 		
  *     Java Persistence Strategy Workgroup 
@@ -133,7 +137,9 @@ class ChangeSetImp<K,T>
 	hasChanges()
 	{
 		return 
-			!(itsInserted.isEmpty()||itsUpdated.isEmpty()||itsRemoved.isEmpty());
+			!(itsInserted.isEmpty() ||
+			  itsUpdated.isEmpty() ||
+			  itsRemoved.isEmpty());
 	}
 
 	/************************************************************************

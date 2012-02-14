@@ -24,7 +24,10 @@
 
 package strata1.integrator.annotation;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * 
@@ -37,7 +40,18 @@ import java.lang.annotation.*;
 @Target(ElementType.PARAMETER)
 public @interface Callback 
 {
+	/************************************************************************
+	 *  
+	 *
+	 * @return
+	 */
 	String method();
+	
+	/************************************************************************
+	 *  
+	 *
+	 * @return
+	 */
 	String exception() default "";
 }
 

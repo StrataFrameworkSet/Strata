@@ -8,7 +8,7 @@
 	<parent>
     	<groupId>strata.java</groupId>
     	<artifactId>Strata</artifactId>
-    	<version>1.0</version>
+    	<version>${project.ver}</version>
     	<relativePath>../Strata</relativePath>
   	</parent>
   	
@@ -29,7 +29,7 @@
   	    <dependency>
   	    	<groupId>strata.java</groupId>
   	    	<artifactId>StrataCommon</artifactId>
-  	    	<version>1.0</version>
+  	    	<version>${project.ver}</version>
   	    </dependency>
   	    <dependency>
   	    	<groupId>strata.java</groupId>

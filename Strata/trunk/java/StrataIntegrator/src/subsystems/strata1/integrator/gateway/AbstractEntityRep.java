@@ -27,6 +27,7 @@ package strata1.integrator.gateway;
 import java.io.Serializable;
 
 /**
+ * @param <Id> id type
  * 
  * @author 		
  *     Architecture Strategy Group 
@@ -39,7 +40,7 @@ class AbstractEntityRep<Id extends Comparable<Id>>
 	implements 	Comparable<AbstractEntityRep<Id>>,
 				Serializable
 {
-	protected Id itsId;
+	private Id itsId;
 	
 	/************************************************************************
 	 * Creates a new EntityProjection. 

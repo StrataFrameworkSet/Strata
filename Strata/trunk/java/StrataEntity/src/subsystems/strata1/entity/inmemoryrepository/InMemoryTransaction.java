@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	InMemoryTransaction.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,15 +24,16 @@
 
 package strata1.entity.inmemoryrepository;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
+/****************************************************************************
  * Implements the Transaction interface as an <i>in-memory</i>
  * transaction that groups changes into <code>ChangeSetImp</code>s 
  * and commits them in an all-or-nothing manner.
  * 
  * @author 		
- *     Java Persistence Strategy Workgroup 
+ *     Sapientia Systems 
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
@@ -64,8 +65,8 @@ class InMemoryTransaction
 	}
 
 	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see Transaction#begin()
+	 *  
+	 *
 	 */
 	public void 
 	begin()
@@ -87,8 +88,7 @@ class InMemoryTransaction
 	}
 
 	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see Transaction#commit()
+	 * 
 	 */
 	public void 
 	commit()
@@ -114,8 +114,7 @@ class InMemoryTransaction
 	}
 
 	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see Transaction#rollback()
+	 * 
 	 */
 	public void 
 	rollback() 
@@ -142,8 +141,7 @@ class InMemoryTransaction
 	}
 
 	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see Transaction#hasActiveTransaction()
+	 *  
 	 */
 	public boolean 
 	isActive()
@@ -161,8 +159,7 @@ class InMemoryTransaction
 	}
 
 	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see Transaction#isCommitted()
+	 * 
 	 */
 	public boolean isCommitted()
 	{
@@ -173,8 +170,7 @@ class InMemoryTransaction
 	}
 
 	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see Transaction#isRolledback()
+	 * 
 	 */
 	public boolean isRolledback()
 	{
@@ -184,6 +180,11 @@ class InMemoryTransaction
 		}
 	}
 
+	/************************************************************************
+	 *  
+	 *
+	 * @param repository
+	 */
 	public void
 	joinTransaction(TransactionParticipant repository)
 	{

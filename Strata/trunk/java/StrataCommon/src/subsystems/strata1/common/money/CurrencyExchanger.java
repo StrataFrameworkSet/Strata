@@ -25,8 +25,8 @@
 package strata1.common.money;
 
 import strata1.common.datetime.DateTime;
-
-import java.util.*;
+import java.util.Collection;
+import java.util.Currency;
 
 /**
  * Provides functionality for converting {@code Money} object

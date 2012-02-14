@@ -26,7 +26,7 @@ package strata1.inspector.diagnostic;
 
 
 /**
- * Encapsulates the execution of {@code Diagnostic</code>s so they
+ * Encapsulates the execution of {@code Diagnostic}s so they
  * can be scheduled to run at specified times.
  * 
  * @author 		
@@ -57,8 +57,8 @@ class DiagnosticTask
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Runnable#run()
 	 */
+	@Override
 	public void 
 	run()
 	{

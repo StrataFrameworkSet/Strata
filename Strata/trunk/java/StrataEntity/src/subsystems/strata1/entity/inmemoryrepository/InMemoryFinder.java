@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	InMemoryFinder.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -25,13 +25,19 @@
 package strata1.entity.inmemoryrepository;
 
 
-import java.util.*;
-
-import strata1.common.utility.Copyable;
 import strata1.entity.repository.Finder;
 import strata1.entity.repository.InvalidInputException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-/**
+/****************************************************************************
+ * 
+ * @param <K> key type
+ * @param <T> entity type
  * 
  * @author 		
  *     Sapientia Systems 
@@ -42,12 +48,12 @@ public abstract
 class InMemoryFinder<K,T> 
 	implements Finder<T>
 {
-	protected InMemoryRepositoryContext itsContext;
-	protected Predicate<T>				itsPredicate;
-	protected Map<K,T>				    itsObjects;
-	protected Map<String,Object>		itsNamedInputs;
-	protected List<T>				    itsResults;
-	protected Iterator<T>				itsIterator;
+	private InMemoryRepositoryContext itsContext;
+	private Predicate<T>			  itsPredicate;
+	private Map<K,T>				  itsObjects;
+	private Map<String,Object>		  itsNamedInputs;
+	private List<T>				      itsResults;
+	private Iterator<T>				  itsIterator;
 	
 	/************************************************************************
 	 * Creates a new InMemoryFinder. 
@@ -86,7 +92,6 @@ class InMemoryFinder<K,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Copyable#copy()
 	 */
 	@Override
 	public abstract InMemoryFinder<K,T> 
@@ -94,7 +99,6 @@ class InMemoryFinder<K,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#setInput(String,Object)
 	 */
 	@Override
 	public void 
@@ -105,7 +109,6 @@ class InMemoryFinder<K,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#setInput(int,Object)
 	 */
 	@Override
 	public void 
@@ -117,7 +120,6 @@ class InMemoryFinder<K,T>
 	
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#setInput(Collection)
 	 */
 	@Override
 	public void 
@@ -129,7 +131,6 @@ class InMemoryFinder<K,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#getUnique()
 	 */
 	@Override
 	public T 
@@ -141,7 +142,6 @@ class InMemoryFinder<K,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#getAll()
 	 */
 	@Override
 	public Collection<T> 
@@ -153,7 +153,6 @@ class InMemoryFinder<K,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#getNext()
 	 */
 	@Override
 	public T 
@@ -165,7 +164,6 @@ class InMemoryFinder<K,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#hasNext()
 	 */
 	@Override
 	public boolean 
