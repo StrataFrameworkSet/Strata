@@ -24,11 +24,10 @@
 
 package strata1.inspector.memorydiagnostic;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 import strata1.inspector.diagnostic.MockDiagnosticResult;
-import strata1.inspector.outputstreamdiagnosticreporter.PrintStreamDiagnosticReporter;
-
+import strata1.inspector.outputstreamdiagnosticreporter.
+                                PrintStreamDiagnosticReporter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -75,7 +74,7 @@ class MaxMemoryCheckTest
 	}
 
 	/**
-	 * Test method for {@link strata1.inspector.memorydiagnostic.MaxMemoryCheck#MaxMemoryCheck(java.lang.String)}.
+	 * Test method for {@link MaxMemoryCheck#MaxMemoryCheck(java.lang.String)}.
 	 */
 	@Test
 	public void 
@@ -84,11 +83,13 @@ class MaxMemoryCheckTest
 		itsTarget = new MaxMemoryCheck( "Foo" );
 		
 		assertEquals( 0L,itsTarget.getMaxRange().getMinimumBtyes() );
-		assertEquals( Long.MAX_VALUE,itsTarget.getMaxRange().getMaximumBtyes() );
+		assertEquals( 
+		    Long.MAX_VALUE,
+		    itsTarget.getMaxRange().getMaximumBtyes() );
 	}
 
 	/**
-	 * Test method for {@link strata1.inspector.memorydiagnostic.MaxMemoryCheck#setMaxRange(strata1.inspector.memorydiagnostic.MemoryRange)}.
+	 * Test method for {@link MaxMemoryCheck#setMaxRange(MemoryRange)}.
 	 */
 	@Test
 	public void 
@@ -101,7 +102,7 @@ class MaxMemoryCheckTest
 	}
 
 	/**
-	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticCheck#runDiagnostic(strata1.inspector.diagnostic.DiagnosticResult)}.
+	 * Test method for {@link DiagnosticCheck#runDiagnostic(DiagnosticResult)}.
 	 */
 	@Test
 	public void 

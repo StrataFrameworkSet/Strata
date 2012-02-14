@@ -6,14 +6,12 @@
 
 package strata1.common.money;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 import strata1.common.datetime.DateTime;
-import strata1.common.money.CurrencyExchanger;
-import strata1.common.money.Money;
-import org.junit.*;
-
-import java.util.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import java.util.Currency;
 
 /**
  * 
@@ -52,7 +50,8 @@ class CurrencyExchangerTest
 	}
 
 	/**
-	 * Test method for {@link stata1.common.money.CurrencyExchanger#exchange(java.util.Currency, strata1.common.money.Money)}.
+	 * Test method for 
+	 * {@link CurrencyExchanger#exchange(Currency,Money)}.
 	 */
 	@Test
 	public void 
@@ -75,7 +74,9 @@ class CurrencyExchangerTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.CurrencyExchanger#exchange(java.util.Currency, threshold.api.common.Money, threshold.api.common.DateTime)}.
+	 * Test method for 
+	 * {@link threshold.api.common.CurrencyExchanger#exchange(
+	 *         Currency,Money,DateTime)}.
 	 */
 	@Test
 	public void 

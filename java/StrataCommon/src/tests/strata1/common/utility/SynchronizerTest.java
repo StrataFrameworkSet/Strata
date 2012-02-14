@@ -24,7 +24,7 @@
 
 package strata1.common.utility;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,7 +61,8 @@ class SynchronizerTest
     }
 
     /**
-     * Test method for {@link strata1.common.utility.Synchronizer#lockForReading()}.
+     * Test method for 
+     * {@link strata1.common.utility.Synchronizer#lockForReading()}.
      */
     @Test
     public void testLockForReading()
@@ -70,7 +71,8 @@ class SynchronizerTest
     }
 
     /**
-     * Test method for {@link strata1.common.utility.Synchronizer#lockForWriting()}.
+     * Test method for 
+     * {@link strata1.common.utility.Synchronizer#lockForWriting()}.
      */
     @Test
     public void testLockForWriting()
@@ -78,7 +80,8 @@ class SynchronizerTest
     }
 
     /**
-     * Test method for {@link strata1.common.utility.Synchronizer#unlockFromReading()}.
+     * Test method for 
+     * {@link strata1.common.utility.Synchronizer#unlockFromReading()}.
      */
     @Test
     public void testUnlockFromReading()
@@ -86,7 +89,8 @@ class SynchronizerTest
     }
 
     /**
-     * Test method for {@link strata1.common.utility.Synchronizer#unlockFromWriting()}.
+     * Test method for 
+     * {@link strata1.common.utility.Synchronizer#unlockFromWriting()}.
      */
     @Test
     public void testUnlockFromWriting()

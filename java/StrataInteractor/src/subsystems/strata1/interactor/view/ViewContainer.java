@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	HelloWorldApp.java
+// # File Name:	ViewContainer.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,10 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.helloworld;
+package strata1.interactor.view;
 
-
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -33,47 +32,43 @@ package strata1.interactor.helloworld;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class HelloWorldApp
-    implements Runnable
+interface ViewContainer
 {
-    HelloWorldModel      itsModel;
-    HelloWorldView       itsView;
-    HelloWorldController itsController;
-    
-    /************************************************************************
-     * Creates a new HelloWorldApp. 
-     *
-     */
-    public 
-    HelloWorldApp()
-    {
-        itsModel      = new DefaultHelloWorldModel();
-        itsView       = null; //new SwtHelloWorldView();
-        itsController = new DefaultHelloWorldController(itsModel,itsView);
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    run()
-    {
-        itsController.start();
-    }
-
-
     /************************************************************************
      *  
      *
-     * @param args
+     * @param view
      */
-    public static void 
-    main(String[] args)
-    {
-        new HelloWorldApp().run();
-    }
-
+    public <V extends View> void
+    registerView(V view);
+    
+    /************************************************************************
+     *  
+     *
+     * @param viewName
+     * @param view
+     */
+    public <V extends View> void
+    registerView(String viewName,V view);
+    
+    /************************************************************************
+     *  
+     *
+     * @param viewType
+     * @return
+     */
+    public <V extends View> V
+    getView(Class<V> viewType);
+    
+    /************************************************************************
+     *  
+     *
+     * @param viewType
+     * @param viewName
+     * @return
+     */
+    public <V extends View> V
+    getView(Class<V> viewType,String viewName);
 }
 
 

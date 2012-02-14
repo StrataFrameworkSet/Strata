@@ -49,16 +49,20 @@ public class DiagnosticCheckTest
 	}
 
 	/**
-	 * Test method for {@link strata1.server.diagnostics.DiagnosticCheck#DiagnosticCheck(java.lang.String)}.
+	 * Test method for 
+	 * {@link DiagnosticCheck#DiagnosticCheck(String)}.
 	 */
 	@Test
 	public void testDiagnosticCheck()
 	{
-		assertEquals( NAME,new MockDiagnosticCheck( NAME,true,true,true,true ).getName() );
+		assertEquals( 
+		    NAME,
+		    new MockDiagnosticCheck( NAME,true,true,true,true ).getName() );
 	}
 
 	/**
-	 * Test method for {@link strata1.server.diagnostics.DiagnosticCheck#runDiagnostic(strata1.server.diagnostics.DiagnosticResult)}.
+	 * Test method for 
+	 * {@link DiagnosticCheck#runDiagnostic(DiagnosticResult)}.
 	 */
 	@Test
 	public void testRunDiagnostic()

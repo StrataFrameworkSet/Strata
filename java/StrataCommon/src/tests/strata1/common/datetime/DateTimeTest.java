@@ -6,14 +6,15 @@
 
 package strata1.common.datetime;
 
-import static org.junit.Assert.*;
-
-import strata1.common.datetime.DateTime;
-import org.junit.*;
-
-
-
-import java.util.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * 
@@ -63,7 +64,8 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#DateTime(java.util.Calendar)}.
+	 * Test method for 
+	 * {@link strata1.common.datetime.DateTime#DateTime(java.util.Calendar)}.
 	 */
 	@Test
 	public void testDateTimeCalendar()
@@ -75,7 +77,8 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#DateTime(java.util.TimeZone)}.
+	 * Test method for 
+	 * {@link strata1.common.datetime.DateTime#DateTime(java.util.TimeZone)}.
 	 */
 	@Test
 	public void testDateTimeTimeZone()
@@ -94,7 +97,8 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#DateTime(int, int, int)}.
+	 * Test method for 
+	 * {@link strata1.common.datetime.DateTime#DateTime(int, int, int)}.
 	 */
 	@Test
 	public void testDateTimeIntIntInt()
@@ -115,7 +119,8 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#DateTime(int, int, int, java.util.TimeZone)}.
+	 * Test method for 
+	 * {@link DateTime#DateTime(int, int, int, TimeZone)}.
 	 */
 	@Test
 	public void testDateTimeIntIntIntTimeZone()
@@ -137,7 +142,8 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#DateTime(int, int, int, int, int)}.
+	 * Test method for 
+	 * {@link DateTime#DateTime(int, int, int, int, int)}.
 	 */
 	@Test
 	public void testDateTimeIntIntIntIntInt()
@@ -159,7 +165,8 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#DateTime(int, int, int, int, int, java.util.TimeZone)}.
+	 * Test method for 
+	 * {@link DateTime#DateTime(int, int, int, int, int,TimeZone)}.
 	 */
 	@Test
 	public void testDateTimeIntIntIntIntIntTimeZone()
@@ -183,7 +190,8 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#DateTime(int, int, int, int, int, int)}.
+	 * Test method for 
+	 * {@link DateTime#DateTime(int, int, int, int, int, int)}.
 	 */
 	@Test
 	public void testDateTimeIntIntIntIntIntInt()
@@ -206,7 +214,8 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#DateTime(int, int, int, int, int, int, java.util.TimeZone)}.
+	 * Test method for 
+	 * {@link DateTime#DateTime(int, int, int, int, int, int, TimeZone)}.
 	 */
 	@Test
 	public void testDateTimeIntIntIntIntIntIntTimeZone()
@@ -218,7 +227,8 @@ public class DateTimeTest
 		int      minute  = 37;
 		int      second  = 23;
 		TimeZone eastern = TimeZone.getTimeZone( "US/Eastern" );
-		DateTime actual  = new DateTime( year,month,day,hour,minute,second,eastern );
+		DateTime actual  = 
+		    new DateTime( year,month,day,hour,minute,second,eastern );
 		
 		assertEquals( year,actual.getYear() );
 		assertEquals( month,actual.getMonth() );
@@ -231,7 +241,8 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#DateTime(int, int, int, int, int, int, int)}.
+	 * Test method for 
+	 * {@link DateTime#DateTime(int, int, int, int, int, int, int)}.
 	 */
 	@Test
 	public void testDateTimeIntIntIntIntIntIntInt()
@@ -255,7 +266,8 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#DateTime(int, int, int, int, int, int, int, java.util.TimeZone)}.
+	 * Test method for 
+	 * {@link DateTime#DateTime(int, int, int, int, int, int, int, TimeZone)}.
 	 */
 	@Test
 	public void testDateTimeIntIntIntIntIntIntIntTimeZone()
@@ -268,7 +280,8 @@ public class DateTimeTest
 		int      second  = 23;
 		int      ms      = 357;
 		TimeZone eastern = TimeZone.getTimeZone( "US/Eastern" );
-		DateTime actual  = new DateTime( year,month,day,hour,minute,second,ms,eastern );
+		DateTime actual  = 
+		    new DateTime( year,month,day,hour,minute,second,ms,eastern );
 		
 		assertEquals( year,actual.getYear() );
 		assertEquals( month,actual.getMonth() );
@@ -281,7 +294,7 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#DateTime(threshold.api.common.DateTime)}.
+	 * Test method for  {@link DateTime#DateTime(DateTime)}.
 	 */
 	@Test
 	public void testDateTimeDateTime()
@@ -294,14 +307,15 @@ public class DateTimeTest
 		int      second  = 23;
 		int      ms      = 357;
 		TimeZone eastern = TimeZone.getTimeZone( "US/Eastern" );
-		DateTime expected  = new DateTime( year,month,day,hour,minute,second,ms,eastern );
+		DateTime expected  = 
+		    new DateTime( year,month,day,hour,minute,second,ms,eastern );
 		DateTime actual    = new DateTime( expected );
 		
 		assertEquals( expected,actual );		
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#compareTo(threshold.api.common.DateTime)}.
+	 * Test method for  {@link DateTime#compareTo(DateTime)}.
 	 */
 	@Test
 	public void testCompareTo()
@@ -321,14 +335,17 @@ public class DateTimeTest
 		assertEquals( "year:",d2.getYear(),d4.getYear() );
 		assertEquals( "month:",d2.getMonth(),d4.getMonth() );
 		assertEquals( "day:",d2.getDay(),d4.getDay() );
-		assertEquals( "hour:",d2.getHour()+getHourOffset( d4.getTimeZone(),d2.getTimeZone()),d4.getHour() );
+		assertEquals( 
+		    "hour:",
+		    d2.getHour()+getHourOffset( 
+		        d4.getTimeZone(),d2.getTimeZone()),d4.getHour() );
 		assertEquals( "minute:",d2.getMinute(),d4.getMinute() );
 		assertEquals( "second:",d2.getSecond(),d4.getSecond() );
 		assertEquals( "millisecond:",d2.getMilliSecond(),d4.getMilliSecond() );
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#isSame(threshold.api.common.DateTime)}.
+	 * Test method for {@link DateTime#isSame(DateTime)}.
 	 */
 	@Test
 	public void testIsSame()
@@ -344,7 +361,7 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#isBefore(threshold.api.common.DateTime)}.
+	 * Test method for {@link DateTime#isBefore(DateTime)}.
 	 */
 	@Test
 	public void testIsBefore()
@@ -363,7 +380,7 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#isAfter(threshold.api.common.DateTime)}.
+	 * Test method for {@link DateTime#isAfter(DateTime)}.
 	 */
 	@Test
 	public void testIsAfter()
@@ -381,6 +398,13 @@ public class DateTimeTest
 		assertFalse( "d2.isAfter(d4)",d2.isAfter( d4 ) );
 	}
 
+	/************************************************************************
+	 *  
+	 *
+	 * @param from
+	 * @param to
+	 * @return
+	 */
 	private int
 	getHourOffset(TimeZone from,TimeZone to)
 	{

@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	InMemoryRepositoryProvider.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,12 +24,16 @@
 
 package strata1.entity.inmemoryrepository;
 
-import java.io.*;
-import java.util.*;
+import strata1.entity.repository.AbstractRepositoryProvider;
+import strata1.entity.repository.KeyRetriever;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
-import strata1.entity.repository.*;
-
-/**
+/****************************************************************************
+ * 
+ * @param <K> key type
+ * @param <T> entity type
  * 
  * @author 		
  *     Sapientia Systems 
@@ -64,7 +68,6 @@ class InMemoryRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryImp#getContext()
 	 */
 	@Override
 	public InMemoryRepositoryContext 
@@ -119,7 +122,6 @@ class InMemoryRepositoryProvider<K extends Serializable,T>
 	
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see AbstractRepositoryProvider#doInsert(Object)
 	 */
 	@Override
 	protected void 
@@ -141,7 +143,6 @@ class InMemoryRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see AbstractRepositoryProvider#doUpdate(Object)
 	 */
 	@Override
 	protected void 
@@ -160,7 +161,6 @@ class InMemoryRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see AbstractRepositoryProvider#doRemove(Object)
 	 */
 	@Override
 	protected void 
@@ -182,7 +182,6 @@ class InMemoryRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see AbstractRepositoryProvider#doGet(Serializable)
 	 */
 	@Override
 	protected T 
@@ -193,7 +192,6 @@ class InMemoryRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see AbstractRepositoryProvider#doHas(Serializable)
 	 */
 	@Override
 	protected boolean 

@@ -24,7 +24,7 @@
 
 package strata1.common.utility;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +42,7 @@ class CopyableTest
     /************************************************************************
      *  
      *
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Before
     public void 

@@ -24,6 +24,8 @@
 
 package strata1.entity.repository;
 
+import strata1.common.annotation.*;
+
 /**
  * The generic interface of all repositories. Participates in the 
  * <a href="{@docRoot}/designpatterns/DomainObjectManager.pdf">Repository 
@@ -77,6 +79,10 @@ interface RepositoryProvider<K,T>
 	 *
 	 * @param finder
 	 */
+	@Precondition("this.hasFinder(finder.getName()) == false")
+	@Postcondition({
+	    "this.hasFinder(finder.getName()) == true",
+	    "this.getFinder(finder.getName()) == finder"})
 	public void
 	insertFinder(Finder<T> finder);
 	
@@ -85,6 +91,8 @@ interface RepositoryProvider<K,T>
 	 *
 	 * @param finderName
 	 */
+    @Precondition("this.hasFinder(finder.getName()) == true")
+    @Postcondition("this.hasFinder(finder.getName()) == false")
 	public void
 	removeFinder(String finderName);
 	

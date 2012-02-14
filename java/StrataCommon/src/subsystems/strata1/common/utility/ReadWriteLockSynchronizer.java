@@ -24,7 +24,8 @@
 
 package strata1.common.utility;
 
-import java.util.concurrent.locks.*;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Implements the {@code Synchronizer} interface by wrapping
@@ -56,8 +57,9 @@ class ReadWriteLockSynchronizer
 	}
 	
 	/************************************************************************
-	 * Creates a new ReadWriteLockSynchronizer. 
+	 * Creates a new {@code ReadWriteLockSynchronizer}. 
 	 *
+	 * @param lock
 	 */
 	public 
 	ReadWriteLockSynchronizer(ReadWriteLock lock)

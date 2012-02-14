@@ -267,7 +267,8 @@ class AbstractDiagnosticResult
 		DiagnosticOutput output = null;
 
 		itsGenerator.setResultState( DiagnosticResultState.FAILED );
-		itsGenerator.setDescription( "Diagnostic recovery failed with exception:" );
+		itsGenerator.setDescription( 
+		    "Diagnostic recovery failed with exception:" );
 		itsGenerator.setException( e );
 		
 		output = itsGenerator.generateOutput();

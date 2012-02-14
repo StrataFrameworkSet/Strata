@@ -6,16 +6,14 @@
 
 package strata1.common.money;
 
-import static org.junit.Assert.*;
-
-import strata1.common.money.CurrencyExchanger;
-import strata1.common.money.Money;
-import strata1.common.money.MoneyCalculator;
-import org.junit.*;
-
-
-
-import java.util.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import java.util.Currency;
 
 /**
  * 
@@ -56,7 +54,8 @@ public class MoneyCalculatorTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.money.MoneyCalculator#MoneyCalculator(strata1.common.money.CurrencyExchanger)}.
+	 * Test method for 
+	 * {@link MoneyCalculator#MoneyCalculator(CurrencyExchanger)}.
 	 */
 	@Test
 	public void testMoneyCalculator()
@@ -68,7 +67,7 @@ public class MoneyCalculatorTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.MoneyCalculator#getExchanger()}.
+	 * Test method for {@link MoneyCalculator#getExchanger()}.
 	 */
 	@Test
 	public void testGetExchanger()
@@ -77,7 +76,7 @@ public class MoneyCalculatorTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.MoneyCalculator#add(threshold.api.common.Money, threshold.api.common.Money)}.
+	 * Test method for {@link MoneyCalculator#add(Money,Money)}.
 	 */
 	@Test
 	public void testAdd()
@@ -95,7 +94,7 @@ public class MoneyCalculatorTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.MoneyCalculator#subtract(threshold.api.common.Money, threshold.api.common.Money)}.
+	 * Test method for {@link MoneyCalculator#subtract(Money,Money)}.
 	 */
 	@Test
 	public void testSubtract()
@@ -108,12 +107,15 @@ public class MoneyCalculatorTest
 		Money    m3 = new Money( usd,50.00 );
 		Money    m4 = new Money( eur,25.00 );
 		
-		assertEquals( 5000.25,itsTarget.subtract( m1,m2 ).getAmount(),TOLERANCE );
+		assertEquals( 
+		    5000.25,
+		    itsTarget.subtract( m1,m2 ).getAmount(),
+		    TOLERANCE );
 		assertEquals( 18.75,itsTarget.subtract( m3,m4 ).getAmount(),TOLERANCE );
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.MoneyCalculator#multiply(threshold.api.common.Money, double)}.
+	 * Test method for {@link MoneyCalculator#multiply(Money, double)}.
 	 */
 	@Test
 	public void testMultiply()
@@ -122,12 +124,18 @@ public class MoneyCalculatorTest
 		
 		Money m1 = new Money( usd,7500.50 );
 		
-		assertEquals( 7500.50*2.0,itsTarget.multiply(m1,2).getAmount(),TOLERANCE );
-		assertEquals( 7500.50*3.5,itsTarget.multiply(m1,3.5).getAmount(),TOLERANCE );
+		assertEquals( 
+		    7500.50*2.0,
+		    itsTarget.multiply(m1,2).getAmount(),
+		    TOLERANCE );
+		assertEquals( 
+		    7500.50*3.5,
+		    itsTarget.multiply(m1,3.5).getAmount(),
+		    TOLERANCE );
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.MoneyCalculator#divide(threshold.api.common.Money, double)}.
+	 * Test method for {@link MoneyCalculator#divide(Money, double)}.
 	 */
 	@Test
 	public void testDivide()
@@ -136,12 +144,18 @@ public class MoneyCalculatorTest
 		
 		Money m1 = new Money( usd,7500.50 );
 		
-		assertEquals( 7500.50/2.0,itsTarget.divide(m1,2).getAmount(),TOLERANCE );
-		assertEquals( 7500.50/3.333,itsTarget.divide(m1,3.333).getAmount(),TOLERANCE );
+		assertEquals( 
+		    7500.50/2.0,
+		    itsTarget.divide(m1,2).getAmount(),
+		    TOLERANCE );
+		assertEquals( 
+		    7500.50/3.333,
+		    itsTarget.divide(m1,3.333).getAmount(),
+		    TOLERANCE );
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.MoneyCalculator#isEqual(threshold.api.common.Money, threshold.api.common.Money)}.
+	 * Test method for {@link MoneyCalculator#isEqual(Money,Money)}.
 	 */
 	@Test
 	public void testIsEqual()
@@ -158,7 +172,7 @@ public class MoneyCalculatorTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.MoneyCalculator#isLess(threshold.api.common.Money, threshold.api.common.Money)}.
+	 * Test method for {@link MoneyCalculator#isLess(Money,Money)}.
 	 */
 	@Test
 	public void testIsLess()

@@ -25,11 +25,11 @@
 package strata1.common.datetime;
 
 import strata1.common.utility.Copyable;
-import java.util.GregorianCalendar;
+import java.io.Serializable;
 import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.Formatter;
-import java.io.*;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Provides a simplified abstraction for representing date/time values

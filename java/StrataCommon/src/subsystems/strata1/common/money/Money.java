@@ -25,10 +25,11 @@
 package strata1.common.money;
 
 import strata1.common.utility.Copyable;
-
-import java.util.*;
-import java.math.*;
-import java.io.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Currency;
+import java.util.Locale;
 
 /**
  * Money represented as a currency and an amount. {@code Money}

@@ -58,7 +58,6 @@ class MockDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see strata1.inspector.diagnostic.DiagnosticReporter#endReport()
 	 */
 	@Override
 	public void 
@@ -68,7 +67,6 @@ class MockDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see strata1.inspector.diagnostic.DiagnosticReporter#beginDiagnostic(strata1.inspector.diagnostic.DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -78,7 +76,6 @@ class MockDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#endDiagnostic(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -88,7 +85,6 @@ class MockDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportBeginFailure(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -98,7 +94,6 @@ class MockDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportCheckSuccess(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -108,7 +103,6 @@ class MockDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportCheckFailure(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -118,7 +112,6 @@ class MockDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportRecoverySuccess(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -128,7 +121,6 @@ class MockDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportRecoveryFailure(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -138,7 +130,6 @@ class MockDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportUnknownFailure(DiagnosticOutput)
 	 */
 	@Override
 	public void 

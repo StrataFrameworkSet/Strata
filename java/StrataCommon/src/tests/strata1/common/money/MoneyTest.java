@@ -6,19 +6,16 @@
 
 package strata1.common.money;
 
-import static org.junit.Assert.*;
-
-import strata1.common.money.Money;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-
-
-import java.util.*;
+import java.util.Currency;
 
 
 /**
@@ -73,7 +70,7 @@ public class MoneyTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.Money#hashCode()}.
+	 * Test method for {@link Money#hashCode()}.
 	 */
 	@Test
 	public void testHashCode()
@@ -82,7 +79,7 @@ public class MoneyTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.Money#Money()}.
+	 * Test method for {@link Money#Money()}.
 	 */
 	@Test
 	public void testMoney()
@@ -97,7 +94,7 @@ public class MoneyTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.Money#Money(double)}.
+	 * Test method for {@link Money#Money(double)}.
 	 */
 	@Test
 	public void testMoneyDouble()
@@ -112,7 +109,7 @@ public class MoneyTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.Money#Money(java.util.Currency, double)}.
+	 * Test method for {@link Money#Money(java.util.Currency, double)}.
 	 */
 	@Test
 	public void testMoneyCurrencyDouble()
@@ -127,7 +124,7 @@ public class MoneyTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.Money#Money(long)}.
+	 * Test method for {@link Money#Money(long)}.
 	 */
 	@Test
 	public void testMoneyLong()
@@ -142,7 +139,7 @@ public class MoneyTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.Money#Money(java.util.Currency, long)}.
+	 * Test method for {@link Money#Money(java.util.Currency, long)}.
 	 */
 	@Test
 	public void testMoneyCurrencyLong()
@@ -157,7 +154,7 @@ public class MoneyTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.Money#getCurrency()}.
+	 * Test method for {@link Money#getCurrency()}.
 	 */
 	@Test
 	public void testGetCurrency()
@@ -169,7 +166,7 @@ public class MoneyTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.Money#getAmount()}.
+	 * Test method for {@link Money#getAmount()}.
 	 */
 	@Test
 	public void testGetAmount()
@@ -185,7 +182,7 @@ public class MoneyTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.Money#equals(java.lang.Object)}.
+	 * Test method for {@link Money#equals(java.lang.Object)}.
 	 */
 	@Test
 	public void testEqualsObject()
@@ -204,7 +201,7 @@ public class MoneyTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.Money#toString()}.
+	 * Test method for {@link Money#toString()}.
 	 */
 	@Test
 	public void testToString()
@@ -222,7 +219,7 @@ public class MoneyTest
 	}
 
 	/**
-	 * Test method for {@link threshold.api.common.Money#equals(threshold.api.common.Money)}.
+	 * Test method for {@link Money#equals(Money)}.
 	 */
 	@Test
 	public void testEqualsMoney()

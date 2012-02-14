@@ -79,7 +79,7 @@ class AbstractCurrencyExchanger
 
 	/************************************************************************
 	 * Returns the exchange rate for the specific currencies at the 
-	 * specific time 
+	 * specific time.
 	 *
 	 * @param 	to		currency converting to
 	 * @param 	from	currency converting from

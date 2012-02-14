@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	HibernateRepositoryProvider.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,20 +24,19 @@
 
 package strata1.entity.hibernaterepository;
 
-import org.springframework.orm.hibernate3.*;
+import strata1.entity.repository.AbstractRepositoryProvider;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+import java.io.Serializable;
 
-import strata1.entity.repository.*;
-
-import java.io.*;
-
-/**
+/****************************************************************************
  * 
+ * @param <K>
+ * @param <T>
+
  * @author 		
  *     Sapientia Systems 
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
- * @param <K>
- * @param <T>
  */
 public 
 class HibernateRepositoryProvider<K extends Serializable,T> 

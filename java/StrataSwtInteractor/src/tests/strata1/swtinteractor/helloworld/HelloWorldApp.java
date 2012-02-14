@@ -26,7 +26,6 @@ package strata1.swtinteractor.helloworld;
 
 import strata1.swtinteractor.swtregion.SwtRegion;
 import strata1.swtinteractor.swtregion.SwtRegionManager;
-import strata1.interactor.app.ModelViewControllerApp;
 import strata1.interactor.region.RegionInitializationException;
 import strata1.interactor.region.RegionManager;
 
@@ -41,10 +40,10 @@ public
 class HelloWorldApp
     implements Runnable
 {
-    RegionManager        itsRegionManager;
-    HelloWorldModel      itsModel;
-    HelloWorldView       itsView;
-    HelloWorldController itsController;
+    private RegionManager        itsRegionManager;
+    private HelloWorldModel      itsModel;
+    private HelloWorldView       itsView;
+    private HelloWorldController itsController;
     
     /************************************************************************
      * Creates a new HelloWorldApp. 
@@ -58,7 +57,7 @@ class HelloWorldApp
         SwtRegion.setManager( itsRegionManager );
         
         itsModel      = new DefaultHelloWorldModel();
-        itsView       = new SwtHelloWorldView(itsRegionManager);
+        itsView       = new SwtHelloWorldView();
         itsController = new DefaultHelloWorldController(itsModel,itsView);
     }
 
@@ -71,7 +70,8 @@ class HelloWorldApp
     {
         try
         {
-            itsRegionManager.registerViewWithRegion( "Greeting",SwtGreetingView.class );
+            itsRegionManager.registerViewWithRegion( 
+                "Greeting",SwtGreetingView.class );
             itsRegionManager.initializeRegions();
             itsController.start();
         }

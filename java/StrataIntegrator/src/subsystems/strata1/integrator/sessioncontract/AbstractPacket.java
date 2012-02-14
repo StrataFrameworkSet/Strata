@@ -31,7 +31,8 @@ import java.io.*;
  * <a href="http://martinfowler.com/eaaCatalog/gateway.html">Gateway</a>
  * methods and identifies the sender through session and user identifiers.
  * Subclasses of <code>AbstractPacket</code> are also <a href=
- * "http://java.sun.com/blueprints/corej2eepatterns/Patterns/TransferObject.html">
+ * "http://java.sun.com/
+ * blueprints/corej2eepatterns/Patterns/TransferObject.html">
  * Transfer Object</a>s and <a href=
  * "http://www.refactoring.com/catalog/introduceParameterObject.html">
  * Parameter Object</a>s.

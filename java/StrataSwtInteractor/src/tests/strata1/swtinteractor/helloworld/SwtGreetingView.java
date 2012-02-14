@@ -26,8 +26,6 @@ package strata1.swtinteractor.helloworld;
 
 import strata1.swtinteractor.swtview.SwtView;
 import strata1.interactor.command.Command;
-import strata1.interactor.command.CommandProvider;
-import strata1.interactor.event.ChangeEvent;
 import strata1.interactor.view.AbstractView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;

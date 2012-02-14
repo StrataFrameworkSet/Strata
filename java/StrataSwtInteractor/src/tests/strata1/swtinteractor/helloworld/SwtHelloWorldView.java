@@ -24,13 +24,11 @@
 
 package strata1.swtinteractor.helloworld;
 
-import strata1.interactor.command.Command;
 import strata1.swtinteractor.swtregion.SwtRegion;
-import strata1.swtinteractor.swtregion.SwtRegionManager;
 import strata1.swtinteractor.swtview.SwtView;
+import strata1.interactor.command.Command;
 import strata1.interactor.region.Region;
 import strata1.interactor.region.RegionInitializationException;
-import strata1.interactor.region.RegionManager;
 import strata1.interactor.view.AbstractView;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -50,7 +48,6 @@ class SwtHelloWorldView
     extends    AbstractView
     implements HelloWorldView, SwtView
 {
-    private RegionManager  itsRegionManager;
     private Display        itsDisplay;
     private Shell          itsShell;
     private Region         itsGreetingRegion;
@@ -61,10 +58,8 @@ class SwtHelloWorldView
      *
      */
     public 
-    SwtHelloWorldView(RegionManager manager) throws RegionInitializationException
+    SwtHelloWorldView() 
     {
-        itsRegionManager = manager;
-        
         itsDisplay   = new Display();
         
         itsShell     = new Shell( itsDisplay );

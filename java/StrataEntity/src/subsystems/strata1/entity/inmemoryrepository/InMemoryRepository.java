@@ -24,14 +24,14 @@
 
 package strata1.entity.inmemoryrepository;
 
-import strata1.entity.repository.*;
+import strata1.entity.repository.Repository;
 
-/**
+/****************************************************************************
  * Base class of all <i>in-memory</i> RepositoryImp objects.
  * Declares a method for committing changes by processing a ChangeSetImp.
  * 
  * @author 		
- *     Java Persistence Strategy Workgroup 
+ *     Sapientia Systems 
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
@@ -39,7 +39,7 @@ public abstract
 class InMemoryRepository
 	implements Repository
 {
-	protected InMemoryRepositoryContext itsContext;
+	private InMemoryRepositoryContext itsContext;
 	
 	/************************************************************************
 	 * Creates a new InMemoryRepository. 

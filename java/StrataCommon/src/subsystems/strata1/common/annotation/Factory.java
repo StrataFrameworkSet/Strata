@@ -24,6 +24,11 @@
 
 package strata1.common.annotation;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * 
  * @author 		
@@ -31,6 +36,8 @@ package strata1.common.annotation;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
 public @interface Factory {}
 
 // ##########################################################################

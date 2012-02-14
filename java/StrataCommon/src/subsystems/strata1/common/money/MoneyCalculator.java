@@ -24,6 +24,8 @@
 
 package strata1.common.money;
 
+import strata1.common.annotation.*;
+
 /**
  * Provides functionality for doing arithmetic operations on
  * {@code Money} objects. Uses {@code CurrencyExchanger}
@@ -47,8 +49,11 @@ class MoneyCalculator
 	 * 
 	 * @param 			exchanger 	used to convert {@code Money} to 
 	 * 								same currency during calculations
-	 * @postcondition	this.getExchanger() == exchanger
 	 */
+	@Precondition("exchanger != null")
+	@Postcondition({
+	    "this.getExchanger() == exchanger",
+	    "this.getExchanger() != null"})
 	public 
 	MoneyCalculator(CurrencyExchanger exchanger)
 	{
