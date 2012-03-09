@@ -114,7 +114,7 @@
     
     <target 
         name="run-integration-stage"
-        depends="test-package">
+        depends="init">
         <junit 
             printsummary="true" 
             showoutput="true" 
