@@ -35,6 +35,7 @@
     <target name="init">
         <mkdir dir="${outputDirectory}"/>
         <mkdir dir="${testOutputDirectory}"/>
+        <delete dir="${project.testreports}"/>
         <mkdir dir="${project.testreports}"/>
     </target>
     
