@@ -8,7 +8,7 @@
 	<parent>
     	<groupId>strata.java</groupId>
     	<artifactId>Strata</artifactId>
-    	<version>${project.ver}</version>
+    	<version>DEV</version>
     	<relativePath>../Strata</relativePath>
   	</parent>
   	

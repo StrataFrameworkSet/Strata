@@ -9,10 +9,15 @@
   	<groupId>strata.java</groupId>
   	<artifactId>Strata</artifactId>
   	<packaging>pom</packaging>
-  	<version>${project.ver}</version>
+  	<version>DEV</version>
   	<name>Strata Framework Set (java)</name>
   	<url>http://maven.apache.org</url>
   	
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jdk-1.6.home>C:\Tools\Java\1.6.22-se</jdk-1.6.home>
+    </properties>
+    
   	<build>  	
   		<plugins>
       		<plugin>
@@ -83,6 +88,13 @@
           			</groups>
         		</configuration>
       		</plugin>
+      		
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+            </plugin>
+        
     	</plugins>
   	</build>
   	  	

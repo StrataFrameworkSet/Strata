@@ -8,7 +8,7 @@
 	<parent>
     	<groupId>strata.java</groupId>
     	<artifactId>Strata</artifactId>
-    	<version>${project.ver}</version>
+    	<version>DEV</version>
     	<relativePath>../Strata</relativePath>
   	</parent>
   	
@@ -17,14 +17,14 @@
   	<packaging>jar</packaging>
 
   	<url>http://maven.apache.org</url>
-  	
+
   	<build>
   		<sourceDirectory>${project.basedir}/src/subsystems</sourceDirectory>
   		<testSourceDirectory>${project.basedir}/src/tests</testSourceDirectory>
-  		<outputDirectory>${project.basedir}/build</outputDirectory>
+  		<outputDirectory>${project.basedir}/build/subsystems</outputDirectory>
   		<directory>${project.basedir}/lib</directory>
     	<finalName>${project.artifactId}-${project.version}</finalName>
-    	<testOutputDirectory>${project.basedir}/build</testOutputDirectory>  		
+    	<testOutputDirectory>${project.basedir}/build/tests</testOutputDirectory>  
   	</build>
 
   	<dependencies>
@@ -114,5 +114,5 @@
 			<systemPath>${jdk-1.6.home}/jre6/lib/ext/sunjce_provider.jar</systemPath>
 		</dependency>  	
 	</dependencies>
-  	
+  	  	
 </project>

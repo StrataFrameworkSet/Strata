@@ -2,6 +2,9 @@
 <classpath>
 	<classpathentry kind="src" output="build" path="src/subsystems"/>
 	<classpathentry kind="src" output="build" path="src/tests"/>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/4.9/junit-4.9.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/fitnesse/fitnesse/20050731/fitnesse-20050731.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/c2/fit/fit/1.1/fit-1.1.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
