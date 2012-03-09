@@ -1,0 +1,109 @@
+<project 
+    name="Strata" 
+    default="run-commit-stage" 
+    basedir=".">
+    
+    <!-- root directories -->
+    <property name="workspace.root" value="${basedir}/.."/>
+    <property name="common.root" value="${workspace.root}/StrataCommon"/>
+    <property name="integrator.root" value="${workspace.root}/StrataIntegrator"/>
+    <property name="interactor.root" value="${workspace.root}/StrataInteractor"/>
+    <property name="swtinteractor.root" value="${workspace.root}/StrataSwtInteractor"/>
+    <property name="inspector.root" value="${workspace.root}/StrataInspector"/>
+    <property name="entity.root" value="${workspace.root}/StrataEntity"/>
+    <property name="initializer.root" value="${workspace.root}/StrataInitializer"/>
+ 
+    <target name="clean">
+        <ant 
+            dir="${common.root}" 
+            antfile="${common.root}/build.xml" 
+            target="clean"/>
+        <ant 
+            dir="${integrator.root}" 
+            antfile="${integrator.root}/build.xml" 
+            target="clean"/>
+        <ant 
+            dir="${interactor.root}" 
+            antfile="${interactor.root}/build.xml" 
+            target="clean"/>
+        <ant 
+            dir="${swtinteractor.root}" 
+            antfile="${swtinteractor.root}/build.xml" 
+            target="clean"/>
+        <ant 
+            dir="${inspector.root}" 
+            antfile="${inspector.root}/build.xml" 
+            target="clean"/>
+        <ant 
+            dir="${entity.root}" 
+            antfile="${entity.root}/build.xml" 
+            target="clean"/>
+        <ant 
+            dir="${initializer.root}" 
+            antfile="${initializer.root}/build.xml" 
+            target="clean"/>
+    </target>
+
+    <target name="run-commit-stage">
+        <ant 
+            dir="${common.root}" 
+            antfile="${common.root}/build.xml" 
+            target="run-commit-stage"/>
+    	<ant 
+    	    dir="${integrator.root}" 
+    	    antfile="${integrator.root}/build.xml" 
+            target="run-commit-stage"/>
+        <ant 
+            dir="${interactor.root}" 
+            antfile="${interactor.root}/build.xml" 
+            target="run-commit-stage"/>
+        <ant 
+            dir="${swtinteractor.root}" 
+            antfile="${swtinteractor.root}/build.xml" 
+            target="run-commit-stage"/>
+        <ant 
+            dir="${inspector.root}" 
+            antfile="${inspector.root}/build.xml" 
+            target="run-commit-stage"/>
+        <ant 
+            dir="${entity.root}" 
+            antfile="${entity.root}/build.xml" 
+            target="run-commit-stage"/>
+        <ant 
+            dir="${initializer.root}" 
+            antfile="${initializer.root}/build.xml" 
+            target="run-commit-stage"/>
+    </target>
+	
+    <target name="run-integration-stage">
+        <ant 
+            dir="${common.root}" 
+            antfile="${common.root}/build.xml" 
+            target="run-integration-stage"/>
+        <ant 
+            dir="${integrator.root}" 
+            antfile="${integrator.root}/build.xml" 
+            target="run-integration-stage"/>
+        <ant 
+            dir="${interactor.root}" 
+            antfile="${interactor.root}/build.xml" 
+            target="run-integration-stage"/>
+        <ant 
+            dir="${swtinteractor.root}" 
+            antfile="${swtinteractor.root}/build.xml" 
+            target="run-integration-stage"/>
+        <ant 
+            dir="${inspector.root}" 
+            antfile="${inspector.root}/build.xml" 
+            target="run-integration-stage"/>
+        <ant 
+            dir="${entity.root}" 
+            antfile="${entity.root}/build.xml" 
+            target="run-integration-stage"/>
+        <ant 
+            dir="${initializer.root}" 
+            antfile="${initializer.root}/build.xml" 
+            target="run-integration-stage"/>
+    </target>
+	
+</project>

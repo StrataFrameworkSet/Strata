@@ -1,7 +1,7 @@
 // ##########################################################################
 // # File Name:	DateTime.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -45,7 +45,7 @@ import java.util.TimeZone;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class DateTime 
+class DateTime
 	implements  Copyable,
 	            Serializable,
 	            Comparable<DateTime>
