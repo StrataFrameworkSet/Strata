@@ -31,8 +31,8 @@ import strata1.common.annotation.Factory;
 import strata1.initializer.base.AbstractBaseContainer;
 import strata1.initializer.provider.ContainerProvider;
 import strata1.integrator.annotation.Gateway;
-import strata1.interactor.controller.Controller;
-import strata1.interactor.view.View;
+import strata1.interactor.controller.IController;
+import strata1.interactor.view.IView;
 
 /**
  * 
@@ -60,7 +60,7 @@ public class DefaultClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <V extends View> V 
+    public <V extends IView> V 
     getView(Class<V> viewType,String name)
     {
         // TODO Auto-generated method stub
@@ -82,7 +82,7 @@ public class DefaultClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <C extends Controller> C 
+    public <C extends IController> C 
     getController(Class<C> controllerType,String name)
     {
         // TODO Auto-generated method stub
@@ -110,7 +110,7 @@ public class DefaultClientContainer
         return
             type.isAnnotationPresent( Gateway.class ) ||
             type.isAnnotationPresent( Factory.class ) ||
-            (View.class).isAssignableFrom( type );
+            (IView.class).isAssignableFrom( type );
     }
 
 }

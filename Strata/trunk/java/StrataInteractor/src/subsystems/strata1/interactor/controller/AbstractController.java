@@ -24,8 +24,8 @@
 
 package strata1.interactor.controller;
 
-import strata1.interactor.command.Command;
-import strata1.interactor.event.ChangeEvent;
+import strata1.interactor.command.ICommand;
+import strata1.interactor.event.IChangeEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,24 +38,24 @@ import java.util.Map;
  */
 public abstract 
 class AbstractController
-	implements Controller
+	implements IController
 {
-	private Map<String,Command>                   itsCommands;
-	private Map<ChangeEvent,Handler<ChangeEvent>> itsHandlers;
+	private Map<String,ICommand>                   itsCommands;
+	private Map<IChangeEvent,IHandler<IChangeEvent>> itsHandlers;
 	
 	public
 	AbstractController()
 	{
 		super();
-		itsCommands = new HashMap<String,Command>();
-		itsHandlers = new HashMap<ChangeEvent,Handler<ChangeEvent>>();
+		itsCommands = new HashMap<String,ICommand>();
+		itsHandlers = new HashMap<IChangeEvent,IHandler<IChangeEvent>>();
 	}
 	
 	/************************************************************************
 	 * {@inheritDoc} 
 	 */
 	@Override
-	public Command 
+	public ICommand 
 	getCommand(String commandName)
 	{
 		return itsCommands.get( commandName );
@@ -66,7 +66,7 @@ class AbstractController
 	 */
 	@Override
 	public void 
-	processChange(ChangeEvent event)
+	processChange(IChangeEvent event)
 	{
 		itsHandlers.get( event ).handle( event );
 	}
@@ -78,7 +78,7 @@ class AbstractController
 	 * @param handler
 	 */
 	protected void
-	setCommand(String commandName,Command command)
+	setCommand(String commandName,ICommand command)
 	{
 		itsCommands.put( commandName,command );
 	}
@@ -90,7 +90,7 @@ class AbstractController
 	 * @param handler
 	 */
 	protected void
-	setHandler(ChangeEvent event,Handler<ChangeEvent> handler)
+	setHandler(IChangeEvent event,IHandler<IChangeEvent> handler)
 	{
 		itsHandlers.put( event,handler );
 	}

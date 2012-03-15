@@ -24,10 +24,10 @@
 
 package strata1.swtinteractor.swtregion;
 
-import strata1.swtinteractor.swtview.SwtView;
-import strata1.interactor.region.Region;
+import strata1.swtinteractor.swtview.ISwtView;
+import strata1.interactor.region.IRegion;
 import strata1.interactor.region.RegionInitializationException;
-import strata1.interactor.region.RegionManager;
+import strata1.interactor.region.IRegionManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -41,11 +41,11 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class SwtRegion
     extends    Composite
-    implements Region
+    implements IRegion
 {
     private static SwtRegionManager theirManager;
     private String                  itsName;
-    private SwtView                 itsView;
+    private ISwtView                 itsView;
 
     /************************************************************************
      * Creates a new {@code SwtRegion}. 
@@ -89,7 +89,7 @@ public class SwtRegion
      * {@inheritDoc} 
      */
     @Override
-    public SwtView 
+    public ISwtView 
     getView()
     {
         return itsView;
@@ -101,7 +101,7 @@ public class SwtRegion
      * @param manager
      */
     public static void
-    setManager(RegionManager manager)
+    setManager(IRegionManager manager)
     {
         theirManager = (SwtRegionManager)manager;
     }

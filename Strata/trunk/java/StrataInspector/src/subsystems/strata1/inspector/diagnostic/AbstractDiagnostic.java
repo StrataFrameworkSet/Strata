@@ -25,7 +25,7 @@
 package strata1.inspector.diagnostic;
 
 /**
- * Base class for all {@code Diagnostic}s.
+ * Base class for all {@code IDiagnostic}s.
  * 
  * @author 		
  *     Sapientia Systems 
@@ -34,7 +34,7 @@ package strata1.inspector.diagnostic;
  */
 public abstract 
 class AbstractDiagnostic 
-	implements Diagnostic
+	implements IDiagnostic
 {
 	protected String itsName;
 
@@ -52,7 +52,7 @@ class AbstractDiagnostic
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Diagnostic#getName()
+	 * @see IDiagnostic#getName()
 	 */
 	public String 
 	getName()

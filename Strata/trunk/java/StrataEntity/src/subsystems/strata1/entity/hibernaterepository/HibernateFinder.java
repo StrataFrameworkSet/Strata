@@ -25,7 +25,7 @@
 package strata1.entity.hibernaterepository;
 
 import strata1.entity.repository.AbstractFinder;
-import strata1.entity.repository.Finder;
+import strata1.entity.repository.IFinder;
 import strata1.entity.repository.InputKeeper;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ import java.util.Map;
 public 
 class HibernateFinder<T>
 	extends 	AbstractFinder<T>
-	implements	Finder<T>
+	implements	IFinder<T>
 {
 	private Class<T>                   itsEntityClass;
 	private HibernateRepositoryContext itsContext;
@@ -86,7 +86,7 @@ class HibernateFinder<T>
 	
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#copy()
+	 * @see IFinder#copy()
 	 */
 	@Override
 	public HibernateFinder<T> 
@@ -97,7 +97,7 @@ class HibernateFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#clear()
+	 * @see IFinder#clear()
 	 */
 	@Override
 	public void clear()
@@ -109,7 +109,7 @@ class HibernateFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#getAll()
+	 * @see IFinder#getAll()
 	 */
 	@Override
 	public Collection<T> 
@@ -121,7 +121,7 @@ class HibernateFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#getUnique()
+	 * @see IFinder#getUnique()
 	 */
 	@Override
 	public T 
@@ -133,7 +133,7 @@ class HibernateFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#getNext()
+	 * @see IFinder#getNext()
 	 */
 	@Override
 	public T 
@@ -145,7 +145,7 @@ class HibernateFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#hasNext()
+	 * @see IFinder#hasNext()
 	 */
 	@Override
 	public boolean 

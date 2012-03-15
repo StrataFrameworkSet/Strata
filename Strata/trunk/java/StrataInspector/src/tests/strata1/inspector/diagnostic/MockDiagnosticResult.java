@@ -38,7 +38,7 @@ public class MockDiagnosticResult
 	 */
 	@Override
 	public void 
-	beginDiagnostic(Diagnostic d)
+	beginDiagnostic(IDiagnostic d)
 	{
 		itsActualRun.add( d.getName() );
 		super.beginDiagnostic( d );
@@ -49,7 +49,7 @@ public class MockDiagnosticResult
 	 */
     @Override
 	public void 
-	endDiagnostic(Diagnostic d)
+	endDiagnostic(IDiagnostic d)
 	{
 		super.endDiagnostic( d );
 	}
@@ -59,7 +59,7 @@ public class MockDiagnosticResult
 	 */
 	@Override
 	public void 
-	reportBeginFailure(Diagnostic d,DiagnosticAbortedException e)
+	reportBeginFailure(IDiagnostic d,DiagnosticAbortedException e)
 	{
 		super.reportBeginFailure( d,e );
 	}
@@ -69,7 +69,7 @@ public class MockDiagnosticResult
 	 */
     @Override
 	public void 
-	reportCheckSuccess(Diagnostic d,String msg)
+	reportCheckSuccess(IDiagnostic d,String msg)
 	{
 		super.reportCheckSuccess( d,msg );
 	}
@@ -79,7 +79,7 @@ public class MockDiagnosticResult
 	 */
     @Override
 	public void 
-	reportCheckFailure(Diagnostic d,DiagnosticException e)
+	reportCheckFailure(IDiagnostic d,DiagnosticException e)
 	{
 		super.reportCheckFailure( d,e );
 	}
@@ -89,7 +89,7 @@ public class MockDiagnosticResult
 	 */
     @Override
 	public void 
-	reportRecoverySuccess(Diagnostic d,String msg)
+	reportRecoverySuccess(IDiagnostic d,String msg)
 	{
 		super.reportRecoverySuccess( d,msg );
 	}
@@ -99,7 +99,7 @@ public class MockDiagnosticResult
 	 */
     @Override
 	public void 
-	reportRecoveryFailure(Diagnostic d,DiagnosticException e)
+	reportRecoveryFailure(IDiagnostic d,DiagnosticException e)
 	{
 		super.reportRecoveryFailure( d,e );
 	}
@@ -109,7 +109,7 @@ public class MockDiagnosticResult
 	 */
     @Override
 	public void 
-	reportUnknownFailure(Diagnostic d,Exception e)
+	reportUnknownFailure(IDiagnostic d,Exception e)
 	{
 		super.reportUnknownFailure( d,e );
 	}

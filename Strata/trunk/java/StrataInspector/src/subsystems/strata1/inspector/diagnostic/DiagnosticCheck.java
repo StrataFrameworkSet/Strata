@@ -54,11 +54,11 @@ class DiagnosticCheck
 	 * <p>
 	 * This method is a <b>Template Method</b> that gets instantiated with 
 	 * functionality from subclasses.
-	 * @see Diagnostic#runDiagnostic(DiagnosticResult)
+	 * @see IDiagnostic#runDiagnostic(IDiagnosticResult)
 	 */
 
 	public void 
-	runDiagnostic(DiagnosticResult result)
+	runDiagnostic(IDiagnosticResult result)
 	{
         try
         {

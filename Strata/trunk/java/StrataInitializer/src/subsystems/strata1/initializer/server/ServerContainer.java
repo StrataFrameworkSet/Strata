@@ -25,7 +25,7 @@
 package strata1.initializer.server;
 
 import strata1.initializer.base.BaseContainer;
-import strata1.entity.repository.Repository;;
+import strata1.entity.repository.IRepository;;
 
 /**
  * 
@@ -45,7 +45,7 @@ interface ServerContainer
      * @param name
      * @return
      */
-    public <R extends Repository> R
+    public <R extends IRepository> R
     getRepository(Class<R> repositoryType,String name);
 }
 

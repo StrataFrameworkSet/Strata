@@ -25,7 +25,7 @@
 package strata1.initializer.server;
 
 import strata1.common.annotation.Factory;
-import strata1.entity.repository.Repository;
+import strata1.entity.repository.IRepository;
 import strata1.initializer.base.AbstractBaseContainer;
 import strata1.initializer.provider.ContainerProvider;
 import strata1.integrator.annotation.Gateway;
@@ -57,7 +57,7 @@ class DefaultServerContainer
      * {@inheritDoc} 
      */
     @Override
-    public <R extends Repository> R 
+    public <R extends IRepository> R 
     getRepository(Class<R> repositoryType,String name)
     {
         return getProvider().getInstance( repositoryType,name );
@@ -73,7 +73,7 @@ class DefaultServerContainer
         return
             type.isAnnotationPresent( Gateway.class ) ||
             type.isAnnotationPresent( Factory.class ) ||
-            (Repository.class).isAssignableFrom( type );
+            (IRepository.class).isAssignableFrom( type );
     }
 
 }

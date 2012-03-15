@@ -26,7 +26,7 @@ public class MoneyCalculatorTest
 {
 	private static final double TOLERANCE = 0.00001;
 	
-	private CurrencyExchanger itsExchanger;
+	private ICurrencyExchanger itsExchanger;
 	private MoneyCalculator   itsTarget;
 	
 	/************************************************************************
@@ -55,12 +55,12 @@ public class MoneyCalculatorTest
 
 	/**
 	 * Test method for 
-	 * {@link MoneyCalculator#MoneyCalculator(CurrencyExchanger)}.
+	 * {@link MoneyCalculator#MoneyCalculator(ICurrencyExchanger)}.
 	 */
 	@Test
 	public void testMoneyCalculator()
 	{
-		CurrencyExchanger e = new MockCurrencyExchanger();
+		ICurrencyExchanger e = new MockCurrencyExchanger();
 		MoneyCalculator   c = new MoneyCalculator( e );
 		
 		assertSame( e,c.getExchanger() );

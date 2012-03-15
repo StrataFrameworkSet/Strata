@@ -26,7 +26,7 @@ package strata1.inspector.diagnostic;
 
 
 /**
- * Encapsulates the execution of {@code Diagnostic}s so they
+ * Encapsulates the execution of {@code IDiagnostic}s so they
  * can be scheduled to run at specified times.
  * 
  * @author 		
@@ -38,8 +38,8 @@ public
 class DiagnosticTask 
 	implements Runnable
 {
-	private Diagnostic       itsDiagnostic;
-	private DiagnosticResult itsResult;
+	private IDiagnostic       itsDiagnostic;
+	private IDiagnosticResult itsResult;
 	
 	/************************************************************************
 	 * Creates a new DiagnosticTask. 
@@ -48,7 +48,7 @@ class DiagnosticTask
 	 * @param result
 	 */
 	public 
-	DiagnosticTask(Diagnostic diagnostic,DiagnosticResult result)
+	DiagnosticTask(IDiagnostic diagnostic,IDiagnosticResult result)
 	{
 		super();
 		itsDiagnostic = diagnostic;

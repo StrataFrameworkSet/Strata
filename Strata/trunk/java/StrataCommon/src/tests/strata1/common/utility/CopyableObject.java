@@ -33,7 +33,7 @@ package strata1.common.utility;
  */
 public 
 class CopyableObject
-    implements Copyable
+    implements ICopyable
 {
     private String itsX;
     private int    itsY;

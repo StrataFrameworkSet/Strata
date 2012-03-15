@@ -35,7 +35,7 @@ import java.lang.reflect.Method;
  */
 public 
 class ParameterizedDelegateCommand<T>
-    implements ParameterizedCommand<T>
+    implements IParameterizedCommand<T>
 {
     protected Object itsInstance;
     protected Method itsMethod;

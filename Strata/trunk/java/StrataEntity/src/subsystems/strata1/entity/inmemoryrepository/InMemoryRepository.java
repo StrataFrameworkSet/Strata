@@ -24,11 +24,11 @@
 
 package strata1.entity.inmemoryrepository;
 
-import strata1.entity.repository.Repository;
+import strata1.entity.repository.IRepository;
 
 /****************************************************************************
  * Base class of all <i>in-memory</i> RepositoryImp objects.
- * Declares a method for committing changes by processing a ChangeSetImp.
+ * Declares a method for committing changes by processing a ChangeSet.
  * 
  * @author 		
  *     Sapientia Systems 
@@ -37,7 +37,7 @@ import strata1.entity.repository.Repository;
  */
 public abstract 
 class InMemoryRepository
-	implements Repository
+	implements IRepository
 {
 	private InMemoryRepositoryContext itsContext;
 	

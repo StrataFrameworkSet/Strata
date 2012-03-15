@@ -24,7 +24,7 @@
 
 package strata1.swtinteractor.helloworld;
 
-import strata1.interactor.view.View;
+import strata1.interactor.view.IView;
 
 /****************************************************************************
  * 
@@ -34,7 +34,7 @@ import strata1.interactor.view.View;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public interface GreetingView
-    extends View
+    extends IView
 {
     public void 
     displayGreeting(String greeting);

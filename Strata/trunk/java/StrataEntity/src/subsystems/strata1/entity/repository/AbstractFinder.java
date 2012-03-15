@@ -35,7 +35,7 @@ import java.util.*;
  */
 public abstract
 class AbstractFinder<T> 
-	implements Finder<T>
+	implements IFinder<T>
 {
 	private String      itsName;
 	private InputKeeper	itsInputs;
@@ -68,7 +68,7 @@ class AbstractFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#setInput(String,Object)
+	 * @see IFinder#setInput(String,Object)
 	 */
 	@Override
 	public void 
@@ -80,7 +80,7 @@ class AbstractFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#setInput(int,Object)
+	 * @see IFinder#setInput(int,Object)
 	 */
 	@Override
 	public void 
@@ -92,7 +92,7 @@ class AbstractFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#setInput(Collection)
+	 * @see IFinder#setInput(Collection)
 	 */
 	@Override
 	public void 
@@ -104,7 +104,7 @@ class AbstractFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#clearInputs()
+	 * @see IFinder#clearInputs()
 	 */
 	@Override
 	public void 
@@ -115,7 +115,7 @@ class AbstractFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Finder#getName()
+	 * @see IFinder#getName()
 	 */
 	@Override
 	public String 

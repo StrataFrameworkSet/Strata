@@ -24,9 +24,9 @@
 
 package strata1.interactor.view;
 
-import strata1.interactor.command.CommandProvider;
-import strata1.interactor.controller.Handler;
-import strata1.interactor.event.ChangeEvent;
+import strata1.interactor.command.ICommandProvider;
+import strata1.interactor.controller.IHandler;
+import strata1.interactor.event.IChangeEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,16 +39,16 @@ import java.util.Map;
  */
 public abstract 
 class AbstractView
-	implements View
+	implements IView
 {	
-    private CommandProvider                       itsProvider;
-    private Map<ChangeEvent,Handler<ChangeEvent>> itsHandlers;
+    private ICommandProvider                         itsProvider;
+    private Map<IChangeEvent,IHandler<IChangeEvent>> itsHandlers;
     
     public 
     AbstractView()
     {
         itsProvider = null;
-        itsHandlers = new HashMap<ChangeEvent,Handler<ChangeEvent>>();
+        itsHandlers = new HashMap<IChangeEvent,IHandler<IChangeEvent>>();
     }
     
     /************************************************************************
@@ -56,7 +56,7 @@ class AbstractView
      */
     @Override
     public void 
-    setProvider(CommandProvider provider)
+    setProvider(ICommandProvider provider)
     {
         itsProvider = provider;
     }
@@ -65,7 +65,7 @@ class AbstractView
      * {@inheritDoc} 
      */
     @Override
-    public CommandProvider 
+    public ICommandProvider 
     getProvider()
     {
         return itsProvider;
@@ -76,7 +76,7 @@ class AbstractView
      */
     @Override
     public void 
-    processChange(ChangeEvent event)
+    processChange(IChangeEvent event)
     {
         itsHandlers.get( event ).handle( event );
     }
@@ -88,7 +88,7 @@ class AbstractView
      * @param handler
      */
     protected void
-    setHandler(ChangeEvent event,Handler<ChangeEvent> handler)
+    setHandler(IChangeEvent event,IHandler<IChangeEvent> handler)
     {
         itsHandlers.put( event,handler );
     }

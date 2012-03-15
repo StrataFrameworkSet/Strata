@@ -24,70 +24,164 @@
 
 package strata1.entity.inmemoryrepository;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /****************************************************************************
+ * Groups together the changes made through an InMemoryRepository
+ * during an InMemoryTransaction. Changes refer to domain object insertion,
+ * update, and removal.
  * 
  * @param <K> key type
  * @param <T> entity type
  * 
  * @author 		
- *     Sapientia Systems 
+ *     Java Persistence Strategy Workgroup 
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ChangeSet<K,T>
+class ChangeSet<K,T>
+	implements IChangeSet<K,T>
+
 {
+	private Map<K,T>	itsInserted;
+	private Map<K,T>	itsRemoved;
+	private Map<K,T>	itsUpdated;
+
 	/************************************************************************
-	 *  
+	 * Creates a new ChangeSet. 
 	 *
-	 * @param key
-	 * @param object
 	 */
-	public void
-	addToInserted(K key,T object);
+	public
+	ChangeSet()
+	{
+		super();
+		itsInserted = new HashMap<K,T>();
+		itsUpdated  = new HashMap<K,T>();
+		itsRemoved  = new HashMap<K,T>();
+	}
 	
 	/************************************************************************
-	 *  
+	 * Adds a new insertion change to the ChangeSet. 
 	 *
-	 * @param key
-	 * @param object
+	 * @param inserted	domain object being inserted
 	 */
-	public void
-	addToUpdated(K key,T object);
-	
+	@Override
+	public void 
+	addToInserted(K key,T inserted)
+	{
+		itsInserted.put( key,inserted );
+	}
+
 	/************************************************************************
-	 *  
+	 * Adds a new removal change to the ChangeSet. 
 	 *
-	 * @param key
-	 * @param object
+	 * @param removed	domain object being removed
 	 */
-	public void
-	addToRemoved(K key,T object);
-	
+	@Override
+	public void 
+	addToRemoved(K key,T removed)
+	{
+		itsRemoved.put( key,removed );
+		
+	}
+
+	/************************************************************************
+	 * Adds a new update change to the ChangeSet. 
+	 *
+	 * @param updated	domain object being updated
+	 */
+	@Override
+	public void 
+	addToUpdated(K key,T updated)
+	{
+		itsUpdated.put( key,updated );		
+	}
+
+	/************************************************************************
+	 * {@inheritDoc} 
+	 * @see IChangeSet#applyChanges(Map)
+	 */
+	@Override
+	public void 
+	applyChanges(Map<K,T> storage)
+	{
+		applyInserts( storage );
+		applyUpdates( storage );
+		applyRemoves( storage );
+		itsInserted.clear();
+		itsUpdated.clear();
+		itsRemoved.clear();
+	}
+
+	/************************************************************************
+	 * {@inheritDoc} 
+	 * @see IChangeSet#discardChanges()
+	 */
+	@Override
+	public void 
+	discardChanges()
+	{
+		itsInserted.clear();
+		itsUpdated.clear();
+		itsRemoved.clear();
+	}
+
+	/************************************************************************
+	 * {@inheritDoc} 
+	 * @see IChangeSet#hasChanges()
+	 */
+	@Override
+	public boolean 
+	hasChanges()
+	{
+		return 
+			!(itsInserted.isEmpty() ||
+			  itsUpdated.isEmpty() ||
+			  itsRemoved.isEmpty());
+	}
+
 	/************************************************************************
 	 *  
 	 *
 	 * @param storage
 	 */
-	public void
-	applyChanges(Map<K,T> storage);
-	
+	private void
+	applyInserts(Map<K,T> storage)
+	{
+		storage.putAll( itsInserted );
+	}
+
 	/************************************************************************
 	 *  
 	 *
+	 * @param storage
 	 */
-	public void
-	discardChanges();
-	
+	private void
+	applyUpdates(Map<K,T> storage)
+	{
+		for (Map.Entry<K,T> entry : itsUpdated.entrySet())
+		{
+			if ( storage.containsKey( entry.getKey() ) )
+				storage.put( entry.getKey(),entry.getValue() );
+		}
+	}
+
 	/************************************************************************
 	 *  
 	 *
-	 * @return
+	 * @param storage
 	 */
-	public boolean
-	hasChanges();
+	private void
+	applyRemoves(Map<K,T> storage)
+	{
+		for (K key : itsRemoved.keySet())
+		{
+			if ( storage.containsKey( key ) )
+				storage.remove( key );
+		}
+	}
 }
 
 

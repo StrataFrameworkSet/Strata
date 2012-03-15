@@ -36,7 +36,7 @@ import java.io.StringWriter;
  */
 public abstract 
 class AbstractMessageBasedDiagnosticReporter
-	implements DiagnosticReporter
+	implements IDiagnosticReporter
 {
 	private PrintWriter itsWriter;
 	
@@ -53,7 +53,7 @@ class AbstractMessageBasedDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#beginReport()
+	 * @see IDiagnosticReporter#beginReport()
 	 */
 	@Override
 	public void 
@@ -64,7 +64,7 @@ class AbstractMessageBasedDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#endReport()
+	 * @see IDiagnosticReporter#endReport()
 	 */
 	@Override
 	public void 
@@ -75,7 +75,7 @@ class AbstractMessageBasedDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#beginDiagnostic(DiagnosticOutput)
+	 * @see IDiagnosticReporter#beginDiagnostic(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -85,7 +85,7 @@ class AbstractMessageBasedDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#endDiagnostic(DiagnosticOutput)
+	 * @see IDiagnosticReporter#endDiagnostic(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -116,7 +116,7 @@ class AbstractMessageBasedDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportBeginFailure(DiagnosticOutput)
+	 * @see IDiagnosticReporter#reportBeginFailure(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -126,7 +126,7 @@ class AbstractMessageBasedDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportCheckSuccess(DiagnosticOutput)
+	 * @see IDiagnosticReporter#reportCheckSuccess(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -136,7 +136,7 @@ class AbstractMessageBasedDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportCheckFailure(DiagnosticOutput)
+	 * @see IDiagnosticReporter#reportCheckFailure(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -146,7 +146,7 @@ class AbstractMessageBasedDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportRecoverySuccess(DiagnosticOutput)
+	 * @see IDiagnosticReporter#reportRecoverySuccess(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -156,7 +156,7 @@ class AbstractMessageBasedDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportRecoveryFailure(DiagnosticOutput)
+	 * @see IDiagnosticReporter#reportRecoveryFailure(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -166,7 +166,7 @@ class AbstractMessageBasedDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportUnknownFailure(DiagnosticOutput)
+	 * @see IDiagnosticReporter#reportUnknownFailure(DiagnosticOutput)
 	 */
 	@Override
 	public void 

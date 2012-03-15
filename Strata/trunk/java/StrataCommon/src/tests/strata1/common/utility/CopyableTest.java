@@ -64,7 +64,7 @@ class CopyableTest
     }
 
     /**
-     * Test method for {@link strata1.common.utility.Copyable#copy()}.
+     * Test method for {@link strata1.common.utility.ICopyable#copy()}.
      */
     @Test
     public void 

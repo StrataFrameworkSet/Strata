@@ -25,9 +25,9 @@
 package strata1.swtinteractor.helloworld;
 
 import strata1.swtinteractor.swtregion.SwtRegion;
-import strata1.swtinteractor.swtview.SwtView;
-import strata1.interactor.command.Command;
-import strata1.interactor.region.Region;
+import strata1.swtinteractor.swtview.ISwtView;
+import strata1.interactor.command.ICommand;
+import strata1.interactor.region.IRegion;
 import strata1.interactor.region.RegionInitializationException;
 import strata1.interactor.view.AbstractView;
 import org.eclipse.swt.layout.GridLayout;
@@ -46,11 +46,11 @@ import org.eclipse.swt.widgets.Widget;
 public 
 class SwtHelloWorldView
     extends    AbstractView
-    implements HelloWorldView, SwtView
+    implements HelloWorldView, ISwtView
 {
     private Display        itsDisplay;
     private Shell          itsShell;
-    private Region         itsGreetingRegion;
+    private IRegion         itsGreetingRegion;
 
     /************************************************************************
      * Creates a new SwtHelloWorldView. 
@@ -125,7 +125,7 @@ class SwtHelloWorldView
      */
     @Override
     public void 
-    invoke(Command command)
+    invoke(ICommand command)
     {
     }
 

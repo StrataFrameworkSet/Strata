@@ -67,7 +67,7 @@ class DiagnosticSuiteTest
 	}
 
 	/**
-	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticSuite#runDiagnostic(strata1.inspector.diagnostic.DiagnosticResult)}.
+	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticSuite#runDiagnostic(strata1.inspector.diagnostic.IDiagnosticResult)}.
 	 */
 	@Test
 	public void 
@@ -79,7 +79,7 @@ class DiagnosticSuiteTest
 	}
 
 	/**
-	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticSuite#addDiagnostic(strata1.inspector.diagnostic.Diagnostic)}.
+	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticSuite#addDiagnostic(strata1.inspector.diagnostic.IDiagnostic)}.
 	 */
 	@Test
 	public void 

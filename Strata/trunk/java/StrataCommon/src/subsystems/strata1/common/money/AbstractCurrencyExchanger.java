@@ -40,7 +40,7 @@ import java.util.Currency;
  */
 public abstract
 class AbstractCurrencyExchanger 
-	implements CurrencyExchanger
+	implements ICurrencyExchanger
 {
 	/************************************************************************
 	 * Creates a new AbstractCurrencyExchanger. 

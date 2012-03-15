@@ -25,7 +25,7 @@
 package strata1.entity.inmemoryrepository;
 
 import strata1.entity.repository.AbstractRepositoryProvider;
-import strata1.entity.repository.KeyRetriever;
+import strata1.entity.repository.IKeyRetriever;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,12 +43,12 @@ import java.util.Map;
 public 
 class InMemoryRepositoryProvider<K extends Serializable,T> 
 	extends 	AbstractRepositoryProvider<K,T>
-	implements 	TransactionParticipant
+	implements 	ITransactionParticipant
 {
 	private InMemoryRepositoryContext itsContext;
 	private Map<K,T>                  itsEntities;
-	private ChangeSet<K,T>            itsChanges;
-	private KeyRetriever<K,T>		  itsKeyRetriever;
+	private IChangeSet<K,T>            itsChanges;
+	private IKeyRetriever<K,T>		  itsKeyRetriever;
 	
 	/************************************************************************
 	 * Creates a new InMemoryRepositoryImp. 
@@ -57,12 +57,12 @@ class InMemoryRepositoryProvider<K extends Serializable,T>
 	public 
 	InMemoryRepositoryProvider(
 		InMemoryRepositoryContext context,
-		KeyRetriever<K,T>         keyRetriever)
+		IKeyRetriever<K,T>         keyRetriever)
 	{
 		super();
 		itsContext      = context;
 		itsEntities     = new HashMap<K,T>();
-		itsChanges      = new ChangeSetImp<K,T>();
+		itsChanges      = new ChangeSet<K,T>();
 		itsKeyRetriever = keyRetriever;
 	}
 

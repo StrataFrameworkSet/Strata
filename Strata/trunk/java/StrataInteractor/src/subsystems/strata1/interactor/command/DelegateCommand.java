@@ -35,7 +35,7 @@ import java.lang.reflect.Method;
  */
 public 
 class DelegateCommand
-    implements Command
+    implements ICommand
 {
     protected Object itsInstance;
     protected Method itsMethod;

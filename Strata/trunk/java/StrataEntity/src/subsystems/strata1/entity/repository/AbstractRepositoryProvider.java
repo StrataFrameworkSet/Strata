@@ -38,9 +38,9 @@ import java.io.*;
  */
 public abstract 
 class AbstractRepositoryProvider<K extends Serializable,T>
-	implements RepositoryProvider<K,T>
+	implements IRepositoryProvider<K,T>
 {
-	private Map<String,Finder<T>> itsFinders;
+	private Map<String,IFinder<T>> itsFinders;
 	
 	/************************************************************************
 	 * Creates a new AbstractRepositoryImp. 
@@ -50,12 +50,12 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 	AbstractRepositoryProvider()
 	{
 		super();
-		itsFinders = new HashMap<String,Finder<T>>();
+		itsFinders = new HashMap<String,IFinder<T>>();
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryProvider#insertNew(Object)
+	 * @see IRepositoryProvider#insertNew(Object)
 	 */
 	@Override
 	public void 
@@ -75,7 +75,7 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryProvider#updateExisting(Object)
+	 * @see IRepositoryProvider#updateExisting(Object)
 	 */
 	@Override
 	public void 
@@ -95,7 +95,7 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryProvider#removeExisting(Object)
+	 * @see IRepositoryProvider#removeExisting(Object)
 	 */
 	@Override
 	public void 
@@ -115,11 +115,11 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryProvider#insertFinder(Finder)
+	 * @see IRepositoryProvider#insertFinder(IFinder)
 	 */
 	@Override
 	public void 
-	insertFinder(Finder<T> finder)
+	insertFinder(IFinder<T> finder)
 	{
 		getContext().getSynchronizer().lockForWriting();
 		
@@ -135,7 +135,7 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryProvider#removeFinder(String)
+	 * @see IRepositoryProvider#removeFinder(String)
 	 */
 	@Override
 	public void 
@@ -156,7 +156,7 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryProvider#getExisting(Object)
+	 * @see IRepositoryProvider#getExisting(Object)
 	 */
 	@Override
 	public T 
@@ -176,10 +176,10 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryProvider#getFinder(String)
+	 * @see IRepositoryProvider#getFinder(String)
 	 */
 	@Override
-	public Finder<T> 
+	public IFinder<T> 
 	getFinder(String finderName)
 	{
 		getContext().getSynchronizer().lockForReading();
@@ -196,7 +196,7 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryProvider#hasExisting(Object)
+	 * @see IRepositoryProvider#hasExisting(Object)
 	 */
 	@Override
 	public boolean 
@@ -216,7 +216,7 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryProvider#hasFinder(String)
+	 * @see IRepositoryProvider#hasFinder(String)
 	 */
 	@Override
 	public boolean 

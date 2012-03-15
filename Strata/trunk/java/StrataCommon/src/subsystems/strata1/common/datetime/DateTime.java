@@ -24,7 +24,7 @@
 
 package strata1.common.datetime;
 
-import strata1.common.utility.Copyable;
+import strata1.common.utility.ICopyable;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Formatter;
@@ -46,7 +46,7 @@ import java.util.TimeZone;
  */
 public 
 class DateTime
-	implements  Copyable,
+	implements  ICopyable,
 	            Serializable,
 	            Comparable<DateTime>
 				
