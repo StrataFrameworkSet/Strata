@@ -34,7 +34,7 @@ public class DiagnosticCheckTestOld extends TestCase
 	}
 
 	/*
-	 * Test method for 'com.capgroup.af.solar.application.DiagnosticCheck.runDiagnostic(DiagnosticResult)'
+	 * Test method for 'com.capgroup.af.solar.application.DiagnosticCheck.runDiagnostic(IDiagnosticResult)'
 	 */
 	public void testRunDiagnostic()
 	{

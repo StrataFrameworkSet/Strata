@@ -24,11 +24,11 @@
 
 package strata1.swtinteractor.swtregion;
 
-import strata1.swtinteractor.swtview.SwtView;
-import strata1.interactor.region.Region;
+import strata1.swtinteractor.swtview.ISwtView;
+import strata1.interactor.region.IRegion;
 import strata1.interactor.region.RegionInitializationException;
-import strata1.interactor.region.RegionManager;
-import strata1.interactor.view.View;
+import strata1.interactor.region.IRegionManager;
+import strata1.interactor.view.IView;
 import org.eclipse.swt.widgets.Composite;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,10 +42,10 @@ import java.util.Map;
  */
 public 
 class SwtRegionManager
-    implements RegionManager
+    implements IRegionManager
 {
-    private Map<String,Region>                itsRegions;
-    private Map<String,Class<? extends View>> itsViewTypes;
+    private Map<String,IRegion>                itsRegions;
+    private Map<String,Class<? extends IView>> itsViewTypes;
     
     /************************************************************************
      * Creates a new {@code SwtRegionManager}. 
@@ -54,8 +54,8 @@ class SwtRegionManager
     public 
     SwtRegionManager()
     {
-        itsRegions   = new HashMap<String,Region>();
-        itsViewTypes = new HashMap<String,Class<? extends View>>();
+        itsRegions   = new HashMap<String,IRegion>();
+        itsViewTypes = new HashMap<String,Class<? extends IView>>();
     }
 
     /************************************************************************
@@ -63,7 +63,7 @@ class SwtRegionManager
      */
     @Override
     public void 
-    insertRegion(Region region)
+    insertRegion(IRegion region)
     {
         itsRegions.put( region.getRegionName(),region );
     }
@@ -76,7 +76,7 @@ class SwtRegionManager
     initializeRegions()
         throws RegionInitializationException
     {
-       for (Region region:itsRegions.values())
+       for (IRegion region:itsRegions.values())
            region.initializeView();
     }
 
@@ -85,9 +85,9 @@ class SwtRegionManager
      */
     @Override
     public void 
-    registerViewWithRegion(
+    registerWithRegion(
         String                regionName,
-        Class<? extends View> viewType)
+        Class<? extends IView> viewType)
     {
         checkViewType( viewType );
         itsViewTypes.put( regionName,viewType );
@@ -109,7 +109,7 @@ class SwtRegionManager
      */
     @Override
     public boolean 
-    isRegisteredWithRegion(String regionName,Class<? extends View> viewType)
+    isRegisteredWithRegion(String regionName,Class<? extends IView> viewType)
     {
         return 
             itsViewTypes.containsKey( regionName ) &&
@@ -124,11 +124,11 @@ class SwtRegionManager
      * @return
      * @throws RegionInitializationException
      */
-    public SwtView
+    public ISwtView
     createView(String name,Composite parent) 
         throws RegionInitializationException
     {
-        Class<? extends View> viewType = itsViewTypes.get( name );
+        Class<? extends IView> viewType = itsViewTypes.get( name );
         
         if ( viewType == null )
             throw new IllegalArgumentException();
@@ -136,7 +136,7 @@ class SwtRegionManager
         try
         {
             return
-                (SwtView)viewType
+                (ISwtView)viewType
                     .getConstructor( Composite.class )
                     .newInstance( parent );
         }
@@ -153,10 +153,10 @@ class SwtRegionManager
      * @throws IllegalArgumentException
      */
     private void 
-    checkViewType(Class<? extends View> viewType)
+    checkViewType(Class<? extends IView> viewType)
         throws IllegalArgumentException
     {
-        if ( !(SwtView.class).isAssignableFrom( viewType ) ) 
+        if ( !(ISwtView.class).isAssignableFrom( viewType ) ) 
             throw new IllegalArgumentException();
     }
 

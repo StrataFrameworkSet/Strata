@@ -24,7 +24,7 @@
 
 package strata1.swtinteractor.helloworld;
 
-import strata1.interactor.model.Model;
+import strata1.interactor.model.IModel;
 
 /**
  * 
@@ -35,7 +35,7 @@ import strata1.interactor.model.Model;
  */
 public 
 interface HelloWorldModel
-    extends Model
+    extends IModel
 {
 
 }

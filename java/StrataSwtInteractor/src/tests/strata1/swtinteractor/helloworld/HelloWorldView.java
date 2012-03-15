@@ -24,7 +24,7 @@
 
 package strata1.swtinteractor.helloworld;
 
-import strata1.interactor.view.View;
+import strata1.interactor.view.IView;
 
 /**
  * 
@@ -35,7 +35,7 @@ import strata1.interactor.view.View;
  */
 public 
 interface HelloWorldView
-    extends View
+    extends IView
 {
 }
 

@@ -24,7 +24,7 @@
 
 package strata1.common.money;
 
-import strata1.common.utility.Copyable;
+import strata1.common.utility.ICopyable;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -43,7 +43,7 @@ import java.util.Locale;
 public 
 class Money
 	implements 	
-	    Copyable,
+	    ICopyable,
 		Serializable
 {
 	private static final long serialVersionUID = 0;
@@ -151,7 +151,7 @@ class Money
 	
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Copyable#copy()
+	 * @see ICopyable#copy()
 	 */
 	@Override
 	public Money 

@@ -24,9 +24,9 @@
 
 package strata1.interactor.app;
 
-import strata1.interactor.controller.Controller;
-import strata1.interactor.model.Model;
-import strata1.interactor.view.View;
+import strata1.interactor.controller.IController;
+import strata1.interactor.model.IModel;
+import strata1.interactor.view.IView;
 
 /**
  * 
@@ -37,9 +37,9 @@ import strata1.interactor.view.View;
  */
 public abstract 
 class ModelViewControllerApp<
-    M extends Model,
-    V extends View,
-    C extends Controller>
+    M extends IModel,
+    V extends IView,
+    C extends IController>
     implements Runnable
 {
     private M itsModel;

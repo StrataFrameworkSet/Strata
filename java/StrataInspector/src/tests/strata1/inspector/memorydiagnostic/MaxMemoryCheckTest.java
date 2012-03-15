@@ -102,7 +102,7 @@ class MaxMemoryCheckTest
 	}
 
 	/**
-	 * Test method for {@link DiagnosticCheck#runDiagnostic(DiagnosticResult)}.
+	 * Test method for {@link DiagnosticCheck#runDiagnostic(IDiagnosticResult)}.
 	 */
 	@Test
 	public void 

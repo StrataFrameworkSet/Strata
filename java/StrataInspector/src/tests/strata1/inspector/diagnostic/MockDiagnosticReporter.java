@@ -33,7 +33,7 @@ package strata1.inspector.diagnostic;
  */
 public 
 class MockDiagnosticReporter 
-	implements DiagnosticReporter
+	implements IDiagnosticReporter
 {
 
 	/************************************************************************
@@ -48,7 +48,7 @@ class MockDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see strata1.inspector.diagnostic.DiagnosticReporter#beginReport()
+	 * @see strata1.inspector.diagnostic.IDiagnosticReporter#beginReport()
 	 */
 	@Override
 	public void 

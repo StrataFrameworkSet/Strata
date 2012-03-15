@@ -28,11 +28,11 @@ import strata1.common.annotation.*;
 
 /**
  * Provides functionality for doing arithmetic operations on
- * {@code Money} objects. Uses {@code CurrencyExchanger}
+ * {@code Money} objects. Uses {@code ICurrencyExchanger}
  * to convert {@code Money} of different currencies prior
  * to calculations.
  * 
- * @see CurrencyExchanger
+ * @see ICurrencyExchanger
  * 
  * @author 		
  *     Sapientia Systems 
@@ -42,7 +42,7 @@ import strata1.common.annotation.*;
 public 
 class MoneyCalculator
 {
-	private CurrencyExchanger itsExchanger;
+	private ICurrencyExchanger itsExchanger;
 	
 	/************************************************************************
 	 * Creates a new MoneyCalculator. 
@@ -55,7 +55,7 @@ class MoneyCalculator
 	    "this.getExchanger() == exchanger",
 	    "this.getExchanger() != null"})
 	public 
-	MoneyCalculator(CurrencyExchanger exchanger)
+	MoneyCalculator(ICurrencyExchanger exchanger)
 	{
 		super();
 		itsExchanger = exchanger;
@@ -64,7 +64,7 @@ class MoneyCalculator
 	/************************************************************************
 	 * @return the {@code MoneyCalculator}'s currency exchanger
 	 */
-	public CurrencyExchanger
+	public ICurrencyExchanger
 	getExchanger()
 	{
 		return itsExchanger;

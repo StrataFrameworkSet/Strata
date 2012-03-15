@@ -25,9 +25,9 @@
 package strata1.entity.hibernaterepository;
 
 
-import strata1.entity.repository.RepositoryContext;
+import strata1.entity.repository.IRepositoryContext;
 import strata1.common.utility.ReadWriteLockSynchronizer;
-import strata1.common.utility.Synchronizer;
+import strata1.common.utility.ISynchronizer;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -43,9 +43,9 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 public 
 class HibernateRepositoryContext 
 	extends 	HibernateDaoSupport
-	implements 	RepositoryContext
+	implements 	IRepositoryContext
 {
-	private final Synchronizer          itsSynchronizer;
+	private final ISynchronizer         itsSynchronizer;
 	private HibernateTransactionManager itsTransactionManager;
 	
 	/************************************************************************
@@ -66,10 +66,10 @@ class HibernateRepositoryContext
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryContext#getSynchronizer()
+	 * @see IRepositoryContext#getSynchronizer()
 	 */
 	@Override
-	public Synchronizer 
+	public ISynchronizer 
 	getSynchronizer()
 	{
 		return itsSynchronizer;
@@ -77,7 +77,7 @@ class HibernateRepositoryContext
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see RepositoryContext#getTransactionManager()
+	 * @see IRepositoryContext#getTransactionManager()
 	 */
 	@Override
 	public HibernateTransactionManager 

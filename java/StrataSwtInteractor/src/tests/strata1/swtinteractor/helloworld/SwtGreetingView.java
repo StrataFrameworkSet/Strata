@@ -24,8 +24,8 @@
 
 package strata1.swtinteractor.helloworld;
 
-import strata1.swtinteractor.swtview.SwtView;
-import strata1.interactor.command.Command;
+import strata1.swtinteractor.swtview.ISwtView;
+import strata1.interactor.command.ICommand;
 import strata1.interactor.view.AbstractView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -41,7 +41,7 @@ import org.eclipse.swt.widgets.Widget;
  */
 public class SwtGreetingView
     extends AbstractView
-    implements GreetingView, SwtView
+    implements GreetingView, ISwtView
 {
     private Label itsGreeting;
     
@@ -92,7 +92,7 @@ public class SwtGreetingView
      * {@inheritDoc} 
      */
     @Override
-    public void invoke(Command command)
+    public void invoke(ICommand command)
     {
         // TODO Auto-generated method stub
         

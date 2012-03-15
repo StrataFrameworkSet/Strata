@@ -82,7 +82,7 @@ class MockCurrencyExchanger
 	
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see CurrencyExchanger#getSupportedCurrencies()
+	 * @see ICurrencyExchanger#getSupportedCurrencies()
 	 */
 	@Override
 	public Collection<Currency> 

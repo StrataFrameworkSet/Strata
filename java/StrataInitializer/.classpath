@@ -7,10 +7,10 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context/3.0.6.RELEASE/spring-context-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context-support/3.0.6.RELEASE/spring-context-support-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/3.0.6.RELEASE/spring-core-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/StrataInteractor/lib/StrataInteractor-DEV.jar"/>
-	<classpathentry kind="lib" path="/StrataCommon/lib/StrataCommon-DEV.jar"/>
-	<classpathentry kind="lib" path="/StrataIntegrator/lib/StrataIntegrator-DEV.jar"/>
-	<classpathentry kind="lib" path="/StrataEntity/lib/StrataEntity-DEV.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-beans/3.0.6.RELEASE/spring-beans-3.0.6.RELEASE.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataEntity"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegrator"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataInteractor"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>

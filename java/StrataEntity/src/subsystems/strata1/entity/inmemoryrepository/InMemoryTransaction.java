@@ -29,7 +29,7 @@ import java.util.Set;
 
 /****************************************************************************
  * Implements the Transaction interface as an <i>in-memory</i>
- * transaction that groups changes into <code>ChangeSetImp</code>s 
+ * transaction that groups changes into <code>ChangeSet</code>s 
  * and commits them in an all-or-nothing manner.
  * 
  * @author 		
@@ -49,7 +49,7 @@ class InMemoryTransaction
 	}
 	
 	private InMemoryRepositoryContext itsContext;
-	private Set<TransactionParticipant> itsRepositories;
+	private Set<ITransactionParticipant> itsRepositories;
 	private State 					  itsState;
 	
 	/************************************************************************
@@ -78,7 +78,7 @@ class InMemoryTransaction
 			if ( itsState != State.CREATED )
 				return;
 			
-			itsRepositories = new HashSet<TransactionParticipant>();
+			itsRepositories = new HashSet<ITransactionParticipant>();
 			itsState = State.ACTIVE;
 		}
 		finally
@@ -101,7 +101,7 @@ class InMemoryTransaction
 				throw new RuntimeException( 
 				"Cannot commit non-active transaction." );
 			
-			for (TransactionParticipant r:itsRepositories)
+			for (ITransactionParticipant r:itsRepositories)
 				r.applyChanges();
 			
 			itsState = State.COMMITTED;
@@ -127,7 +127,7 @@ class InMemoryTransaction
 				throw new RuntimeException( 
 				"Cannot rollback non-active transaction." );
 			
-			for (TransactionParticipant r:itsRepositories)
+			for (ITransactionParticipant r:itsRepositories)
 				r.discardChanges();
 			
 			itsRepositories = null;
@@ -186,7 +186,7 @@ class InMemoryTransaction
 	 * @param repository
 	 */
 	public void
-	joinTransaction(TransactionParticipant repository)
+	joinTransaction(ITransactionParticipant repository)
 	{
 		if ( !itsRepositories.contains( repository ) )
 			itsRepositories.add( repository );

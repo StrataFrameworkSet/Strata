@@ -101,7 +101,7 @@ class TotalMemoryCheckTest
 	}
 
 	/**
-	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticCheck#runDiagnostic(strata1.inspector.diagnostic.DiagnosticResult)}.
+	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticCheck#runDiagnostic(strata1.inspector.diagnostic.IDiagnosticResult)}.
 	 */
 	@Test
 	public void 

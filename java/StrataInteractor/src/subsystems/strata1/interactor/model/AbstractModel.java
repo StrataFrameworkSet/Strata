@@ -24,8 +24,8 @@
 
 package strata1.interactor.model;
 
-import strata1.interactor.event.ChangeEvent;
-import strata1.interactor.event.ChangeEventProcessor;
+import strata1.interactor.event.IChangeEvent;
+import strata1.interactor.event.IChangeEventProcessor;
 
 /**
  * 
@@ -36,28 +36,28 @@ import strata1.interactor.event.ChangeEventProcessor;
  */
 public abstract 
 class AbstractModel
-	implements Model
+	implements IModel
 {
-	protected ChangeEventProcessor itsProcessor;
+	protected IChangeEventProcessor itsProcessor;
 	
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Model#setProcessor(ChangeEventProcessor)
+	 * @see IModel#setProcessor(IChangeEventProcessor)
 	 */
 	@Override
 	public void 
-	setProcessor(ChangeEventProcessor processor)
+	setProcessor(IChangeEventProcessor processor)
 	{
 		itsProcessor = processor;
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see Model#notifyUpdate(Object)
+	 * @see IModel#notifyUpdate(Object)
 	 */
 	@Override
 	public void 
-	notifyChange(ChangeEvent event)
+	notifyChange(IChangeEvent event)
 	{
 		itsProcessor.processChange( event );
 	}

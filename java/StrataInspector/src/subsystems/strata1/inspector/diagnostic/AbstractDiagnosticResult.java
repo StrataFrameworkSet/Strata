@@ -37,9 +37,9 @@ import java.util.List;
  */
 public abstract 
 class AbstractDiagnosticResult 
-	implements DiagnosticResult
+	implements IDiagnosticResult
 {
-	private List<DiagnosticReporter>  itsReporters;
+	private List<IDiagnosticReporter>  itsReporters;
 	private List<DiagnosticOutput>    itsContents;
 	private DiagnosticOutputGenerator itsGenerator;
 	
@@ -50,18 +50,18 @@ class AbstractDiagnosticResult
 	public 
 	AbstractDiagnosticResult()
 	{
-		itsReporters = new LinkedList<DiagnosticReporter>();
+		itsReporters = new LinkedList<IDiagnosticReporter>();
 		itsContents  = new LinkedList<DiagnosticOutput>();
 		itsGenerator = new DiagnosticOutputGenerator();
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticResult#attachReporter(DiagnosticReporter)
+	 * @see IDiagnosticResult#attachReporter(IDiagnosticReporter)
 	 */
 	@Override
 	public void 
-	attachReporter(DiagnosticReporter reporter)
+	attachReporter(IDiagnosticReporter reporter)
 	{
 		if ( !hasReporter( reporter ) )
 			itsReporters.add( reporter );
@@ -69,29 +69,29 @@ class AbstractDiagnosticResult
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticResult#detachReporter(DiagnosticReporter)
+	 * @see IDiagnosticResult#detachReporter(IDiagnosticReporter)
 	 */
 	@Override
 	public void 
-	detachReporter(DiagnosticReporter reporter)
+	detachReporter(IDiagnosticReporter reporter)
 	{
 		itsReporters.remove( reporter );
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticResult#getReporters()
+	 * @see IDiagnosticResult#getReporters()
 	 */
 	@Override
-	public List<DiagnosticReporter> 
+	public List<IDiagnosticReporter> 
 	getReporters()
 	{
-		return new LinkedList<DiagnosticReporter>( itsReporters );
+		return new LinkedList<IDiagnosticReporter>( itsReporters );
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticResult#hasReporters()
+	 * @see IDiagnosticResult#hasReporters()
 	 */
 	@Override
 	public boolean 
@@ -102,69 +102,69 @@ class AbstractDiagnosticResult
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticResult#hasReporter(DiagnosticReporter)
+	 * @see IDiagnosticResult#hasReporter(IDiagnosticReporter)
 	 */
 	@Override
 	public boolean 
-	hasReporter(DiagnosticReporter reporter)
+	hasReporter(IDiagnosticReporter reporter)
 	{
 		return itsReporters.contains( reporter );
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticResult#beginReports()
+	 * @see IDiagnosticResult#beginReports()
 	 */
 	@Override
 	public void 
 	beginReports()
 	{
-		for (DiagnosticReporter reporter:getReporters())
+		for (IDiagnosticReporter reporter:getReporters())
 			reporter.beginReport();
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticResult#endReports()
+	 * @see IDiagnosticResult#endReports()
 	 */
 	@Override
 	public void 
 	endReports()
 	{
-		for (DiagnosticReporter reporter:getReporters())
+		for (IDiagnosticReporter reporter:getReporters())
 			reporter.endReport();
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReceiver#beginDiagnostic(Diagnostic)
+	 * @see IDiagnosticReceiver#beginDiagnostic(IDiagnostic)
 	 */
 	@Override
 	public void 
-	beginDiagnostic(Diagnostic d)
+	beginDiagnostic(IDiagnostic d)
 	{
 		DiagnosticOutput output = null;
 		
 		itsGenerator.setDiagnosticName( d.getName() );
 		output = itsGenerator.generateOutput();
 		
-		for (DiagnosticReporter reporter:getReporters())
+		for (IDiagnosticReporter reporter:getReporters())
 			reporter.beginDiagnostic( output );
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReceiver#endDiagnostic(Diagnostic)
+	 * @see IDiagnosticReceiver#endDiagnostic(IDiagnostic)
 	 */
 	@Override
 	public void 
-	endDiagnostic(Diagnostic d)
+	endDiagnostic(IDiagnostic d)
 	{
 		DiagnosticOutput output =  itsGenerator.generateOutput();
 		
 		itsContents.add( output );
 		
-		for (DiagnosticReporter reporter:getReporters())
+		for (IDiagnosticReporter reporter:getReporters())
 			reporter.endDiagnostic( output );
 		
 		itsGenerator.clear();
@@ -172,33 +172,33 @@ class AbstractDiagnosticResult
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReceiver#reportBeginFailure(
-	 * 			Diagnostic,
+	 * @see IDiagnosticReceiver#reportBeginFailure(
+	 * 			IDiagnostic,
 	 * 			DiagnosticAbortedException)
 	 */
 	@Override
 	public void 
-	reportBeginFailure(Diagnostic d,DiagnosticAbortedException e)
+	reportBeginFailure(IDiagnostic d,DiagnosticAbortedException e)
 	{
 		DiagnosticOutput output = null;
 		
 		itsGenerator.setResultState( DiagnosticResultState.ABORTED );
-		itsGenerator.setDescription( "Diagnostic failed to run." );
+		itsGenerator.setDescription( "IDiagnostic failed to run." );
 		itsGenerator.setException( e );
 		
 		output = itsGenerator.generateOutput();
 		
-		for (DiagnosticReporter reporter:getReporters())
+		for (IDiagnosticReporter reporter:getReporters())
 			reporter.reportBeginFailure( output );
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReceiver#reportCheckSuccess(Diagnostic,String)
+	 * @see IDiagnosticReceiver#reportCheckSuccess(IDiagnostic,String)
 	 */
 	@Override
 	public void 
-	reportCheckSuccess(Diagnostic d,String msg)
+	reportCheckSuccess(IDiagnostic d,String msg)
 	{
 		DiagnosticOutput output = null;
 		
@@ -208,39 +208,39 @@ class AbstractDiagnosticResult
 		
 		output = itsGenerator.generateOutput();
 		
-		for (DiagnosticReporter reporter:getReporters())
+		for (IDiagnosticReporter reporter:getReporters())
 			reporter.reportCheckSuccess( output );
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReceiver#reportCheckFailure(
-	 * 			Diagnostic,
+	 * @see IDiagnosticReceiver#reportCheckFailure(
+	 * 			IDiagnostic,
 	 * 			DiagnosticException)
 	 */
 	@Override
 	public void 
-	reportCheckFailure(Diagnostic d,DiagnosticException e)
+	reportCheckFailure(IDiagnostic d,DiagnosticException e)
 	{
 		DiagnosticOutput output = null;
 		
 		itsGenerator.setResultState( DiagnosticResultState.FAILED );
-		itsGenerator.setDescription( "Diagnostic failed with exception:" );
+		itsGenerator.setDescription( "IDiagnostic failed with exception:" );
 		itsGenerator.setException( e );
 		
 		output = itsGenerator.generateOutput();
 		
-		for (DiagnosticReporter reporter:getReporters())
+		for (IDiagnosticReporter reporter:getReporters())
 			reporter.reportCheckFailure( output );
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReceiver#reportRecoverySuccess(Diagnostic,String)
+	 * @see IDiagnosticReceiver#reportRecoverySuccess(IDiagnostic,String)
 	 */
 	@Override
 	public void 
-	reportRecoverySuccess(Diagnostic d,String msg)
+	reportRecoverySuccess(IDiagnostic d,String msg)
 	{
 		DiagnosticOutput output = null;
 		
@@ -250,56 +250,56 @@ class AbstractDiagnosticResult
 		
 		output = itsGenerator.generateOutput();
 		
-		for (DiagnosticReporter reporter:getReporters())
+		for (IDiagnosticReporter reporter:getReporters())
 			reporter.reportRecoverySuccess( output );
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReceiver#reportRecoveryFailure(
-	 *			Diagnostic,
+	 * @see IDiagnosticReceiver#reportRecoveryFailure(
+	 *			IDiagnostic,
 	 *			DiagnosticException)
 	 */
 	@Override
 	public void 
-	reportRecoveryFailure(Diagnostic d,DiagnosticException e)
+	reportRecoveryFailure(IDiagnostic d,DiagnosticException e)
 	{
 		DiagnosticOutput output = null;
 
 		itsGenerator.setResultState( DiagnosticResultState.FAILED );
 		itsGenerator.setDescription( 
-		    "Diagnostic recovery failed with exception:" );
+		    "IDiagnostic recovery failed with exception:" );
 		itsGenerator.setException( e );
 		
 		output = itsGenerator.generateOutput();
 		
-		for (DiagnosticReporter reporter:getReporters())
+		for (IDiagnosticReporter reporter:getReporters())
 			reporter.reportRecoveryFailure( output );
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReceiver#reportUnknownFailure(Diagnostic,Exception)
+	 * @see IDiagnosticReceiver#reportUnknownFailure(IDiagnostic,Exception)
 	 */
 	@Override
 	public void 
-	reportUnknownFailure(Diagnostic d,Exception e)
+	reportUnknownFailure(IDiagnostic d,Exception e)
 	{
 		DiagnosticOutput output = null;
 		
 		itsGenerator.setResultState( DiagnosticResultState.FAILED );
-		itsGenerator.setDescription( "Diagnostic failed with exception:" );
+		itsGenerator.setDescription( "IDiagnostic failed with exception:" );
 		itsGenerator.setException( e );
 		
 		output = itsGenerator.generateOutput();
 		
-		for (DiagnosticReporter reporter:getReporters())
+		for (IDiagnosticReporter reporter:getReporters())
 			reporter.reportUnknownFailure( output );
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticResult#getNumberOfDiagnostics()
+	 * @see IDiagnosticResult#getNumberOfDiagnostics()
 	 */
 	@Override
 	public int 
@@ -310,7 +310,7 @@ class AbstractDiagnosticResult
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticResult#getNumberOfAborts()
+	 * @see IDiagnosticResult#getNumberOfAborts()
 	 */
 	@Override
 	public int 
@@ -327,7 +327,7 @@ class AbstractDiagnosticResult
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticResult#getNumberOfSuccesses()
+	 * @see IDiagnosticResult#getNumberOfSuccesses()
 	 */
 	@Override
 	public int 
@@ -344,7 +344,7 @@ class AbstractDiagnosticResult
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticResult#getNumberOfFailures()
+	 * @see IDiagnosticResult#getNumberOfFailures()
 	 */
 	@Override
 	public int 
@@ -361,7 +361,7 @@ class AbstractDiagnosticResult
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticResult#getContents()
+	 * @see IDiagnosticResult#getContents()
 	 */
 	@Override
 	public List<DiagnosticOutput> 

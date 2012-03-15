@@ -25,7 +25,7 @@
 package strata1.inspector.outputstreamdiagnosticreporter;
 
 import strata1.inspector.diagnostic.DiagnosticOutput;
-import strata1.inspector.diagnostic.DiagnosticReporter;
+import strata1.inspector.diagnostic.IDiagnosticReporter;
 
 import java.io.PrintStream;
 
@@ -38,7 +38,7 @@ import java.io.PrintStream;
  */
 public 
 class PrintStreamDiagnosticReporter 
-	implements DiagnosticReporter
+	implements IDiagnosticReporter
 {
 	private PrintStream itsWriter;
 	
@@ -54,7 +54,7 @@ class PrintStreamDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#beginReport()
+	 * @see IDiagnosticReporter#beginReport()
 	 */
 	@Override
 	public void 
@@ -64,7 +64,7 @@ class PrintStreamDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#endReport()
+	 * @see IDiagnosticReporter#endReport()
 	 */
 	@Override
 	public void 
@@ -75,7 +75,7 @@ class PrintStreamDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#beginDiagnostic(DiagnosticOutput)
+	 * @see IDiagnosticReporter#beginDiagnostic(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -85,7 +85,7 @@ class PrintStreamDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#endDiagnostic(DiagnosticOutput)
+	 * @see IDiagnosticReporter#endDiagnostic(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -131,7 +131,7 @@ class PrintStreamDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportBeginFailure(DiagnosticOutput)
+	 * @see IDiagnosticReporter#reportBeginFailure(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -141,7 +141,7 @@ class PrintStreamDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportCheckSuccess(DiagnosticOutput)
+	 * @see IDiagnosticReporter#reportCheckSuccess(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -151,7 +151,7 @@ class PrintStreamDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportCheckFailure(DiagnosticOutput)
+	 * @see IDiagnosticReporter#reportCheckFailure(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -161,7 +161,7 @@ class PrintStreamDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportRecoverySuccess(DiagnosticOutput)
+	 * @see IDiagnosticReporter#reportRecoverySuccess(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -171,7 +171,7 @@ class PrintStreamDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportRecoveryFailure(DiagnosticOutput)
+	 * @see IDiagnosticReporter#reportRecoveryFailure(DiagnosticOutput)
 	 */
 	@Override
 	public void 
@@ -181,7 +181,7 @@ class PrintStreamDiagnosticReporter
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see DiagnosticReporter#reportUnknownFailure(DiagnosticOutput)
+	 * @see IDiagnosticReporter#reportUnknownFailure(DiagnosticOutput)
 	 */
 	@Override
 	public void 

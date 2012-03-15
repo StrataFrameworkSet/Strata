@@ -62,7 +62,7 @@ public class DiagnosticCheckTest
 
 	/**
 	 * Test method for 
-	 * {@link DiagnosticCheck#runDiagnostic(DiagnosticResult)}.
+	 * {@link DiagnosticCheck#runDiagnostic(IDiagnosticResult)}.
 	 */
 	@Test
 	public void testRunDiagnostic()

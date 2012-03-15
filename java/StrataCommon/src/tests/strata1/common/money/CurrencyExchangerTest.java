@@ -23,7 +23,7 @@ import java.util.Currency;
 public 
 class CurrencyExchangerTest
 {
-	private CurrencyExchanger itsTarget;
+	private ICurrencyExchanger itsTarget;
 		
 	/************************************************************************
 	 *  
@@ -51,7 +51,7 @@ class CurrencyExchangerTest
 
 	/**
 	 * Test method for 
-	 * {@link CurrencyExchanger#exchange(Currency,Money)}.
+	 * {@link ICurrencyExchanger#exchange(Currency,Money)}.
 	 */
 	@Test
 	public void 
@@ -75,7 +75,7 @@ class CurrencyExchangerTest
 
 	/**
 	 * Test method for 
-	 * {@link threshold.api.common.CurrencyExchanger#exchange(
+	 * {@link ICurrencyExchanger.api.common.CurrencyExchanger#exchange(
 	 *         Currency,Money,DateTime)}.
 	 */
 	@Test

@@ -27,10 +27,10 @@ package strata1.inspector.diagnostic;
 import java.util.*;
 
 /**
- * Represents a suite of {@code Diagnostic}s that are meant to be 
+ * Represents a suite of {@code IDiagnostic}s that are meant to be 
  * run as a whole or as part of a larger suite. {@code DiagnosticSuite} 
  * is a <a href="{@docRoot}/designpatterns/pat4c.htm">Composite</a> of 
- * {@code Diagnostic}s.
+ * {@code IDiagnostic}s.
  * 
  * @author 		
  *     Sapientia Systems 
@@ -41,7 +41,7 @@ public
 class DiagnosticSuite 
 	extends AbstractDiagnostic
 {
-	private Map<String,Diagnostic> itsDiagnostics;
+	private Map<String,IDiagnostic> itsDiagnostics;
 	
 	/************************************************************************
 	 * Creates a new DiagnosticSuite. 
@@ -52,7 +52,7 @@ class DiagnosticSuite
 	DiagnosticSuite(String name)
 	{
 		super( name );
-		itsDiagnostics = new LinkedHashMap<String,Diagnostic>();
+		itsDiagnostics = new LinkedHashMap<String,IDiagnostic>();
 	}
 
 	/************************************************************************
@@ -60,14 +60,14 @@ class DiagnosticSuite
 	 */
 	@Override
 	public void 
-	runDiagnostic(DiagnosticResult result)
+	runDiagnostic(IDiagnosticResult result)
 	{
 		try
 		{
 			result.beginDiagnostic( this );
 			beginDiagnosticMode();
 			
-			for (Diagnostic d:itsDiagnostics.values())
+			for (IDiagnostic d:itsDiagnostics.values())
 				d.runDiagnostic( result );
 		}
 		catch (DiagnosticAbortedException ae)
@@ -82,7 +82,7 @@ class DiagnosticSuite
 	}
 
 	/************************************************************************
-	 * Adds a Diagnostic to the DiagnosticSuite. 
+	 * Adds a IDiagnostic to the DiagnosticSuite. 
 	 *
 	 * @param 			d	The diagnostic being added.
 	 * @precondition	this.hasDiagnostic( d.getName() ) == false
@@ -90,13 +90,13 @@ class DiagnosticSuite
 	 * @postcondition	this.getDiagnostic( d.getName() ) == d
 	 */
 	public void 
-	addDiagnostic(Diagnostic d)
+	addDiagnostic(IDiagnostic d)
 	{
 		itsDiagnostics.put( d.getName(),d );
 	}
 	
 	/************************************************************************
-	 * Removes the Diagnostic with the specified 
+	 * Removes the IDiagnostic with the specified 
 	 * name from the DiagnosticSuite. 
 	 *
 	 * @param 			name	The name of the diagnostic being removed 
@@ -111,19 +111,19 @@ class DiagnosticSuite
 	}
 	
 	/************************************************************************
-	 * Returns the Diagnostic associated with the specified name. 
+	 * Returns the IDiagnostic associated with the specified name. 
 	 *
 	 * @param 	name	The name of the diagnostic to be returned.
 	 * @return	The diagnostic associated with name.
 	 */
-	public Diagnostic 
+	public IDiagnostic 
 	getDiagnostic(String name)
 	{
 		return itsDiagnostics.get( name );
 	}
 	
 	/************************************************************************
-	 * Queries the DiagnosticSuite if it contains a Diagnostic 
+	 * Queries the DiagnosticSuite if it contains a IDiagnostic 
 	 * with the specified name. 
 	 *
 	 * @param 	name	The name of the diagnostic being queried.

@@ -25,7 +25,7 @@
 package strata1.entity.inmemoryrepository;
 
 
-import strata1.entity.repository.Finder;
+import strata1.entity.repository.IFinder;
 import strata1.entity.repository.InvalidInputException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,10 +46,10 @@ import java.util.Map;
  */
 public abstract
 class InMemoryFinder<K,T> 
-	implements Finder<T>
+	implements IFinder<T>
 {
 	private InMemoryRepositoryContext itsContext;
-	private Predicate<T>			  itsPredicate;
+	private IPredicate<T>			  itsPredicate;
 	private Map<K,T>				  itsObjects;
 	private Map<String,Object>		  itsNamedInputs;
 	private List<T>				      itsResults;
@@ -62,7 +62,7 @@ class InMemoryFinder<K,T>
 	public 
 	InMemoryFinder(
 		InMemoryRepositoryContext context,
-		Predicate<T>			  predicate,
+		IPredicate<T>			  predicate,
 		Map<K,T>                  objects)
 	{
 		super();

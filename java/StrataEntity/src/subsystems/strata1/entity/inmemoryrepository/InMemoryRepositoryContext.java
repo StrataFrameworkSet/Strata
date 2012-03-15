@@ -24,9 +24,9 @@
 
 package strata1.entity.inmemoryrepository;
 
-import strata1.entity.repository.RepositoryContext;
+import strata1.entity.repository.IRepositoryContext;
 import strata1.common.utility.ReadWriteLockSynchronizer;
-import strata1.common.utility.Synchronizer;
+import strata1.common.utility.ISynchronizer;
 import org.springframework.transaction.PlatformTransactionManager;
 
 
@@ -41,9 +41,9 @@ import org.springframework.transaction.PlatformTransactionManager;
  */
 public 
 class InMemoryRepositoryContext 
-	implements RepositoryContext
+	implements IRepositoryContext
 {
-	private final Synchronizer        itsSynchronizer;
+	private final ISynchronizer        itsSynchronizer;
 	private       InMemoryTransaction itsTransaction;
 	
 	/************************************************************************
@@ -62,7 +62,7 @@ class InMemoryRepositoryContext
 	 * {@inheritDoc} 
 	 */
     @Override
-	public Synchronizer 
+	public ISynchronizer 
 	getSynchronizer()
 	{
 		return itsSynchronizer;

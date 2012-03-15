@@ -28,7 +28,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- * Implements the {@code Synchronizer} interface by wrapping
+ * Implements the {@code ISynchronizer} interface by wrapping
  * the standard {@code ReadWriteLock}. 
  * 
  * @see ReadWriteLock
@@ -40,7 +40,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public 
 class ReadWriteLockSynchronizer 
-	implements Synchronizer
+	implements ISynchronizer
 {
 	private final ReadWriteLock itsLock;
 	
