@@ -33,7 +33,7 @@ package strata1.initializer.provider;
  */
 public abstract 
 class AbstractContainerFactory
-    implements ContainerFactory
+    implements IProviderFactory
 {
 
     /************************************************************************
@@ -47,7 +47,7 @@ class AbstractContainerFactory
      * {@inheritDoc} 
      */
     @Override
-    public ComponentDefinition 
+    public IComponentDefinition 
     createComponentDefinition()
     {
         return new DefaultComponentDefinition();
@@ -57,7 +57,7 @@ class AbstractContainerFactory
      * {@inheritDoc} 
      */
     @Override
-    public ConstructorInjector 
+    public IConstructorInjector 
     createConstructorInjector()
     {
         return new DefaultConstructorInjector();
@@ -67,7 +67,7 @@ class AbstractContainerFactory
      * {@inheritDoc} 
      */
     @Override
-    public PropertyInjector 
+    public IPropertyInjector 
     createPropertyInjector()
     {
         return new DefaultPropertyInjector();

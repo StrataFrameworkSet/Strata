@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IControllerContainer.java
+// # File Name:	AbstractViewModel.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInteractor Framework.
 // #
@@ -22,35 +22,46 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.controller;
+package strata1.interactor.viewmodel;
 
-/****************************************************************************
+import strata1.interactor.event.IChangeEvent;
+import strata1.interactor.event.IChangeEventProcessor;
+
+/**
  * 
  * @author 		
- *     Sapientia Systems
+ *     Sapientia Systems 
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IControllerContainer
+public abstract 
+class AbstractViewModel
+	implements IViewModel
 {
-    public <C extends IController> void
-    registerController(C controller);
-    
-    public <C extends IController> void
-    registerController(String controllerName,C controller);
-    
-    public <C extends IController> C
-    getController(Class<C> controllerType);
-    
-    public <C extends IController> C
-    getController(Class<C> controllerType,String controllerName);
-    
-    public <C extends IController> boolean
-    hasController(Class<C> controllerType);
-    
-    public <C extends IController> boolean
-    hasController(Class<C> controllerType,String controllerName);    
+	protected IChangeEventProcessor itsProcessor;
+	
+	/************************************************************************
+	 * {@inheritDoc} 
+	 * @see IViewModel#setProcessor(IChangeEventProcessor)
+	 */
+	@Override
+	public void 
+	setProcessor(IChangeEventProcessor processor)
+	{
+		itsProcessor = processor;
+	}
+
+	/************************************************************************
+	 * {@inheritDoc} 
+	 * @see IViewModel#notifyUpdate(Object)
+	 */
+	@Override
+	public void 
+	notifyChange(IChangeEvent event)
+	{
+		itsProcessor.processChange( event );
+	}
 }
+
 
 // ##########################################################################

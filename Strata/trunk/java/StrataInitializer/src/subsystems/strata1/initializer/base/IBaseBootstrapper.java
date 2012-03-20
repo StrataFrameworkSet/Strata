@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ClientContainerFactory.java
+// # File Name:	IBaseBootstrapper.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.client;
+package strata1.initializer.base;
 
 /**
  * 
@@ -32,24 +32,11 @@ package strata1.initializer.client;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ClientContainerFactory
+interface IBaseBootstrapper
 {
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public ClientContainer
-    createClientContainer();
-    
-    /************************************************************************
-     *  
-     *
-     * @param resourceLocation
-     * @return
-     */
-    public ClientContainer
-    createClientContainer(String resourceLocation);
+    public void
+    run();
 }
+
 
 // ##########################################################################

@@ -25,7 +25,7 @@
 package strata1.initializer.springprovider;
 
 import strata1.initializer.provider.AbstractContainerFactory;
-import strata1.initializer.provider.ContainerProvider;
+import strata1.initializer.provider.IContainerProvider;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -51,7 +51,7 @@ public class SpringContainerFactory
      * {@inheritDoc} 
      */
     @Override
-    public ContainerProvider 
+    public IContainerProvider 
     createComponentContainer()
     {
         
@@ -63,7 +63,7 @@ public class SpringContainerFactory
      * {@inheritDoc} 
      */
     @Override
-    public ContainerProvider 
+    public IContainerProvider 
     createComponentContainer(String resourceLocation)
     {
         return 

@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IControllerContainer.java
+// # File Name:	IViewModelContainer.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.controller;
+package strata1.interactor.viewmodel;
 
 /****************************************************************************
  * 
@@ -32,25 +32,25 @@ package strata1.interactor.controller;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IControllerContainer
+interface IViewModelContainer
 {
-    public <C extends IController> void
-    registerController(C controller);
+    public <V extends IViewModel> void
+    registerViewModel(V viewmodel);
     
-    public <C extends IController> void
-    registerController(String controllerName,C controller);
+    public <V extends IViewModel> void
+    registerViewModel(String viewmodelName,V viewmodel);
     
-    public <C extends IController> C
-    getController(Class<C> controllerType);
+    public <V extends IViewModel> V
+    getViewModel(Class<V> viewmodelType);
     
-    public <C extends IController> C
-    getController(Class<C> controllerType,String controllerName);
+    public <V extends IViewModel> V
+    getViewModel(Class<V> viewmodelType,String viewmodelName);
     
-    public <C extends IController> boolean
-    hasController(Class<C> controllerType);
+    public <V extends IViewModel> boolean
+    hasViewModel(Class<V> viewmodelType);
     
-    public <C extends IController> boolean
-    hasController(Class<C> controllerType,String controllerName);    
+    public <V extends IViewModel> boolean
+    hasViewModel(Class<V> viewmodelType,String viewmodelName);    
 }
 
 // ##########################################################################

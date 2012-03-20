@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ComponentDefinition.java
+// # File Name:	IComponentDefinition.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -33,7 +33,7 @@ package strata1.initializer.provider;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ComponentDefinition
+interface IComponentDefinition
 {
     /************************************************************************
      *  
@@ -66,7 +66,7 @@ interface ComponentDefinition
      * @param injector
      */
     public void
-    setConstructorInjector(ConstructorInjector injector);
+    setConstructorInjector(IConstructorInjector injector);
     
     /************************************************************************
      *  
@@ -97,7 +97,7 @@ interface ComponentDefinition
      *
      * @return
      */
-    public ConstructorInjector
+    public IConstructorInjector
     getConstructorInjector();
     
     /************************************************************************

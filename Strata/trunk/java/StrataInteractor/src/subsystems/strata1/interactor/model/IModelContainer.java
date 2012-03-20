@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IControllerContainer.java
+// # File Name:	IModelContainer.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.controller;
+package strata1.interactor.model;
 
 /****************************************************************************
  * 
@@ -32,25 +32,25 @@ package strata1.interactor.controller;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IControllerContainer
+interface IModelContainer
 {
-    public <C extends IController> void
-    registerController(C controller);
+    public <M extends IModel> void
+    registerModel(M model);
     
-    public <C extends IController> void
-    registerController(String controllerName,C controller);
+    public <M extends IModel> void
+    registerModel(String modelName,M model);
     
-    public <C extends IController> C
-    getController(Class<C> controllerType);
+    public <M extends IModel> M
+    getModel(Class<M> modelType);
     
-    public <C extends IController> C
-    getController(Class<C> controllerType,String controllerName);
+    public <M extends IModel> M
+    getModel(Class<M> modelType,String modelName);
     
-    public <C extends IController> boolean
-    hasController(Class<C> controllerType);
+    public <M extends IModel> boolean
+    hasModel(Class<M> modelType);
     
-    public <C extends IController> boolean
-    hasController(Class<C> controllerType,String controllerName);    
+    public <M extends IModel> boolean
+    hasModel(Class<M> modelType,String modelName);    
 }
 
 // ##########################################################################

@@ -27,7 +27,7 @@ package strata1.initializer.server;
 import strata1.common.annotation.Factory;
 import strata1.entity.repository.IRepository;
 import strata1.initializer.base.AbstractBaseContainer;
-import strata1.initializer.provider.ContainerProvider;
+import strata1.initializer.provider.IContainerProvider;
 import strata1.integrator.annotation.Gateway;
 
 /**
@@ -40,7 +40,7 @@ import strata1.integrator.annotation.Gateway;
 public 
 class DefaultServerContainer
     extends    AbstractBaseContainer
-    implements ServerContainer
+    implements IServerContainer
 {
     
     /************************************************************************
@@ -48,25 +48,87 @@ class DefaultServerContainer
      *
      */
     public 
-    DefaultServerContainer(ContainerProvider provider)
+    DefaultServerContainer(IContainerProvider provider)
     {
         super( provider );
     }
+
+    
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <R extends IRepository> void 
+    registerRepository(R repository)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <R extends IRepository> void 
+    registerRepository(String repositoryName,R repository)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
     public <R extends IRepository> R 
-    getRepository(Class<R> repositoryType,String name)
+    getRepository(Class<R> repositoryType)
     {
-        return getProvider().getInstance( repositoryType,name );
+        // TODO Auto-generated method stub
+        return null;
     }
-    
+
+
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
+    public <R extends IRepository> R 
+    getRepository(Class<R> repositoryType,String repositoryName)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <R extends IRepository> boolean 
+    hasRepository(Class<R> repositoryType)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <R extends IRepository> boolean 
+    hasRepository(Class<R> repositoryType,String repositoryName)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
     protected boolean
     isSupportedType(Class<?> type)
     {

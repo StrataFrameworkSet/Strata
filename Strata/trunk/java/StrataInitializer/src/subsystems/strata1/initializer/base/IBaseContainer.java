@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	BaseContainer.java
+// # File Name:	IBaseContainer.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,6 +24,9 @@
 
 package strata1.initializer.base;
 
+import strata1.integrator.gateway.IGatewayContainer;
+import strata1.common.factory.IFactoryContainer;
+
 
 /**
  * 
@@ -33,46 +36,10 @@ package strata1.initializer.base;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface BaseContainer
+interface IBaseContainer
+    extends IGatewayContainer,
+            IFactoryContainer
 {
-    /************************************************************************
-     *  
-     *
-     * @param name
-     * @param instance
-     */
-    public <T> void
-    registerInstance(String name,T instance);
-    
-    /************************************************************************
-     *  
-     *
-     * @param gatewayType
-     * @param name
-     * @return
-     */
-    public <G> G
-    getGateway(Class<G> gatewayType,String name);
-
-    /************************************************************************
-     *  
-     *
-     * @param factoryType
-     * @param name
-     * @return
-     */
-    public <F> F
-    getFactory(Class<F> factoryType,String name);
-    
-    /************************************************************************
-     *  
-     *
-     * @param type
-     * @param name
-     * @return
-     */
-    public boolean
-    hasInstance(Class<?> type,String name);
 }
 
 
