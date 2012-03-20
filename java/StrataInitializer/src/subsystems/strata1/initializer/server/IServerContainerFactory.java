@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	Bootstrapper.java
+// # File Name:	IServerContainerFactory.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.client;
-
-import strata1.initializer.base.BaseBootstrapper;
+package strata1.initializer.server;
 
 /**
  * 
@@ -34,11 +32,24 @@ import strata1.initializer.base.BaseBootstrapper;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ClientBootstrapper
-    extends BaseBootstrapper
+interface IServerContainerFactory
 {
-    public void 
-    setContainer(ClientContainer container);
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public IServerContainer
+    createServerContainer();
+    
+    /************************************************************************
+     *  
+     *
+     * @param resourceLocation
+     * @return
+     */
+    public IServerContainer
+    createServerContainer(String resourceLocation);
 }
 
 

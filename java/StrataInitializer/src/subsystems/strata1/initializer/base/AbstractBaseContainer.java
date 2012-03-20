@@ -25,7 +25,7 @@
 package strata1.initializer.base;
 
 import strata1.common.annotation.Factory;
-import strata1.initializer.provider.ContainerProvider;
+import strata1.initializer.provider.IContainerProvider;
 import strata1.integrator.annotation.Gateway;
 
 /**
@@ -37,16 +37,16 @@ import strata1.integrator.annotation.Gateway;
  */
 public abstract 
 class AbstractBaseContainer
-    implements BaseContainer
+    implements IBaseContainer
 {
-    private ContainerProvider itsProvider;
+    private IContainerProvider itsProvider;
 
     /************************************************************************
      * Creates a new AbstractBaseContainer. 
      *
      */
     public 
-    AbstractBaseContainer(ContainerProvider provider)
+    AbstractBaseContainer(IContainerProvider provider)
     {
         itsProvider = provider;
     }
@@ -55,17 +55,28 @@ class AbstractBaseContainer
      * {@inheritDoc} 
      */
     @Override
-    public <T> void 
-    registerInstance(String name,T instance)
+    public <G> void 
+    registerGateway(G gateway)
     {
-        Class<?> instanceType = instance.getClass();
         
-        if ( isSupportedType( instanceType ) )
-            getProvider().registerInstance( name,instance );
+        registerGateway( gateway.getClass().getCanonicalName(),gateway );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <G> void 
+    registerGateway(String gatewayName,G gateway)
+    {
+        Class<?> gatewayType = gateway.getClass();
+        
+        if ( gatewayType.isAnnotationPresent( Gateway.class ) )
+            getProvider().registerInstance( gatewayName,gateway );
         else
             throw 
                 new IllegalArgumentException( 
-                    instanceType + " is not a supported type.");    
+                    gatewayType + " is not a supported type.");    
     }
 
     /************************************************************************
@@ -73,14 +84,79 @@ class AbstractBaseContainer
      */
     @Override
     public <G> G 
-    getGateway(Class<G> gatewayType,String name)
+    getGateway(Class<G> gatewayType)
+    {
+        return getGateway( gatewayType,gatewayType.getCanonicalName() );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <G> G 
+    getGateway(Class<G> gatewayType,String gatewayName)
     {
         if ( !gatewayType.isAnnotationPresent( Gateway.class ) )
             throw 
                 new IllegalArgumentException( 
                     gatewayType + "is not a gateway.");
         
-        return itsProvider.getInstance( gatewayType,name );
+        return itsProvider.getInstance( gatewayType,gatewayName );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <G> boolean 
+    hasGateway(Class<G> gatewayType)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <G> boolean 
+    hasGateway(Class<G> gatewayType,String gatewayName)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <F> void 
+    registerFactory(F factory)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <F> void 
+    registerFactory(String factoryName,F factory)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <F> F 
+    getFactory(Class<F> factoryType)
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     /************************************************************************
@@ -102,10 +178,22 @@ class AbstractBaseContainer
      * {@inheritDoc} 
      */
     @Override
-    public boolean 
-    hasInstance(Class<?> type,String name)
+    public <F> boolean 
+    hasFactory(Class<F> factoryType)
     {
-        return itsProvider.hasInstance( type,name );
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <F> boolean 
+    hasFactory(Class<F> factoryType,String factoryName)
+    {
+        // TODO Auto-generated method stub
+        return false;
     }
 
     /************************************************************************
@@ -113,20 +201,12 @@ class AbstractBaseContainer
      *
      * @return
      */
-    protected ContainerProvider
+    protected IContainerProvider
     getProvider()
     {
         return itsProvider;
     }
     
-    /************************************************************************
-     *  
-     *
-     * @param type
-     * @return
-     */
-    protected abstract boolean
-    isSupportedType(Class<?> type);
 }
 
 

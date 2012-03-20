@@ -1,28 +1,31 @@
 // ##########################################################################
-// # File Name:	ContainerFactory.java
+// # File Name:	IServerContainer.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataInitializer Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataInitializer Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataInitializer Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataInitializer
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.provider;
+package strata1.initializer.server;
+
+import strata1.initializer.base.IBaseContainer;
+import strata1.entity.repository.IRepositoryContainer;
 
 /**
  * 
@@ -32,22 +35,8 @@ package strata1.initializer.provider;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ContainerFactory
-{
-    public ContainerProvider
-    createComponentContainer();
-    
-    public ContainerProvider
-    createComponentContainer(String resourceLocation);
-    
-    public ComponentDefinition
-    createComponentDefinition();
-    
-    public ConstructorInjector
-    createConstructorInjector();
-    
-    public PropertyInjector
-    createPropertyInjector();
-}
+interface IServerContainer
+    extends IBaseContainer,
+            IRepositoryContainer {}
 
 // ##########################################################################

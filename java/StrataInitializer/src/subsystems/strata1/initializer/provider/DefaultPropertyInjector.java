@@ -33,7 +33,7 @@ package strata1.initializer.provider;
  */
 public 
 class DefaultPropertyInjector
-    implements PropertyInjector
+    implements IPropertyInjector
 {
 
     /************************************************************************

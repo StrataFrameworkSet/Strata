@@ -27,8 +27,8 @@
 
 package strata1.initializer.springclient;
 
-import strata1.initializer.client.ClientContainer;
-import strata1.initializer.client.ClientContainerFactory;
+import strata1.initializer.client.IClientContainer;
+import strata1.initializer.client.IClientContainerFactory;
 import strata1.initializer.client.DefaultClientContainer;
 import strata1.initializer.springprovider.SpringContainerProvider;
 import org.springframework.context.support.GenericApplicationContext;
@@ -43,7 +43,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
  */
 public 
 class SpringClientContainerFactory
-    implements ClientContainerFactory
+    implements IClientContainerFactory
 {
 
     /************************************************************************
@@ -57,7 +57,7 @@ class SpringClientContainerFactory
      * {@inheritDoc} 
      */
     @Override
-    public ClientContainer 
+    public IClientContainer 
     createClientContainer()
     {
         return 
@@ -70,7 +70,7 @@ class SpringClientContainerFactory
      * {@inheritDoc} 
      */
     @Override
-    public ClientContainer 
+    public IClientContainer 
     createClientContainer(String resourceLocation)
     {
         return 

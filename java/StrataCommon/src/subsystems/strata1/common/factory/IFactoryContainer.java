@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	DefaultConstructorInjector.java
+// # File Name:	IFactoryContainer.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,11 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.provider;
+package strata1.common.factory;
 
-import java.util.List;
-
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -34,42 +32,25 @@ import java.util.List;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class DefaultConstructorInjector
-    implements IConstructorInjector
+interface IFactoryContainer
 {
-
-    /************************************************************************
-     * Creates a new {@code DefaultConstructorInjector}. 
-     *
-     */
-    public 
-    DefaultConstructorInjector() 
-    {
-        // TODO Auto-generated method stub
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    setConstructorValues(List<String> componentNames)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public List<String> 
-    getConstructorValues()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
+    public <F> void
+    registerFactory(F factory);
+    
+    public <F> void
+    registerFactory(String factoryName,F factory);
+    
+    public <F> F
+    getFactory(Class<F> factoryType);
+    
+    public <F> F
+    getFactory(Class<F> factoryType,String factoryName);
+    
+    public <F> boolean
+    hasFactory(Class<F> factoryType);
+    
+    public <F> boolean
+    hasFactory(Class<F> factoryType,String factoryName);
 }
 
 // ##########################################################################

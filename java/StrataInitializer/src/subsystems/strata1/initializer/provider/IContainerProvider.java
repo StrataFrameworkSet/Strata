@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ContainerProvider.java
+// # File Name:	IContainerProvider.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -34,23 +34,23 @@ package strata1.initializer.provider;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ContainerProvider
+interface IContainerProvider
 {
 	/************************************************************************
-	 * Opens the {@code ContainerProvider} and makes it 
+	 * Opens the {@code IContainerProvider} and makes it 
 	 * ready to find components. 
 	 */
 	public void 
 	open();
 	
 	/************************************************************************
-	 * Refreshes the components referenced by the {@code ContainerProvider}. 
+	 * Refreshes the components referenced by the {@code IContainerProvider}. 
 	 */
 	public void 
 	refresh();
 	
 	/************************************************************************
-	 * Closes the {@code ContainerProvider} by releasing 
+	 * Closes the {@code IContainerProvider} by releasing 
 	 * its references to components. 
 	 */
 	public void 
@@ -58,16 +58,16 @@ interface ContainerProvider
 	
 	/************************************************************************
 	 * Registers a definition of a component  
-	 * with the {@code ContainerProvider}.
+	 * with the {@code IContainerProvider}.
 	 *
 	 * @param definition   definition of the component being registered
 	 */
 	public void
-	registerDefinition(ComponentDefinition definition);
+	registerDefinition(IComponentDefinition definition);
 	
     /************************************************************************
      * Registers an instance of a component with the 
-     * {@code ContainerProvider} under the specified name.
+     * {@code IContainerProvider} under the specified name.
      *
      * @param <T>           component class
      * @param instanceName  name of the instance being registered
@@ -88,7 +88,7 @@ interface ContainerProvider
 	getInstance(Class<T> componentClass,String instanceName);
 	
     /************************************************************************
-     * Queries the {@code ContainerProvider} if it has 
+     * Queries the {@code IContainerProvider} if it has 
      * a component with the specified class and name. 
      *
      * @param  <T>            component class

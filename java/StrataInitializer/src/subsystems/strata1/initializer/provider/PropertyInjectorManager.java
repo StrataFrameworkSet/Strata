@@ -46,7 +46,7 @@ import java.util.Map;
 public 
 class PropertyInjectorManager
 {
-    private Map<String,PropertyInjector> itsInjectors;
+    private Map<String,IPropertyInjector> itsInjectors;
     
     /************************************************************************
      * Creates a new {@code DefaultPropertyInjectorManager}. 
@@ -55,7 +55,7 @@ class PropertyInjectorManager
     public 
     PropertyInjectorManager()
     {
-        itsInjectors = new HashMap<String,PropertyInjector>();
+        itsInjectors = new HashMap<String,IPropertyInjector>();
     }
 
     /************************************************************************
@@ -64,7 +64,7 @@ class PropertyInjectorManager
      * @param injector
      */
     public void 
-    insertInjector(PropertyInjector injector)
+    insertInjector(IPropertyInjector injector)
     {
         itsInjectors.put( injector.getPropertyName(),injector );
     }
@@ -75,7 +75,7 @@ class PropertyInjectorManager
      * @param injector
      */
     public void 
-    removeInjector(PropertyInjector injector)
+    removeInjector(IPropertyInjector injector)
     {
         itsInjectors.remove( injector.getPropertyName() );
     }
@@ -86,7 +86,7 @@ class PropertyInjectorManager
      * @param propertyName
      * @return
      */
-    public PropertyInjector 
+    public IPropertyInjector 
     getInjector(String propertyName)
     {
         return itsInjectors.get( propertyName );
@@ -97,10 +97,10 @@ class PropertyInjectorManager
      *
      * @return
      */
-    public List<PropertyInjector> 
+    public List<IPropertyInjector> 
     getInjectors()
     {
-         return new ArrayList<PropertyInjector>(itsInjectors.values());
+         return new ArrayList<IPropertyInjector>(itsInjectors.values());
     }
 
     /************************************************************************

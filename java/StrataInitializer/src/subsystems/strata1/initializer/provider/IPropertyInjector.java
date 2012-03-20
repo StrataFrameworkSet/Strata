@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	PropertyInjector.java
+// # File Name:	IPropertyInjector.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -32,7 +32,7 @@ package strata1.initializer.provider;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface PropertyInjector
+interface IPropertyInjector
 {
     public void
     setPropertyName(String propertyName);

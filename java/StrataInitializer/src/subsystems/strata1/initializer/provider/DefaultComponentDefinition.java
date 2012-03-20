@@ -33,11 +33,11 @@ package strata1.initializer.provider;
  */
 public 
 class DefaultComponentDefinition
-    implements ComponentDefinition
+    implements IComponentDefinition
 {
     private String                  itsComponentName;
     private Class<?>                itsComponentType;
-    private ConstructorInjector     itsConstructorInjector;
+    private IConstructorInjector     itsConstructorInjector;
     private PropertyInjectorManager itsPropertyInjectorManager;
     private ComponentScope          itsScope;
     
@@ -92,7 +92,7 @@ class DefaultComponentDefinition
      */
     @Override
     public void 
-    setConstructorInjector(ConstructorInjector injector)
+    setConstructorInjector(IConstructorInjector injector)
     {
         itsConstructorInjector = injector;
     }
@@ -131,7 +131,7 @@ class DefaultComponentDefinition
      * {@inheritDoc} 
      */
     @Override
-    public ConstructorInjector 
+    public IConstructorInjector 
     getConstructorInjector()
     {
         return itsConstructorInjector;

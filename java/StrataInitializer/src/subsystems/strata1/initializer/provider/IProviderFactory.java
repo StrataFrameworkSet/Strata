@@ -1,28 +1,28 @@
 // ##########################################################################
-// # File Name:	ServerContainerFactory.java
+// # File Name:	IProviderFactory.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataInitializer Framework.
+// # License:	This file is part of the StrataCommon Framework.
 // #
-// #   			The StrataInitializer Framework is free software: you 
+// #   			The StrataCommon Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataInitializer Framework is distributed in the 
+// #    		The StrataCommon Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataInitializer
+// #			General Public License along with the StrataCommon
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.server;
+package strata1.initializer.provider;
 
 /**
  * 
@@ -32,25 +32,22 @@ package strata1.initializer.server;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ServerContainerFactory
+interface IProviderFactory
 {
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public ServerContainer
-    createServerContainer();
+    public IContainerProvider
+    createComponentContainer();
     
-    /************************************************************************
-     *  
-     *
-     * @param resourceLocation
-     * @return
-     */
-    public ServerContainer
-    createServerContainer(String resourceLocation);
+    public IContainerProvider
+    createComponentContainer(String resourceLocation);
+    
+    public IComponentDefinition
+    createComponentDefinition();
+    
+    public IConstructorInjector
+    createConstructorInjector();
+    
+    public IPropertyInjector
+    createPropertyInjector();
 }
-
 
 // ##########################################################################

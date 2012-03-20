@@ -24,11 +24,11 @@
 
 package strata1.initializer.springprovider;
 
-import strata1.initializer.provider.ComponentDefinition;
+import strata1.initializer.provider.IComponentDefinition;
 import strata1.initializer.provider.ComponentScope;
-import strata1.initializer.provider.ConstructorInjector;
-import strata1.initializer.provider.ContainerProvider;
-import strata1.initializer.provider.PropertyInjector;
+import strata1.initializer.provider.IConstructorInjector;
+import strata1.initializer.provider.IContainerProvider;
+import strata1.initializer.provider.IPropertyInjector;
 import strata1.initializer.provider.PropertyInjectorManager;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
@@ -53,7 +53,7 @@ import org.springframework.context.support.GenericApplicationContext;
  */
 public 
 class SpringContainerProvider
-	implements ContainerProvider
+	implements IContainerProvider
 {
 	private GenericApplicationContext itsContext;
 	
@@ -102,7 +102,7 @@ class SpringContainerProvider
      */
     @Override
     public void 
-    registerDefinition(ComponentDefinition definition)
+    registerDefinition(IComponentDefinition definition)
     {
         GenericBeanDefinition bean = new GenericBeanDefinition();
         
@@ -163,10 +163,10 @@ class SpringContainerProvider
      */
     private void 
     registerConstructorInjector(
-        ComponentDefinition definition,
+        IComponentDefinition definition,
         GenericBeanDefinition bean)
     {
-       ConstructorInjector constructor = null;
+       IConstructorInjector constructor = null;
        
        if ( definition.hasConstructorInjector() )
             constructor = definition.getConstructorInjector();
@@ -188,13 +188,13 @@ class SpringContainerProvider
      */
     private void 
     registerPropertyInjectors(
-        ComponentDefinition definition,
+        IComponentDefinition definition,
         GenericBeanDefinition bean)
     {
         PropertyInjectorManager properties = 
             definition.getPropertyInjectorManager();
         
-        for (PropertyInjector injector:properties.getInjectors())
+        for (IPropertyInjector injector:properties.getInjectors())
         {
             bean
                 .getPropertyValues()

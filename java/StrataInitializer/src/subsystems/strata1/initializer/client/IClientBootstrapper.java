@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	BaseBootstrapper.java
+// # File Name:	Bootstrapper.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.base;
+package strata1.initializer.client;
+
+import strata1.initializer.base.IBaseBootstrapper;
 
 /**
  * 
@@ -32,10 +34,11 @@ package strata1.initializer.base;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface BaseBootstrapper
+interface IClientBootstrapper
+    extends IBaseBootstrapper
 {
-    public void
-    run();
+    public void 
+    setContainer(IClientContainer container);
 }
 
 
