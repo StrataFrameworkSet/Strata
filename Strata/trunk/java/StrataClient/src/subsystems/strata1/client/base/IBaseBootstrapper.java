@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IBaseContainer.java
+// # File Name:	IBaseBootstrapper.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.base;
-
-import strata1.integrator.gateway.IGatewayContainer;
-import strata1.common.factory.IFactoryContainer;
-
+package strata1.client.base;
 
 /**
  * 
@@ -36,10 +32,10 @@ import strata1.common.factory.IFactoryContainer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBaseContainer
-    extends IGatewayContainer,
-            IFactoryContainer
+interface IBaseBootstrapper
 {
+    public void
+    run();
 }
 
 

@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	InstanceInserter.java
+// # File Name:	ClientModuleManager.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,10 +22,11 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.base;
+package strata1.client.clientapp;
 
-import strata1.initializer.provider.IContainerProvider;
-import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /****************************************************************************
  * 
@@ -35,65 +36,52 @@ import java.lang.annotation.Annotation;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class InstanceInserter<T>
+class ClientModuleManager
+    implements IClientModuleManager
 {
-    private IContainerProvider itsProvider;
+    private Map<String,IClientModule> itsModules;
     
     /************************************************************************
-     * Creates a new {@code InstanceInserter}. 
+     * Creates a new {@code ClientModuleManager}. 
      *
-     * @param p
      */
-    public
-    InstanceInserter(IContainerProvider p)
+    public 
+    ClientModuleManager()
     {
-        itsProvider = p;
+        itsModules = new HashMap<String,IClientModule>();
     }
-    
+
     /************************************************************************
-     *  
-     *
-     * @param annotation
-     * @param instanceName
-     * @param instance
+     * {@inheritDoc} 
      */
-    public void
-    insertByAnnotation(
-        Class<? extends Annotation> annotation,
-        String                      instanceName,
-        T                           instance)
+    @Override
+    public Iterator<IClientModule> 
+    iterator()
     {
-        Class<?> instanceType = instance.getClass();
-        
-        if ( instanceType.isAnnotationPresent( annotation ) )
-            itsProvider.registerInstance( instanceName,instance );
-        else
-            throw 
-                new IllegalArgumentException( 
-                    instanceType + " is not a supported type.");    
+        return itsModules.values().iterator();
     }
-    
+
     /************************************************************************
-     *  
-     *
-     * @param annotation
-     * @param instanceName
-     * @param instance
+     * {@inheritDoc} 
      */
-    public void
-    insertByType(Class<?> type,String instanceName,T instance)
+    @Override
+    public void 
+    registerModule(IClientModule module)
     {
-        Class<?> instanceType = instance.getClass();
-        
-        if ( type.isAssignableFrom( instanceType ) )
-            itsProvider.registerInstance( instanceName,instance );
-        else
-            throw 
-                new IllegalArgumentException( 
-                    instanceType + " is not a supported type.");    
+        itsModules.put( module.getClass().getName(),module );
     }
-    
-    
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    initialize(IClientBootstrapper bootstrapper)
+    {
+        for (IClientModule module:itsModules.values())
+            module.initialize( bootstrapper );
+    }
+
 }
 
 // ##########################################################################

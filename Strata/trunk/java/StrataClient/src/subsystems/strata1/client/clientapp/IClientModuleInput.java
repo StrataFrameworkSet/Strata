@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ClientModuleManager.java
+// # File Name:	IClientModuleInput.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.client;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+package strata1.client.clientapp;
 
 /****************************************************************************
  * 
@@ -36,51 +32,8 @@ import java.util.Map;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class ClientModuleManager
-    implements IClientModuleManager
+interface IClientModuleInput
 {
-    private Map<String,IClientModule> itsModules;
-    
-    /************************************************************************
-     * Creates a new {@code ClientModuleManager}. 
-     *
-     */
-    public 
-    ClientModuleManager()
-    {
-        itsModules = new HashMap<String,IClientModule>();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public Iterator<IClientModule> 
-    iterator()
-    {
-        return itsModules.values().iterator();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    registerModule(IClientModule module)
-    {
-        itsModules.put( module.getClass().getName(),module );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    initialize(IClientBootstrapper bootstrapper)
-    {
-        for (IClientModule module:itsModules.values())
-            module.initialize( bootstrapper );
-    }
 
 }
 
