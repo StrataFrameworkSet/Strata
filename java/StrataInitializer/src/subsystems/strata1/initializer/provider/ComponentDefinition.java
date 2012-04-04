@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	DefaultComponentDefinition.java
+// # File Name:	ComponentDefinition.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -32,7 +32,7 @@ package strata1.initializer.provider;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class DefaultComponentDefinition
+class ComponentDefinition
     implements IComponentDefinition
 {
     private String                  itsComponentName;
@@ -42,11 +42,11 @@ class DefaultComponentDefinition
     private ComponentScope          itsScope;
     
     /************************************************************************
-     * Creates a new {@code DefaultComponentDefinition}. 
+     * Creates a new {@code ComponentDefinition}. 
      *
      */
     public 
-    DefaultComponentDefinition()
+    ComponentDefinition()
     {
         itsComponentName           = null;
         itsComponentType           = null;

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	DefaultServerContainer.java
+// # File Name:	HelloWorldClientFactory.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInitializer Framework.
 // #
@@ -22,14 +22,23 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.server;
+package strata1.initializer.helloworld;
 
-import strata1.initializer.base.AbstractBaseContainer;
-import strata1.initializer.base.InstanceInserter;
-import strata1.initializer.provider.IContainerProvider;
-import strata1.entity.repository.IRepository;
+import strata1.initializer.client.AbstractClientFactory;
+import strata1.initializer.client.ClientContainer;
+import strata1.initializer.client.IClientContainer;
+import strata1.initializer.springprovider.SpringContainerProvider;
+import strata1.swtinteractor.swtregion.SwtRegionManager;
+import strata1.swtinteractor.swtshell.ISwtDispatcher;
+import strata1.swtinteractor.swtshell.SwtDispatcher;
+import strata1.swtinteractor.swtshell.SwtShell;
+import strata1.interactor.region.IRegionManager;
+import strata1.interactor.shell.IDispatcher;
+import strata1.interactor.shell.IShell;
+import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -37,90 +46,73 @@ import strata1.entity.repository.IRepository;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class DefaultServerContainer
-    extends    AbstractBaseContainer
-    implements IServerContainer
+class HelloWorldClientFactory
+    extends AbstractClientFactory
 {
-    
+
     /************************************************************************
-     * Creates a new DefaultServerContainer. 
+     * Creates a new {@code HelloWorldClientFactory}. 
      *
      */
     public 
-    DefaultServerContainer(IContainerProvider provider)
+    HelloWorldClientFactory()
     {
-        super( provider );
     }
-
-    
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> void 
-    registerRepository(R repository)
-    {
-        registerRepository(
-            repository.getClass().getCanonicalName(),
-            repository);
-    }
-
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <R extends IRepository> void 
-    registerRepository(String repositoryName,R repository)
-    {
-        new InstanceInserter<R>(getProvider())
-            .insertByType( IRepository.class,repositoryName,repository );
-    }
-
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> R 
-    getRepository(Class<R> repositoryType)
+    public IClientContainer 
+    createContainer()
     {
         return 
-            getRepository(repositoryType,repositoryType.getCanonicalName());
-    }
-
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> R 
-    getRepository(Class<R> repositoryType,String repositoryName)
-    {
-        return getProvider().getInstance( repositoryType,repositoryName );
-    }
-
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> boolean 
-    hasRepository(Class<R> repositoryType)
-    {
-        return             
-            hasRepository(repositoryType,repositoryType.getCanonicalName());
-
+            new ClientContainer(
+                new SpringContainerProvider(
+                    new GenericApplicationContext()));
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <R extends IRepository> boolean 
-    hasRepository(Class<R> repositoryType,String repositoryName)
+    public IClientContainer 
+    createContainer(String resourceLocation)
     {
-        return getProvider().hasInstance( repositoryType,repositoryName );
+        return 
+            new ClientContainer(
+                new SpringContainerProvider(
+                    new GenericXmlApplicationContext(resourceLocation)));
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IRegionManager 
+    createRegionManager()
+    {
+        return new SwtRegionManager();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IDispatcher 
+    createDispatcher()
+    {
+        return new SwtDispatcher();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IShell 
+    createShell(IDispatcher dispatcher)
+    {
+        return new SwtShell( (ISwtDispatcher)dispatcher );
     }
 
 }

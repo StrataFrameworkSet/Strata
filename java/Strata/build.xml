@@ -12,7 +12,7 @@
     <property name="swtinteractor.root" value="${workspace.root}/StrataSwtInteractor"/>
     <property name="inspector.root" value="${workspace.root}/StrataInspector"/>
     <property name="entity.root" value="${workspace.root}/StrataEntity"/>
-    <property name="initializer.root" value="${workspace.root}/StrataInitializer"/>
+    <property name="client.root" value="${workspace.root}/StrataClient"/>
  
     <target name="clean">
         <ant 
@@ -40,8 +40,8 @@
             antfile="${entity.root}/build.xml" 
             target="clean"/>
         <ant 
-            dir="${initializer.root}" 
-            antfile="${initializer.root}/build.xml" 
+            dir="${client.root}" 
+            antfile="${client.root}/build.xml" 
             target="clean"/>
     </target>
 
@@ -71,8 +71,8 @@
             antfile="${entity.root}/build.xml" 
             target="run-commit-stage"/>
         <ant 
-            dir="${initializer.root}" 
-            antfile="${initializer.root}/build.xml" 
+            dir="${client.root}" 
+            antfile="${client.root}/build.xml" 
             target="run-commit-stage"/>
     </target>
 	
@@ -102,8 +102,8 @@
             antfile="${entity.root}/build.xml" 
             target="run-integration-stage"/>
         <ant 
-            dir="${initializer.root}" 
-            antfile="${initializer.root}/build.xml" 
+            dir="${client.root}" 
+            antfile="${client.root}/build.xml" 
             target="run-integration-stage"/>
     </target>
 	

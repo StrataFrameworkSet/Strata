@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	AbstractContainerFactory.java
+// # File Name:	ConstructorInjector.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,6 +24,8 @@
 
 package strata1.initializer.provider;
 
+import java.util.List;
+
 /**
  * 
  * @author 		
@@ -31,46 +33,41 @@ package strata1.initializer.provider;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract 
-class AbstractContainerFactory
-    implements IProviderFactory
+public 
+class ConstructorInjector
+    implements IConstructorInjector
 {
 
     /************************************************************************
-     * Creates a new {@code AbstractContainerFactory}. 
+     * Creates a new {@code ConstructorInjector}. 
      *
      */
     public 
-    AbstractContainerFactory() {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IComponentDefinition 
-    createComponentDefinition()
+    ConstructorInjector() 
     {
-        return new ComponentDefinition();
+        // TODO Auto-generated method stub
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IConstructorInjector 
-    createConstructorInjector()
+    public void 
+    setConstructorValues(List<String> componentNames)
     {
-        return new ConstructorInjector();
+        // TODO Auto-generated method stub
+
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IPropertyInjector 
-    createPropertyInjector()
+    public List<String> 
+    getConstructorValues()
     {
-        return new PropertyInjector();
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	DefaultServerContainer.java
+// # File Name:	MockClientFactory.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInitializer Framework.
 // #
@@ -22,14 +22,14 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.server;
+package strata1.initializer.client;
 
-import strata1.initializer.base.AbstractBaseContainer;
-import strata1.initializer.base.InstanceInserter;
-import strata1.initializer.provider.IContainerProvider;
-import strata1.entity.repository.IRepository;
+import strata1.interactor.region.IRegionManager;
+import strata1.interactor.shell.IDispatcher;
+import strata1.interactor.shell.IShell;
+import org.mockito.*;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -37,90 +37,77 @@ import strata1.entity.repository.IRepository;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class DefaultServerContainer
-    extends    AbstractBaseContainer
-    implements IServerContainer
+class MockClientFactory
+    extends AbstractClientFactory
 {
-    
+
     /************************************************************************
-     * Creates a new DefaultServerContainer. 
+     * Creates a new {@code MockClientFactory}. 
      *
      */
     public 
-    DefaultServerContainer(IContainerProvider provider)
+    MockClientFactory()
     {
-        super( provider );
-    }
-
-    
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> void 
-    registerRepository(R repository)
-    {
-        registerRepository(
-            repository.getClass().getCanonicalName(),
-            repository);
-    }
-
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> void 
-    registerRepository(String repositoryName,R repository)
-    {
-        new InstanceInserter<R>(getProvider())
-            .insertByType( IRepository.class,repositoryName,repository );
-    }
-
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> R 
-    getRepository(Class<R> repositoryType)
-    {
-        return 
-            getRepository(repositoryType,repositoryType.getCanonicalName());
-    }
-
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> R 
-    getRepository(Class<R> repositoryType,String repositoryName)
-    {
-        return getProvider().getInstance( repositoryType,repositoryName );
-    }
-
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> boolean 
-    hasRepository(Class<R> repositoryType)
-    {
-        return             
-            hasRepository(repositoryType,repositoryType.getCanonicalName());
-
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <R extends IRepository> boolean 
-    hasRepository(Class<R> repositoryType,String repositoryName)
+    public IClientModuleManager 
+    createModuleManager()
     {
-        return getProvider().hasInstance( repositoryType,repositoryName );
+        return Mockito.spy( super.createModuleManager() );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IClientContainer 
+    createContainer()
+    {
+        return Mockito.mock( IClientContainer.class );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IClientContainer 
+    createContainer(String resourceLocation)
+    {
+        return createContainer();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IRegionManager 
+    createRegionManager()
+    {
+        return Mockito.mock( IRegionManager.class );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IDispatcher 
+    createDispatcher()
+    {
+        return Mockito.mock( IDispatcher.class );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IShell 
+    createShell(IDispatcher dispatcher)
+    {
+        return Mockito.mock( IShell.class );
     }
 
 }

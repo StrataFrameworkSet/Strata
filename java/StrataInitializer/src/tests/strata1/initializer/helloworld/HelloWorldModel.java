@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ModelViewControllerApp.java
+// # File Name:	HelloWorldModel.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.app;
+package strata1.initializer.helloworld;
 
-import strata1.interactor.controller.IController;
 import strata1.interactor.model.IModel;
-import strata1.interactor.view.IView;
 
 /**
  * 
@@ -35,55 +33,11 @@ import strata1.interactor.view.IView;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract 
-class ModelViewControllerApp<
-    M extends IModel,
-    V extends IView,
-    C extends IController>
-    implements Runnable
+public 
+interface HelloWorldModel
+    extends IModel
 {
-    private M itsModel;
-    private V itsView;
-    private C itsController;
-    
-    /************************************************************************
-     * Creates a new ModelViewControllerApp. 
-     */
-    public 
-    ModelViewControllerApp()
-    {
-        itsModel      = null;
-        itsView       = null;
-        itsController = null;
-    }
-    
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    run()
-    {
-        itsController.start();
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @param model
-     * @param view
-     * @param controller
-     */
-    protected void
-    configure(M model,V view,C controller)
-    {
-        itsModel      = model;
-        itsView       = view;
-        itsController = controller;
-        
-        itsModel.setProcessor( itsController );
-        itsView.setProvider( itsController );
-    }
+
 }
 
 

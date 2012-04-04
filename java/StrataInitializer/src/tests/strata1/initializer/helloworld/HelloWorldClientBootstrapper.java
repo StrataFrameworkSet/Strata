@@ -1,76 +1,72 @@
 // ##########################################################################
-// # File Name:	AbstractContainerFactory.java
+// # File Name:	HelloWorldClientBootstrapper.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataInitializer Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataInitializer Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataInitializer Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataInitializer
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.provider;
+package strata1.initializer.helloworld;
 
-/**
+import strata1.initializer.client.AbstractClientBootstrapper;
+import strata1.swtinteractor.swtregion.SwtRegion;
+import strata1.swtinteractor.swtregion.SwtRegionManager;
+
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract 
-class AbstractContainerFactory
-    implements IProviderFactory
+public 
+class HelloWorldClientBootstrapper
+    extends AbstractClientBootstrapper
 {
 
     /************************************************************************
-     * Creates a new {@code AbstractContainerFactory}. 
+     * Creates a new {@code HelloWorldClientBootstrapper}. 
      *
      */
     public 
-    AbstractContainerFactory() {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IComponentDefinition 
-    createComponentDefinition()
+    HelloWorldClientBootstrapper()
     {
-        return new ComponentDefinition();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IConstructorInjector 
-    createConstructorInjector()
+    protected void 
+    configureModules()
     {
-        return new ConstructorInjector();
+        getModuleManager().registerModule( new GreetingModule() );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IPropertyInjector 
-    createPropertyInjector()
+    protected void 
+    configureRegionManager()
     {
-        return new PropertyInjector();
+        SwtRegion.setManager( (SwtRegionManager)getRegionManager() );
     }
 
 }

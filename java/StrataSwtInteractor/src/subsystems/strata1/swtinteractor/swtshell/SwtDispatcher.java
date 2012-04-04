@@ -1,30 +1,34 @@
 // ##########################################################################
-// # File Name:	DefaultPropertyInjector.java
+// # File Name:	SwtShell.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataSwtInteractor Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataSwtInteractor Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataSwtInteractor Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataSwtInteractor
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.provider;
+package strata1.swtinteractor.swtshell;
 
-/**
+import strata1.interactor.shell.IDispatcher;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -32,18 +36,19 @@ package strata1.initializer.provider;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class DefaultPropertyInjector
-    implements IPropertyInjector
+class SwtDispatcher
+    implements ISwtDispatcher
 {
+    private Display itsDisplay;
 
     /************************************************************************
-     * Creates a new {@code DefaultPropertyInjector}. 
+     * Creates a new {@code SwtShell}. 
      *
      */
     public 
-    DefaultPropertyInjector()
+    SwtDispatcher()
     {
-        // TODO Auto-generated constructor stub
+        itsDisplay = new Display();     
     }
 
     /************************************************************************
@@ -51,10 +56,9 @@ class DefaultPropertyInjector
      */
     @Override
     public void 
-    setPropertyName(String propertyName)
+    invokeSynchronous(Runnable task)
     {
-        // TODO Auto-generated method stub
-
+        itsDisplay.syncExec( task );
     }
 
     /************************************************************************
@@ -62,34 +66,46 @@ class DefaultPropertyInjector
      */
     @Override
     public void 
-    setPropertyValue(String componentName)
+    invokeAsynchronous(Runnable task)
     {
-        // TODO Auto-generated method stub
-
+        itsDisplay.asyncExec( task );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public String 
-    getPropertyName()
+    public void 
+    start()
     {
-        // TODO Auto-generated method stub
-        return null;
+        while (!itsDisplay.isDisposed()) 
+        {
+            if (!itsDisplay.readAndDispatch()) 
+                itsDisplay.sleep();
+        }
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public String 
-    getPropertyValue()
+    public void 
+    stop()
     {
-        // TODO Auto-generated method stub
-        return null;
+        itsDisplay.dispose();
+        System.exit( 0 );
     }
 
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public Display
+    getDisplay()
+    {
+        return itsDisplay;
+    }
 }
 
 // ##########################################################################
