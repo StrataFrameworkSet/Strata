@@ -1,126 +1,128 @@
 // ##########################################################################
-// # File Name:	DefaultServerContainer.java
+// # File Name:	SwtGreetingView.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataInitializer Framework.
+// # License:	This file is part of the StrataSwtInteractor Framework.
 // #
-// #   			The StrataInitializer Framework is free software: you 
+// #   			The StrataSwtInteractor Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataInitializer Framework is distributed in the 
+// #    		The StrataSwtInteractor Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataInitializer
+// #			General Public License along with the StrataSwtInteractor
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.server;
+package strata1.initializer.helloworld;
 
-import strata1.initializer.base.AbstractBaseContainer;
-import strata1.initializer.base.InstanceInserter;
-import strata1.initializer.provider.IContainerProvider;
-import strata1.entity.repository.IRepository;
+import strata1.swtinteractor.swtview.ISwtView;
+import strata1.interactor.command.ICommand;
+import strata1.interactor.view.AbstractView;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Widget;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class DefaultServerContainer
-    extends    AbstractBaseContainer
-    implements IServerContainer
+public class SwtGreetingView
+    extends AbstractView
+    implements GreetingView, ISwtView
 {
+    private Label itsGreeting;
     
     /************************************************************************
-     * Creates a new DefaultServerContainer. 
+     * Creates a new {@code SwtGreetingView}. 
      *
      */
-    public 
-    DefaultServerContainer(IContainerProvider provider)
+    public SwtGreetingView(Composite parent)
     {
-        super( provider );
-    }
-
-    
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> void 
-    registerRepository(R repository)
-    {
-        registerRepository(
-            repository.getClass().getCanonicalName(),
-            repository);
-    }
-
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> void 
-    registerRepository(String repositoryName,R repository)
-    {
-        new InstanceInserter<R>(getProvider())
-            .insertByType( IRepository.class,repositoryName,repository );
-    }
-
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> R 
-    getRepository(Class<R> repositoryType)
-    {
-        return 
-            getRepository(repositoryType,repositoryType.getCanonicalName());
-    }
-
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> R 
-    getRepository(Class<R> repositoryType,String repositoryName)
-    {
-        return getProvider().getInstance( repositoryType,repositoryName );
-    }
-
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <R extends IRepository> boolean 
-    hasRepository(Class<R> repositoryType)
-    {
-        return             
-            hasRepository(repositoryType,repositoryType.getCanonicalName());
-
+        itsGreeting = new Label( parent,SWT.NONE );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <R extends IRepository> boolean 
-    hasRepository(Class<R> repositoryType,String repositoryName)
+    public void start()
     {
-        return getProvider().hasInstance( repositoryType,repositoryName );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void stop()
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void show()
+    {
+        itsGreeting.setVisible( true );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void hide()
+    {
+        itsGreeting.setVisible( false );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void invoke(ICommand command)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void displayGreeting(String greeting)
+    {
+        itsGreeting.setText( greeting );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public Widget getWidget()
+    {
+        return itsGreeting;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public Composite getComposite()
+    {
+        return null;
     }
 
 }

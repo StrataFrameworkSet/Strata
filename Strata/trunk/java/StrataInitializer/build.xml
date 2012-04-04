@@ -1,6 +1,6 @@
 <project 
     xmlns:artifact="antlib:org.apache.maven.artifact.ant"
-    name="StrataInitializer" 
+    name="StrataClient" 
     default="run-commit-stage">
         
     <property name="sourceDirectory" value="${basedir}/src/subsystems"/>
@@ -18,11 +18,14 @@
     <property name="entity.artifact" value="${basedir}/../StrataEntity/lib/StrataEntity-${version}.jar"/>
     <property name="integrator.artifact" value="${basedir}/../StrataIntegrator/lib/StrataIntegrator-${version}.jar"/>
     <property name="interactor.artifact" value="${basedir}/../StrataInteractor/lib/StrataInteractor-${version}.jar"/>
+    <property name="swtinteractor.artifact" value="${basedir}/../StrataSwtInteractor/lib/StrataSwtInteractor-${version}.jar"/>
 
     <artifact:dependencies pathId="partial.classpath">
         <artifact:dependency groupId="junit" artifactId="junit" version="4.9"/>
         <artifact:dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
         <artifact:dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
+        <artifact:dependency groupId="org.eclipse" artifactId="swt.win32.win32.x86_64" version="3.6.1"/>
+        <artifact:dependency groupId="org.mockito" artifactId="mockito-all" version="1.9.0"/>
     </artifact:dependencies>
 
     <path 
@@ -31,6 +34,7 @@
         <pathelement location="${entity.artifact}" /> 
         <pathelement location="${integrator.artifact}" /> 
         <pathelement location="${interactor.artifact}" /> 
+        <pathelement location="${swtinteractor.artifact}" /> 
         <path refid="partial.classpath"/> 
     </path>
     

@@ -1,76 +1,85 @@
 // ##########################################################################
-// # File Name:	AbstractContainerFactory.java
+// # File Name:	ClientModuleManager.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataInitializer Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataInitializer Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataInitializer Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataInitializer
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.provider;
+package strata1.initializer.client;
 
-/**
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract 
-class AbstractContainerFactory
-    implements IProviderFactory
+public 
+class ClientModuleManager
+    implements IClientModuleManager
 {
-
+    private Map<String,IClientModule> itsModules;
+    
     /************************************************************************
-     * Creates a new {@code AbstractContainerFactory}. 
+     * Creates a new {@code ClientModuleManager}. 
      *
      */
     public 
-    AbstractContainerFactory() {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IComponentDefinition 
-    createComponentDefinition()
+    ClientModuleManager()
     {
-        return new ComponentDefinition();
+        itsModules = new HashMap<String,IClientModule>();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IConstructorInjector 
-    createConstructorInjector()
+    public Iterator<IClientModule> 
+    iterator()
     {
-        return new ConstructorInjector();
+        return itsModules.values().iterator();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IPropertyInjector 
-    createPropertyInjector()
+    public void 
+    registerModule(IClientModule module)
     {
-        return new PropertyInjector();
+        itsModules.put( module.getClass().getName(),module );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    initialize(IClientBootstrapper bootstrapper)
+    {
+        for (IClientModule module:itsModules.values())
+            module.initialize( bootstrapper );
     }
 
 }

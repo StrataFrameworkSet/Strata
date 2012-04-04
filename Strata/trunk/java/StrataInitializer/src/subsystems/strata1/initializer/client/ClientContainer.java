@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	DefaultClientContainer.java
+// # File Name:	ClientContainer.java
 // #
 // # Copyright:	2011, Stratagema Systems, LLC. All Rights Reserved.
 // #
@@ -28,6 +28,7 @@
 package strata1.initializer.client;
 
 import strata1.initializer.base.AbstractBaseContainer;
+import strata1.initializer.base.InstanceInserter;
 import strata1.initializer.provider.IContainerProvider;
 import strata1.interactor.controller.IController;
 import strata1.interactor.model.IModel;
@@ -41,17 +42,16 @@ import strata1.interactor.viewmodel.IViewModel;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public class DefaultClientContainer
+public class ClientContainer
     extends    AbstractBaseContainer
     implements IClientContainer
 {
-
     /************************************************************************
-     * Creates a new DefaultClientContainer. 
+     * Creates a new ClientContainer. 
      *
      */
     public 
-    DefaultClientContainer(IContainerProvider provider)
+    ClientContainer(IContainerProvider provider)
     {
         super( provider );
     }
@@ -63,8 +63,7 @@ public class DefaultClientContainer
     public <V extends IView> void 
     registerView(V view)
     {
-        // TODO Auto-generated method stub
-        
+        registerView(view.getClass().getCanonicalName(),view);
     }
 
     /************************************************************************
@@ -74,19 +73,28 @@ public class DefaultClientContainer
     public <V extends IView> void 
     registerView(String viewName,V view)
     {
-        // TODO Auto-generated method stub
-        
+        new InstanceInserter<V>(getProvider())
+            .insertByType( IView.class,viewName,view );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <V extends IView>V 
+    public <V extends IView> V 
     getView(Class<V> viewType)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return getView( viewType,viewType.getCanonicalName() );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <V extends IView> V 
+    getView(Class<V> viewType,String viewName)
+    {
+        return getProvider().getInstance( viewType,viewName );
     }
 
     /************************************************************************
@@ -96,8 +104,7 @@ public class DefaultClientContainer
     public <V extends IView> boolean 
     hasView(Class<V> viewType)
     {
-        // TODO Auto-generated method stub
-        return false;
+        return hasView( viewType,viewType.getCanonicalName() );
     }
 
     /************************************************************************
@@ -107,19 +114,7 @@ public class DefaultClientContainer
     public <V extends IView> boolean 
     hasView(Class<V> viewType,String viewName)
     {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <V extends IView> V 
-    getView(Class<V> viewType,String name)
-    {
-        // TODO Auto-generated method stub
-        return null;
+        return getProvider().hasInstance( viewType,viewName );
     }
 
     /************************************************************************
@@ -129,8 +124,7 @@ public class DefaultClientContainer
     public <V extends IViewModel> void 
     registerViewModel(V viewmodel)
     {
-        // TODO Auto-generated method stub
-        
+        registerViewModel(viewmodel.getClass().getCanonicalName(),viewmodel);
     }
 
     /************************************************************************
@@ -140,8 +134,8 @@ public class DefaultClientContainer
     public <V extends IViewModel> void 
     registerViewModel(String viewmodelName,V viewmodel)
     {
-        // TODO Auto-generated method stub
-        
+        new InstanceInserter<V>(getProvider())
+            .insertByType( IViewModel.class,viewmodelName,viewmodel );
     }
 
     /************************************************************************
@@ -151,8 +145,7 @@ public class DefaultClientContainer
     public <V extends IViewModel> V 
     getViewModel(Class<V> viewmodelType)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return getViewModel(viewmodelType,viewmodelType.getCanonicalName());
     }
 
     /************************************************************************
@@ -162,8 +155,7 @@ public class DefaultClientContainer
     public <V extends IViewModel> V 
     getViewModel(Class<V> viewmodelType,String viewmodelName)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return getProvider().getInstance( viewmodelType,viewmodelName );
     }
 
     /************************************************************************
@@ -173,8 +165,7 @@ public class DefaultClientContainer
     public <V extends IViewModel> boolean 
     hasViewModel(Class<V> viewmodelType)
     {
-        // TODO Auto-generated method stub
-        return false;
+        return hasViewModel(viewmodelType,viewmodelType.getCanonicalName());
     }
 
     /************************************************************************
@@ -184,8 +175,7 @@ public class DefaultClientContainer
     public <V extends IViewModel> boolean 
     hasViewModel(Class<V> viewmodelType,String viewmodelName)
     {
-        // TODO Auto-generated method stub
-        return false;
+        return getProvider().hasInstance( viewmodelType,viewmodelName );
     }
 
     /************************************************************************
@@ -195,8 +185,9 @@ public class DefaultClientContainer
     public <C extends IController> void 
     registerController(C controller)
     {
-        // TODO Auto-generated method stub
-        
+        registerController(
+            controller.getClass().getCanonicalName(),
+            controller);
     }
 
     /************************************************************************
@@ -206,8 +197,8 @@ public class DefaultClientContainer
     public <C extends IController> void 
     registerController(String controllerName,C controller)
     {
-        // TODO Auto-generated method stub
-        
+        new InstanceInserter<C>(getProvider())
+            .insertByType( IController.class,controllerName,controller );
     }
 
     /************************************************************************
@@ -217,8 +208,8 @@ public class DefaultClientContainer
     public <C extends IController> C 
     getController(Class<C> controllerType)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return 
+            getController(controllerType,controllerType.getCanonicalName());
     }
 
     /************************************************************************
@@ -228,8 +219,9 @@ public class DefaultClientContainer
     public <C extends IController> C 
     getController(Class<C> controllerType,String controllerName)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return 
+            getProvider()
+                .getInstance( controllerType,controllerName );
     }
 
     /************************************************************************
@@ -239,8 +231,8 @@ public class DefaultClientContainer
     public <C extends IController> boolean 
     hasController(Class<C> controllerType)
     {
-        // TODO Auto-generated method stub
-        return false;
+        return 
+            hasController(controllerType,controllerType.getCanonicalName());
     }
 
     /************************************************************************
@@ -250,8 +242,8 @@ public class DefaultClientContainer
     public <C extends IController> boolean 
     hasController(Class<C> controllerType,String controllerName)
     {
-        // TODO Auto-generated method stub
-        return false;
+        return 
+            getProvider().hasInstance( controllerType,controllerName );
     }
 
     /************************************************************************
@@ -261,8 +253,7 @@ public class DefaultClientContainer
     public <M extends IModel> void 
     registerModel(M model)
     {
-        // TODO Auto-generated method stub
-        
+        registerModel(model.getClass().getCanonicalName(),model);
     }
 
     /************************************************************************
@@ -272,8 +263,8 @@ public class DefaultClientContainer
     public <M extends IModel> void 
     registerModel(String modelName,M model)
     {
-        // TODO Auto-generated method stub
-        
+        new InstanceInserter<M>(getProvider())
+            .insertByType( IModel.class,modelName,model );
     }
 
     /************************************************************************
@@ -283,8 +274,7 @@ public class DefaultClientContainer
     public <M extends IModel> M 
     getModel(Class<M> modelType)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return getModel( modelType,modelType.getCanonicalName());
     }
 
     /************************************************************************
@@ -294,8 +284,7 @@ public class DefaultClientContainer
     public <M extends IModel> M 
     getModel(Class<M> modelType,String modelName)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return getProvider().getInstance( modelType,modelName );
     }
 
     /************************************************************************
@@ -305,8 +294,7 @@ public class DefaultClientContainer
     public <M extends IModel> boolean 
     hasModel(Class<M> modelType)
     {
-        // TODO Auto-generated method stub
-        return false;
+        return hasModel(modelType,modelType.getCanonicalName());
     }
 
     /************************************************************************
@@ -316,8 +304,7 @@ public class DefaultClientContainer
     public <M extends IModel> boolean 
     hasModel(Class<M> modelType,String modelName)
     {
-        // TODO Auto-generated method stub
-        return false;
+        return getProvider().hasInstance( modelType,modelName );
     }
 
 

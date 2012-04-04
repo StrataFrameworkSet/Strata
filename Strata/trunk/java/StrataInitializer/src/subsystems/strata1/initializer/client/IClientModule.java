@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	Bootstrapper.java
+// # File Name:	IClientModule.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInitializer Framework.
 // #
@@ -24,53 +24,18 @@
 
 package strata1.initializer.client;
 
-import strata1.interactor.region.IRegionManager;
-import strata1.interactor.shell.IDispatcher;
-import strata1.interactor.shell.IShell;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IClientBootstrapper
+public interface IClientModule
 {
-    public void 
-    setModuleManager(IClientModuleManager modules);
-
-    public void 
-    setContainer(IClientContainer container);
-    
     public void
-    setRegionManager(IRegionManager manager);
-    
-    public void
-    setDispatcher(IDispatcher dispatcher);
-    
-    public void
-    setShell(IShell shell);
-    
-    public IClientModuleManager
-    getModuleManager();
-
-    public IClientContainer
-    getContainer();
-    
-    public IRegionManager
-    getRegionManager();
-    
-    public IDispatcher
-    getDispatcher();
-    
-    public IShell
-    getShell();
-    
-    public void
-    run(IClientFactory factory);
+    initialize(IClientBootstrapper bootstrapper);
 }
-
 
 // ##########################################################################

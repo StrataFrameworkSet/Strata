@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	SpringClientContainerFactory.java
+// # File Name:	SpringClientFactory.java
 // #
 // # Copyright:	2011, Stratagema Systems, LLC. All Rights Reserved.
 // #
@@ -27,10 +27,14 @@
 
 package strata1.initializer.springclient;
 
+import strata1.initializer.client.AbstractClientFactory;
+import strata1.initializer.client.ClientContainer;
 import strata1.initializer.client.IClientContainer;
-import strata1.initializer.client.IClientContainerFactory;
-import strata1.initializer.client.DefaultClientContainer;
+import strata1.initializer.client.IClientModuleManager;
 import strata1.initializer.springprovider.SpringContainerProvider;
+import strata1.interactor.region.IRegionManager;
+import strata1.interactor.shell.IDispatcher;
+import strata1.interactor.shell.IShell;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -41,27 +45,34 @@ import org.springframework.context.support.GenericXmlApplicationContext;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
+/****************************************************************************
+ * 
+ * @author 		
+ *     Sapientia Systems
+ * @conventions	
+ *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
+ */
 public 
-class SpringClientContainerFactory
-    implements IClientContainerFactory
+class SpringClientFactory
+    extends AbstractClientFactory
 {
 
     /************************************************************************
-     * Creates a new SpringClientContainerFactory. 
+     * Creates a new SpringClientFactory. 
      *
      */
     public 
-    SpringClientContainerFactory() {}
+    SpringClientFactory() {}
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
     public IClientContainer 
-    createClientContainer()
+    createContainer()
     {
         return 
-            new DefaultClientContainer(
+            new ClientContainer(
                 new SpringContainerProvider(
                     new GenericApplicationContext()));
     }
@@ -71,12 +82,56 @@ class SpringClientContainerFactory
      */
     @Override
     public IClientContainer 
-    createClientContainer(String resourceLocation)
+    createContainer(String resourceLocation)
     {
         return 
-            new DefaultClientContainer(
+            new ClientContainer(
                 new SpringContainerProvider(
                     new GenericXmlApplicationContext(resourceLocation)));
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IClientModuleManager 
+    createModuleManager()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IRegionManager 
+    createRegionManager()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IDispatcher 
+    createDispatcher()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IShell 
+    createShell(IDispatcher dispatcher)
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

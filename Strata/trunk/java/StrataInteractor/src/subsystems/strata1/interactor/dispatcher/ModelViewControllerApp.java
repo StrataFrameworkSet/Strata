@@ -1,28 +1,32 @@
 // ##########################################################################
-// # File Name:	AbstractContainerFactory.java
+// # File Name:	ModelViewControllerApp.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataInteractor Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataInteractor Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataInteractor Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataInteractor
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.provider;
+package strata1.interactor.dispatcher;
+
+import strata1.interactor.controller.IController;
+import strata1.interactor.model.IModel;
+import strata1.interactor.view.IView;
 
 /**
  * 
@@ -32,47 +36,55 @@ package strata1.initializer.provider;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public abstract 
-class AbstractContainerFactory
-    implements IProviderFactory
+class ModelViewControllerApp<
+    M extends IModel,
+    V extends IView,
+    C extends IController>
+    implements Runnable
 {
-
+    private M itsModel;
+    private V itsView;
+    private C itsController;
+    
     /************************************************************************
-     * Creates a new {@code AbstractContainerFactory}. 
-     *
+     * Creates a new ModelViewControllerApp. 
      */
     public 
-    AbstractContainerFactory() {}
-
+    ModelViewControllerApp()
+    {
+        itsModel      = null;
+        itsView       = null;
+        itsController = null;
+    }
+    
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IComponentDefinition 
-    createComponentDefinition()
+    public void 
+    run()
     {
-        return new ComponentDefinition();
+        itsController.start();
     }
-
+    
     /************************************************************************
-     * {@inheritDoc} 
+     *  
+     *
+     * @param model
+     * @param view
+     * @param controller
      */
-    @Override
-    public IConstructorInjector 
-    createConstructorInjector()
+    protected void
+    configure(M model,V view,C controller)
     {
-        return new ConstructorInjector();
+        itsModel      = model;
+        itsView       = view;
+        itsController = controller;
+        
+        itsModel.setProcessor( itsController );
+        itsView.setProvider( itsController );
     }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IPropertyInjector 
-    createPropertyInjector()
-    {
-        return new PropertyInjector();
-    }
-
 }
+
 
 // ##########################################################################
