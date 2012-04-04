@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	Bootstrapper.java
+// # File Name:	IClientFactory.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.client;
+package strata1.client.clientapp;
 
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IDispatcher;
@@ -36,41 +36,56 @@ import strata1.interactor.shell.IShell;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IClientBootstrapper
+interface IClientFactory
 {
-    public void 
-    setModuleManager(IClientModuleManager modules);
-
-    public void 
-    setContainer(IClientContainer container);
-    
-    public void
-    setRegionManager(IRegionManager manager);
-    
-    public void
-    setDispatcher(IDispatcher dispatcher);
-    
-    public void
-    setShell(IShell shell);
-    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public IClientModuleManager
-    getModuleManager();
+    createModuleManager();
 
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public IClientContainer
-    getContainer();
+    createContainer();
     
+    /************************************************************************
+     *  
+     *
+     * @param resourceLocation
+     * @return
+     */
+    public IClientContainer
+    createContainer(String resourceLocation);
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public IRegionManager
-    getRegionManager();
+    createRegionManager();
     
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public IDispatcher
-    getDispatcher();
+    createDispatcher();
     
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public IShell
-    getShell();
-    
-    public void
-    run(IClientFactory factory);
+    createShell(IDispatcher dispatcher);
 }
-
 
 // ##########################################################################

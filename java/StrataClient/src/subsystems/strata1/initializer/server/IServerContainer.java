@@ -24,8 +24,8 @@
 
 package strata1.initializer.server;
 
-import strata1.initializer.base.IBaseContainer;
 import strata1.entity.repository.IRepositoryContainer;
+import strata1.client.base.IBaseContainer;
 
 /**
  * 

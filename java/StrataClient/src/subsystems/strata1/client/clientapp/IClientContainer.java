@@ -22,13 +22,13 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.client;
+package strata1.client.clientapp;
 
-import strata1.initializer.base.IBaseContainer;
 import strata1.interactor.controller.IControllerContainer;
 import strata1.interactor.model.IModelContainer;
 import strata1.interactor.view.IViewContainer;
 import strata1.interactor.viewmodel.IViewModelContainer;
+import strata1.client.base.IBaseContainer;
 
 /**
  * 

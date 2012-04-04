@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	AbstractClientFactory.java
+// # File Name:	IBaseContainer.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInitializer Framework.
 // #
@@ -22,39 +22,25 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.client;
+package strata1.client.base;
 
-/****************************************************************************
+import strata1.integrator.gateway.IGatewayContainer;
+import strata1.common.factory.IFactoryContainer;
+
+
+/**
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract class AbstractClientFactory
-    implements IClientFactory
+public 
+interface IBaseContainer
+    extends IGatewayContainer,
+            IFactoryContainer
 {
-
-    /************************************************************************
-     * Creates a new {@code AbstractClientFactory}. 
-     *
-     */
-    public 
-    AbstractClientFactory()
-    {
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IClientModuleManager 
-    createModuleManager()
-    {
-        return new ClientModuleManager();
-    }
-
-    
 }
+
 
 // ##########################################################################

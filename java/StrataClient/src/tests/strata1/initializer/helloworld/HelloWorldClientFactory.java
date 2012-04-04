@@ -24,9 +24,6 @@
 
 package strata1.initializer.helloworld;
 
-import strata1.initializer.client.AbstractClientFactory;
-import strata1.initializer.client.ClientContainer;
-import strata1.initializer.client.IClientContainer;
 import strata1.initializer.springprovider.SpringContainerProvider;
 import strata1.swtinteractor.swtregion.SwtRegionManager;
 import strata1.swtinteractor.swtshell.ISwtDispatcher;
@@ -35,6 +32,9 @@ import strata1.swtinteractor.swtshell.SwtShell;
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IDispatcher;
 import strata1.interactor.shell.IShell;
+import strata1.client.clientapp.AbstractClientFactory;
+import strata1.client.clientapp.ClientContainer;
+import strata1.client.clientapp.IClientContainer;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 

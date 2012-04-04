@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IClientModule.java
+// # File Name:	AbstractClientFactory.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,8 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.client;
-
+package strata1.client.clientapp;
 
 /****************************************************************************
  * 
@@ -32,10 +31,30 @@ package strata1.initializer.client;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public interface IClientModule
+public abstract class AbstractClientFactory
+    implements IClientFactory
 {
-    public void
-    initialize(IClientBootstrapper bootstrapper);
+
+    /************************************************************************
+     * Creates a new {@code AbstractClientFactory}. 
+     *
+     */
+    public 
+    AbstractClientFactory()
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IClientModuleManager 
+    createModuleManager()
+    {
+        return new ClientModuleManager();
+    }
+
+    
 }
 
 // ##########################################################################

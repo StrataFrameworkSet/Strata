@@ -24,11 +24,11 @@
 
 package strata1.initializer.helloworld;
 
-import strata1.initializer.client.IClientBootstrapper;
-import strata1.initializer.client.IClientContainer;
-import strata1.initializer.client.IClientModule;
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IShell;
+import strata1.client.clientapp.IClientBootstrapper;
+import strata1.client.clientapp.IClientContainer;
+import strata1.client.clientapp.IClientModule;
 
 /****************************************************************************
  * 

@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IClientModuleManager.java
+// # File Name:	IClientModule.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.client;
+package strata1.client.clientapp;
 
 
 /****************************************************************************
@@ -32,13 +32,8 @@ package strata1.initializer.client;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IClientModuleManager
-    extends Iterable<IClientModule>
+public interface IClientModule
 {
-    public void
-    registerModule(IClientModule module);
-    
     public void
     initialize(IClientBootstrapper bootstrapper);
 }

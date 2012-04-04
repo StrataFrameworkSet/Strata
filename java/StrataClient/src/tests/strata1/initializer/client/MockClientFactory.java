@@ -27,6 +27,9 @@ package strata1.initializer.client;
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IDispatcher;
 import strata1.interactor.shell.IShell;
+import strata1.client.clientapp.AbstractClientFactory;
+import strata1.client.clientapp.IClientContainer;
+import strata1.client.clientapp.IClientModuleManager;
 import org.mockito.*;
 
 /****************************************************************************

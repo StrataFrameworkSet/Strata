@@ -25,16 +25,16 @@
 // #			Framework at http://www.stratagemasystems.com/strata/.
 // ##########################################################################
 
-package strata1.initializer.springclient;
+package strata1.client.springclient;
 
-import strata1.initializer.client.AbstractClientFactory;
-import strata1.initializer.client.ClientContainer;
-import strata1.initializer.client.IClientContainer;
-import strata1.initializer.client.IClientModuleManager;
 import strata1.initializer.springprovider.SpringContainerProvider;
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IDispatcher;
 import strata1.interactor.shell.IShell;
+import strata1.client.clientapp.AbstractClientFactory;
+import strata1.client.clientapp.ClientContainer;
+import strata1.client.clientapp.IClientContainer;
+import strata1.client.clientapp.IClientModuleManager;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 

@@ -24,10 +24,10 @@
 
 package strata1.initializer.server;
 
-import strata1.initializer.base.AbstractBaseContainer;
-import strata1.initializer.base.InstanceInserter;
 import strata1.initializer.provider.IContainerProvider;
 import strata1.entity.repository.IRepository;
+import strata1.client.base.AbstractBaseContainer;
+import strata1.client.base.InstanceInserter;
 
 /**
  * 
