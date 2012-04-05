@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.client;
+package strata1.client.clientapp;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

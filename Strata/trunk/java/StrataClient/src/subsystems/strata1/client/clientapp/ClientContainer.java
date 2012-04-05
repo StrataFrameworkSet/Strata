@@ -27,11 +27,11 @@
 
 package strata1.client.clientapp;
 
-import strata1.initializer.provider.IContainerProvider;
 import strata1.interactor.controller.IController;
 import strata1.interactor.model.IModel;
 import strata1.interactor.view.IView;
 import strata1.interactor.viewmodel.IViewModel;
+import strata1.common.containerprovider.IContainerProvider;
 import strata1.client.base.AbstractBaseContainer;
 import strata1.client.base.InstanceInserter;
 
