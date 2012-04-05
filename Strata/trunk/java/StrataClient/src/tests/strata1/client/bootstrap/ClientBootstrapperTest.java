@@ -22,18 +22,18 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.client.clientapp;
+package strata1.client.bootstrap;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IDispatcher;
 import strata1.interactor.shell.IShell;
-import strata1.client.clientapp.IClientBootstrapper;
-import strata1.client.clientapp.IClientContainer;
-import strata1.client.clientapp.IClientFactory;
-import strata1.client.clientapp.IClientModule;
-import strata1.client.clientapp.IClientModuleManager;
+import strata1.client.bootstrap.IClientBootstrapper;
+import strata1.client.bootstrap.IClientContainer;
+import strata1.client.bootstrap.IClientFactory;
+import strata1.client.bootstrap.IClientModule;
+import strata1.client.bootstrap.IClientModuleManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

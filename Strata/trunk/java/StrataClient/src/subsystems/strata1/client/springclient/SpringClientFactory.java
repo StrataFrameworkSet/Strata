@@ -31,10 +31,10 @@ import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IDispatcher;
 import strata1.interactor.shell.IShell;
 import strata1.common.springcontainerprovider.SpringContainerProvider;
-import strata1.client.clientapp.AbstractClientFactory;
-import strata1.client.clientapp.ClientContainer;
-import strata1.client.clientapp.IClientContainer;
-import strata1.client.clientapp.IClientModuleManager;
+import strata1.client.bootstrap.AbstractClientFactory;
+import strata1.client.bootstrap.ClientContainer;
+import strata1.client.bootstrap.IClientContainer;
+import strata1.client.bootstrap.IClientModuleManager;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 

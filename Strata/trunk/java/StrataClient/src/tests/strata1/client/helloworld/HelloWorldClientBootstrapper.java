@@ -26,7 +26,7 @@ package strata1.client.helloworld;
 
 import strata1.swtinteractor.swtregion.SwtRegion;
 import strata1.swtinteractor.swtregion.SwtRegionManager;
-import strata1.client.clientapp.AbstractClientBootstrapper;
+import strata1.client.bootstrap.AbstractClientBootstrapper;
 
 /****************************************************************************
  * 

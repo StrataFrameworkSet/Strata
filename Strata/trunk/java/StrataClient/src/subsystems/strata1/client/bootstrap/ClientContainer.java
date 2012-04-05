@@ -25,15 +25,16 @@
 // #			Framework at http://www.stratagemasystems.com/strata/.
 // ##########################################################################
 
-package strata1.client.clientapp;
+package strata1.client.bootstrap;
 
 import strata1.interactor.controller.IController;
 import strata1.interactor.model.IModel;
 import strata1.interactor.view.IView;
 import strata1.interactor.viewmodel.IViewModel;
+import strata1.integrator.annotation.Gateway;
+import strata1.common.annotation.Factory;
 import strata1.common.containerprovider.IContainerProvider;
-import strata1.client.base.AbstractBaseContainer;
-import strata1.client.base.InstanceInserter;
+import strata1.common.containerprovider.InstanceInserter;
 
 /**
  * 
@@ -43,9 +44,10 @@ import strata1.client.base.InstanceInserter;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public class ClientContainer
-    extends    AbstractBaseContainer
     implements IClientContainer
 {
+    private IContainerProvider itsProvider;
+
     /************************************************************************
      * Creates a new ClientContainer. 
      *
@@ -53,7 +55,7 @@ public class ClientContainer
     public 
     ClientContainer(IContainerProvider provider)
     {
-        super( provider );
+        itsProvider = provider;
     }
 
     /************************************************************************
@@ -305,6 +307,149 @@ public class ClientContainer
     hasModel(Class<M> modelType,String modelName)
     {
         return getProvider().hasInstance( modelType,modelName );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <G>void registerGateway(G gateway)
+    {
+        
+        registerGateway( gateway.getClass().getCanonicalName(),gateway );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <G>void registerGateway(String gatewayName,G gateway)
+    {
+        Class<?> gatewayType = gateway.getClass();
+        
+        if ( gatewayType.isAnnotationPresent( Gateway.class ) )
+            getProvider().registerInstance( gatewayName,gateway );
+        else
+            throw 
+                new IllegalArgumentException( 
+                    gatewayType + " is not a supported type.");    
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <G>G getGateway(Class<G> gatewayType)
+    {
+        return getGateway( gatewayType,gatewayType.getCanonicalName() );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <G>G getGateway(Class<G> gatewayType,String gatewayName)
+    {
+        if ( !gatewayType.isAnnotationPresent( Gateway.class ) )
+            throw 
+                new IllegalArgumentException( 
+                    gatewayType + "is not a gateway.");
+        
+        return itsProvider.getInstance( gatewayType,gatewayName );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <G>boolean hasGateway(Class<G> gatewayType)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <G>boolean hasGateway(Class<G> gatewayType,String gatewayName)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <F>void registerFactory(F factory)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <F>void registerFactory(String factoryName,F factory)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <F>F getFactory(Class<F> factoryType)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <F>F getFactory(Class<F> factoryType,String name)
+    {
+        if ( !factoryType.isAnnotationPresent( Factory.class ) )
+            throw 
+                new IllegalArgumentException( 
+                    factoryType + "is not a factory.");
+        
+        return itsProvider.getInstance( factoryType,name );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <F>boolean hasFactory(Class<F> factoryType)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <F>boolean hasFactory(Class<F> factoryType,String factoryName)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    protected IContainerProvider getProvider()
+    {
+        return itsProvider;
     }
 
 

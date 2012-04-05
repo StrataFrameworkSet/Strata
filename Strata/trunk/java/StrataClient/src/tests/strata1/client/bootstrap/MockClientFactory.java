@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IClientFactory.java
+// # File Name:	MockClientFactory.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInitializer Framework.
 // #
@@ -22,13 +22,17 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.client.clientapp;
+package strata1.client.bootstrap;
 
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IDispatcher;
 import strata1.interactor.shell.IShell;
+import strata1.client.bootstrap.AbstractClientFactory;
+import strata1.client.bootstrap.IClientContainer;
+import strata1.client.bootstrap.IClientModuleManager;
+import org.mockito.*;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -36,56 +40,79 @@ import strata1.interactor.shell.IShell;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IClientFactory
+class MockClientFactory
+    extends AbstractClientFactory
 {
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public IClientModuleManager
-    createModuleManager();
 
     /************************************************************************
-     *  
+     * Creates a new {@code MockClientFactory}. 
      *
-     * @return
      */
-    public IClientContainer
-    createContainer();
-    
+    public 
+    MockClientFactory()
+    {
+    }
+
     /************************************************************************
-     *  
-     *
-     * @param resourceLocation
-     * @return
+     * {@inheritDoc} 
      */
-    public IClientContainer
-    createContainer(String resourceLocation);
-    
+    @Override
+    public IClientModuleManager 
+    createModuleManager()
+    {
+        return Mockito.spy( super.createModuleManager() );
+    }
+
     /************************************************************************
-     *  
-     *
-     * @return
+     * {@inheritDoc} 
      */
-    public IRegionManager
-    createRegionManager();
-    
+    @Override
+    public IClientContainer 
+    createContainer()
+    {
+        return Mockito.mock( IClientContainer.class );
+    }
+
     /************************************************************************
-     *  
-     *
-     * @return
+     * {@inheritDoc} 
      */
-    public IDispatcher
-    createDispatcher();
-    
+    @Override
+    public IClientContainer 
+    createContainer(String resourceLocation)
+    {
+        return createContainer();
+    }
+
     /************************************************************************
-     *  
-     *
-     * @return
+     * {@inheritDoc} 
      */
-    public IShell
-    createShell(IDispatcher dispatcher);
+    @Override
+    public IRegionManager 
+    createRegionManager()
+    {
+        return Mockito.mock( IRegionManager.class );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IDispatcher 
+    createDispatcher()
+    {
+        return Mockito.mock( IDispatcher.class );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IShell 
+    createShell(IDispatcher dispatcher)
+    {
+        return Mockito.mock( IShell.class );
+    }
+
 }
 
 // ##########################################################################

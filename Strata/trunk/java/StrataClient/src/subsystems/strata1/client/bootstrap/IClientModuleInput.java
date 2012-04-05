@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBaseContainer.java
+// # File Name:	IClientModuleInput.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInitializer Framework.
 // #
@@ -22,13 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.client.base;
+package strata1.client.bootstrap;
 
-import strata1.integrator.gateway.IGatewayContainer;
-import strata1.common.factory.IFactoryContainer;
-
-
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -36,11 +32,9 @@ import strata1.common.factory.IFactoryContainer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBaseContainer
-    extends IGatewayContainer,
-            IFactoryContainer
+interface IClientModuleInput
 {
-}
 
+}
 
 // ##########################################################################

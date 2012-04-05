@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.client.clientapp;
+package strata1.client.bootstrap;
 
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.region.RegionInitializationException;

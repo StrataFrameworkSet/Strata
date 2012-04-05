@@ -26,9 +26,9 @@ package strata1.client.helloworld;
 
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IShell;
-import strata1.client.clientapp.IClientBootstrapper;
-import strata1.client.clientapp.IClientContainer;
-import strata1.client.clientapp.IClientModule;
+import strata1.client.bootstrap.IClientBootstrapper;
+import strata1.client.bootstrap.IClientContainer;
+import strata1.client.bootstrap.IClientModule;
 
 /****************************************************************************
  * 
