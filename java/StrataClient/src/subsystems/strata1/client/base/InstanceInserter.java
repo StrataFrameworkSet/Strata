@@ -24,7 +24,7 @@
 
 package strata1.client.base;
 
-import strata1.initializer.provider.IContainerProvider;
+import strata1.common.containerprovider.IContainerProvider;
 import java.lang.annotation.Annotation;
 
 /****************************************************************************

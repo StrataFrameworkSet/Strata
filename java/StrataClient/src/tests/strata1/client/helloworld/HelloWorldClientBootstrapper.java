@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IServerContainerFactory.java
+// # File Name:	HelloWorldClientBootstrapper.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInitializer Framework.
 // #
@@ -22,9 +22,13 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.server;
+package strata1.client.helloworld;
 
-/**
+import strata1.swtinteractor.swtregion.SwtRegion;
+import strata1.swtinteractor.swtregion.SwtRegionManager;
+import strata1.client.clientapp.AbstractClientBootstrapper;
+
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -32,25 +36,39 @@ package strata1.initializer.server;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IServerContainerFactory
+class HelloWorldClientBootstrapper
+    extends AbstractClientBootstrapper
 {
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public IServerContainer
-    createServerContainer();
-    
-    /************************************************************************
-     *  
-     *
-     * @param resourceLocation
-     * @return
-     */
-    public IServerContainer
-    createServerContainer(String resourceLocation);
-}
 
+    /************************************************************************
+     * Creates a new {@code HelloWorldClientBootstrapper}. 
+     *
+     */
+    public 
+    HelloWorldClientBootstrapper()
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected void 
+    configureModules()
+    {
+        getModuleManager().registerModule( new GreetingModule() );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected void 
+    configureRegionManager()
+    {
+        SwtRegion.setManager( (SwtRegionManager)getRegionManager() );
+    }
+
+}
 
 // ##########################################################################

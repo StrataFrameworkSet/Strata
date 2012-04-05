@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	HelloWorldClientBootstrapper.java
+// # File Name:	GreetingModule.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,13 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.helloworld;
+package strata1.client.helloworld;
 
-import strata1.swtinteractor.swtregion.SwtRegion;
-import strata1.swtinteractor.swtregion.SwtRegionManager;
-import strata1.client.clientapp.AbstractClientBootstrapper;
+import strata1.interactor.region.IRegionManager;
+import strata1.interactor.shell.IShell;
+import strata1.client.clientapp.IClientBootstrapper;
+import strata1.client.clientapp.IClientContainer;
+import strata1.client.clientapp.IClientModule;
 
 /****************************************************************************
  * 
@@ -36,16 +38,16 @@ import strata1.client.clientapp.AbstractClientBootstrapper;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class HelloWorldClientBootstrapper
-    extends AbstractClientBootstrapper
+class GreetingModule
+    implements IClientModule
 {
 
     /************************************************************************
-     * Creates a new {@code HelloWorldClientBootstrapper}. 
+     * Creates a new {@code GreetingModule}. 
      *
      */
     public 
-    HelloWorldClientBootstrapper()
+    GreetingModule()
     {
     }
 
@@ -53,20 +55,26 @@ class HelloWorldClientBootstrapper
      * {@inheritDoc} 
      */
     @Override
-    protected void 
-    configureModules()
+    public void 
+    initialize(IClientBootstrapper bootstrapper)
     {
-        getModuleManager().registerModule( new GreetingModule() );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    protected void 
-    configureRegionManager()
-    {
-        SwtRegion.setManager( (SwtRegionManager)getRegionManager() );
+        IClientContainer     container = bootstrapper.getContainer();
+        IRegionManager       manager   = bootstrapper.getRegionManager();
+        IShell               shell     = bootstrapper.getShell();
+        
+        HelloWorldModel      model;
+        HelloWorldView       view;
+        HelloWorldController controller;
+        
+        model      = new DefaultHelloWorldModel();
+        view       = new SwtHelloWorldView(shell);
+        controller = new DefaultHelloWorldController(model,view);
+        
+        manager.registerWithRegion( "Greeting",SwtGreetingView.class );
+  
+        container.registerModel( model );
+        container.registerView( view );
+        container.registerController( controller );
     }
 
 }

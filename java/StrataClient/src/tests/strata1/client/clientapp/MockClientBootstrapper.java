@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	GreetingModule.java
+// # File Name:	MockClientBootstrapper.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,13 +22,11 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.helloworld;
+package strata1.client.clientapp;
 
-import strata1.interactor.region.IRegionManager;
-import strata1.interactor.shell.IShell;
-import strata1.client.clientapp.IClientBootstrapper;
-import strata1.client.clientapp.IClientContainer;
+import strata1.client.clientapp.AbstractClientBootstrapper;
 import strata1.client.clientapp.IClientModule;
+import org.mockito.Mockito;
 
 /****************************************************************************
  * 
@@ -38,16 +36,16 @@ import strata1.client.clientapp.IClientModule;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class GreetingModule
-    implements IClientModule
+class MockClientBootstrapper
+    extends AbstractClientBootstrapper
 {
 
     /************************************************************************
-     * Creates a new {@code GreetingModule}. 
+     * Creates a new {@code MockClientBootstrapper}. 
      *
      */
     public 
-    GreetingModule()
+    MockClientBootstrapper()
     {
     }
 
@@ -55,27 +53,23 @@ class GreetingModule
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    initialize(IClientBootstrapper bootstrapper)
+    protected void 
+    configureModules()
     {
-        IClientContainer     container = bootstrapper.getContainer();
-        IRegionManager       manager   = bootstrapper.getRegionManager();
-        IShell               shell     = bootstrapper.getShell();
-        
-        HelloWorldModel      model;
-        HelloWorldView       view;
-        HelloWorldController controller;
-        
-        model      = new DefaultHelloWorldModel();
-        view       = new SwtHelloWorldView(shell);
-        controller = new DefaultHelloWorldController(model,view);
-        
-        manager.registerWithRegion( "Greeting",SwtGreetingView.class );
-  
-        container.registerModel( model );
-        container.registerView( view );
-        container.registerController( controller );
+        getModuleManager()
+            .registerModule( Mockito.mock( IClientModule.class ) );
     }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected void 
+    configureRegionManager()
+    {
+        
+    }
+
 
 }
 

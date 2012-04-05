@@ -22,9 +22,8 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.initializer.helloworld;
+package strata1.client.helloworld;
 
-import strata1.initializer.springprovider.SpringContainerProvider;
 import strata1.swtinteractor.swtregion.SwtRegionManager;
 import strata1.swtinteractor.swtshell.ISwtDispatcher;
 import strata1.swtinteractor.swtshell.SwtDispatcher;
@@ -32,6 +31,7 @@ import strata1.swtinteractor.swtshell.SwtShell;
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IDispatcher;
 import strata1.interactor.shell.IShell;
+import strata1.common.springcontainerprovider.SpringContainerProvider;
 import strata1.client.clientapp.AbstractClientFactory;
 import strata1.client.clientapp.ClientContainer;
 import strata1.client.clientapp.IClientContainer;
