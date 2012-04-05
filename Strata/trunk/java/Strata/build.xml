@@ -13,6 +13,7 @@
     <property name="inspector.root" value="${workspace.root}/StrataInspector"/>
     <property name="entity.root" value="${workspace.root}/StrataEntity"/>
     <property name="client.root" value="${workspace.root}/StrataClient"/>
+    <property name="server.root" value="${workspace.root}/StrataServer"/>
  
     <target name="clean">
         <ant 
@@ -42,6 +43,10 @@
         <ant 
             dir="${client.root}" 
             antfile="${client.root}/build.xml" 
+            target="clean"/>
+        <ant 
+            dir="${server.root}" 
+            antfile="${server.root}/build.xml" 
             target="clean"/>
     </target>
 
@@ -74,6 +79,10 @@
             dir="${client.root}" 
             antfile="${client.root}/build.xml" 
             target="run-commit-stage"/>
+        <ant 
+            dir="${server.root}" 
+            antfile="${server.root}/build.xml" 
+            target="run-commit-stage"/>
     </target>
 	
     <target name="run-integration-stage">
@@ -104,6 +113,10 @@
         <ant 
             dir="${client.root}" 
             antfile="${client.root}/build.xml" 
+            target="run-integration-stage"/>
+        <ant 
+            dir="${server.root}" 
+            antfile="${server.root}/build.xml" 
             target="run-integration-stage"/>
     </target>
 	
