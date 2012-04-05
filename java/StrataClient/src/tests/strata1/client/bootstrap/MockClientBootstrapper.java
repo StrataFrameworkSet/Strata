@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ClientModuleManager.java
+// # File Name:	MockClientBootstrapper.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,11 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.client.clientapp;
+package strata1.client.bootstrap;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import strata1.client.bootstrap.AbstractClientBootstrapper;
+import strata1.client.bootstrap.IClientModule;
+import org.mockito.Mockito;
 
 /****************************************************************************
  * 
@@ -36,51 +36,40 @@ import java.util.Map;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class ClientModuleManager
-    implements IClientModuleManager
+class MockClientBootstrapper
+    extends AbstractClientBootstrapper
 {
-    private Map<String,IClientModule> itsModules;
-    
+
     /************************************************************************
-     * Creates a new {@code ClientModuleManager}. 
+     * Creates a new {@code MockClientBootstrapper}. 
      *
      */
     public 
-    ClientModuleManager()
+    MockClientBootstrapper()
     {
-        itsModules = new HashMap<String,IClientModule>();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public Iterator<IClientModule> 
-    iterator()
+    protected void 
+    configureModules()
     {
-        return itsModules.values().iterator();
+        getModuleManager()
+            .registerModule( Mockito.mock( IClientModule.class ) );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    registerModule(IClientModule module)
+    protected void 
+    configureRegionManager()
     {
-        itsModules.put( module.getClass().getName(),module );
+        
     }
 
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    initialize(IClientBootstrapper bootstrapper)
-    {
-        for (IClientModule module:itsModules.values())
-            module.initialize( bootstrapper );
-    }
 
 }
 

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBaseBootstrapper.java
+// # File Name:	IClientModule.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInitializer Framework.
 // #
@@ -22,21 +22,20 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.client.base;
+package strata1.client.bootstrap;
 
-/**
+
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IBaseBootstrapper
+public interface IClientModule
 {
     public void
-    run();
+    initialize(IClientBootstrapper bootstrapper);
 }
-
 
 // ##########################################################################

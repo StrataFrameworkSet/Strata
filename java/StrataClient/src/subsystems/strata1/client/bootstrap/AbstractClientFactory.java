@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IClientContainer.java
+// # File Name:	AbstractClientFactory.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInitializer Framework.
 // #
@@ -22,27 +22,39 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.client.clientapp;
+package strata1.client.bootstrap;
 
-import strata1.interactor.controller.IControllerContainer;
-import strata1.interactor.model.IModelContainer;
-import strata1.interactor.view.IViewContainer;
-import strata1.interactor.viewmodel.IViewModelContainer;
-import strata1.client.base.IBaseContainer;
-
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IClientContainer
-    extends IBaseContainer,
-            IViewContainer,
-            IViewModelContainer,
-            IControllerContainer,
-            IModelContainer {}
+public abstract class AbstractClientFactory
+    implements IClientFactory
+{
+
+    /************************************************************************
+     * Creates a new {@code AbstractClientFactory}. 
+     *
+     */
+    public 
+    AbstractClientFactory()
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IClientModuleManager 
+    createModuleManager()
+    {
+        return new ClientModuleManager();
+    }
+
+    
+}
 
 // ##########################################################################

@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	MockClientBootstrapper.java
+// # File Name:	InstanceInserter.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.client.clientapp;
+package strata1.common.containerprovider;
 
-import strata1.client.clientapp.AbstractClientBootstrapper;
-import strata1.client.clientapp.IClientModule;
-import org.mockito.Mockito;
+import strata1.common.containerprovider.IContainerProvider;
+import java.lang.annotation.Annotation;
 
 /****************************************************************************
  * 
@@ -36,41 +35,65 @@ import org.mockito.Mockito;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class MockClientBootstrapper
-    extends AbstractClientBootstrapper
+class InstanceInserter<T>
 {
-
+    private IContainerProvider itsProvider;
+    
     /************************************************************************
-     * Creates a new {@code MockClientBootstrapper}. 
+     * Creates a new {@code InstanceInserter}. 
      *
+     * @param p
      */
-    public 
-    MockClientBootstrapper()
+    public
+    InstanceInserter(IContainerProvider p)
     {
+        itsProvider = p;
     }
-
+    
     /************************************************************************
-     * {@inheritDoc} 
+     *  
+     *
+     * @param annotation
+     * @param instanceName
+     * @param instance
      */
-    @Override
-    protected void 
-    configureModules()
+    public void
+    insertByAnnotation(
+        Class<? extends Annotation> annotation,
+        String                      instanceName,
+        T                           instance)
     {
-        getModuleManager()
-            .registerModule( Mockito.mock( IClientModule.class ) );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    protected void 
-    configureRegionManager()
-    {
+        Class<?> instanceType = instance.getClass();
         
+        if ( instanceType.isAnnotationPresent( annotation ) )
+            itsProvider.registerInstance( instanceName,instance );
+        else
+            throw 
+                new IllegalArgumentException( 
+                    instanceType + " is not a supported type.");    
     }
-
-
+    
+    /************************************************************************
+     *  
+     *
+     * @param annotation
+     * @param instanceName
+     * @param instance
+     */
+    public void
+    insertByType(Class<?> type,String instanceName,T instance)
+    {
+        Class<?> instanceType = instance.getClass();
+        
+        if ( type.isAssignableFrom( instanceType ) )
+            itsProvider.registerInstance( instanceName,instance );
+        else
+            throw 
+                new IllegalArgumentException( 
+                    instanceType + " is not a supported type.");    
+    }
+    
+    
 }
 
 // ##########################################################################

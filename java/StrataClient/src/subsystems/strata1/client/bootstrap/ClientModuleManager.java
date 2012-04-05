@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	MockClientFactory.java
+// # File Name:	ClientModuleManager.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,15 +22,11 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.client.clientapp;
+package strata1.client.bootstrap;
 
-import strata1.interactor.region.IRegionManager;
-import strata1.interactor.shell.IDispatcher;
-import strata1.interactor.shell.IShell;
-import strata1.client.clientapp.AbstractClientFactory;
-import strata1.client.clientapp.IClientContainer;
-import strata1.client.clientapp.IClientModuleManager;
-import org.mockito.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /****************************************************************************
  * 
@@ -40,77 +36,50 @@ import org.mockito.*;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class MockClientFactory
-    extends AbstractClientFactory
+class ClientModuleManager
+    implements IClientModuleManager
 {
-
+    private Map<String,IClientModule> itsModules;
+    
     /************************************************************************
-     * Creates a new {@code MockClientFactory}. 
+     * Creates a new {@code ClientModuleManager}. 
      *
      */
     public 
-    MockClientFactory()
+    ClientModuleManager()
     {
+        itsModules = new HashMap<String,IClientModule>();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IClientModuleManager 
-    createModuleManager()
+    public Iterator<IClientModule> 
+    iterator()
     {
-        return Mockito.spy( super.createModuleManager() );
+        return itsModules.values().iterator();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IClientContainer 
-    createContainer()
+    public void 
+    registerModule(IClientModule module)
     {
-        return Mockito.mock( IClientContainer.class );
+        itsModules.put( module.getClass().getName(),module );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IClientContainer 
-    createContainer(String resourceLocation)
+    public void 
+    initialize(IClientBootstrapper bootstrapper)
     {
-        return createContainer();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IRegionManager 
-    createRegionManager()
-    {
-        return Mockito.mock( IRegionManager.class );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IDispatcher 
-    createDispatcher()
-    {
-        return Mockito.mock( IDispatcher.class );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IShell 
-    createShell(IDispatcher dispatcher)
-    {
-        return Mockito.mock( IShell.class );
+        for (IClientModule module:itsModules.values())
+            module.initialize( bootstrapper );
     }
 
 }
