@@ -25,7 +25,6 @@
 package strata1.swtinteractor.helloworld;
 
 import strata1.swtinteractor.swtview.ISwtView;
-import strata1.interactor.command.ICommand;
 import strata1.interactor.view.AbstractView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -92,7 +91,8 @@ public class SwtGreetingView
      * {@inheritDoc} 
      */
     @Override
-    public void invoke(ICommand command)
+    public void 
+    invoke(String commandName)
     {
         // TODO Auto-generated method stub
         

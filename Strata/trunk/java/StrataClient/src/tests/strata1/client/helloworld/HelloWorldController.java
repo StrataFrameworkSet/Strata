@@ -24,7 +24,8 @@
 
 package strata1.client.helloworld;
 
-import strata1.interactor.controller.IController;
+import strata1.interactor.command.ICommand;
+import strata1.interactor.controller.AbstractController;
 
 /**
  * 
@@ -34,9 +35,50 @@ import strata1.interactor.controller.IController;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface HelloWorldController
-    extends IController
+class HelloWorldController
+    extends    AbstractController
+    implements IHelloWorldController
 {
+    private IHelloWorldModel itsModel;
+    private IHelloWorldView  itsView;
+    
+    /************************************************************************
+     * Creates a new HelloWorldController. 
+     *
+     */
+    public 
+    HelloWorldController(IHelloWorldModel model,IHelloWorldView view)
+    {
+        itsModel = model;
+        itsView  = view;
+       
+        setCommand( 
+            "Exit",
+            new ICommand() 
+            {
+                public void 
+                execute() 
+                {
+                    itsView.stop();
+                    System.exit( 0 );
+                }
+            } );
+        
+        itsModel.setProcessor( this );
+        itsView.setProvider( this );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    start()
+    {
+        itsView.setGreeting( "Hello John!" );
+        itsView.start();
+    }
+
 
 }
 

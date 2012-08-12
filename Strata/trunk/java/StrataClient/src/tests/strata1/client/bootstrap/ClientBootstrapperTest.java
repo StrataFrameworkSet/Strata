@@ -24,16 +24,9 @@
 
 package strata1.client.bootstrap;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
 import strata1.interactor.region.IRegionManager;
-import strata1.interactor.shell.IDispatcher;
-import strata1.interactor.shell.IShell;
-import strata1.client.bootstrap.IClientBootstrapper;
-import strata1.client.bootstrap.IClientContainer;
-import strata1.client.bootstrap.IClientFactory;
-import strata1.client.bootstrap.IClientModule;
-import strata1.client.bootstrap.IClientModuleManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -119,20 +112,6 @@ class ClientBootstrapperTest
     }
 
     /**
-     * Test method for {@link IClientBootstrapper#setShell(IShell)}.
-     */
-    @Test
-    public void 
-    testSetGetShell()
-    {
-        IDispatcher dispatcher = itsFactory.createDispatcher();
-        IShell      expected   = itsFactory.createShell(dispatcher);
-        
-        itsTarget.setShell( expected );
-        assertEquals( expected,itsTarget.getShell() );
-    }
-
-    /**
      * Test method for {@link IClientBootstrapper#run(IClientFactory)}.
      */
     @Test
@@ -148,7 +127,7 @@ class ClientBootstrapperTest
             verify(module)
                 .initialize( itsTarget );
         
-        verify(itsTarget.getShell()).getDispatcher().start();
+
     }
     
     protected IClientBootstrapper

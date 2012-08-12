@@ -24,6 +24,7 @@
 
 package strata1.interactor.view;
 
+import strata1.interactor.command.ExecutionException;
 import strata1.interactor.command.ICommandProvider;
 import strata1.interactor.controller.IHandler;
 import strata1.interactor.event.IChangeEvent;
@@ -41,12 +42,29 @@ public abstract
 class AbstractView
 	implements IView
 {	
+    private String                                   itsViewName;
     private ICommandProvider                         itsProvider;
     private Map<IChangeEvent,IHandler<IChangeEvent>> itsHandlers;
     
-    public 
+    /************************************************************************
+     * Creates a new {@code AbstractView}. 
+     *
+     */
+    public
     AbstractView()
     {
+        this( "" );
+    }
+    
+    /************************************************************************
+     * Creates a new {@code AbstractView}. 
+     *
+     * @param viewName
+     */
+    public 
+    AbstractView(String viewName)
+    {
+        itsViewName = viewName;
         itsProvider = null;
         itsHandlers = new HashMap<IChangeEvent,IHandler<IChangeEvent>>();
     }
@@ -75,10 +93,44 @@ class AbstractView
      * {@inheritDoc} 
      */
     @Override
+    public String 
+    getInvokerName()
+    {
+        return getViewName();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    invoke(String commandName) 
+        throws ExecutionException
+    {
+        if ( !getProvider().hasCommand( commandName ) )
+            throw new ExecutionException( "No such command: "+commandName );
+        
+        getProvider().getCommand( commandName ).execute();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
     public void 
     processChange(IChangeEvent event)
     {
         itsHandlers.get( event ).handle( event );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public String 
+    getViewName()
+    {
+        return itsViewName;
     }
 
     /************************************************************************

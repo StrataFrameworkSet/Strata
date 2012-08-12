@@ -24,9 +24,8 @@
 
 package strata1.swtinteractor.swtshell;
 
-import strata1.interactor.shell.IDispatcher;
+import strata1.interactor.shell.AbstractDispatcher;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 
 /****************************************************************************
  * 
@@ -37,9 +36,10 @@ import org.eclipse.swt.widgets.Shell;
  */
 public 
 class SwtDispatcher
+    extends    AbstractDispatcher
     implements ISwtDispatcher
 {
-    private Display itsDisplay;
+    private Display  itsDisplay;
 
     /************************************************************************
      * Creates a new {@code SwtShell}. 
@@ -48,7 +48,7 @@ class SwtDispatcher
     public 
     SwtDispatcher()
     {
-        itsDisplay = new Display();     
+        itsDisplay = new Display();
     }
 
     /************************************************************************
@@ -80,6 +80,11 @@ class SwtDispatcher
     {
         while (!itsDisplay.isDisposed()) 
         {
+            Runnable task = getNextTask();
+                                               
+            if ( task != null )
+                invokeSynchronous( task );
+
             if (!itsDisplay.readAndDispatch()) 
                 itsDisplay.sleep();
         }
@@ -92,8 +97,18 @@ class SwtDispatcher
     public void 
     stop()
     {
-        itsDisplay.dispose();
-        System.exit( 0 );
+        itsDisplay.dispose();        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    processWork()
+    {
+        if (!itsDisplay.isDisposed()) 
+            while ( itsDisplay.readAndDispatch() );
     }
 
     /************************************************************************

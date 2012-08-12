@@ -52,48 +52,58 @@ class AbstractController
 	}
 	
 	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public ICommand 
-	getCommand(String commandName)
-	{
-		return itsCommands.get( commandName );
-	}
-	
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public void 
-	processChange(IChangeEvent event)
-	{
-		itsHandlers.get( event ).handle( event );
-	}
+     * {@inheritDoc} 
+     */
+    @Override
+    public ICommand 
+    getCommand(String commandName)
+    {
+    	return itsCommands.get( commandName );
+    }
 
-	/************************************************************************
-	 *  
-	 *
-	 * @param action
-	 * @param handler
-	 */
-	protected void
-	setCommand(String commandName,ICommand command)
-	{
-		itsCommands.put( commandName,command );
-	}
-	
-	/************************************************************************
-	 *  
-	 *
-	 * @param update
-	 * @param handler
-	 */
-	protected void
-	setHandler(IChangeEvent event,IHandler<IChangeEvent> handler)
-	{
-		itsHandlers.put( event,handler );
-	}
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    hasCommand(String commandName)
+    {
+        return itsCommands.containsKey( commandName );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    processChange(IChangeEvent event)
+    {
+    	itsHandlers.get( event ).handle( event );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param action
+     * @param handler
+     */
+    protected void
+    setCommand(String commandName,ICommand command)
+    {
+    	itsCommands.put( commandName,command );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param update
+     * @param handler
+     */
+    protected void
+    setHandler(IChangeEvent event,IHandler<IChangeEvent> handler)
+    {
+    	itsHandlers.put( event,handler );
+    }
 }
 
 

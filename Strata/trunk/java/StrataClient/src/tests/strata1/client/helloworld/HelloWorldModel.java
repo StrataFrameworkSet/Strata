@@ -24,7 +24,7 @@
 
 package strata1.client.helloworld;
 
-import strata1.interactor.model.IModel;
+import strata1.interactor.model.AbstractModel;
 
 /**
  * 
@@ -34,9 +34,19 @@ import strata1.interactor.model.IModel;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface HelloWorldModel
-    extends IModel
+class HelloWorldModel
+    extends    AbstractModel
+    implements IHelloWorldModel
 {
+
+    /************************************************************************
+     * Creates a new HelloWorldModel. 
+     *
+     */
+    public HelloWorldModel()
+    {
+        // TODO Auto-generated constructor stub
+    }
 
 }
 

@@ -26,11 +26,11 @@ package strata1.client.bootstrap;
 
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IDispatcher;
-import strata1.interactor.shell.IShell;
-import strata1.client.bootstrap.AbstractClientFactory;
-import strata1.client.bootstrap.IClientContainer;
-import strata1.client.bootstrap.IClientModuleManager;
-import org.mockito.*;
+import strata1.interactor.view.ILoginView;
+import strata1.interactor.view.ISplashView;
+import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.logger.ILogger;
+import org.mockito.Mockito;
 
 /****************************************************************************
  * 
@@ -51,6 +51,16 @@ class MockClientFactory
     public 
     MockClientFactory()
     {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ILogger 
+    createLogger()
+    {
+        return Mockito.mock( ILogger.class );
     }
 
     /************************************************************************
@@ -107,10 +117,30 @@ class MockClientFactory
      * {@inheritDoc} 
      */
     @Override
-    public IShell 
-    createShell(IDispatcher dispatcher)
+    public ILoginView 
+    createLoginView(IDispatcher dispatcher)
     {
-        return Mockito.mock( IShell.class );
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ISplashView 
+    createSplashView(IDispatcher dispatcher)
+    {
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IClientAuthenticator 
+    createAuthenticator()
+    {
+        return null;
     }
 
 }

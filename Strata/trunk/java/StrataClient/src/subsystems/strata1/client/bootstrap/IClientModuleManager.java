@@ -39,6 +39,9 @@ interface IClientModuleManager
     public void
     registerModule(IClientModule module);
     
+    public int
+    getNumberOfModules();
+    
     public void
     initialize(IClientBootstrapper bootstrapper);
 }

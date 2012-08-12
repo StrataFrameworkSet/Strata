@@ -26,7 +26,6 @@ package strata1.swtinteractor.helloworld;
 
 import strata1.swtinteractor.swtregion.SwtRegion;
 import strata1.swtinteractor.swtview.ISwtView;
-import strata1.interactor.command.ICommand;
 import strata1.interactor.region.IRegion;
 import strata1.interactor.region.RegionInitializationException;
 import strata1.interactor.view.AbstractView;
@@ -125,7 +124,7 @@ class SwtHelloWorldView
      */
     @Override
     public void 
-    invoke(ICommand command)
+    invoke(String commandName)
     {
     }
 

@@ -24,8 +24,6 @@
 
 package strata1.client.bootstrap;
 
-import strata1.client.bootstrap.AbstractClientBootstrapper;
-import strata1.client.bootstrap.IClientModule;
 import org.mockito.Mockito;
 
 /****************************************************************************
@@ -68,6 +66,15 @@ class MockClientBootstrapper
     configureRegionManager()
     {
         
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected void 
+    startApplication()
+    {
     }
 
 
