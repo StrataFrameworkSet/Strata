@@ -33,6 +33,7 @@ import strata1.interactor.view.IView;
 import strata1.interactor.viewmodel.IViewModel;
 import strata1.integrator.annotation.Gateway;
 import strata1.common.annotation.Factory;
+import strata1.common.authentication.IPrincipal;
 import strata1.common.containerprovider.IContainerProvider;
 import strata1.common.containerprovider.InstanceInserter;
 
@@ -362,7 +363,8 @@ public class ClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <G>boolean hasGateway(Class<G> gatewayType)
+    public <G> boolean 
+    hasGateway(Class<G> gatewayType)
     {
         // TODO Auto-generated method stub
         return false;
@@ -372,7 +374,8 @@ public class ClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <G>boolean hasGateway(Class<G> gatewayType,String gatewayName)
+    public <G> boolean 
+    hasGateway(Class<G> gatewayType,String gatewayName)
     {
         // TODO Auto-generated method stub
         return false;
@@ -382,7 +385,8 @@ public class ClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <F>void registerFactory(F factory)
+    public <F> void 
+    registerFactory(F factory)
     {
         // TODO Auto-generated method stub
         
@@ -392,7 +396,8 @@ public class ClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <F>void registerFactory(String factoryName,F factory)
+    public <F> void 
+    registerFactory(String factoryName,F factory)
     {
         // TODO Auto-generated method stub
         
@@ -402,7 +407,8 @@ public class ClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <F>F getFactory(Class<F> factoryType)
+    public <F> F 
+    getFactory(Class<F> factoryType)
     {
         // TODO Auto-generated method stub
         return null;
@@ -412,7 +418,8 @@ public class ClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <F>F getFactory(Class<F> factoryType,String name)
+    public <F> F 
+    getFactory(Class<F> factoryType,String name)
     {
         if ( !factoryType.isAnnotationPresent( Factory.class ) )
             throw 
@@ -426,7 +433,8 @@ public class ClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <F>boolean hasFactory(Class<F> factoryType)
+    public <F> boolean 
+    hasFactory(Class<F> factoryType)
     {
         // TODO Auto-generated method stub
         return false;
@@ -436,7 +444,73 @@ public class ClientContainer
      * {@inheritDoc} 
      */
     @Override
-    public <F>boolean hasFactory(Class<F> factoryType,String factoryName)
+    public <F> boolean 
+    hasFactory(Class<F> factoryType,String factoryName)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <P extends IPrincipal> void 
+    registerPrincipal(P principal)
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <P extends IPrincipal> void 
+    registerPrincipal(String principalName,P principal)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <P extends IPrincipal> P 
+    getPrincipal(Class<P> principalType)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <P extends IPrincipal> P 
+    getPrincipal(Class<P> principalType,String principalName)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <P extends IPrincipal> boolean 
+    hasPrincipal(Class<P> principalType)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <P extends IPrincipal> boolean 
+    hasPrincipal(Class<P> principalType,
+        String principalName)
     {
         // TODO Auto-generated method stub
         return false;
@@ -447,7 +521,8 @@ public class ClientContainer
      *
      * @return
      */
-    protected IContainerProvider getProvider()
+    protected IContainerProvider 
+    getProvider()
     {
         return itsProvider;
     }

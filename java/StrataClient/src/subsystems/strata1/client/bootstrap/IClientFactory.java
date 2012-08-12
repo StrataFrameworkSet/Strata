@@ -26,7 +26,10 @@ package strata1.client.bootstrap;
 
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IDispatcher;
-import strata1.interactor.shell.IShell;
+import strata1.interactor.view.ILoginView;
+import strata1.interactor.view.ISplashView;
+import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.logger.ILogger;
 
 /**
  * 
@@ -38,6 +41,14 @@ import strata1.interactor.shell.IShell;
 public 
 interface IClientFactory
 {
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public ILogger
+    createLogger();
+    
     /************************************************************************
      *  
      *
@@ -82,10 +93,29 @@ interface IClientFactory
     /************************************************************************
      *  
      *
+     * @param dispatcher
      * @return
      */
-    public IShell
-    createShell(IDispatcher dispatcher);
+    public ILoginView
+    createLoginView(IDispatcher dispatcher);
+    
+    /************************************************************************
+     *  
+     *
+     * @param dispatcher
+     * @return
+     */
+    public ISplashView
+    createSplashView(IDispatcher dispatcher);
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public IClientAuthenticator
+    createAuthenticator();
+    
 }
 
 // ##########################################################################

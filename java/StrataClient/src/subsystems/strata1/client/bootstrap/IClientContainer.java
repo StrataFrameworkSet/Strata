@@ -29,6 +29,7 @@ import strata1.interactor.model.IModelContainer;
 import strata1.interactor.view.IViewContainer;
 import strata1.interactor.viewmodel.IViewModelContainer;
 import strata1.integrator.gateway.IGatewayContainer;
+import strata1.common.authentication.IPrincipalContainer;
 import strata1.common.factory.IFactoryContainer;
 
 
@@ -46,6 +47,7 @@ interface IClientContainer
             IControllerContainer,
             IModelContainer,
             IGatewayContainer,
-            IFactoryContainer {}
+            IFactoryContainer,
+            IPrincipalContainer {}
 
 // ##########################################################################

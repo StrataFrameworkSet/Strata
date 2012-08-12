@@ -26,8 +26,8 @@ package strata1.swtinteractor.swtregion;
 
 import strata1.swtinteractor.swtview.ISwtView;
 import strata1.interactor.region.IRegion;
-import strata1.interactor.region.RegionInitializationException;
 import strata1.interactor.region.IRegionManager;
+import strata1.interactor.region.RegionInitializationException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -45,7 +45,7 @@ public class SwtRegion
 {
     private static SwtRegionManager theirManager;
     private String                  itsName;
-    private ISwtView                 itsView;
+    private ISwtView                itsView;
 
     /************************************************************************
      * Creates a new {@code SwtRegion}. 
@@ -73,6 +73,7 @@ public class SwtRegion
         throws RegionInitializationException
     {
         itsView = getManager().createView( getRegionName(),this );
+        itsView.show();
     }
     
     /************************************************************************

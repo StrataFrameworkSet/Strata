@@ -24,12 +24,11 @@
 
 package strata1.client.helloworld;
 
-import strata1.swtinteractor.swtregion.SwtRegion;
-import strata1.swtinteractor.swtregion.SwtRegionManager;
 import strata1.interactor.region.RegionInitializationException;
-import strata1.interactor.region.IRegionManager;
 import strata1.client.bootstrap.IClientBootstrapper;
 import strata1.client.bootstrap.IClientFactory;
+import strata1.client.swthelloworld.SwtHelloWorldClientBootstrapper;
+import strata1.client.swthelloworld.SwtHelloWorldClientFactory;
 
 /**
  * 
@@ -53,8 +52,8 @@ class HelloWorldApp
     public 
     HelloWorldApp() 
     {
-        itsBootstrapper = new HelloWorldClientBootstrapper();
-        itsFactory      = new HelloWorldClientFactory();
+        itsBootstrapper = new SwtHelloWorldClientBootstrapper();
+        itsFactory      = new SwtHelloWorldClientFactory();
     }
 
     /************************************************************************

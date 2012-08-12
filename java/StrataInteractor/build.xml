@@ -14,14 +14,21 @@
     <property name="project.subsystems" value="${directory}/${artifactName}.jar"/>
     <property name="project.tests" value="${directory}/${testArtifactName}.jar"/>
     <property name="project.testreports" value="${testOutputDirectory}/reports"/>
+    <property name="common.artifact" value="${basedir}/../StrataCommon/lib/StrataCommon-${version}.jar"/>
 
-    <artifact:dependencies pathId="dependency.classpath">
+    <artifact:dependencies pathId="temp.classpath">
         <artifact:dependency groupId="junit" artifactId="junit" version="4.9"/>
         <artifact:dependency groupId="org.fitnesse" artifactId="fitnesse" version="20050731"/>
         <artifact:dependency groupId="com.c2.fit" artifactId="fit" version="1.1"/>
     </artifact:dependencies>
 
     <path 
+        id="dependency.classpath">
+        <path refid="temp.classpath"/> 
+        <pathelement location="${common.artifact}" /> 
+    </path>
+
+	<path 
         id="testDependency.classpath">
         <pathelement location="${project.subsystems}" /> 
         <path refid="dependency.classpath"/> 

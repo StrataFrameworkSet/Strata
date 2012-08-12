@@ -26,8 +26,8 @@ package strata1.swtinteractor.helloworld;
 
 import strata1.swtinteractor.swtregion.SwtRegion;
 import strata1.swtinteractor.swtregion.SwtRegionManager;
-import strata1.interactor.region.RegionInitializationException;
 import strata1.interactor.region.IRegionManager;
+import strata1.interactor.region.RegionInitializationException;
 
 /**
  * 

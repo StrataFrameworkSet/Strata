@@ -24,6 +24,7 @@
 
 package strata1.client.bootstrap;
 
+import strata1.common.logger.LoggingLevel;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -75,11 +76,41 @@ class ClientModuleManager
      * {@inheritDoc} 
      */
     @Override
+    public int 
+    getNumberOfModules()
+    {
+        return itsModules.size();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
     public void 
     initialize(IClientBootstrapper bootstrapper)
     {
+        IStartUpController controller = bootstrapper.getController();
+        
         for (IClientModule module:itsModules.values())
-            module.initialize( bootstrapper );
+        {
+            String message = 
+                "Initializing module: " +
+                module.getClass().getSimpleName();
+            
+            bootstrapper
+                .getLogger()
+                .log( LoggingLevel.INFO,message );
+            
+           controller.setInitializationMessage( message );
+           controller.incrementInitializationProgress();
+           
+            bootstrapper
+                .getDispatcher()
+                .processWork();
+            
+           module.initialize( bootstrapper );  
+            
+        }
     }
 
 }

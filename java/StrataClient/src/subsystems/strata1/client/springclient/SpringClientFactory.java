@@ -29,7 +29,10 @@ package strata1.client.springclient;
 
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IDispatcher;
-import strata1.interactor.shell.IShell;
+import strata1.interactor.view.ILoginView;
+import strata1.interactor.view.ISplashView;
+import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.logger.ILogger;
 import strata1.common.springcontainerprovider.SpringContainerProvider;
 import strata1.client.bootstrap.AbstractClientFactory;
 import strata1.client.bootstrap.ClientContainer;
@@ -63,6 +66,18 @@ class SpringClientFactory
      */
     public 
     SpringClientFactory() {}
+
+    
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ILogger createLogger()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 
     /************************************************************************
      * {@inheritDoc} 
@@ -127,8 +142,30 @@ class SpringClientFactory
      * {@inheritDoc} 
      */
     @Override
-    public IShell 
-    createShell(IDispatcher dispatcher)
+    public ILoginView 
+    createLoginView(IDispatcher dispatcher)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ISplashView 
+    createSplashView(IDispatcher dispatcher)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IClientAuthenticator 
+    createAuthenticator()
     {
         // TODO Auto-generated method stub
         return null;

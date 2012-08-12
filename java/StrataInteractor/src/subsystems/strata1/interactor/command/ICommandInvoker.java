@@ -53,10 +53,19 @@ interface ICommandInvoker
     /************************************************************************
      *  
      *
+     * @return
+     */
+    public String
+    getInvokerName();
+    
+    /************************************************************************
+     *  
+     *
      * @param commandName
      */
     public void
-    invoke(ICommand command);
+    invoke(String commandName)
+        throws ExecutionException;
 }
 
 

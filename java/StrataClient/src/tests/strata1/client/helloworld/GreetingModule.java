@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	GreetingModule.java
+// # File Name:	SwtGreetingModule.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -25,10 +25,11 @@
 package strata1.client.helloworld;
 
 import strata1.interactor.region.IRegionManager;
-import strata1.interactor.shell.IShell;
+import strata1.interactor.shell.IDispatcher;
 import strata1.client.bootstrap.IClientBootstrapper;
 import strata1.client.bootstrap.IClientContainer;
 import strata1.client.bootstrap.IClientModule;
+import strata1.client.swthelloworld.SwtGreetingView;
 
 /****************************************************************************
  * 
@@ -37,13 +38,13 @@ import strata1.client.bootstrap.IClientModule;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
+public abstract
 class GreetingModule
     implements IClientModule
 {
 
     /************************************************************************
-     * Creates a new {@code GreetingModule}. 
+     * Creates a new {@code SwtGreetingModule}. 
      *
      */
     public 
@@ -58,24 +59,27 @@ class GreetingModule
     public void 
     initialize(IClientBootstrapper bootstrapper)
     {
-        IClientContainer     container = bootstrapper.getContainer();
-        IRegionManager       manager   = bootstrapper.getRegionManager();
-        IShell               shell     = bootstrapper.getShell();
+        IClientContainer      container  = bootstrapper.getContainer();
+        IRegionManager        manager    = bootstrapper.getRegionManager();
+        IDispatcher           dispatcher = bootstrapper.getDispatcher();
         
-        HelloWorldModel      model;
-        HelloWorldView       view;
-        HelloWorldController controller;
+        IHelloWorldModel      model;
+        IHelloWorldView       view;
+        IHelloWorldController controller;
         
-        model      = new DefaultHelloWorldModel();
-        view       = new SwtHelloWorldView(shell);
-        controller = new DefaultHelloWorldController(model,view);
+        model      = new HelloWorldModel();
+        view       = createHelloWorldView( dispatcher );
+        controller = new HelloWorldController( model,view );
         
         manager.registerWithRegion( "Greeting",SwtGreetingView.class );
   
         container.registerModel( model );
         container.registerView( view );
-        container.registerController( controller );
+        container.registerController( "MainController",controller );
     }
+    
+    protected abstract IHelloWorldView
+    createHelloWorldView(IDispatcher dispatcher);
 
 }
 

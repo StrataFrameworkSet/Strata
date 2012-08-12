@@ -28,9 +28,9 @@
 package strata1.server.springserver;
 
 import strata1.common.springcontainerprovider.SpringContainerProvider;
-import strata1.server.serverapp.DefaultServerContainer;
-import strata1.server.serverapp.IServerContainer;
-import strata1.server.serverapp.IServerContainerFactory;
+import strata1.server.bootstrap.ServerContainer;
+import strata1.server.bootstrap.IServerContainer;
+import strata1.server.bootstrap.IServerContainerFactory;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -61,7 +61,7 @@ class SpringServerContainerFactory
     createServerContainer()
     {
         return
-            new DefaultServerContainer(
+            new ServerContainer(
                 new SpringContainerProvider(
                     new GenericApplicationContext()));
     }
@@ -74,7 +74,7 @@ class SpringServerContainerFactory
     createServerContainer(String resourceLocation)
     {
         return
-            new DefaultServerContainer(
+            new ServerContainer(
                 new SpringContainerProvider(
                     new GenericXmlApplicationContext(resourceLocation)));
     }

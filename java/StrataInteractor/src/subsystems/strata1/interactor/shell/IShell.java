@@ -34,6 +34,12 @@ package strata1.interactor.shell;
 public 
 interface IShell
 {
+    public void
+    start();
+    
+    public void
+    stop();
+    
     public IDispatcher
     getDispatcher();
 }

@@ -26,7 +26,10 @@ package strata1.client.bootstrap;
 
 import strata1.interactor.region.IRegionManager;
 import strata1.interactor.shell.IDispatcher;
-import strata1.interactor.shell.IShell;
+import strata1.interactor.view.ILoginView;
+import strata1.interactor.view.ISplashView;
+import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.logger.ILogger;
 
 /**
  * 
@@ -38,6 +41,9 @@ import strata1.interactor.shell.IShell;
 public 
 interface IClientBootstrapper
 {
+    public void
+    setLogger(ILogger logger);
+    
     public void 
     setModuleManager(IClientModuleManager modules);
 
@@ -50,8 +56,17 @@ interface IClientBootstrapper
     public void
     setDispatcher(IDispatcher dispatcher);
     
+    public void 
+    setLoginView(ILoginView loginView);
+    
     public void
-    setShell(IShell shell);
+    setSplashView(ISplashView splashView);
+    
+    public void 
+    setAuthenticator(IClientAuthenticator authenticator);
+    
+    public ILogger
+    getLogger();
     
     public IClientModuleManager
     getModuleManager();
@@ -65,8 +80,17 @@ interface IClientBootstrapper
     public IDispatcher
     getDispatcher();
     
-    public IShell
-    getShell();
+    public ILoginView
+    getLoginView();
+    
+    public ISplashView
+    getSplashView();
+    
+    public IClientAuthenticator
+    getAuthenticator();
+    
+    public IStartUpController
+    getController();
     
     public void
     run(IClientFactory factory);

@@ -35,6 +35,15 @@ public
 interface IDispatcher
 {
     public void
+    insertTask(Runnable task);
+    
+    public void 
+    removeTask(Runnable task);
+    
+    public Runnable
+    getNextTask();
+    
+    public void
     invokeSynchronous(Runnable task);
     
     public void
@@ -45,6 +54,9 @@ interface IDispatcher
     
     public void
     stop();
+    
+    public void
+    processWork();
 }
 
 // ##########################################################################
