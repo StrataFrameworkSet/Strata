@@ -29,7 +29,7 @@ import strata1.client.bootstrap.IClientContainer;
 import strata1.client.bootstrap.IClientModule;
 import strata1.client.region.IRegionManager;
 import strata1.client.shell.IDispatcher;
-import strata1.client.swthelloworld.SwtGreetingView;
+//import strata1.client.swthelloworld.SwtGreetingView;
 
 /****************************************************************************
  * 
@@ -71,7 +71,7 @@ class GreetingModule
         view       = createHelloWorldView( dispatcher );
         controller = new HelloWorldController( model,view );
         
-        manager.registerWithRegion( "Greeting",SwtGreetingView.class );
+        //manager.registerWithRegion( "Greeting",SwtGreetingView.class );
   
         container.registerModel( model );
         container.registerView( view );
