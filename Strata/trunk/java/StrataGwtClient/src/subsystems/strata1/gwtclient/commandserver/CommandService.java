@@ -22,11 +22,11 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.commandserver;
+package strata1.gwtclient.commandserver;
 
-import strata1.gwtinteractor.commandclient.CommandException;
-import strata1.gwtinteractor.commandclient.CommandRequest;
-import strata1.gwtinteractor.commandclient.ICommandService;
+import strata1.gwtclient.commandclient.CommandException;
+import strata1.gwtclient.commandclient.CommandRequest;
+import strata1.gwtclient.commandclient.ICommandService;
 import strata1.client.command.ICommandInvoker;
 import strata1.client.command.ICommandInvokerManager;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;

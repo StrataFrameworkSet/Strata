@@ -105,7 +105,7 @@
             </classpath>
             <test 
                 todir="${project.testreports}" 
-                name="strata1.gwtinteractor.testsuite.CommitStageSuite"/>
+                name="strata1.gwtclient.testsuite.CommitStageSuite"/>
             </junit>
             <junitreport 
                 todir="${project.testreports}">
@@ -131,7 +131,7 @@
             </classpath>
             <test 
                 todir="${project.testreports}" 
-                name="strata1.gwtinteractor.testsuite.IntegrationStageSuite"/>
+                name="strata1.gwtclient.testsuite.IntegrationStageSuite"/>
             </junit>
             <junitreport 
                 todir="${project.testreports}">
