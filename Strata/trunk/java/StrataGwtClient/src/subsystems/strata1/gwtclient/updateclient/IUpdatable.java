@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	UpdateException.java
+// # File Name:	IUpdatable.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.updateclient;
+package strata1.gwtclient.updateclient;
 
 /****************************************************************************
  * 
@@ -32,42 +32,23 @@ package strata1.gwtinteractor.updateclient;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class UpdateException
-    extends Exception
+interface IUpdatable
 {
-
-    private static final long serialVersionUID = 4471404439362661312L;
-
     /************************************************************************
-     * Creates a new {@code UpdateException}. 
+     *  
      *
+     * @return
      */
-    public 
-    UpdateException()
-    {
-    }
-
+    public String
+    getUpdatableName();
+    
     /************************************************************************
-     * Creates a new {@code UpdateException}. 
+     *  
      *
-     * @param message
+     * @param response
      */
-    public 
-    UpdateException(String message)
-    {
-        super( message );
-    }
-
-    /************************************************************************
-     * Creates a new {@code UpdateException}. 
-     *
-     * @param cause
-     */
-    public UpdateException(Throwable cause)
-    {
-        this( cause.getMessage() );
-    }
-
+    public void
+    update(UpdateResponse response);
 }
 
 // ##########################################################################

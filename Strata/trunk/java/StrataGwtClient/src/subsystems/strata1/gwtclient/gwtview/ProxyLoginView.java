@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	UpdateService.java
+// # File Name:	ProxyLoginView.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,17 +22,14 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.updateserver;
+package strata1.gwtclient.gwtview;
 
-import strata1.gwtinteractor.updateclient.IUpdateService;
-import strata1.gwtinteractor.updateclient.UpdateException;
-import strata1.gwtinteractor.updateclient.UpdateRequest;
-import strata1.gwtinteractor.updateclient.UpdateResponse;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.BlockingQueue;
+import strata1.gwtclient.updateclient.UpdateResponse;
+import strata1.gwtclient.updateserver.IUpdatableManager;
+import strata1.client.command.ICommandInvokerManager;
+import strata1.client.view.ILoginView;
+import strata1.common.authentication.IClientCredential;
+import strata1.common.authentication.UserNameAndPasswordCredential;
 
 /****************************************************************************
  * 
@@ -42,59 +39,25 @@ import java.util.concurrent.BlockingQueue;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class UpdateService
-    extends    RemoteServiceServlet
-    implements IUpdateService,
-               IUpdatableManager
+class ProxyLoginView
+    extends    AbstractProxyView
+    implements ILoginView
 {
-    private static final long serialVersionUID = 6543310418320565590L;
-    private Map<String,BlockingQueue<UpdateResponse>> itsUpdatables;
-
+    private String itsUserName;
+    private String itsPassword;
+    
     /************************************************************************
-     * Creates a new {@code UpdateService}. 
+     * Creates a new {@code ProxyLoginView}. 
      *
+     * @param invokerManager
+     * @param updatableManager
      */
     public 
-    UpdateService()
+    ProxyLoginView(
+        ICommandInvokerManager invokerManager,
+        IUpdatableManager      updatableManager)
     {
-        itsUpdatables = 
-            Collections.synchronizedMap( 
-                new HashMap<String,BlockingQueue<UpdateResponse>>() );
-    }
-
-    /************************************************************************
-     * Creates a new {@code UpdateService}. 
-     *
-     * @param delegate
-     */
-    public 
-    UpdateService(Object delegate)
-    {
-        super( delegate );
-        itsUpdatables = 
-            Collections.synchronizedMap( 
-                new HashMap<String,BlockingQueue<UpdateResponse>>() );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public UpdateResponse 
-    getUpdate(UpdateRequest request)
-        throws UpdateException
-    {
-        try
-        {
-            return
-                itsUpdatables
-                    .get( request.getUpdatableName() )
-                    .take();
-        }
-        catch (Throwable caught)
-        {
-            throw new UpdateException( caught );
-        }
+        super( "LoginView",invokerManager,updatableManager );
     }
 
     /************************************************************************
@@ -102,11 +65,12 @@ class UpdateService
      */
     @Override
     public void 
-    registerUpdatable(
-        String                    updatableName,
-        BlockingQueue<UpdateResponse> updates)
+    setInvalidUserName()
     {
-        itsUpdatables.put( updatableName,updates );
+        UpdateResponse response = new UpdateResponse(getViewName());
+        
+        response.setUpdateAction( "setInvalidUserName" );
+        sendUpdate( response );
     }
 
     /************************************************************************
@@ -114,19 +78,57 @@ class UpdateService
      */
     @Override
     public void 
-    unregisterUpdatable(String updatableName)
+    setInvalidPassword()
     {
-        itsUpdatables.remove( updatableName );
+        UpdateResponse response = new UpdateResponse(getViewName());
+        
+        response.setUpdateAction( "setInvalidPassword" );
+        sendUpdate( response );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public boolean 
-    hasUpdatable(String updatableName)
+    public void 
+    setLoginError(String message)
     {
-        return itsUpdatables.containsKey( updatableName );
+        UpdateResponse response = new UpdateResponse(getViewName());
+        
+        response.setUpdateAction( "setLoginError" );
+        response.insertUpdatedProperty( "LoginError",message );
+        sendUpdate( response );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public String 
+    getUserName()
+    {
+        return itsUserName;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public String 
+    getPassword()
+    {
+        return itsPassword;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IClientCredential 
+    getCredential()
+    {
+        return 
+            new UserNameAndPasswordCredential(getUserName(),getPassword());
     }
 
 }

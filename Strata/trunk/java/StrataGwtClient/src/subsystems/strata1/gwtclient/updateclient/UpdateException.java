@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	UpdateResponseReceiver.java
+// # File Name:	UpdateException.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.updateclient;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
+package strata1.gwtclient.updateclient;
 
 /****************************************************************************
  * 
@@ -34,55 +32,40 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class UpdateResponseReceiver
-    implements AsyncCallback<UpdateResponse>
+class UpdateException
+    extends Exception
 {
-    private IUpdatable itsView;
-    private IUpdater   itsUpdater;
-    
+
+    private static final long serialVersionUID = 4471404439362661312L;
+
     /************************************************************************
-     * Creates a new {@code UpdateResponseReceiver}. 
+     * Creates a new {@code UpdateException}. 
      *
      */
     public 
-    UpdateResponseReceiver(IUpdatable view,IUpdater updater)
+    UpdateException()
     {
-        itsView    = view;
-        itsUpdater = updater;
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * Creates a new {@code UpdateException}. 
+     *
+     * @param message
      */
-    @Override
-    public void 
-    onSuccess(UpdateResponse response)
+    public 
+    UpdateException(String message)
     {
-        try
-        {
-            itsView.update( response );
-        }
-        finally
-        {
-            itsUpdater.updateView( itsView );
-        }
+        super( message );
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * Creates a new {@code UpdateException}. 
+     *
+     * @param cause
      */
-    @Override
-    public void 
-    onFailure(Throwable caught)
+    public UpdateException(Throwable cause)
     {
-        try
-        {
-            
-        }
-        finally
-        {
-            itsUpdater.updateView( itsView );
-        }
+        this( cause.getMessage() );
     }
 
 }

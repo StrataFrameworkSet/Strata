@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ISessionService.java
+// # File Name:	IUpdateService.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,10 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.sessionclient;
+package strata1.gwtclient.updateclient;
 
 import com.google.gwt.user.client.rpc.RemoteService;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 /****************************************************************************
  * 
@@ -34,16 +33,13 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-@RemoteServiceRelativePath("SessionService")
 public 
-interface ISessionService
+interface IUpdateService
     extends RemoteService
 {
-    public void 
-    startSession();
-    
-    public void
-    stopSession();
+    public UpdateResponse
+    getUpdate(UpdateRequest request)
+        throws UpdateException;
 }
 
 // ##########################################################################

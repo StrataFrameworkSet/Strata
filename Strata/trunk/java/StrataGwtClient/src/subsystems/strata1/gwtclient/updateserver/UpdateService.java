@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ProxyLoginView.java
+// # File Name:	UpdateService.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,14 +22,17 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.gwtview;
+package strata1.gwtclient.updateserver;
 
-import strata1.gwtinteractor.updateclient.UpdateResponse;
-import strata1.gwtinteractor.updateserver.IUpdatableManager;
-import strata1.client.command.ICommandInvokerManager;
-import strata1.client.view.ILoginView;
-import strata1.common.authentication.IClientCredential;
-import strata1.common.authentication.UserNameAndPasswordCredential;
+import strata1.gwtclient.updateclient.IUpdateService;
+import strata1.gwtclient.updateclient.UpdateException;
+import strata1.gwtclient.updateclient.UpdateRequest;
+import strata1.gwtclient.updateclient.UpdateResponse;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 
 /****************************************************************************
  * 
@@ -39,25 +42,59 @@ import strata1.common.authentication.UserNameAndPasswordCredential;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class ProxyLoginView
-    extends    AbstractProxyView
-    implements ILoginView
+class UpdateService
+    extends    RemoteServiceServlet
+    implements IUpdateService,
+               IUpdatableManager
 {
-    private String itsUserName;
-    private String itsPassword;
-    
+    private static final long serialVersionUID = 6543310418320565590L;
+    private Map<String,BlockingQueue<UpdateResponse>> itsUpdatables;
+
     /************************************************************************
-     * Creates a new {@code ProxyLoginView}. 
+     * Creates a new {@code UpdateService}. 
      *
-     * @param invokerManager
-     * @param updatableManager
      */
     public 
-    ProxyLoginView(
-        ICommandInvokerManager invokerManager,
-        IUpdatableManager      updatableManager)
+    UpdateService()
     {
-        super( "LoginView",invokerManager,updatableManager );
+        itsUpdatables = 
+            Collections.synchronizedMap( 
+                new HashMap<String,BlockingQueue<UpdateResponse>>() );
+    }
+
+    /************************************************************************
+     * Creates a new {@code UpdateService}. 
+     *
+     * @param delegate
+     */
+    public 
+    UpdateService(Object delegate)
+    {
+        super( delegate );
+        itsUpdatables = 
+            Collections.synchronizedMap( 
+                new HashMap<String,BlockingQueue<UpdateResponse>>() );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public UpdateResponse 
+    getUpdate(UpdateRequest request)
+        throws UpdateException
+    {
+        try
+        {
+            return
+                itsUpdatables
+                    .get( request.getUpdatableName() )
+                    .take();
+        }
+        catch (Throwable caught)
+        {
+            throw new UpdateException( caught );
+        }
     }
 
     /************************************************************************
@@ -65,12 +102,11 @@ class ProxyLoginView
      */
     @Override
     public void 
-    setInvalidUserName()
+    registerUpdatable(
+        String                    updatableName,
+        BlockingQueue<UpdateResponse> updates)
     {
-        UpdateResponse response = new UpdateResponse(getViewName());
-        
-        response.setUpdateAction( "setInvalidUserName" );
-        sendUpdate( response );
+        itsUpdatables.put( updatableName,updates );
     }
 
     /************************************************************************
@@ -78,57 +114,19 @@ class ProxyLoginView
      */
     @Override
     public void 
-    setInvalidPassword()
+    unregisterUpdatable(String updatableName)
     {
-        UpdateResponse response = new UpdateResponse(getViewName());
-        
-        response.setUpdateAction( "setInvalidPassword" );
-        sendUpdate( response );
+        itsUpdatables.remove( updatableName );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    setLoginError(String message)
+    public boolean 
+    hasUpdatable(String updatableName)
     {
-        UpdateResponse response = new UpdateResponse(getViewName());
-        
-        response.setUpdateAction( "setLoginError" );
-        response.insertUpdatedProperty( "LoginError",message );
-        sendUpdate( response );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public String 
-    getUserName()
-    {
-        return itsUserName;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public String 
-    getPassword()
-    {
-        return itsPassword;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IClientCredential 
-    getCredential()
-    {
-        return 
-            new UserNameAndPasswordCredential(getUserName(),getPassword());
+        return itsUpdatables.containsKey( updatableName );
     }
 
 }

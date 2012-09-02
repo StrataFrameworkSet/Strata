@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IUpdater.java
+// # File Name:	Updater.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.updateclient;
+package strata1.gwtclient.updateclient;
+
+import com.google.gwt.core.client.GWT;
 
 /****************************************************************************
  * 
@@ -32,37 +34,81 @@ package strata1.gwtinteractor.updateclient;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IUpdater
+class Updater
+    implements IUpdater
 {
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    activate();
+    private boolean itsActiveIndicator;
     
     /************************************************************************
-     *  
+     * Creates a new {@code Updater}. 
      *
      */
-    public void
-    deactivate();
-    
+    public 
+    Updater() 
+    {
+        activate();
+    }
+
     /************************************************************************
-     *  
-     *
-     * @return
+     * {@inheritDoc} 
      */
-    public boolean
-    isActive();
-    
+    @Override
+    public void 
+    activate()
+    {
+        synchronized (this)
+        {
+            itsActiveIndicator = true;
+        }
+    }
+
     /************************************************************************
-     *  
-     *
-     * @param view
+     * {@inheritDoc} 
      */
-    public void
-    updateView(IUpdatable view);
+    @Override
+    public void 
+    deactivate()
+    {
+        synchronized (this)
+        {
+            itsActiveIndicator = false;
+        }
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    isActive()
+    {
+        synchronized (this)
+        {
+            return itsActiveIndicator;
+        }
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    updateView(IUpdatable view)
+    {
+        UpdateRequest          request = null;
+        UpdateResponseReceiver response = null;
+        IUpdateServiceAsync    service  = null;
+        
+        if ( isActive() )
+        {
+            request  = new UpdateRequest(view.getUpdatableName());
+            response = new UpdateResponseReceiver(view,this);
+            service  = GWT.create( IUpdateService.class );
+            
+            service.getUpdate( request,response );
+        }
+    }
+
 }
 
 // ##########################################################################

@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	SessionService.java
+// # File Name:	ISessionService.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,10 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.sessionserver;
+package strata1.gwtclient.sessionclient;
 
-import strata1.gwtinteractor.sessionclient.ISessionService;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 /****************************************************************************
  * 
@@ -34,53 +34,16 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
+@RemoteServiceRelativePath("SessionService")
 public 
-class SessionService
-    extends RemoteServiceServlet
-    implements ISessionService
+interface ISessionService
+    extends RemoteService
 {
-
-    private static final long serialVersionUID = -2347859087811625339L;
-
-    /************************************************************************
-     * Creates a new {@code SessionService}. 
-     *
-     */
-    public 
-    SessionService()
-    {
-    }
-
-    /************************************************************************
-     * Creates a new {@code SessionService}. 
-     *
-     * @param delegate
-     */
-    public 
-    SessionService(Object delegate)
-    {
-        super( delegate );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
     public void 
-    startSession()
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    stopSession()
-    {
-    }
+    startSession();
+    
+    public void
+    stopSession();
 }
 
 // ##########################################################################
