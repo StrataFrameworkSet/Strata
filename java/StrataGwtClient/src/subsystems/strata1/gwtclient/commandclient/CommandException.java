@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.commandclient;
+package strata1.gwtclient.commandclient;
 
 /****************************************************************************
  * 
