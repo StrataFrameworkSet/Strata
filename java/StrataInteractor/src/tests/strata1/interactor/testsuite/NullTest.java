@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.testsuite;
+package strata1.client.testsuite;
 
 import org.junit.Test;
 

@@ -24,7 +24,7 @@
 
 package strata1.swtinteractor.swtshell;
 
-import strata1.interactor.shell.IShell;
+import strata1.client.shell.IShell;
 import org.eclipse.swt.widgets.Shell;
 
 /****************************************************************************

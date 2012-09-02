@@ -24,7 +24,7 @@
 
 package strata1.swtinteractor.swtview;
 
-import strata1.interactor.view.IView;
+import strata1.client.view.IView;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 

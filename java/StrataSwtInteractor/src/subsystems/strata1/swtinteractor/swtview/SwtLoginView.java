@@ -25,10 +25,10 @@
 package strata1.swtinteractor.swtview;
 
 import strata1.swtinteractor.swtshell.ISwtDispatcher;
-import strata1.interactor.command.ExecutionException;
-import strata1.interactor.shell.IDispatcher;
-import strata1.interactor.view.AbstractView;
-import strata1.interactor.view.ILoginView;
+import strata1.client.command.ExecutionException;
+import strata1.client.shell.IDispatcher;
+import strata1.client.view.AbstractView;
+import strata1.client.view.ILoginView;
 import strata1.common.authentication.IClientCredential;
 import strata1.common.authentication.UserNameAndPasswordCredential;
 import org.eclipse.swt.SWT;

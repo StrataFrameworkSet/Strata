@@ -22,9 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.helloworld;
+package strata1.client.helloworld;
 
-import strata1.interactor.model.IModel;
+import strata1.client.model.IModel;
 
 /**
  * 

@@ -1,102 +1,92 @@
 // ##########################################################################
-// # File Name:	.java
+// # File Name:	SwtGreetingView.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataInteractor Framework.
+// # License:	This file is part of the StrataSwtInteractor Framework.
 // #
-// #   			The StrataInteractor Framework is free software: you 
+// #   			The StrataSwtInteractor Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataInteractor Framework is distributed in the 
+// #    		The StrataSwtInteractor Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataInteractor
+// #			General Public License along with the StrataSwtInteractor
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.interactor.view;
+package strata1.client.swthelloworld;
 
-import strata1.interactor.command.ExecutionException;
-import strata1.interactor.command.ICommandProvider;
-import strata1.interactor.controller.IHandler;
-import strata1.interactor.event.IChangeEvent;
-import java.util.HashMap;
-import java.util.Map;
+import strata1.swtinteractor.swtview.ISwtView;
+import strata1.client.command.ExecutionException;
+import strata1.client.helloworld.IGreetingView;
+import strata1.client.view.AbstractView;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Widget;
 
-/**
+/****************************************************************************
  * 
  * @author 		
- *     Sapientia Systems 
+ *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract 
-class AbstractView
-	implements IView
-{	
-    private String                                   itsViewName;
-    private ICommandProvider                         itsProvider;
-    private Map<IChangeEvent,IHandler<IChangeEvent>> itsHandlers;
+public class SwtGreetingView
+    extends AbstractView
+    implements IGreetingView, ISwtView
+{
+    private Label itsGreeting;
     
     /************************************************************************
-     * Creates a new {@code AbstractView}. 
+     * Creates a new {@code SwtGreetingView}. 
      *
      */
-    public
-    AbstractView()
+    public SwtGreetingView(Composite parent)
     {
-        this( "" );
-    }
-    
-    /************************************************************************
-     * Creates a new {@code AbstractView}. 
-     *
-     * @param viewName
-     */
-    public 
-    AbstractView(String viewName)
-    {
-        itsViewName = viewName;
-        itsProvider = null;
-        itsHandlers = new HashMap<IChangeEvent,IHandler<IChangeEvent>>();
-    }
-    
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    setProvider(ICommandProvider provider)
-    {
-        itsProvider = provider;
+        itsGreeting = new Label( parent,SWT.NONE );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public ICommandProvider 
-    getProvider()
+    public void start()
     {
-        return itsProvider;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public String 
-    getInvokerName()
+    public void stop()
     {
-        return getViewName();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void show()
+    {
+        itsGreeting.setVisible( true );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void hide()
+    {
+        itsGreeting.setVisible( false );
     }
 
     /************************************************************************
@@ -104,45 +94,36 @@ class AbstractView
      */
     @Override
     public void 
-    invoke(String commandName) 
+    invoke(String commandName)
         throws ExecutionException
     {
-        if ( !getProvider().hasCommand( commandName ) )
-            throw new ExecutionException( "No such command: "+commandName );
-        
-        getProvider().getCommand( commandName ).execute();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    processChange(IChangeEvent event)
+    public void displayGreeting(String greeting)
     {
-        itsHandlers.get( event ).handle( event );
+        itsGreeting.setText( greeting );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public String 
-    getViewName()
+    public Widget getWidget()
     {
-        return itsViewName;
+        return itsGreeting;
     }
 
     /************************************************************************
-     *  
-     *
-     * @param update
-     * @param handler
+     * {@inheritDoc} 
      */
-    protected void
-    setHandler(IChangeEvent event,IHandler<IChangeEvent> handler)
+    @Override
+    public Composite getComposite()
     {
-        itsHandlers.put( event,handler );
+        return null;
     }
 
 }
