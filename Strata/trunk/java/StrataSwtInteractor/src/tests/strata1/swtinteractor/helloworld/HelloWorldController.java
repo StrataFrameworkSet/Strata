@@ -24,7 +24,7 @@
 
 package strata1.swtinteractor.helloworld;
 
-import strata1.interactor.controller.IController;
+import strata1.client.controller.IController;
 
 /**
  * 

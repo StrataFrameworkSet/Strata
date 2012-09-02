@@ -25,9 +25,9 @@
 package strata1.swtinteractor.swtview;
 
 import strata1.swtinteractor.swtshell.ISwtDispatcher;
-import strata1.interactor.shell.IDispatcher;
-import strata1.interactor.view.AbstractView;
-import strata1.interactor.view.ISplashView;
+import strata1.client.shell.IDispatcher;
+import strata1.client.view.AbstractView;
+import strata1.client.view.ISplashView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;

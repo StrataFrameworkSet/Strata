@@ -26,8 +26,8 @@ package strata1.gwtinteractor.gwtview;
 
 import strata1.gwtinteractor.updateclient.UpdateResponse;
 import strata1.gwtinteractor.updateserver.IUpdatableManager;
-import strata1.interactor.command.ICommandInvokerManager;
-import strata1.interactor.view.AbstractView;
+import strata1.client.command.ICommandInvokerManager;
+import strata1.client.view.AbstractView;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 

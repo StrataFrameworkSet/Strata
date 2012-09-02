@@ -25,9 +25,9 @@
 package strata1.swtinteractor.swtregion;
 
 import strata1.swtinteractor.swtview.ISwtView;
-import strata1.interactor.region.IRegion;
-import strata1.interactor.region.IRegionManager;
-import strata1.interactor.region.RegionInitializationException;
+import strata1.client.region.IRegion;
+import strata1.client.region.IRegionManager;
+import strata1.client.region.RegionInitializationException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;

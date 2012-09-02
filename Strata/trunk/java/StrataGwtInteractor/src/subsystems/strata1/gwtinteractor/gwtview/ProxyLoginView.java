@@ -26,8 +26,8 @@ package strata1.gwtinteractor.gwtview;
 
 import strata1.gwtinteractor.updateclient.UpdateResponse;
 import strata1.gwtinteractor.updateserver.IUpdatableManager;
-import strata1.interactor.command.ICommandInvokerManager;
-import strata1.interactor.view.ILoginView;
+import strata1.client.command.ICommandInvokerManager;
+import strata1.client.view.ILoginView;
 import strata1.common.authentication.IClientCredential;
 import strata1.common.authentication.UserNameAndPasswordCredential;
 
