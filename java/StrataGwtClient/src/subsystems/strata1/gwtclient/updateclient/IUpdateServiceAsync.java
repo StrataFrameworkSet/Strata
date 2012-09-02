@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IUpdateService.java
+// # File Name:	IViewUpdateServiceAsync.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.updateclient;
+package strata1.gwtclient.updateclient;
 
-import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /****************************************************************************
  * 
@@ -34,12 +34,19 @@ import com.google.gwt.user.client.rpc.RemoteService;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IUpdateService
-    extends RemoteService
+interface IUpdateServiceAsync
 {
-    public UpdateResponse
-    getUpdate(UpdateRequest request)
-        throws UpdateException;
+    /************************************************************************
+     *  
+     *
+     * @param request
+     * @param response
+     */
+    public void
+    getUpdate(
+        UpdateRequest                 request,
+        AsyncCallback<UpdateResponse> response);
+
 }
 
 // ##########################################################################

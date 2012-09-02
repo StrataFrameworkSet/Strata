@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IUpdatable.java
+// # File Name:	UpdateRequest.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.updateclient;
+package strata1.gwtclient.updateclient;
+
+import java.io.Serializable;
 
 /****************************************************************************
  * 
@@ -32,23 +34,56 @@ package strata1.gwtinteractor.updateclient;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IUpdatable
+class UpdateRequest
+    implements Serializable
 {
+
+    private static final long serialVersionUID = -8609463547460721613L;
+    private String            itsUpdatableName;
+
+    /************************************************************************
+     * Creates a new {@code UpdateRequest}. 
+     *
+     */
+    public 
+    UpdateRequest()
+    {
+        this( "" );
+    }
+    
+    /************************************************************************
+     * Creates a new {@code UpdateRequest}. 
+     *
+     * @param updatableName
+     */
+    public
+    UpdateRequest(String updatableName)
+    {
+        itsUpdatableName = updatableName;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param updatableName
+     */
+    public void
+    setUpdatableName(String updatableName)
+    {
+        itsUpdatableName = updatableName;
+    }
+    
     /************************************************************************
      *  
      *
      * @return
      */
     public String
-    getUpdatableName();
-    
-    /************************************************************************
-     *  
-     *
-     * @param response
-     */
-    public void
-    update(UpdateResponse response);
+    getUpdatableName()
+    {
+        return itsUpdatableName;
+    }
+
 }
 
 // ##########################################################################

@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IUpdatableManager.java
+// # File Name:	ISessionServiceAsync.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,10 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.updateserver;
+package strata1.gwtclient.sessionclient;
 
-import strata1.gwtinteractor.updateclient.UpdateResponse;
-import java.util.concurrent.BlockingQueue;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /****************************************************************************
  * 
@@ -35,35 +34,13 @@ import java.util.concurrent.BlockingQueue;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IUpdatableManager
+interface ISessionServiceAsync
 {
-    /************************************************************************
-     *  
-     *
-     * @param updatableName
-     * @param updates 
-     */
     public void
-    registerUpdatable(
-        String                        updatableName,
-        BlockingQueue<UpdateResponse> updates);
+    startSession(AsyncCallback<Void> response);
     
-    /************************************************************************
-     *  
-     *
-     * @param updatableName
-     */
     public void
-    unregisterUpdatable(String updatableName);
-    
-    /************************************************************************
-     *  
-     *
-     * @param updatableName
-     * @return
-     */
-    public boolean
-    hasUpdatable(String updatableName);
+    stopSession(AsyncCallback<Void> response);
 }
 
 // ##########################################################################

@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	Updater.java
+// # File Name:	AbstractProxyView.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,14 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.updateclient;
+package strata1.gwtclient.gwtview;
 
-import com.google.gwt.core.client.GWT;
+import strata1.gwtclient.updateclient.UpdateResponse;
+import strata1.gwtclient.updateserver.IUpdatableManager;
+import strata1.client.command.ICommandInvokerManager;
+import strata1.client.view.AbstractView;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /****************************************************************************
  * 
@@ -33,82 +38,96 @@ import com.google.gwt.core.client.GWT;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class Updater
-    implements IUpdater
+public abstract 
+class AbstractProxyView
+    extends AbstractView
 {
-    private boolean itsActiveIndicator;
+    private BlockingQueue<UpdateResponse> itsUpdates;
     
     /************************************************************************
-     * Creates a new {@code Updater}. 
+     * Creates a new {@code AbstractProxyView}. 
      *
+     * @param viewName
      */
     public 
-    Updater() 
+    AbstractProxyView(
+        String viewName,
+        ICommandInvokerManager invokerManager,
+        IUpdatableManager      updatableManager)
     {
-        activate();
+        itsUpdates  = new LinkedBlockingQueue<UpdateResponse>();
+        invokerManager.registerInvoker( this );
+        updatableManager.registerUpdatable( getViewName(),itsUpdates );
     }
-
+    
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
     public void 
-    activate()
+    start()
     {
-        synchronized (this)
-        {
-            itsActiveIndicator = true;
-        }
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    deactivate()
-    {
-        synchronized (this)
-        {
-            itsActiveIndicator = false;
-        }
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    isActive()
-    {
-        synchronized (this)
-        {
-            return itsActiveIndicator;
-        }
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    updateView(IUpdatable view)
-    {
-        UpdateRequest          request = null;
-        UpdateResponseReceiver response = null;
-        IUpdateServiceAsync    service  = null;
+        UpdateResponse response = new UpdateResponse( getViewName() );
         
-        if ( isActive() )
-        {
-            request  = new UpdateRequest(view.getUpdatableName());
-            response = new UpdateResponseReceiver(view,this);
-            service  = GWT.create( IUpdateService.class );
-            
-            service.getUpdate( request,response );
-        }
+        response.setUpdateAction( "start" );
+        sendUpdate( response );
     }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    stop()
+    {
+        UpdateResponse response = new UpdateResponse( getViewName() );
+        
+        response.setUpdateAction( "stop" );
+        sendUpdate( response );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    show()
+    {
+        UpdateResponse response = new UpdateResponse( getViewName() );
+        
+        response.setUpdateAction( "show" );
+        sendUpdate( response );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    hide()
+    {
+        UpdateResponse response = new UpdateResponse( getViewName() );
+        
+        response.setUpdateAction( "hide" );
+        sendUpdate( response );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param response
+     */
+    protected void
+    sendUpdate(UpdateResponse response)
+    {
+        try
+        {
+            itsUpdates.put( response );
+        }
+        catch(InterruptedException e)
+        {
+        }
+    }
 }
 
 // ##########################################################################

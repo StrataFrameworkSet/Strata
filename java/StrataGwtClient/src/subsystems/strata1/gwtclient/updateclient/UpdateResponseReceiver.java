@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ISessionServiceAsync.java
+// # File Name:	UpdateResponseReceiver.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.sessionclient;
+package strata1.gwtclient.updateclient;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -34,13 +34,57 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ISessionServiceAsync
+class UpdateResponseReceiver
+    implements AsyncCallback<UpdateResponse>
 {
-    public void
-    startSession(AsyncCallback<Void> response);
+    private IUpdatable itsView;
+    private IUpdater   itsUpdater;
     
-    public void
-    stopSession(AsyncCallback<Void> response);
+    /************************************************************************
+     * Creates a new {@code UpdateResponseReceiver}. 
+     *
+     */
+    public 
+    UpdateResponseReceiver(IUpdatable view,IUpdater updater)
+    {
+        itsView    = view;
+        itsUpdater = updater;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    onSuccess(UpdateResponse response)
+    {
+        try
+        {
+            itsView.update( response );
+        }
+        finally
+        {
+            itsUpdater.updateView( itsView );
+        }
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    onFailure(Throwable caught)
+    {
+        try
+        {
+            
+        }
+        finally
+        {
+            itsUpdater.updateView( itsView );
+        }
+    }
+
 }
 
 // ##########################################################################

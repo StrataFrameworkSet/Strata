@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IViewUpdateServiceAsync.java
+// # File Name:	IUpdater.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.updateclient;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
+package strata1.gwtclient.updateclient;
 
 /****************************************************************************
  * 
@@ -34,19 +32,37 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IUpdateServiceAsync
+interface IUpdater
 {
     /************************************************************************
      *  
      *
-     * @param request
-     * @param response
      */
     public void
-    getUpdate(
-        UpdateRequest                 request,
-        AsyncCallback<UpdateResponse> response);
-
+    activate();
+    
+    /************************************************************************
+     *  
+     *
+     */
+    public void
+    deactivate();
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public boolean
+    isActive();
+    
+    /************************************************************************
+     *  
+     *
+     * @param view
+     */
+    public void
+    updateView(IUpdatable view);
 }
 
 // ##########################################################################

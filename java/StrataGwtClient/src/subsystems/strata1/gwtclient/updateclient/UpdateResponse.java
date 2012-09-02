@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	UpdateRequest.java
+// # File Name:	UpdateResponse.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,12 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.gwtinteractor.updateclient;
+package strata1.gwtclient.updateclient;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /****************************************************************************
  * 
@@ -34,34 +37,38 @@ import java.io.Serializable;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class UpdateRequest
+class UpdateResponse
     implements Serializable
 {
 
-    private static final long serialVersionUID = -8609463547460721613L;
-    private String            itsUpdatableName;
+    private static final long serialVersionUID = 5886357873613185935L;
+    
+    private String                   itsUpdatableName;
+    private String                   itsUpdateAction;
+    private Map<String,Serializable> itsUpdatedProperties;
 
     /************************************************************************
-     * Creates a new {@code UpdateRequest}. 
+     * Creates a new {@code UpdateResponse}. 
      *
      */
     public 
-    UpdateRequest()
+    UpdateResponse()
     {
         this( "" );
     }
     
     /************************************************************************
-     * Creates a new {@code UpdateRequest}. 
+     * Creates a new {@code UpdateResponse}. 
      *
      * @param updatableName
      */
-    public
-    UpdateRequest(String updatableName)
+    public 
+    UpdateResponse(String updatableName)
     {
-        itsUpdatableName = updatableName;
+        itsUpdatableName     = updatableName;
+        itsUpdatedProperties = new HashMap<String,Serializable>();
     }
-    
+
     /************************************************************************
      *  
      *
@@ -76,6 +83,29 @@ class UpdateRequest
     /************************************************************************
      *  
      *
+     * @param updateAction
+     */
+    public void
+    setUpdateAction(String updateAction)
+    {
+        itsUpdateAction = updateAction;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param name
+     * @param value
+     */
+    public void
+    insertUpdatedProperty(String name,Serializable value)
+    {
+        itsUpdatedProperties.put( name,value );
+    }
+    
+    /************************************************************************
+     *  
+     *
      * @return
      */
     public String
@@ -83,7 +113,40 @@ class UpdateRequest
     {
         return itsUpdatableName;
     }
-
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public String
+    getUpdateAction()
+    {
+        return itsUpdateAction;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public Set<String>
+    getPropertyNames()
+    {
+        return itsUpdatedProperties.keySet();
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param name
+     * @return
+     */
+    public Serializable
+    getPropertyValue(String name)
+    {
+        return itsUpdatedProperties.get( name );
+    }
 }
 
 // ##########################################################################
