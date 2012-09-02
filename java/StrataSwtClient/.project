@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>StrataSwtInteractor</name>
+	<name>StrataSwtClient</name>
 	<comment></comment>
 	<projects>
-		<project>StrataInteractor</project>
+		<project>StrataClient</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
