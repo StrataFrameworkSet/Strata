@@ -24,8 +24,8 @@
 
 package strata1.swtinteractor.helloworld;
 
-import strata1.swtinteractor.swtview.ISwtView;
 import strata1.client.view.AbstractView;
+import strata1.swtclient.swtview.ISwtView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;

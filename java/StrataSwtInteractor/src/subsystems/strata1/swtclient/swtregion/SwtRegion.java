@@ -22,12 +22,12 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.swtinteractor.swtregion;
+package strata1.swtclient.swtregion;
 
-import strata1.swtinteractor.swtview.ISwtView;
 import strata1.client.region.IRegion;
 import strata1.client.region.IRegionManager;
 import strata1.client.region.RegionInitializationException;
+import strata1.swtclient.swtview.ISwtView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;

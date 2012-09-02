@@ -24,10 +24,10 @@
 
 package strata1.swtinteractor.helloworld;
 
-import strata1.swtinteractor.swtregion.SwtRegion;
-import strata1.swtinteractor.swtregion.SwtRegionManager;
 import strata1.client.region.IRegionManager;
 import strata1.client.region.RegionInitializationException;
+import strata1.swtclient.swtregion.SwtRegion;
+import strata1.swtclient.swtregion.SwtRegionManager;
 
 /**
  * 
