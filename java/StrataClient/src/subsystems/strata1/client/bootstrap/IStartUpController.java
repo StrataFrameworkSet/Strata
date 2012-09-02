@@ -24,11 +24,11 @@
 
 package strata1.client.bootstrap;
 
-import strata1.interactor.controller.IController;
-import strata1.interactor.view.ILoginView;
-import strata1.interactor.view.ISplashView;
 import strata1.common.authentication.IClientAuthenticator;
 import strata1.common.logger.ILogger;
+import strata1.client.controller.IController;
+import strata1.client.view.ILoginView;
+import strata1.client.view.ISplashView;
 
 /****************************************************************************
  * 

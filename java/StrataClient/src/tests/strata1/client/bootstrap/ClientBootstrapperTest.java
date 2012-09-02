@@ -26,7 +26,7 @@ package strata1.client.bootstrap;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
-import strata1.interactor.region.IRegionManager;
+import strata1.client.region.IRegionManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

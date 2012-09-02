@@ -27,15 +27,15 @@
 
 package strata1.client.bootstrap;
 
-import strata1.interactor.controller.IController;
-import strata1.interactor.model.IModel;
-import strata1.interactor.view.IView;
-import strata1.interactor.viewmodel.IViewModel;
 import strata1.integrator.annotation.Gateway;
 import strata1.common.annotation.Factory;
 import strata1.common.authentication.IPrincipal;
 import strata1.common.containerprovider.IContainerProvider;
 import strata1.common.containerprovider.InstanceInserter;
+import strata1.client.controller.IController;
+import strata1.client.model.IModel;
+import strata1.client.view.IView;
+import strata1.client.viewmodel.IViewModel;
 
 /**
  * 

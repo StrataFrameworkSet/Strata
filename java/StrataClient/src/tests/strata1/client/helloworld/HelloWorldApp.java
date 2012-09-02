@@ -24,9 +24,9 @@
 
 package strata1.client.helloworld;
 
-import strata1.interactor.region.RegionInitializationException;
 import strata1.client.bootstrap.IClientBootstrapper;
 import strata1.client.bootstrap.IClientFactory;
+import strata1.client.region.RegionInitializationException;
 import strata1.client.swthelloworld.SwtHelloWorldClientBootstrapper;
 import strata1.client.swthelloworld.SwtHelloWorldClientFactory;
 

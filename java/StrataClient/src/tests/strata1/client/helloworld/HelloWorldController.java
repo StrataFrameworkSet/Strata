@@ -24,8 +24,8 @@
 
 package strata1.client.helloworld;
 
-import strata1.interactor.command.ICommand;
-import strata1.interactor.controller.AbstractController;
+import strata1.client.command.ICommand;
+import strata1.client.controller.AbstractController;
 
 /**
  * 

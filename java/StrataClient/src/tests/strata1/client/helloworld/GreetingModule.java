@@ -24,11 +24,11 @@
 
 package strata1.client.helloworld;
 
-import strata1.interactor.region.IRegionManager;
-import strata1.interactor.shell.IDispatcher;
 import strata1.client.bootstrap.IClientBootstrapper;
 import strata1.client.bootstrap.IClientContainer;
 import strata1.client.bootstrap.IClientModule;
+import strata1.client.region.IRegionManager;
+import strata1.client.shell.IDispatcher;
 import strata1.client.swthelloworld.SwtGreetingView;
 
 /****************************************************************************
