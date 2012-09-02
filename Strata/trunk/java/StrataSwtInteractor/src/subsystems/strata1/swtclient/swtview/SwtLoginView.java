@@ -22,13 +22,13 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.swtinteractor.swtview;
+package strata1.swtclient.swtview;
 
-import strata1.swtinteractor.swtshell.ISwtDispatcher;
 import strata1.client.command.ExecutionException;
 import strata1.client.shell.IDispatcher;
 import strata1.client.view.AbstractView;
 import strata1.client.view.ILoginView;
+import strata1.swtclient.swtshell.ISwtDispatcher;
 import strata1.common.authentication.IClientCredential;
 import strata1.common.authentication.UserNameAndPasswordCredential;
 import org.eclipse.swt.SWT;

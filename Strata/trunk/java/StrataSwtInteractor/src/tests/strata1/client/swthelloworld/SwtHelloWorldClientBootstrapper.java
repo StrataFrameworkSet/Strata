@@ -24,10 +24,10 @@
 
 package strata1.client.swthelloworld;
 
-import strata1.swtinteractor.swtregion.SwtRegion;
-import strata1.swtinteractor.swtregion.SwtRegionManager;
 import strata1.client.bootstrap.AbstractClientBootstrapper;
 import strata1.client.helloworld.IHelloWorldController;
+import strata1.swtclient.swtregion.SwtRegion;
+import strata1.swtclient.swtregion.SwtRegionManager;
 
 /****************************************************************************
  * 

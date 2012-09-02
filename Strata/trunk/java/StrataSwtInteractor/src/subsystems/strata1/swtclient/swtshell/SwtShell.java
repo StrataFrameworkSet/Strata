@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.swtinteractor.swtshell;
+package strata1.swtclient.swtshell;
 
 import strata1.client.shell.IDispatcher;
 import org.eclipse.swt.widgets.Shell;

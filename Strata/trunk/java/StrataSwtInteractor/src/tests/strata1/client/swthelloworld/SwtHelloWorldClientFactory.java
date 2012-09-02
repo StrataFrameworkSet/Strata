@@ -24,10 +24,6 @@
 
 package strata1.client.swthelloworld;
 
-import strata1.swtinteractor.swtregion.SwtRegionManager;
-import strata1.swtinteractor.swtshell.SwtDispatcher;
-import strata1.swtinteractor.swtview.SwtLoginView;
-import strata1.swtinteractor.swtview.SwtSplashView;
 import strata1.common.authentication.FakeClientAuthenticator;
 import strata1.common.authentication.IClientAuthenticator;
 import strata1.common.logger.ILogger;
@@ -41,6 +37,10 @@ import strata1.client.region.IRegionManager;
 import strata1.client.shell.IDispatcher;
 import strata1.client.view.ILoginView;
 import strata1.client.view.ISplashView;
+import strata1.swtclient.swtregion.SwtRegionManager;
+import strata1.swtclient.swtshell.SwtDispatcher;
+import strata1.swtclient.swtview.SwtLoginView;
+import strata1.swtclient.swtview.SwtSplashView;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import java.io.PrintWriter;

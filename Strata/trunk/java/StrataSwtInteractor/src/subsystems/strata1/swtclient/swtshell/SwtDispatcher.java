@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	SteppedProgressBar.java
+// # File Name:	SwtShell.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,16 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.swtinteractor.widget;
+package strata1.swtclient.swtshell;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.PaintEvent;
+import strata1.client.shell.AbstractDispatcher;
+import org.eclipse.swt.widgets.Display;
 
 /****************************************************************************
  * 
@@ -41,94 +35,92 @@ import org.eclipse.swt.events.PaintEvent;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class SteppedProgressBar
+class SwtDispatcher
+    extends    AbstractDispatcher
+    implements ISwtDispatcher
 {
-    private Canvas itsBar;
-    private int    itsNumberOfSteps;
-    private int    itsCurrentStep;
-   
+    private Display  itsDisplay;
+
     /************************************************************************
-     * Creates a new {@code SteppedProgressBar}. 
+     * Creates a new {@code SwtShell}. 
      *
      */
     public 
-    SteppedProgressBar(Composite parent,int numSteps)
+    SwtDispatcher()
     {
-        itsBar = new Canvas( parent,SWT.None );
-        itsBar.addPaintListener(
-            new PaintListener() 
-            {
-                public void 
-                paintControl(PaintEvent p) 
-                {
-                    GC g = p.gc;
-                    Rectangle area = itsBar.getClientArea();
-                    
-                    g.setBackground( SWTResourceManager.getColor(210, 180, 140) );
-                    g.fillRectangle( 0,0,area.height,getBarWidth() );
-                }
-            } );
-        
-        itsNumberOfSteps = numSteps;
-        itsCurrentStep   = 0;
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @param numSteps
-     */
-    public void
-    setNumberOfSteps(int numSteps)
-    {
-        itsNumberOfSteps = numSteps;
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public Canvas
-    getBar()
-    {
-        return itsBar;
-    }
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    resetCurrentStep()
-    {
-        itsCurrentStep = 0;
-        itsBar.redraw();
-    }
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    incrementCurrentStep()
-    {
-        ++itsCurrentStep;
-        itsBar.redraw();
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    private int
-    getBarWidth()
-    {
-        Rectangle area = itsBar.getClientArea();
-        return area.width * itsCurrentStep / itsNumberOfSteps;
+        itsDisplay = new Display();
     }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    invokeSynchronous(Runnable task)
+    {
+        itsDisplay.syncExec( task );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    invokeAsynchronous(Runnable task)
+    {
+        itsDisplay.asyncExec( task );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    start()
+    {
+        while (!itsDisplay.isDisposed()) 
+        {
+            Runnable task = getNextTask();
+                                               
+            if ( task != null )
+                invokeSynchronous( task );
+
+            if (!itsDisplay.readAndDispatch()) 
+                itsDisplay.sleep();
+        }
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    stop()
+    {
+        itsDisplay.dispose();        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    processWork()
+    {
+        if (!itsDisplay.isDisposed()) 
+            while ( itsDisplay.readAndDispatch() );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public Display
+    getDisplay()
+    {
+        return itsDisplay;
+    }
 }
 
 // ##########################################################################

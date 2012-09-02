@@ -24,11 +24,11 @@
 
 package strata1.swtinteractor.helloworld;
 
-import strata1.swtinteractor.swtregion.SwtRegion;
-import strata1.swtinteractor.swtview.ISwtView;
 import strata1.client.region.IRegion;
 import strata1.client.region.RegionInitializationException;
 import strata1.client.view.AbstractView;
+import strata1.swtclient.swtregion.SwtRegion;
+import strata1.swtclient.swtview.ISwtView;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;

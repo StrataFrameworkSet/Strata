@@ -1,34 +1,33 @@
 // ##########################################################################
-// # File Name:	ISwtView.java
+// # File Name:	ISwtDispatcher.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataInteractor Framework.
+// # License:	This file is part of the StrataSwtInteractor Framework.
 // #
-// #   			The StrataInteractor Framework is free software: you 
+// #   			The StrataSwtInteractor Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataInteractor Framework is distributed in the 
+// #    		The StrataSwtInteractor Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataInteractor
+// #			General Public License along with the StrataSwtInteractor
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.swtinteractor.swtview;
+package strata1.swtclient.swtshell;
 
-import strata1.client.view.IView;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Widget;
+import strata1.client.shell.IDispatcher;
+import org.eclipse.swt.widgets.Display;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -36,15 +35,11 @@ import org.eclipse.swt.widgets.Widget;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ISwtView
-    extends IView
+interface ISwtDispatcher
+    extends IDispatcher
 {
-    public Widget
-    getWidget();
-    
-    public Composite
-    getComposite();
+    public Display
+    getDisplay();
 }
-
 
 // ##########################################################################
