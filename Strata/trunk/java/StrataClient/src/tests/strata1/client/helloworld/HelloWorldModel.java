@@ -24,7 +24,7 @@
 
 package strata1.client.helloworld;
 
-import strata1.interactor.model.AbstractModel;
+import strata1.client.model.AbstractModel;
 
 /**
  * 

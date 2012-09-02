@@ -28,9 +28,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import strata1.interactor.view.IView;
-import strata1.interactor.view.IViewContainer;
 import strata1.common.springcontainerprovider.SpringContainerProvider;
+import strata1.client.view.IView;
+import strata1.client.view.IViewContainer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -92,7 +92,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.view.IViewContainer#registerView(java.lang.String, strata1.interactor.view.IView)}.
+     * Test method for {@link strata1.client.view.IViewContainer#registerView(java.lang.String, strata1.client.view.IView)}.
      */
     @Test
     public void testRegisterViewStringV()
@@ -101,7 +101,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.view.IViewContainer#getView(java.lang.Class)}.
+     * Test method for {@link strata1.client.view.IViewContainer#getView(java.lang.Class)}.
      */
     @Test
     public void testGetViewClassOfV()
@@ -110,7 +110,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.view.IViewContainer#getView(java.lang.Class, java.lang.String)}.
+     * Test method for {@link strata1.client.view.IViewContainer#getView(java.lang.Class, java.lang.String)}.
      */
     @Test
     public void testGetViewClassOfVString()
@@ -119,7 +119,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.view.IViewContainer#hasView(java.lang.Class)}.
+     * Test method for {@link strata1.client.view.IViewContainer#hasView(java.lang.Class)}.
      */
     @Test
     public void testHasViewClassOfV()
@@ -128,7 +128,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.view.IViewContainer#hasView(java.lang.Class, java.lang.String)}.
+     * Test method for {@link strata1.client.view.IViewContainer#hasView(java.lang.Class, java.lang.String)}.
      */
     @Test
     public void testHasViewClassOfVString()
@@ -137,7 +137,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.viewmodel.IViewModelContainer#registerViewModel(strata1.interactor.viewmodel.IViewModel)}.
+     * Test method for {@link strata1.client.viewmodel.IViewModelContainer#registerViewModel(strata1.client.viewmodel.IViewModel)}.
      */
     @Test
     public void testRegisterViewModelV()
@@ -146,7 +146,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.viewmodel.IViewModelContainer#registerViewModel(java.lang.String, strata1.interactor.viewmodel.IViewModel)}.
+     * Test method for {@link strata1.client.viewmodel.IViewModelContainer#registerViewModel(java.lang.String, strata1.client.viewmodel.IViewModel)}.
      */
     @Test
     public void testRegisterViewModelStringV()
@@ -155,7 +155,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.viewmodel.IViewModelContainer#getViewModel(java.lang.Class)}.
+     * Test method for {@link strata1.client.viewmodel.IViewModelContainer#getViewModel(java.lang.Class)}.
      */
     @Test
     public void testGetViewModelClassOfV()
@@ -164,7 +164,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.viewmodel.IViewModelContainer#getViewModel(java.lang.Class, java.lang.String)}.
+     * Test method for {@link strata1.client.viewmodel.IViewModelContainer#getViewModel(java.lang.Class, java.lang.String)}.
      */
     @Test
     public void testGetViewModelClassOfVString()
@@ -173,7 +173,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.viewmodel.IViewModelContainer#hasViewModel(java.lang.Class)}.
+     * Test method for {@link strata1.client.viewmodel.IViewModelContainer#hasViewModel(java.lang.Class)}.
      */
     @Test
     public void testHasViewModelClassOfV()
@@ -182,7 +182,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.viewmodel.IViewModelContainer#hasViewModel(java.lang.Class, java.lang.String)}.
+     * Test method for {@link strata1.client.viewmodel.IViewModelContainer#hasViewModel(java.lang.Class, java.lang.String)}.
      */
     @Test
     public void testHasViewModelClassOfVString()
@@ -191,7 +191,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.controller.IControllerContainer#registerController(strata1.interactor.controller.IController)}.
+     * Test method for {@link strata1.client.controller.IControllerContainer#registerController(strata1.client.controller.IController)}.
      */
     @Test
     public void testRegisterControllerC()
@@ -200,7 +200,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.controller.IControllerContainer#registerController(java.lang.String, strata1.interactor.controller.IController)}.
+     * Test method for {@link strata1.client.controller.IControllerContainer#registerController(java.lang.String, strata1.client.controller.IController)}.
      */
     @Test
     public void testRegisterControllerStringC()
@@ -209,7 +209,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.controller.IControllerContainer#getController(java.lang.Class)}.
+     * Test method for {@link strata1.client.controller.IControllerContainer#getController(java.lang.Class)}.
      */
     @Test
     public void testGetControllerClassOfC()
@@ -218,7 +218,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.controller.IControllerContainer#getController(java.lang.Class, java.lang.String)}.
+     * Test method for {@link strata1.client.controller.IControllerContainer#getController(java.lang.Class, java.lang.String)}.
      */
     @Test
     public void testGetControllerClassOfCString()
@@ -227,7 +227,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.controller.IControllerContainer#hasController(java.lang.Class)}.
+     * Test method for {@link strata1.client.controller.IControllerContainer#hasController(java.lang.Class)}.
      */
     @Test
     public void testHasControllerClassOfC()
@@ -236,7 +236,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.controller.IControllerContainer#hasController(java.lang.Class, java.lang.String)}.
+     * Test method for {@link strata1.client.controller.IControllerContainer#hasController(java.lang.Class, java.lang.String)}.
      */
     @Test
     public void testHasControllerClassOfCString()
@@ -245,7 +245,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.model.IModelContainer#registerModel(strata1.interactor.model.IModel)}.
+     * Test method for {@link strata1.client.model.IModelContainer#registerModel(strata1.client.model.IModel)}.
      */
     @Test
     public void testRegisterModelM()
@@ -254,7 +254,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.model.IModelContainer#registerModel(java.lang.String, strata1.interactor.model.IModel)}.
+     * Test method for {@link strata1.client.model.IModelContainer#registerModel(java.lang.String, strata1.client.model.IModel)}.
      */
     @Test
     public void testRegisterModelStringM()
@@ -263,7 +263,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.model.IModelContainer#getModel(java.lang.Class)}.
+     * Test method for {@link strata1.client.model.IModelContainer#getModel(java.lang.Class)}.
      */
     @Test
     public void testGetModelClassOfM()
@@ -272,7 +272,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.model.IModelContainer#getModel(java.lang.Class, java.lang.String)}.
+     * Test method for {@link strata1.client.model.IModelContainer#getModel(java.lang.Class, java.lang.String)}.
      */
     @Test
     public void testGetModelClassOfMString()
@@ -281,7 +281,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.model.IModelContainer#hasModel(java.lang.Class)}.
+     * Test method for {@link strata1.client.model.IModelContainer#hasModel(java.lang.Class)}.
      */
     @Test
     public void testHasModelClassOfM()
@@ -290,7 +290,7 @@ class ClientContainerTest
     }
 
     /**
-     * Test method for {@link strata1.interactor.model.IModelContainer#hasModel(java.lang.Class, java.lang.String)}.
+     * Test method for {@link strata1.client.model.IModelContainer#hasModel(java.lang.Class, java.lang.String)}.
      */
     @Test
     public void testHasModelClassOfMString()

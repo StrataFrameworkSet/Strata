@@ -24,9 +24,9 @@
 
 package strata1.client.swthelloworld;
 
-import strata1.interactor.shell.IDispatcher;
 import strata1.client.helloworld.GreetingModule;
 import strata1.client.helloworld.IHelloWorldView;
+import strata1.client.shell.IDispatcher;
 
 /****************************************************************************
  * 

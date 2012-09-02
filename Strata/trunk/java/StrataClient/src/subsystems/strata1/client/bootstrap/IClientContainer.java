@@ -24,13 +24,13 @@
 
 package strata1.client.bootstrap;
 
-import strata1.interactor.controller.IControllerContainer;
-import strata1.interactor.model.IModelContainer;
-import strata1.interactor.view.IViewContainer;
-import strata1.interactor.viewmodel.IViewModelContainer;
 import strata1.integrator.gateway.IGatewayContainer;
 import strata1.common.authentication.IPrincipalContainer;
 import strata1.common.factory.IFactoryContainer;
+import strata1.client.controller.IControllerContainer;
+import strata1.client.model.IModelContainer;
+import strata1.client.view.IViewContainer;
+import strata1.client.viewmodel.IViewModelContainer;
 
 
 /**

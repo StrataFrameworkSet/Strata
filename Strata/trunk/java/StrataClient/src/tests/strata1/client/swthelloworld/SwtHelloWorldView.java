@@ -26,12 +26,12 @@ package strata1.client.swthelloworld;
 
 import strata1.swtinteractor.swtshell.ISwtDispatcher;
 import strata1.swtinteractor.swtview.ISwtView;
-import strata1.interactor.command.ExecutionException;
-import strata1.interactor.command.ICommand;
-import strata1.interactor.region.RegionInitializationException;
-import strata1.interactor.shell.IDispatcher;
-import strata1.interactor.view.AbstractView;
+import strata1.client.command.ExecutionException;
+import strata1.client.command.ICommand;
 import strata1.client.helloworld.IHelloWorldView;
+import strata1.client.region.RegionInitializationException;
+import strata1.client.shell.IDispatcher;
+import strata1.client.view.AbstractView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
