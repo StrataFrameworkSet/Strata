@@ -1,6 +1,6 @@
 <project 
     xmlns:artifact="antlib:org.apache.maven.artifact.ant"
-    name="StrataSwtInteractor" 
+    name="StrataSwtClient" 
     default="run-commit-stage">
 
     <property name="sourceDirectory" value="${basedir}/src/subsystems"/>
@@ -15,10 +15,14 @@
     <property name="project.tests" value="${directory}/${testArtifactName}.jar"/>
     <property name="project.testreports" value="${testOutputDirectory}/reports"/>
     <property name="common.artifact" value="${basedir}/../StrataCommon/lib/StrataCommon-${version}.jar"/>
-    <property name="interactor.artifact" value="${basedir}/../StrataInteractor/lib/StrataInteractor-${version}.jar"/>
+    <property name="client.artifact" value="${basedir}/../StrataClient/lib/StrataClient-${version}.jar"/>
+    <property name="client.testartifact" value="${basedir}/../StrataClient/lib/StrataClientTest-${version}.jar"/>
+    <property name="integrator.artifact" value="${basedir}/../StrataIntegrator/lib/StrataIntegrator-${version}.jar"/>
 
     <artifact:dependencies pathId="partial.classpath">
         <artifact:dependency groupId="junit" artifactId="junit" version="4.9"/>
+        <artifact:dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
+        <artifact:dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
         <artifact:dependency groupId="org.fitnesse" artifactId="fitnesse" version="20050731"/>
         <artifact:dependency groupId="com.c2.fit" artifactId="fit" version="1.1"/>
         <artifact:dependency groupId="org.eclipse" artifactId="swt.win32.win32.x86_64" version="3.7.2"/>
@@ -27,13 +31,15 @@
     <path 
         id="dependency.classpath">
         <pathelement location="${common.artifact}" /> 
-        <pathelement location="${interactor.artifact}" /> 
+        <pathelement location="${integrator.artifact}" /> 
+        <pathelement location="${client.artifact}" /> 
         <path refid="partial.classpath"/> 
     </path>
 	
     <path 
         id="testDependency.classpath">
         <pathelement location="${project.subsystems}" /> 
+        <pathelement location="${client.testartifact}" /> 
         <path refid="dependency.classpath"/> 
     </path>
     
@@ -104,7 +110,7 @@
             </classpath>
             <test 
                 todir="${project.testreports}" 
-                name="strata1.swtinteractor.testsuite.CommitStageSuite"/>
+                name="strata1.swtclient.testsuite.CommitStageSuite"/>
             </junit>
             <junitreport 
                 todir="${project.testreports}">
@@ -130,7 +136,7 @@
             </classpath>
             <test 
                 todir="${project.testreports}" 
-                name="strata1.swtinteractor.testsuite.IntegrationStageSuite"/>
+                name="strata1.swtclient.testsuite.IntegrationStageSuite"/>
             </junit>
             <junitreport 
                 todir="${project.testreports}">

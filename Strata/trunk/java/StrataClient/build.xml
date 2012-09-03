@@ -15,10 +15,7 @@
     <property name="project.tests" value="${directory}/${testArtifactName}.jar"/>
     <property name="project.testreports" value="${testOutputDirectory}/reports"/>
     <property name="common.artifact" value="${basedir}/../StrataCommon/lib/StrataCommon-${version}.jar"/>
-    <property name="entity.artifact" value="${basedir}/../StrataEntity/lib/StrataEntity-${version}.jar"/>
     <property name="integrator.artifact" value="${basedir}/../StrataIntegrator/lib/StrataIntegrator-${version}.jar"/>
-    <property name="interactor.artifact" value="${basedir}/../StrataInteractor/lib/StrataInteractor-${version}.jar"/>
-    <property name="swtinteractor.artifact" value="${basedir}/../StrataSwtInteractor/lib/StrataSwtInteractor-${version}.jar"/>
 
     <artifact:dependencies pathId="partial.classpath">
         <artifact:dependency groupId="junit" artifactId="junit" version="4.9"/>
@@ -31,10 +28,8 @@
     <path 
         id="dependency.classpath">
         <pathelement location="${common.artifact}" /> 
-        <pathelement location="${entity.artifact}" /> 
         <pathelement location="${integrator.artifact}" /> 
-        <pathelement location="${interactor.artifact}" /> 
-        <pathelement location="${swtinteractor.artifact}" /> 
+        <pathelement location="${client.artifact}" /> 
         <path refid="partial.classpath"/> 
     </path>
     
