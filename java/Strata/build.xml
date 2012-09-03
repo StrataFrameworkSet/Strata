@@ -8,11 +8,10 @@
     <property name="workspace.root" value="${basedir}/.."/>
     <property name="common.root" value="${workspace.root}/StrataCommon"/>
     <property name="integrator.root" value="${workspace.root}/StrataIntegrator"/>
-    <property name="interactor.root" value="${workspace.root}/StrataInteractor"/>
-    <property name="swtinteractor.root" value="${workspace.root}/StrataSwtInteractor"/>
+    <property name="client.root" value="${workspace.root}/StrataClient"/>
+    <property name="swtclient.root" value="${workspace.root}/StrataSwtClient"/>
     <property name="inspector.root" value="${workspace.root}/StrataInspector"/>
     <property name="entity.root" value="${workspace.root}/StrataEntity"/>
-    <property name="client.root" value="${workspace.root}/StrataClient"/>
     <property name="server.root" value="${workspace.root}/StrataServer"/>
  
     <target name="clean">
@@ -25,12 +24,12 @@
             antfile="${integrator.root}/build.xml" 
             target="clean"/>
         <ant 
-            dir="${interactor.root}" 
-            antfile="${interactor.root}/build.xml" 
+            dir="${client.root}" 
+            antfile="${client.root}/build.xml" 
             target="clean"/>
         <ant 
-            dir="${swtinteractor.root}" 
-            antfile="${swtinteractor.root}/build.xml" 
+            dir="${swtclient.root}" 
+            antfile="${swtclient.root}/build.xml" 
             target="clean"/>
         <ant 
             dir="${inspector.root}" 
@@ -39,10 +38,6 @@
         <ant 
             dir="${entity.root}" 
             antfile="${entity.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${client.root}" 
-            antfile="${client.root}/build.xml" 
             target="clean"/>
         <ant 
             dir="${server.root}" 
@@ -60,12 +55,12 @@
     	    antfile="${integrator.root}/build.xml" 
             target="run-commit-stage"/>
         <ant 
-            dir="${interactor.root}" 
-            antfile="${interactor.root}/build.xml" 
+            dir="${client.root}" 
+            antfile="${client.root}/build.xml" 
             target="run-commit-stage"/>
         <ant 
-            dir="${swtinteractor.root}" 
-            antfile="${swtinteractor.root}/build.xml" 
+            dir="${swtclient.root}" 
+            antfile="${swtclient.root}/build.xml" 
             target="run-commit-stage"/>
         <ant 
             dir="${inspector.root}" 
@@ -74,10 +69,6 @@
         <ant 
             dir="${entity.root}" 
             antfile="${entity.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${client.root}" 
-            antfile="${client.root}/build.xml" 
             target="run-commit-stage"/>
         <ant 
             dir="${server.root}" 
@@ -95,12 +86,12 @@
             antfile="${integrator.root}/build.xml" 
             target="run-integration-stage"/>
         <ant 
-            dir="${interactor.root}" 
-            antfile="${interactor.root}/build.xml" 
+            dir="${client.root}" 
+            antfile="${client.root}/build.xml" 
             target="run-integration-stage"/>
         <ant 
-            dir="${swtinteractor.root}" 
-            antfile="${swtinteractor.root}/build.xml" 
+            dir="${swtclient.root}" 
+            antfile="${swtclient.root}/build.xml" 
             target="run-integration-stage"/>
         <ant 
             dir="${inspector.root}" 
@@ -109,10 +100,6 @@
         <ant 
             dir="${entity.root}" 
             antfile="${entity.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${client.root}" 
-            antfile="${client.root}/build.xml" 
             target="run-integration-stage"/>
         <ant 
             dir="${server.root}" 
