@@ -25,9 +25,14 @@
 package strata1.entity.inmemoryrepository;
 
 import strata1.entity.repository.AbstractRepositoryProvider;
+import strata1.entity.repository.IFinder;
 import strata1.entity.repository.IKeyRetriever;
+import strata1.entity.repository.InsertFailedException;
+import strata1.entity.repository.RemoveFailedException;
+import strata1.entity.repository.UpdateFailedException;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /****************************************************************************
@@ -42,13 +47,14 @@ import java.util.Map;
  */
 public 
 class InMemoryRepositoryProvider<K extends Serializable,T> 
-	extends 	AbstractRepositoryProvider<K,T>
-	implements 	ITransactionParticipant
+	extends AbstractRepositoryProvider<K,T>
 {
+    private Class<T>                  itsEntityClass;
 	private InMemoryRepositoryContext itsContext;
-	private Map<K,T>                  itsEntities;
-	private IChangeSet<K,T>            itsChanges;
-	private IKeyRetriever<K,T>		  itsKeyRetriever;
+	private IEntityReplicator<K,T>    itsReplicator;
+	private IKeyRetriever<K,T>		  itsRetriever;
+	private Map<String,IFinder<T>>    itsFinders;
+
 	
 	/************************************************************************
 	 * Creates a new InMemoryRepositoryImp. 
@@ -56,14 +62,20 @@ class InMemoryRepositoryProvider<K extends Serializable,T>
 	 */
 	public 
 	InMemoryRepositoryProvider(
+	    Class<T>                  type,
 		InMemoryRepositoryContext context,
-		IKeyRetriever<K,T>         keyRetriever)
+		IEntityReplicator<K,T>    replicator,
+		IKeyRetriever<K,T>        retriever)
 	{
 		super();
-		itsContext      = context;
-		itsEntities     = new HashMap<K,T>();
-		itsChanges      = new ChangeSet<K,T>();
-		itsKeyRetriever = keyRetriever;
+		itsEntityClass = type;
+		itsContext     = context;
+		itsReplicator  = replicator;
+		itsRetriever   = retriever;
+		itsFinders     = new HashMap<String,IFinder<T>>();
+		
+		initializeFinders( itsContext.getFinders( itsEntityClass ) );
+		createFinder( "GetAll",new GetAllPredicate<T>() );
 	}
 
 	/************************************************************************
@@ -77,142 +89,151 @@ class InMemoryRepositoryProvider<K extends Serializable,T>
 	}
 
 	/************************************************************************
-	 * Apply the change set to the repository's internal storage. 
-	 * 
-	 */
-	public void 
-	applyChanges()
-	{
-		getContext().getSynchronizer().lockForWriting();
-		
-		try
-		{			
-			if ( !itsChanges.hasChanges() )
-				return;
-			
-			itsChanges.applyChanges( itsEntities );
-		}
-		finally
-		{
-			getContext().getSynchronizer().unlockFromWriting();
-		}
-	}
-
-	/************************************************************************
-	 * Discard the change set. 
-	 *
-	 */
-	public void 
-	discardChanges()
-	{
-		getContext().getSynchronizer().lockForWriting();
-		
-		try
-		{			
-			if ( !itsChanges.hasChanges() )
-				return;
-			
-			itsChanges.discardChanges();
-		}
-		finally
-		{
-			getContext().getSynchronizer().unlockFromWriting();
-		}
-	}
-	
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	protected void 
-	doInsert(T entity)
-	{
-		K key = itsKeyRetriever.getKey( entity );
-		
-		if ( doHas( key ) )
-			return;
-		
-		if ( getContext().hasActiveTransaction() )
-		{
-			joinTransaction();
-			itsChanges.addToInserted( key,entity );
-		}
-		else
-			itsEntities.put( key,entity );
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	protected void 
-	doUpdate(T entity)
-	{
-		K key = itsKeyRetriever.getKey( entity );
-		
-		if ( getContext().hasActiveTransaction() )
-		{
-			joinTransaction();
-			itsChanges.addToUpdated( key,entity );
-		}
-		else
-			itsEntities.put( key,entity );
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	protected void 
-	doRemove(T entity)
-	{
-		K key = itsKeyRetriever.getKey( entity );
-		
-		if ( !doHas( key ) )
-			return;
-		
-		if ( getContext().hasActiveTransaction() )
-		{
-			joinTransaction();
-			itsChanges.addToRemoved( key,entity );
-		}
-		else
-			itsEntities.remove( key );
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	protected T 
-	doGet(K key)
-	{
-		return itsEntities.get( key );
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	protected boolean 
-	doHas(K key)
-	{
-		return itsEntities.containsKey( key );
-	}
-	
-	/************************************************************************
 	 *  
 	 *
+	 * @param finderName
+	 * @param predicate
 	 */
-	private void
-	joinTransaction()
+	public void 
+	createFinder(String finderName,IPredicate<T> predicate)
 	{
-		InMemoryTransaction t = 
-			getContext().getTransaction();
-		
-		t.joinTransaction( this );
+	    IFinder<T> finder = 
+	        new InMemoryFinder<T>(
+	            itsContext,
+	            finderName,
+	            itsEntityClass,
+	            predicate);
+	    
+	    itsFinders.put( finder.getName(),finder ); 
 	}
+	
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected T 
+    doInsertNew(T entity) 
+        throws InsertFailedException
+    {
+        try
+        {
+            return
+                itsContext
+                    .getUnitOfWork()
+                    .doInsert(
+                        entity,
+                        itsEntityClass,
+                        itsReplicator,
+                        itsRetriever);
+        }
+        catch (Throwable cause)
+        {
+            throw new InsertFailedException(cause);
+        }
+    }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected T 
+    doUpdateExisting(T entity) 
+        throws UpdateFailedException
+    {
+        try
+        {
+            return
+                itsContext
+                    .getUnitOfWork()
+                    .doUpdate( 
+                        entity,
+                        itsEntityClass,
+                        itsReplicator, 
+                        itsRetriever );
+        }
+        catch (Throwable cause)
+        {
+            throw new UpdateFailedException(cause);
+        }
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected void 
+    doRemoveExisting(T entity) 
+        throws RemoveFailedException
+    {
+        try
+        {
+            itsContext
+                .getUnitOfWork()
+                .doRemove( entity,itsEntityClass,itsRetriever );
+        }
+        catch (Throwable cause)
+        {
+            throw new RemoveFailedException(cause);
+        }
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected T 
+    doGetExisting(K key)
+    {
+        return
+            itsContext
+                .getUnitOfWork()
+                .doGet( itsEntityClass,key );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected IFinder<T> 
+    doGetFinder(String finderName)
+    {
+        return itsFinders.get( finderName ).copy();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected boolean 
+    doHasExisting(K key)
+    {
+        return
+            itsContext
+                .getUnitOfWork()
+                .doHas( itsEntityClass,key );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected boolean 
+    doHasFinder(String finderName)
+    {
+        return itsFinders.containsKey( finderName );
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param finders
+     */
+    private void
+    initializeFinders(List<InMemoryFinder<T>> finders)
+    {
+        for (InMemoryFinder<T> finder : finders)
+            itsFinders.put( finder.getName(),finder );
+    }
 }
 
 

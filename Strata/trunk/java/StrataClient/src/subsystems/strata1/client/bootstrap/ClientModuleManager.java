@@ -101,14 +101,14 @@ class ClientModuleManager
                 .getLogger()
                 .log( LoggingLevel.INFO,message );
             
-           controller.setInitializationMessage( message );
-           controller.incrementInitializationProgress();
+            controller.setInitializationMessage( message );
+            controller.incrementInitializationProgress();
            
             bootstrapper
                 .getDispatcher()
                 .processWork();
             
-           module.initialize( bootstrapper );  
+            module.initialize( bootstrapper );  
             
         }
     }

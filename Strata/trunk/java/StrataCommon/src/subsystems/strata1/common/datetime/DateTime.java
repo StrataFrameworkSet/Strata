@@ -30,6 +30,7 @@ import java.util.Calendar;
 import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
+import java.sql.Timestamp;
 
 /**
  * Provides a simplified abstraction for representing date/time values
@@ -46,10 +47,10 @@ import java.util.TimeZone;
  */
 public 
 class DateTime
-	implements  ICopyable,
-	            Serializable,
-	            Comparable<DateTime>
-				
+	implements  
+	    ICopyable,
+	    Serializable,
+	    Comparable<DateTime>
 {
 	private static final long serialVersionUID = 0;
 	
@@ -265,6 +266,13 @@ class DateTime
 		itsImp.setTimeZone( zone );	
 	}
 	
+	public
+	DateTime(Timestamp timestamp)
+	{
+	    itsImp = new GregorianCalendar();
+	    itsImp.setTimeInMillis( timestamp.getTime() );
+	}
+	
 	/************************************************************************
 	 * Creates a new DateTime. 
 	 *
@@ -313,6 +321,17 @@ class DateTime
 		imp.setTimeZone( zone );
 		imp.setTimeInMillis( timestamp );
 		return new DateTime( imp );
+	}
+	
+	/************************************************************************
+	 *  
+	 *
+	 * @return
+	 */
+	public Timestamp
+	getTimestamp()
+	{
+	    return new Timestamp(itsImp.getTimeInMillis());
 	}
 	
 	/************************************************************************

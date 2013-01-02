@@ -24,6 +24,9 @@
 
 package strata1.entity.testsuite;
 
+import strata1.entity.hibernatetestdomain.HibernateOrganizationRepositoryTest;
+import strata1.entity.hibernatetestdomain.HibernatePartyRepositoryTest;
+import strata1.entity.hibernatetestdomain.HibernatePersonRepositoryTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -35,7 +38,10 @@ import org.junit.runners.Suite;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({NullTest.class})
+@Suite.SuiteClasses({
+    HibernatePersonRepositoryTest.class,
+    HibernateOrganizationRepositoryTest.class,
+    HibernatePartyRepositoryTest.class})
 public 
 class IntegrationStageSuite {}
 

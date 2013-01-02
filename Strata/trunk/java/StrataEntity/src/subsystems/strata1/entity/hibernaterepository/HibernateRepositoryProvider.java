@@ -25,7 +25,12 @@
 package strata1.entity.hibernaterepository;
 
 import strata1.entity.repository.AbstractRepositoryProvider;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import strata1.entity.repository.IFinder;
+import strata1.entity.repository.InsertFailedException;
+import strata1.entity.repository.RemoveFailedException;
+import strata1.entity.repository.UpdateFailedException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import java.io.Serializable;
 
 /****************************************************************************
@@ -72,68 +77,125 @@ class HibernateRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see AbstractRepositoryProvider#doInsert(Object)
-	 */
-	@Override
-	protected void 
-	doInsert(T entity)
-	{
-		HibernateTemplate template = getContext().getHibernateTemplate();
-		
-		template.saveOrUpdate( entity );
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see AbstractRepositoryProvider#doUpdate(Object)
-	 */
-	@Override
-	protected void doUpdate(T entity)
-	{
-		HibernateTemplate template = getContext().getHibernateTemplate();
-		
-		template.saveOrUpdate( entity );
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see AbstractRepositoryProvider#doRemove(Object)
-	 */
-	@Override
-	protected void 
-	doRemove(T entity)
-	{
-		HibernateTemplate template = getContext().getHibernateTemplate();
-		
-		template.delete( entity );
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see AbstractRepositoryProvider#doGet(Serializable)
+	 * @return 
+	 * @see AbstractRepositoryProvider#doInsertNew(Object)
 	 */
 	@Override
 	protected T 
-	doGet(K key)
+	doInsertNew(T entity)
+	    throws InsertFailedException
 	{
-		HibernateTemplate template = getContext().getHibernateTemplate();
-		Object            entity = template.get( itsEntityClass,key );
-		
-		return itsEntityClass.cast( entity );
+		try
+		{
+		    return  
+		        itsContext
+		            .getUnitOfWork()
+		            .doInsertNew(itsEntityClass,entity);
+		}
+		catch (Throwable cause)
+		{
+		    throw new InsertFailedException(cause);
+		}	
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see AbstractRepositoryProvider#doHas(Serializable)
+	 * @return 
+	 * @see AbstractRepositoryProvider#doUpdateExisting(Object)
+	 */
+	@Override
+	protected T 
+	doUpdateExisting(T entity)
+	    throws UpdateFailedException
+	{
+        try
+        {
+            return  
+                itsContext
+                    .getUnitOfWork()
+                    .doUpdateExisting(itsEntityClass,entity);
+        }
+        catch (Throwable cause)
+        {
+            throw new UpdateFailedException(cause);
+        }
+	}
+
+	/************************************************************************
+	 * {@inheritDoc} 
+	 * @see AbstractRepositoryProvider#doRemoveExisting(Object)
+	 */
+	@Override
+	protected void 
+	doRemoveExisting(T entity)
+	    throws RemoveFailedException
+	{
+        try
+        {
+            itsContext
+                .getUnitOfWork()
+                .doRemoveExisting(entity);
+        }
+        catch (Throwable cause)
+        {
+            throw new RemoveFailedException(cause);
+        }
+	}
+
+	/************************************************************************
+	 * {@inheritDoc} 
+	 * @see AbstractRepositoryProvider#doGetExisting(Serializable)
+	 */
+	@Override
+	protected T 
+	doGetExisting(K key)
+	{
+	    return
+	        itsContext
+	            .getUnitOfWork()
+	            .doGetExisting( itsEntityClass,key );
+	}
+
+	/************************************************************************
+	 * {@inheritDoc} 
+	 */
+	@Override
+    protected IFinder<T> 
+	doGetFinder(String finderName)
+    {
+	    if ( doHasFinder(finderName))
+	        return 
+	            new HibernateFinder<T>(finderName,itsEntityClass,itsContext);
+	    
+        return null; 
+    }
+
+    /************************************************************************
+	 * {@inheritDoc} 
+	 * @see AbstractRepositoryProvider#doHasExisting(Serializable)
 	 */
 	@Override
 	protected boolean 
-	doHas(K key)
+	doHasExisting(K key)
 	{
-		HibernateTemplate template = getContext().getHibernateTemplate();
-		
-		return template.contains( key );
+	    return
+	        itsContext
+	            .getUnitOfWork()
+	            .doHasExisting( itsEntityClass,key );
 	}
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected boolean 
+    doHasFinder(String finderName)
+    {   
+        SessionFactory factory = itsContext.getSessionFactory();
+        Session        session = factory.openSession();
+        
+        return session.getNamedQuery(finderName) != null;
+    }
 
 }
 

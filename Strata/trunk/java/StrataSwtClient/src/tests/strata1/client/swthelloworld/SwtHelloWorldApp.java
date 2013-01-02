@@ -24,9 +24,7 @@
 
 package strata1.client.swthelloworld;
 
-import strata1.client.bootstrap.IClientBootstrapper;
-import strata1.client.bootstrap.IClientFactory;
-import strata1.client.helloworld.HelloWorldApp;
+import strata1.client.application.ClientApplication;
 
 /****************************************************************************
  * 
@@ -36,7 +34,7 @@ import strata1.client.helloworld.HelloWorldApp;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public class SwtHelloWorldApp
-    extends HelloWorldApp
+    extends ClientApplication
 {
 
     /************************************************************************
@@ -62,7 +60,7 @@ public class SwtHelloWorldApp
     {
         try
         {
-            new SwtHelloWorldApp().run();
+            new SwtHelloWorldApp().run( args );
         }
         catch (Exception e)
         {

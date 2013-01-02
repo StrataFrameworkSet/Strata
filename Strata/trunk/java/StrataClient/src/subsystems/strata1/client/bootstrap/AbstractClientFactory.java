@@ -24,6 +24,9 @@
 
 package strata1.client.bootstrap;
 
+import strata1.common.commandline.ICommandLineProcessor;
+import strata1.common.commandline.NullCommandLineProcessor;
+
 /****************************************************************************
  * 
  * @author 		
@@ -42,6 +45,16 @@ public abstract class AbstractClientFactory
     public 
     AbstractClientFactory()
     {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ICommandLineProcessor 
+    createCommandLineProcessor()
+    {
+        return new NullCommandLineProcessor();
     }
 
     /************************************************************************

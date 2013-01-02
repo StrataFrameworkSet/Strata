@@ -27,7 +27,10 @@ package strata1.entity.hibernaterepository;
 import strata1.entity.repository.AbstractFinder;
 import strata1.entity.repository.IFinder;
 import strata1.entity.repository.InputKeeper;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import strata1.entity.repository.NotUniqueException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -86,7 +89,6 @@ class HibernateFinder<T>
 	
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IFinder#copy()
 	 */
 	@Override
 	public HibernateFinder<T> 
@@ -97,10 +99,10 @@ class HibernateFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IFinder#clear()
 	 */
 	@Override
-	public void clear()
+	public void 
+	clear()
 	{
 		clearInputs();
 		itsResult  = null;
@@ -109,77 +111,110 @@ class HibernateFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IFinder#getAll()
 	 */
 	@Override
 	public Collection<T> 
 	getAll()
 	{
-		evaluateQuery();
+		evaluateGet(ResultCardinality.ZERO_TO_MANY);
 		return itsResult;
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IFinder#getUnique()
 	 */
 	@Override
 	public T 
-	getUnique()
+	getUnique() 
+	    throws NotUniqueException
 	{
-		evaluateQuery();
+		evaluateGet(ResultCardinality.ZERO_TO_ONE);
+		
+		if ( itsResult.size() > 1 )
+		    throw new NotUniqueException("result not unique");
+		
 		return itsResult.get( 0 );
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IFinder#getNext()
 	 */
 	@Override
 	public T 
 	getNext()
 	{
-		evaluateQuery();
+		evaluateGet(ResultCardinality.ZERO_TO_MANY);
 		return itsCurrent.next();
 	}
 
 	/************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    hasUnique() 
+        throws NotUniqueException
+    {
+        int numResults = evaluateHas();
+        
+        if ( numResults > 1 )
+            throw new NotUniqueException("results are not unique");
+        
+        return numResults == 1;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    hasAny()
+    {
+        return evaluateHas() > 0;
+    }
+
+    /************************************************************************
 	 * {@inheritDoc} 
-	 * @see IFinder#hasNext()
 	 */
 	@Override
 	public boolean 
 	hasNext()
 	{
-		evaluateQuery();
+		evaluateGet(ResultCardinality.ZERO_TO_MANY);
 		return itsCurrent.hasNext();
 	}
 	
 	/************************************************************************
 	 *  
 	 *
+	 * @param cardinality
 	 */
 	protected void
-	evaluateQuery()
+	evaluateGet(ResultCardinality cardinality)
 	{
 		if ( itsResult == null )
 		{
-			HibernateTemplate template = itsContext.getHibernateTemplate();
-			InputKeeper       keeper   = getInputs();
+			SessionFactory factory = itsContext.getSessionFactory();
+			Session        session = factory.openSession();
+			InputKeeper    keeper  = getInputs();
 			
 			switch ( keeper.getMode() )
 			{
 			case NAMED:
-				itsResult = evaluateQueryWithNamedInputs( template,keeper );
+				itsResult = 
+				    evaluateGetWithNamedInputs(
+				        session,keeper,cardinality );
 				break;
 				
 			case POSITIONAL:
 				itsResult = 
-				    evaluateQueryWithPositionalInputs( template,keeper );
+				    evaluateGetWithPositionalInputs(
+				        session,keeper,cardinality );
 				break;
 				
 			default:
-				itsResult = evaluateQueryWithNoInputs( template );
+				itsResult = 
+				    evaluateGetWithNoInputs( session,cardinality );
 				break;
 			}
 			
@@ -188,60 +223,186 @@ class HibernateFinder<T>
 	}
 
 	/************************************************************************
+     *  
+     *
+     * @param session
+     * @param keeper
+     * @param cardinality
+     * @return
+     */
+    private List<T> 
+    evaluateGetWithNamedInputs(
+    	Session           session,
+    	InputKeeper       keeper,
+    	ResultCardinality cardinality)
+    {
+        Query              query  = session.getNamedQuery( getName() );
+    	Map<String,Object> inputs = keeper.getNamedInputs();
+    	
+    	for (Map.Entry<String,Object> input : inputs.entrySet())
+    	    query.setParameter( input.getKey(),input.getValue() );
+    	
+    	return 
+            cardinality == ResultCardinality.ZERO_TO_MANY
+                ? convertUntypedListToTypedList(query.list())
+                : convertObjectToTypedList(query.uniqueResult());
+    }
+
+    /************************************************************************
 	 *  
 	 *
-	 * @param template
+	 * @param session
 	 * @param keeper
+	 * @param cardinality
 	 * @return
 	 */
 	private List<T> 
-	evaluateQueryWithPositionalInputs(
-		HibernateTemplate template,
-		InputKeeper       keeper)
+	evaluateGetWithPositionalInputs(
+		Session           session,
+		InputKeeper       keeper, 
+		ResultCardinality cardinality)
 	{
-		Collection<Object> inputs = keeper.getPositionalInputs();
+	    Query              query    = session.getNamedQuery( getName() );
+		Collection<Object> inputs   = keeper.getPositionalInputs();
+		int                position = 0;
 		
-		return
-			convertToTypedList(
-				template.findByNamedQuery( 
-					getName(),
-					inputs.toArray() ) );
+		for (Object input : inputs)
+		    query.setParameter( position++,input );
+		
+		return 
+		    cardinality == ResultCardinality.ZERO_TO_MANY
+                ? convertUntypedListToTypedList(query.list())
+                : convertObjectToTypedList(query.uniqueResult());	        
 	}
 
 	/************************************************************************
 	 *  
 	 *
 	 * @param template
-	 * @param keeper
 	 * @return
 	 */
 	private List<T> 
-	evaluateQueryWithNamedInputs(
-		HibernateTemplate template,
-		InputKeeper       keeper)
+	evaluateGetWithNoInputs(
+	    Session           session,
+	    ResultCardinality cardinality)
 	{
-		Map<String,Object> inputs = keeper.getNamedInputs();
-		
-		return 
-			convertToTypedList(
-				template.findByNamedQueryAndNamedParam( 
-					getName(),
-					inputs.keySet().toArray(new String[0]),
-					inputs.values().toArray() ) );
-	}
-	
-	/************************************************************************
-	 *  
-	 *
-	 * @param template
-	 * @return
-	 */
-	private List<T> 
-	evaluateQueryWithNoInputs(HibernateTemplate template)
-	{
+	    Query query = session.getNamedQuery( getName() );
+	    
 		return
-			convertToTypedList(template.findByNamedQuery( getName() ) );
+            cardinality == ResultCardinality.ZERO_TO_MANY
+                ? convertUntypedListToTypedList(query.list())
+                : convertObjectToTypedList(query.uniqueResult());
 	}
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    protected int
+    evaluateHas()
+    {
+        SessionFactory factory = itsContext.getSessionFactory();
+        Session        session = factory.openSession();
+        InputKeeper    keeper  = getInputs();
+        
+        switch ( keeper.getMode() )
+        {
+        case NAMED:
+            return 
+                evaluateHasWithNamedInputs( session,keeper );
+            
+        case POSITIONAL:
+            return 
+                evaluateHasWithPositionalInputs( session,keeper );
+            
+        default:
+            return 
+                evaluateHasWithNoInputs( session );
+        }
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param session
+     * @param keeper
+     * @return
+     */
+    private int 
+    evaluateHasWithNamedInputs(Session session,InputKeeper keeper)
+    {
+        Query              query  = session.getNamedQuery( getName() );
+        Map<String,Object> inputs = keeper.getNamedInputs();
+        
+        query.setMaxResults( 2 );
+        query.setFetchSize( 2 );
+        
+        for (Map.Entry<String,Object> input : inputs.entrySet())
+            query.setParameter( input.getKey(),input.getValue() );
+        
+        
+        return query.list().size();
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param session
+     * @param keeper
+     * @return
+     */
+    private int 
+    evaluateHasWithPositionalInputs(
+        Session           session,
+        InputKeeper       keeper)
+    {
+        Query              query    = session.getNamedQuery( getName() );
+        Collection<Object> inputs   = keeper.getPositionalInputs();
+        int                position = 0;
+        
+        query.setMaxResults( 2 );
+        query.setFetchSize( 2 );
+        
+        for (Object input : inputs)
+            query.setParameter( position++,input );
+        
+        return query.list().size();           
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param template
+     * @return
+     */
+    private int 
+    evaluateHasWithNoInputs(Session session)
+    {
+        Query query = session.getNamedQuery( getName() );
+        
+        query.setMaxResults( 2 );
+        query.setFetchSize( 2 );
+        
+        return query.list().size();           
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param untyped
+     * @return
+     */
+    private List<T> 
+    convertUntypedListToTypedList(List<?> untyped)
+    {
+        List<T> typed = new ArrayList<T>();
+        
+        for (Object entity : untyped)
+            typed.add( itsEntityClass.cast( entity ) );
+        
+        return typed;
+    }
 
 	/************************************************************************
 	 *  
@@ -250,13 +411,11 @@ class HibernateFinder<T>
 	 * @return
 	 */
 	private List<T> 
-	convertToTypedList(List<?> untyped)
+	convertObjectToTypedList(Object untyped)
 	{
 		List<T> typed = new ArrayList<T>();
 		
-		for (Object entity : untyped)
-			typed.add( itsEntityClass.cast( entity ) );
-		
+		typed.add( itsEntityClass.cast( untyped ) );
 		return typed;
 	}
 

@@ -42,12 +42,13 @@ import strata1.client.viewmodel.IViewModelContainer;
  */
 public 
 interface IClientContainer
-    extends IViewContainer,
-            IViewModelContainer,
-            IControllerContainer,
-            IModelContainer,
-            IGatewayContainer,
-            IFactoryContainer,
-            IPrincipalContainer {}
+    extends 
+        IViewContainer,
+        IViewModelContainer,
+        IControllerContainer,
+        IModelContainer,
+        IGatewayContainer,
+        IFactoryContainer,
+        IPrincipalContainer {}
 
 // ##########################################################################

@@ -25,9 +25,12 @@
 package strata1.entity.inmemoryrepository;
 
 import strata1.entity.repository.IRepositoryContext;
-import strata1.common.utility.ReadWriteLockSynchronizer;
 import strata1.common.utility.ISynchronizer;
-import org.springframework.transaction.PlatformTransactionManager;
+import strata1.common.utility.ReadWriteLockSynchronizer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -43,8 +46,10 @@ public
 class InMemoryRepositoryContext 
 	implements IRepositoryContext
 {
-	private final ISynchronizer        itsSynchronizer;
-	private       InMemoryTransaction itsTransaction;
+	private final ISynchronizer                   itsSynchronizer;
+    private Map<EntityIdentifier,Object>          itsEntities;
+	private InMemoryUnitOfWork                    itsUnitOfWork;
+	private Map<Class<?>,List<InMemoryFinder<?>>> itsFinders;
 	
 	/************************************************************************
 	 * Creates a new InMemoryRepositoryContext. 
@@ -54,8 +59,10 @@ class InMemoryRepositoryContext
 	InMemoryRepositoryContext()
 	{
 		super();
-		itsSynchronizer = new ReadWriteLockSynchronizer();
-		itsTransaction = null;
+		itsSynchronizer  = new ReadWriteLockSynchronizer();
+        itsEntities      = new HashMap<EntityIdentifier,Object>();
+		itsUnitOfWork    = new InMemoryUnitOfWork(itsEntities);
+		itsFinders       = new HashMap<Class<?>,List<InMemoryFinder<?>>>();
 	}
 
 	/************************************************************************
@@ -69,75 +76,74 @@ class InMemoryRepositoryContext
 	}
 
 	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public PlatformTransactionManager 
-	getTransactionManager()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+     * {@inheritDoc} 
+     */
+    @Override
+    public InMemoryUnitOfWork 
+    getUnitOfWork()
+    {
+        if ( itsUnitOfWork == null || !itsUnitOfWork.isActive() )
+            itsUnitOfWork = new InMemoryUnitOfWork(itsEntities);
+        
+        return itsUnitOfWork;
+    }
 
-	/************************************************************************
-	 *  
-	 */
-	public boolean 
-	hasActiveTransaction()
-	{
-		itsSynchronizer.lockForReading();
-		
-		try
-		{
-			return (itsTransaction != null) && itsTransaction.isActive();
-		}
-		finally
-		{
-			itsSynchronizer.unlockFromReading();
-		}
-	}
-
-	/************************************************************************
-	 *  
-	 *
-	 * @return
-	 */
-	public InMemoryTransaction 
-	getTransaction()
-	{
-		itsSynchronizer.lockForReading();
-		
-		try
-		{
-			if ( itsTransaction == null )
-				itsTransaction = new InMemoryTransaction( this );
-			
-			return itsTransaction;
-		}
-		finally
-		{
-			itsSynchronizer.unlockFromReading();
-		}
-	}
-	
- 	/************************************************************************
- 	 *  
- 	 *
- 	 */
- 	void clearTransaction()
-	{
-		itsSynchronizer.lockForWriting();
-		
-		try
-		{
-			if ( (itsTransaction != null) && !itsTransaction.isActive() )
-				itsTransaction = null;
-		}
-		finally
-		{
-			itsSynchronizer.unlockFromWriting();
-		}
-	}
+    /************************************************************************
+     *  
+     *
+     * @param type
+     * @return
+     */
+    public <T> List<T>
+    getEntitiesByType(Class<T> type)
+    {
+        List<T> entities = new ArrayList<T>();
+        
+        for (
+            Map.Entry<EntityIdentifier,Object> entry:
+                itsEntities.entrySet())
+        {
+            if ( type.isAssignableFrom( entry.getKey().getType() ) )
+                entities.add( type.cast( entry.getValue() ) );
+        }
+        
+        return entities;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param type
+     * @param finder
+     */
+    public <T> void
+    insertFinder(Class<T> type,InMemoryFinder<T> finder)
+    {
+        if ( !itsFinders.containsKey( type ) )
+            itsFinders.put( type,new ArrayList<InMemoryFinder<?>>() );
+        
+        itsFinders.get( type ).add( finder );
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param type
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public <T> List<InMemoryFinder<T>>
+    getFinders(Class<T> type)
+    {
+        List<InMemoryFinder<T>> finders = 
+            new ArrayList<InMemoryFinder<T>>();
+        
+        if ( itsFinders.containsKey( type ) )
+            for (InMemoryFinder<?> finder : itsFinders.get( type ))
+                finders.add( (InMemoryFinder<T>)finder );
+        
+        return finders;
+    }
 }
 
 
