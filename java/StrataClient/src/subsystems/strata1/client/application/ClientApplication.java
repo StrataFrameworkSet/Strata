@@ -38,8 +38,8 @@ public
 class ClientApplication
     implements IClientApplication
 {
-    private IClientBootstrapper itsBootstrapper;
-    private IClientFactory      itsFactory;
+    private IClientBootstrapper   itsBootstrapper;
+    private IClientFactory        itsFactory;
     
     /************************************************************************
      * Creates a new {@code ClientApplication}. 
@@ -50,8 +50,8 @@ class ClientApplication
         IClientBootstrapper bootstrapper,
         IClientFactory      factory)
     {
-        itsBootstrapper    = bootstrapper;
-        itsFactory         = factory;
+        itsBootstrapper = bootstrapper;
+        itsFactory      = factory;
     }
 
     /************************************************************************
@@ -61,7 +61,7 @@ class ClientApplication
     public void 
     run(String[] args)
     {
-        itsBootstrapper.run( itsFactory );
+        itsBootstrapper.run( itsFactory,args );
     }
 
 }

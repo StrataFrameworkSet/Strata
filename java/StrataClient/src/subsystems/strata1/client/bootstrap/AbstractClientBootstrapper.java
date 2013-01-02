@@ -25,6 +25,7 @@
 package strata1.client.bootstrap;
 
 import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.commandline.ICommandLineProcessor;
 import strata1.common.logger.ILogger;
 import strata1.common.logger.LoggingLevel;
 import strata1.client.region.IRegionManager;
@@ -51,15 +52,16 @@ public abstract
 class AbstractClientBootstrapper
     implements IClientBootstrapper
 {
-    private ILogger              itsLogger;
-    private IClientModuleManager itsModuleManager;
-    private IClientContainer     itsContainer;
-    private IRegionManager       itsRegionManager;
-    private IDispatcher          itsDispatcher;
-    private ILoginView           itsLoginView;
-    private ISplashView          itsSplashView;
-    private IClientAuthenticator itsAuthenticator;
-    private IStartUpController   itsController;
+    private ICommandLineProcessor itsProcessor;
+    private ILogger               itsLogger;
+    private IClientModuleManager  itsModuleManager;
+    private IClientContainer      itsContainer;
+    private IRegionManager        itsRegionManager;
+    private IDispatcher           itsDispatcher;
+    private ILoginView            itsLoginView;
+    private ISplashView           itsSplashView;
+    private IClientAuthenticator  itsAuthenticator;
+    private IStartUpController    itsController;
     
     /************************************************************************
      * Creates a new {@code AbstractClientBootstrapper}. 
@@ -68,6 +70,7 @@ class AbstractClientBootstrapper
     public 
     AbstractClientBootstrapper()
     {
+        itsProcessor     = null;
         itsLogger        = null;
         itsModuleManager = null;
         itsContainer     = null;
@@ -76,6 +79,16 @@ class AbstractClientBootstrapper
         itsSplashView    = null;
         itsAuthenticator = null;
         itsController    = new StartUpController();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    setCommandLineProcessor(ICommandLineProcessor processor)
+    {
+        itsProcessor = processor;
     }
 
     /************************************************************************
@@ -156,6 +169,16 @@ class AbstractClientBootstrapper
     setAuthenticator(IClientAuthenticator authenticator)
     {
         itsAuthenticator = authenticator;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ICommandLineProcessor 
+    getCommandLineProcessor()
+    {
+        return itsProcessor;
     }
 
     /************************************************************************
@@ -254,11 +277,16 @@ class AbstractClientBootstrapper
      */
     @Override
     public void 
-    run(IClientFactory factory)
+    run(IClientFactory factory,String[] arguments)
     {
         try
         {
+            setCommandLineProcessor( factory.createCommandLineProcessor() );
             setLogger( factory.createLogger() );
+            getLogger().log( 
+                LoggingLevel.INFO,"Processing command line arguments." );
+            processCommandLineArguments( arguments );
+            
             getLogger().log( LoggingLevel.INFO,"Creating module manager." );
             setModuleManager( factory.createModuleManager() );
             getLogger().log( LoggingLevel.INFO,"Creating container." );
@@ -288,6 +316,17 @@ class AbstractClientBootstrapper
         {
             getLogger().log( LoggingLevel.SEVERE,e.getMessage() );
         }
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param arguments
+     */
+    protected void 
+    processCommandLineArguments(String[] arguments)
+    {        
+        getCommandLineProcessor().process( arguments );
     }
 
     /************************************************************************

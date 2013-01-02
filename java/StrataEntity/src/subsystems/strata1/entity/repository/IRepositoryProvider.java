@@ -24,7 +24,6 @@
 
 package strata1.entity.repository;
 
-import strata1.common.annotation.*;
 
 /**
  * The generic interface of all repositories. Participates in the 
@@ -54,9 +53,21 @@ interface IRepositoryProvider<K,T>
 	 *  
 	 *
 	 * @param object
+	 * @return TODO
 	 */
-	public void
-	insertNew(T object);
+	public T
+	insertNew(T object)
+	    throws InsertFailedException;
+	
+	/************************************************************************
+	 *  
+	 *
+	 * @param object
+	 * @return TODO
+	 */
+	public T
+	updateExisting(T object)
+	    throws UpdateFailedException;
 	
 	/************************************************************************
 	 *  
@@ -64,37 +75,8 @@ interface IRepositoryProvider<K,T>
 	 * @param object
 	 */
 	public void
-	updateExisting(T object);
-	
-	/************************************************************************
-	 *  
-	 *
-	 * @param object
-	 */
-	public void
-	removeExisting(T object);
-	
-	/************************************************************************
-	 *  
-	 *
-	 * @param finder
-	 */
-	@Precondition("this.hasFinder(finder.getName()) == false")
-	@Postcondition({
-	    "this.hasFinder(finder.getName()) == true",
-	    "this.getFinder(finder.getName()) == finder"})
-	public void
-	insertFinder(IFinder<T> finder);
-	
-	/************************************************************************
-	 *  
-	 *
-	 * @param finderName
-	 */
-    @Precondition("this.hasFinder(finder.getName()) == true")
-    @Postcondition("this.hasFinder(finder.getName()) == false")
-	public void
-	removeFinder(String finderName);
+	removeExisting(T object)
+	    throws RemoveFailedException;
 	
 	/************************************************************************
 	 *  

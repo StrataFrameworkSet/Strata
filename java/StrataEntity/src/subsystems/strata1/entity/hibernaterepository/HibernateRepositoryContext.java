@@ -26,11 +26,9 @@ package strata1.entity.hibernaterepository;
 
 
 import strata1.entity.repository.IRepositoryContext;
-import strata1.common.utility.ReadWriteLockSynchronizer;
 import strata1.common.utility.ISynchronizer;
+import strata1.common.utility.ReadWriteLockSynchronizer;
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate3.HibernateTransactionManager;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 
 /**
@@ -42,26 +40,23 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public 
 class HibernateRepositoryContext 
-	extends 	HibernateDaoSupport
 	implements 	IRepositoryContext
 {
-	private final ISynchronizer         itsSynchronizer;
-	private HibernateTransactionManager itsTransactionManager;
+	private final ISynchronizer       itsSynchronizer;
+	private       SessionFactory      itsSessionFactory;
+	private       HibernateUnitOfWork itsUnitOfWork;
 	
 	/************************************************************************
 	 * Creates a new HibernateDomainObjectManagerContext. 
 	 *
 	 */
 	public 
-	HibernateRepositoryContext(
-		SessionFactory              factory,
-		HibernateTransactionManager manager)
+	HibernateRepositoryContext(SessionFactory factory)
 	{
 		super();
-		createHibernateTemplate( factory );
-		
-		itsSynchronizer       = new ReadWriteLockSynchronizer();
-		itsTransactionManager = manager;
+		itsSynchronizer   = new ReadWriteLockSynchronizer();
+		itsSessionFactory = factory;
+		itsUnitOfWork     = new HibernateUnitOfWork(itsSessionFactory);
 	}
 
 	/************************************************************************
@@ -76,14 +71,27 @@ class HibernateRepositoryContext
 	}
 
 	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see IRepositoryContext#getTransactionManager()
+     * {@inheritDoc} 
+     */
+    @Override
+    public HibernateUnitOfWork 
+    getUnitOfWork()
+    {
+        if ( itsUnitOfWork == null || !itsUnitOfWork.isActive() )
+            itsUnitOfWork = new HibernateUnitOfWork(itsSessionFactory);
+        
+        return itsUnitOfWork;
+    }
+
+	/************************************************************************
+	 *  
+	 *
+	 * @return
 	 */
-	@Override
-	public HibernateTransactionManager 
-	getTransactionManager()
+	public SessionFactory
+	getSessionFactory()
 	{
-		return itsTransactionManager;
+	    return itsSessionFactory;
 	}
 }
 

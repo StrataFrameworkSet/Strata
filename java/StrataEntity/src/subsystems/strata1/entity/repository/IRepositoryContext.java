@@ -25,8 +25,6 @@
 package strata1.entity.repository;
 
 
-import org.springframework.transaction.PlatformTransactionManager;
-
 import strata1.common.utility.ISynchronizer;
 
 /**
@@ -44,26 +42,26 @@ interface IRepositoryContext
 {
 	/************************************************************************
 	 * Returns the synchronizer associated with this 
-	 * <code>IRepositoryContext</code> that synchronizes access to all
-	 * of the <code>RepositoryImp</code>s associated with this 
-	 * <code>IRepositoryContext</code>.
+	 * {@code IRepositoryContext} that synchronizes access to all
+	 * of the {@code IRepositoryProvider}s associated with this 
+	 * {@code IRepositoryContext}.
 	 *
 	 * @return synchronization mechanism
 	 */
 	public ISynchronizer 
 	getSynchronizer();
-	
-	/************************************************************************
-	 * Returns the transaction manager associated with this
-	 * <code>IRepositoryContext</code> that manages the transactions to all
-	 * of the <code>RepositoryImp</code>s associated with this
-	 * <code>IRepositoryContext</code>.
-	 * 
-	 * @see 	PlatformTransactionManager
-	 * @return 	transaction  manager
-	 */
-	public PlatformTransactionManager
-	getTransactionManager();	
+	   
+    /************************************************************************
+     * Returns the current unit of work associated with this
+     * {@code IRepositoryContext} that manages the transactions to all
+     * of the {@code IRepositoryProvider}s associated with this
+     * {@code IRepositoryContext}.
+     * 
+     * @see     IUnitOfWork
+     * @return  current unit of work
+     */
+    public IUnitOfWork
+    getUnitOfWork();    
 }
 
 

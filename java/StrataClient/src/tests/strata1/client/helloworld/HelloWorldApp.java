@@ -65,7 +65,7 @@ class HelloWorldApp
     public void 
     run()
     {
-       itsBootstrapper.run( itsFactory );
+       itsBootstrapper.run( itsFactory, null );
     }
 }
 

@@ -36,14 +36,13 @@ interface IRepository
 {
 
 	/************************************************************************
-	 * Returns the <code>IRepositoryContext</code> associated with this
-	 * <code>RepositoryImp</code>. 
+	 * Returns the {@code IRepositoryContext} associated with this
+	 * {@code IRepository} instance. 
 	 *
 	 * @return	repository context
 	 */
 	public IRepositoryContext
 	getContext();
-
 }
 
 

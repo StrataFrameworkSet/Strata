@@ -112,13 +112,13 @@ class ClientBootstrapperTest
     }
 
     /**
-     * Test method for {@link IClientBootstrapper#run(IClientFactory)}.
+     * Test method for {@link IClientBootstrapper#run(IClientFactory, String[])}.
      */
     @Test
     public void 
     testRun()
     {
-        itsTarget.run( itsFactory );
+        itsTarget.run( itsFactory, null );
         
         verify(itsTarget.getModuleManager())
             .initialize( itsTarget );

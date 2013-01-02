@@ -24,8 +24,7 @@
 
 package strata1.entity.repository;
 
-import java.util.*;
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * 
@@ -40,32 +39,30 @@ public abstract
 class AbstractRepositoryProvider<K extends Serializable,T>
 	implements IRepositoryProvider<K,T>
 {
-	private Map<String,IFinder<T>> itsFinders;
 	
 	/************************************************************************
-	 * Creates a new AbstractRepositoryImp. 
+	 * Creates a new {@code AbstractRepositoryProvider}. 
 	 *
 	 */
 	public 
 	AbstractRepositoryProvider()
 	{
 		super();
-		itsFinders = new HashMap<String,IFinder<T>>();
 	}
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IRepositoryProvider#insertNew(Object)
 	 */
 	@Override
-	public void 
-	insertNew(T object)
+	public T 
+	insertNew(T entity)
+	    throws InsertFailedException
 	{
 		getContext().getSynchronizer().lockForWriting();
 		
 		try
 		{
-			doInsert( object );
+		    return doInsertNew(entity);
 		}
 		finally
 		{
@@ -75,17 +72,17 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IRepositoryProvider#updateExisting(Object)
 	 */
 	@Override
-	public void 
+	public T 
 	updateExisting(T object)
+	    throws UpdateFailedException
 	{
 		getContext().getSynchronizer().lockForWriting();
 		
 		try
 		{
-			doUpdate( object );
+			return doUpdateExisting( object );
 		}
 		finally
 		{
@@ -95,17 +92,17 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IRepositoryProvider#removeExisting(Object)
 	 */
 	@Override
 	public void 
 	removeExisting(T object)
+	    throws RemoveFailedException
 	{
 		getContext().getSynchronizer().lockForWriting();
 		
 		try
 		{
-			doRemove( object );
+			doRemoveExisting( object );
 		}
 		finally
 		{
@@ -115,48 +112,6 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IRepositoryProvider#insertFinder(IFinder)
-	 */
-	@Override
-	public void 
-	insertFinder(IFinder<T> finder)
-	{
-		getContext().getSynchronizer().lockForWriting();
-		
-		try
-		{
-			itsFinders.put( finder.getName(),finder );
-		}
-		finally
-		{
-			getContext().getSynchronizer().unlockFromWriting();
-		}
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see IRepositoryProvider#removeFinder(String)
-	 */
-	@Override
-	public void 
-	removeFinder(String finderName)
-	{
-		getContext().getSynchronizer().lockForWriting();
-		
-		try
-		{
-			if ( itsFinders.containsKey( finderName ) )
-				itsFinders.remove( finderName );
-		}
-		finally
-		{
-			getContext().getSynchronizer().unlockFromWriting();
-		}
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 * @see IRepositoryProvider#getExisting(Object)
 	 */
 	@Override
 	public T 
@@ -166,7 +121,7 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 		
 		try
 		{
-			return doGet( key );
+			return doGetExisting( key );
 		}
 		finally
 		{
@@ -176,7 +131,6 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IRepositoryProvider#getFinder(String)
 	 */
 	@Override
 	public IFinder<T> 
@@ -186,7 +140,7 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 		
 		try
 		{
-			return itsFinders.get( finderName );
+			return doGetFinder(finderName);
 		}
 		finally
 		{
@@ -196,7 +150,6 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IRepositoryProvider#hasExisting(Object)
 	 */
 	@Override
 	public boolean 
@@ -206,7 +159,7 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 		
 		try
 		{
-			return doHas( key );
+			return doHasExisting( key );
 		}
 		finally
 		{
@@ -216,7 +169,6 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IRepositoryProvider#hasFinder(String)
 	 */
 	@Override
 	public boolean 
@@ -226,7 +178,7 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 		
 		try
 		{
-			return itsFinders.containsKey( finderName );
+			return doHasFinder( finderName );
 		}
 		finally
 		{
@@ -234,20 +186,74 @@ class AbstractRepositoryProvider<K extends Serializable,T>
 		}
 	}
 
-	protected abstract void
-	doInsert(T entity);
-
-	protected abstract void
-	doUpdate(T entity);
-
-	protected abstract void
-	doRemove(T entity);
-
+	/************************************************************************
+	 *  
+	 *
+	 * @param entity
+	 * @return
+	 * @throws InsertFailedException
+	 */
 	protected abstract T
-	doGet(K key);
+	doInsertNew(T entity)
+	    throws InsertFailedException;
+
+	/************************************************************************
+	 *  
+	 *
+	 * @param entity
+	 * @return
+	 * @throws UpdateFailedException
+	 */
+	protected abstract T
+	doUpdateExisting(T entity)
+	    throws UpdateFailedException;
+
+	/************************************************************************
+	 *  
+	 *
+	 * @param entity
+	 * @throws RemoveFailedException
+	 */
+	protected abstract void
+	doRemoveExisting(T entity)
+	    throws RemoveFailedException;
+
+	/************************************************************************
+	 *  
+	 *
+	 * @param key
+	 * @return
+	 */
+	protected abstract T
+	doGetExisting(K key);
 	
+	/************************************************************************
+	 *  
+	 *
+	 * @param finderName
+	 * @return
+	 */
+	protected abstract IFinder<T>
+	doGetFinder(String finderName);
+	
+	/************************************************************************
+	 *  
+	 *
+	 * @param key
+	 * @return
+	 */
 	protected abstract boolean
-	doHas(K key);
+	doHasExisting(K key);
+	
+	/************************************************************************
+	 *  
+	 *
+	 * @param finderName
+	 * @return
+	 */
+	protected abstract boolean
+	doHasFinder(String finderName);
+	
 }
 
 

@@ -122,9 +122,11 @@ interface IFinder<T>
 	 * Returns the unique result of finding a Person. 
 	 *
 	 * @return	the unique person
+	 * @throws NotUniqueException
 	 */
 	public T 
-	getUnique();
+	getUnique() 
+	    throws NotUniqueException;
 	
 	/************************************************************************
 	 * Returns the next result during the process of finding Persons. 
@@ -134,6 +136,24 @@ interface IFinder<T>
 	public T 
 	getNext();
 
+	/************************************************************************
+	 * Returns true if there is a unique result. 
+	 *
+	 * @return
+	 * @throws NotUniqueException
+	 */
+	public boolean
+	hasUnique() 
+	    throws NotUniqueException;
+	
+	/************************************************************************
+	 * Returns true if there are any results. 
+	 *
+	 * @return
+	 */
+	public boolean
+	hasAny();
+	
 	/************************************************************************
 	 * Asks the finder if there is more to retrieve. 
 	 *

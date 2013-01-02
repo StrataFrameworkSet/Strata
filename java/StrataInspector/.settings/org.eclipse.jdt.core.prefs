@@ -1,4 +1,4 @@
-#Sat Mar 10 12:23:36 PST 2012
+#Sat Dec 08 13:44:59 PST 2012
 eclipse.preferences.version=1
 org.eclipse.jdt.core.codeComplete.argumentPrefixes=
 org.eclipse.jdt.core.codeComplete.argumentSuffixes=
@@ -21,7 +21,7 @@ org.eclipse.jdt.core.formatter.align_type_members_on_columns=true
 org.eclipse.jdt.core.formatter.alignment_for_arguments_in_allocation_expression=17
 org.eclipse.jdt.core.formatter.alignment_for_arguments_in_annotation=16
 org.eclipse.jdt.core.formatter.alignment_for_arguments_in_enum_constant=16
-org.eclipse.jdt.core.formatter.alignment_for_arguments_in_explicit_constructor_call=17
+org.eclipse.jdt.core.formatter.alignment_for_arguments_in_explicit_constructor_call=1
 org.eclipse.jdt.core.formatter.alignment_for_arguments_in_method_invocation=16
 org.eclipse.jdt.core.formatter.alignment_for_arguments_in_qualified_allocation_expression=17
 org.eclipse.jdt.core.formatter.alignment_for_assignment=16

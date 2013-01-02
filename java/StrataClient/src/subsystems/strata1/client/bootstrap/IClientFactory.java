@@ -25,6 +25,7 @@
 package strata1.client.bootstrap;
 
 import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.commandline.ICommandLineProcessor;
 import strata1.common.logger.ILogger;
 import strata1.client.region.IRegionManager;
 import strata1.client.shell.IDispatcher;
@@ -41,6 +42,14 @@ import strata1.client.view.ISplashView;
 public 
 interface IClientFactory
 {
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public ICommandLineProcessor
+    createCommandLineProcessor();
+    
     /************************************************************************
      *  
      *

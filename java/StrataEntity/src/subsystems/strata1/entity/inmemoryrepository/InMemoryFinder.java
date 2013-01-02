@@ -25,11 +25,11 @@
 package strata1.entity.inmemoryrepository;
 
 
+import strata1.entity.repository.AbstractFinder;
 import strata1.entity.repository.IFinder;
-import strata1.entity.repository.InvalidInputException;
+import strata1.entity.repository.NotUniqueException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -44,34 +44,39 @@ import java.util.Map;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract
-class InMemoryFinder<K,T> 
+public 
+class InMemoryFinder<T> 
+    extends    AbstractFinder<T>
 	implements IFinder<T>
 {
 	private InMemoryRepositoryContext itsContext;
+	private Class<T>                  itsType;
 	private IPredicate<T>			  itsPredicate;
-	private Map<K,T>				  itsObjects;
-	private Map<String,Object>		  itsNamedInputs;
+	private List<T>				      itsObjects;
 	private List<T>				      itsResults;
 	private Iterator<T>				  itsIterator;
-	
+		
 	/************************************************************************
 	 * Creates a new InMemoryFinder. 
+	 * @param type TODO
 	 *
 	 */
 	public 
 	InMemoryFinder(
-		InMemoryRepositoryContext context,
-		IPredicate<T>			  predicate,
-		Map<K,T>                  objects)
+	    InMemoryRepositoryContext context,
+		String                    name,
+		Class<T>                  type, 
+		IPredicate<T>			  predicate)
 	{
-		super();
+		super(type.getCanonicalName() + "." + name);
 		itsContext       = context;
+		itsType          = type;
 		itsPredicate	 = predicate;
-		itsObjects       = objects;
-		itsNamedInputs 	 = new HashMap<String,Object>();
+		itsObjects       = itsContext.getEntitiesByType( itsType );
 		itsResults       = null;
 		itsIterator      = null;
+		
+		itsContext.insertFinder(type,this);
 	}
 
 	/************************************************************************
@@ -79,13 +84,13 @@ class InMemoryFinder<K,T>
 	 *
 	 */
 	public 
-	InMemoryFinder(InMemoryFinder<K,T> other)
+	InMemoryFinder(InMemoryFinder<T> other)
 	{
-		super();
+		super(other);
 		itsContext       = other.itsContext;
+		itsType          = other.itsType;
 		itsPredicate	 = other.itsPredicate;
-		itsObjects       = other.itsObjects;
-		itsNamedInputs   = new HashMap<String,Object>();
+		itsObjects       = itsContext.getEntitiesByType( itsType );
 		itsResults       = null;
 		itsIterator      = null;
 	}
@@ -94,49 +99,37 @@ class InMemoryFinder<K,T>
 	 * {@inheritDoc} 
 	 */
 	@Override
-	public abstract InMemoryFinder<K,T> 
-	copy();
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public void 
-	setInput(String name,Object input) throws InvalidInputException
+	public InMemoryFinder<T> 
+	copy()
 	{
-		itsNamedInputs.put( name,input );
+	    return new InMemoryFinder<T>( this );
 	}
 
 	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public void 
-	setInput(int index,Object input) 
-		throws InvalidInputException
-	{
-		throw new InvalidInputException( "Not supported" );
-	}
-	
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public void 
-	setInput(Collection<Object> inputs)
-			throws InvalidInputException
-	{
-		throw new InvalidInputException( "Not supported" );
-	}
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    clear()
+    {
+        itsObjects = itsContext.getEntitiesByType( itsType );
+        itsResults = null;
+        itsIterator = null;
+    }
 
-	/************************************************************************
+    /************************************************************************
 	 * {@inheritDoc} 
 	 */
 	@Override
 	public T 
-	getUnique()
+	getUnique() 
+	    throws NotUniqueException
 	{
 		execute();
+		
+		if ( itsResults.size() > 1 )
+		    throw new NotUniqueException("result is not unique");
+		
 		return itsResults.get( 0 );
 	}
 
@@ -174,6 +167,29 @@ class InMemoryFinder<K,T>
 	}
 
 	/************************************************************************
+	 * {@inheritDoc} 
+	 */
+	@Override
+    public boolean 
+    hasUnique() 
+        throws NotUniqueException
+    {
+	    execute();
+	    return itsResults.size() == 1;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    hasAny()
+    {
+        execute();
+        return !itsResults.isEmpty();
+    }
+
+    /************************************************************************
 	 *  
 	 *
 	 */
@@ -183,7 +199,7 @@ class InMemoryFinder<K,T>
 		if ( itsResults != null )
 			return;
 		
-		itsResults  = getResults( itsNamedInputs,itsObjects );
+		itsResults  = getResults( getInputs().getNamedInputs(),itsObjects );
 		itsIterator = itsResults.iterator();
 	}
 	
@@ -195,15 +211,13 @@ class InMemoryFinder<K,T>
 	 * @return
 	 */
 	protected List<T> 
-	getResults(Map<String,Object> inputs,Map<K,T> objects)
+	getResults(Map<String,Object> inputs,List<T> objects)
 	{
 		List<T> output = new ArrayList<T>();
 		
-		for (T entry : objects.values())
-		{
+		for (T entry : objects)
 			if ( itsPredicate.evaluate( entry,inputs ) )
 				output.add( entry );
-		}
 		
 		return output;
 	}
