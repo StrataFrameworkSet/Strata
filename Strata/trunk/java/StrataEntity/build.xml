@@ -26,7 +26,7 @@
         <artifact:dependency groupId="org.hibernate" artifactId="hibernate-annotations" version="3.5.6-Final"/>
         <artifact:dependency groupId="org.hibernate" artifactId="hibernate-tools" version="3.6.0.CR1"/>
         <artifact:dependency groupId="mysql" artifactId="mysql-connector-java" version="5.1.21"/>
-        <artifact:dependency groupId="org.javassist" artifactId="javassist" version="3.15.0-GA"/>
+        <artifact:dependency groupId="org.javassist" artifactId="javassist" version="3.17.0-GA"/>
         <artifact:dependency groupId="org.slf4j" artifactId="slf4j-simple" version="1.6.1"/>
     </artifact:dependencies>
 
