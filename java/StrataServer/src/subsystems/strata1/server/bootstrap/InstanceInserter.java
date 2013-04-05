@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.server.base;
+package strata1.server.bootstrap;
 
 import strata1.common.containerprovider.IContainerProvider;
 import java.lang.annotation.Annotation;
@@ -34,7 +34,6 @@ import java.lang.annotation.Annotation;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
 class InstanceInserter<T>
 {
     private IContainerProvider itsProvider;

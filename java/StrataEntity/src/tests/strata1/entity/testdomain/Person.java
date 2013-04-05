@@ -24,6 +24,8 @@
 
 package strata1.entity.testdomain;
 
+import strata1.common.money.Money;
+
 /****************************************************************************
  * 
  * @author 		
@@ -40,6 +42,7 @@ class Person
 {
     private PersonName itsName;
     private PersonAge  itsAge;
+    private Money      itsNetWorth;
     
     /************************************************************************
      * Creates a new {@code Person}. 
@@ -51,6 +54,7 @@ class Person
         super();
         itsName = new PersonName();
         itsAge  = new PersonAge();
+        itsNetWorth = new Money( 0.00 );
     }
 
     /************************************************************************
@@ -65,6 +69,7 @@ class Person
         super();
         itsName = name;
         itsAge  = age;
+        itsNetWorth = new Money( 0.00 );
     }
     
     /************************************************************************
@@ -81,7 +86,8 @@ class Person
             return
                 getPartyKey().equals( other.getPartyKey() ) &&
                 getName().equals( other.getName() ) &&
-                getAge().equals( other.getAge() );
+                getAge().equals( other.getAge() ) &&
+                getNetWorth().equals( other.getNetWorth() );
         }
         
         return false;    
@@ -99,6 +105,7 @@ class Person
         hash = hash*31 + getPartyKey().hashCode();
         hash = hash*31 + getName().hashCode();
         hash = hash*31 + getAge().hashCode();
+        hash = hash*31 + getNetWorth().hashCode();
         return hash;
     }
 
@@ -113,7 +120,8 @@ class Person
         
         builder.append( "[PartyKey=" ).append( getPartyKey() );
         builder.append( ",Name=" ).append( getName() );
-        builder.append( ",Age=" ).append( getAge() ).append( "]" );
+        builder.append( ",Age=" ).append( getAge() );
+        builder.append( ",NetWorth=" ).append( getNetWorth() ).append( "]" );
         return builder.toString();
     }
 
@@ -141,6 +149,16 @@ class Person
      * {@inheritDoc} 
      */
     @Override
+    public void 
+    setNetWorth(Money netWorth)
+    {
+        itsNetWorth = netWorth;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
     public PersonName 
     getName()
     {
@@ -155,6 +173,16 @@ class Person
     getAge()
     {
         return itsAge;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public Money 
+    getNetWorth()
+    {
+        return itsNetWorth;
     }
 
 }

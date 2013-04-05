@@ -43,6 +43,15 @@ interface IRepository
 	 */
 	public IRepositoryContext
 	getContext();
+	
+	/************************************************************************
+	 * Returns the current {@code IUnitOfWork} associated with this
+	 * {@code IRepository} instance. 
+	 *
+	 * @return
+	 */
+	public IUnitOfWork
+	getUnitOfWork();
 }
 
 

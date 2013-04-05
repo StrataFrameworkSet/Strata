@@ -102,6 +102,10 @@ class Money
 	Money(Currency currency,double amount)
 	{
 		super();
+		
+		if ( currency == null )
+		    throw new IllegalArgumentException("currency is null");
+		
 		itsCurrency = currency;
 		itsAmount   = amount;
 	}

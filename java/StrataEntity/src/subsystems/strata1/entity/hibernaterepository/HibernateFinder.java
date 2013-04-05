@@ -31,6 +31,9 @@ import strata1.entity.repository.NotUniqueException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.type.IntegerType;
+import org.hibernate.type.LongType;
+import org.hibernate.type.ShortType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -155,7 +158,7 @@ class HibernateFinder<T>
     hasUnique() 
         throws NotUniqueException
     {
-        int numResults = evaluateHas();
+        long numResults = evaluateHas();
         
         if ( numResults > 1 )
             throw new NotUniqueException("results are not unique");
@@ -299,7 +302,7 @@ class HibernateFinder<T>
      *
      * @return
      */
-    protected int
+    protected long
     evaluateHas()
     {
         SessionFactory factory = itsContext.getSessionFactory();
@@ -329,7 +332,7 @@ class HibernateFinder<T>
      * @param keeper
      * @return
      */
-    private int 
+    private long 
     evaluateHasWithNamedInputs(Session session,InputKeeper keeper)
     {
         Query              query  = session.getNamedQuery( getName() );
@@ -340,9 +343,11 @@ class HibernateFinder<T>
         
         for (Map.Entry<String,Object> input : inputs.entrySet())
             query.setParameter( input.getKey(),input.getValue() );
-        
-        
-        return query.list().size();
+                
+        return
+            hasIntegerReturnType(query)
+                ? (long)query.uniqueResult() 
+                : query.list().size();           
     }
 
     /************************************************************************
@@ -352,7 +357,7 @@ class HibernateFinder<T>
      * @param keeper
      * @return
      */
-    private int 
+    private long 
     evaluateHasWithPositionalInputs(
         Session           session,
         InputKeeper       keeper)
@@ -367,7 +372,10 @@ class HibernateFinder<T>
         for (Object input : inputs)
             query.setParameter( position++,input );
         
-        return query.list().size();           
+        return
+            hasIntegerReturnType(query)
+                ? (long)query.uniqueResult() 
+                : query.list().size();           
     }
 
     /************************************************************************
@@ -376,7 +384,7 @@ class HibernateFinder<T>
      * @param template
      * @return
      */
-    private int 
+    private long 
     evaluateHasWithNoInputs(Session session)
     {
         Query query = session.getNamedQuery( getName() );
@@ -384,7 +392,10 @@ class HibernateFinder<T>
         query.setMaxResults( 2 );
         query.setFetchSize( 2 );
         
-        return query.list().size();           
+        return
+            hasIntegerReturnType(query)
+                ? (long)query.uniqueResult() 
+                : query.list().size();           
     }
 
     /************************************************************************
@@ -419,6 +430,21 @@ class HibernateFinder<T>
 		return typed;
 	}
 
+	/************************************************************************
+	 *  
+	 *
+	 * @param query
+	 * @return
+	 */
+	private boolean
+	hasIntegerReturnType(Query query)
+	{
+	    return
+	        query.getReturnTypes().length == 1 && (
+	        query.getReturnTypes()[0].equals( new LongType() ) ||
+	        query.getReturnTypes()[0].equals( new IntegerType() ) ||
+	        query.getReturnTypes()[0].equals( new ShortType() ) );
+	}
 }
 
 

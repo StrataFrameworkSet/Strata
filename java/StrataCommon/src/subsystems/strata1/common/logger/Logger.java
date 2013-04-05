@@ -85,6 +85,66 @@ class Logger
      */
     @Override
     public void 
+    logStart(String message)
+    {
+        log( LoggingLevel.START,message );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    logStop(String message)
+    {
+        log( LoggingLevel.STOP,message );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    logDebug(String message)
+    {
+        log( LoggingLevel.DEBUG,message );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    logInfo(String message)
+    {
+        log( LoggingLevel.INFO,message );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    logWarning(String message)
+    {
+        log( LoggingLevel.WARNING,message );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    logError(String message)
+    {
+        log( LoggingLevel.ERROR,message );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
     log(LoggingLevel level,String message)
     {
         ILogEntry entry = new LogEntry( level,message );

@@ -66,6 +66,16 @@ class PartyRepository
      * {@inheritDoc} 
      */
     @Override
+    public IUnitOfWork 
+    getUnitOfWork()
+    {
+        return getContext().getUnitOfWork();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
     public IParty 
     getPartyByKey(Long partyKey)
     {

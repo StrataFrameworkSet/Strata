@@ -24,6 +24,10 @@
      <column name="DateOfBirth"/>
     </property>
    </component>
+   <property generated="never" lazy="false" name="NetWorth" type="strata1.entity.hibernaterepository.MoneyType">
+     <column name="Currency"/>
+     <column name="NetWorth"/>
+    </property>
    <joined-subclass extends="strata1.entity.testdomain.IPerson"
     name="strata1.entity.testdomain.Person" table="Person">
     <key column="PartyKey"/>

@@ -27,6 +27,7 @@ package strata1.entity.testdomain;
 import strata1.entity.repository.IFinder;
 import strata1.entity.repository.IRepositoryContext;
 import strata1.entity.repository.IRepositoryProvider;
+import strata1.entity.repository.IUnitOfWork;
 import strata1.entity.repository.InsertFailedException;
 import strata1.entity.repository.InvalidInputException;
 import strata1.entity.repository.RemoveFailedException;
@@ -65,6 +66,16 @@ class PersonRepository
     getContext()
     {
         return itsProvider.getContext();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IUnitOfWork 
+    getUnitOfWork()
+    {
+        return getContext().getUnitOfWork();
     }
 
     /************************************************************************
@@ -152,7 +163,7 @@ class PersonRepository
     public boolean 
     hasPersonWithName(PersonName name) 
     {
-        IFinder<IPerson> finder = getFinder( "GetByName" );
+        IFinder<IPerson> finder = getFinder( "HasPersonWithName" );
         
         try
         {

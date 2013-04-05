@@ -44,7 +44,8 @@ import strata1.client.viewmodel.IViewModel;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public class ClientContainer
+public 
+class ClientContainer
     implements IClientContainer
 {
     private IContainerProvider itsProvider;
