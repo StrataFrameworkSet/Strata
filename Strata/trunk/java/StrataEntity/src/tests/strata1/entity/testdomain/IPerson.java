@@ -24,6 +24,8 @@
 
 package strata1.entity.testdomain;
 
+import strata1.common.money.Money;
+
 /****************************************************************************
  * 
  * @author 		
@@ -41,11 +43,17 @@ interface IPerson
     public void
     setAge(PersonAge age);
     
+    public void
+    setNetWorth(Money netWorth);
+    
     public PersonName
     getName();
     
     public PersonAge
     getAge();
+    
+    public Money
+    getNetWorth();
 }
 
 // ##########################################################################

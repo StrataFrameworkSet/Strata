@@ -44,6 +44,24 @@ interface ILogger
     hasProcessor(ILogEntryProcessor processor);
     
     public void
+    logStart(String message);
+    
+    public void
+    logStop(String message);
+    
+    public void
+    logDebug(String message);
+    
+    public void
+    logInfo(String message);
+    
+    public void
+    logWarning(String message);
+    
+    public void
+    logError(String message);
+    
+    public void
     log(LoggingLevel level,String message);
 }
 

@@ -175,11 +175,11 @@ class InMemoryUnitOfWork
         K                key           = retriever.getKey( updatedEntity );
         EntityIdentifier id            = new EntityIdentifier(type,key);
         
-        if ( !itsInserted.containsKey( id ) && !doHas( type,key ) )
-            throw new IllegalArgumentException("entity does not exist");
-        
         if ( itsRemoved.containsKey( id ) )
             throw new IllegalArgumentException("entity is already removed");
+
+        if ( !itsInserted.containsKey( id ) && !doHas( type,key ) )
+            throw new IllegalArgumentException("entity does not exist");
         
         itsUpdated.put( new EntityIdentifier(type,key),updatedEntity );
         return updatedEntity;
@@ -213,6 +213,15 @@ class InMemoryUnitOfWork
     {
         EntityIdentifier id = new EntityIdentifier(type,key);
         
+        if ( itsRemoved.containsKey( id ) )
+            return null;
+        
+        if ( itsUpdated.containsKey( id ) )
+            return type.cast( itsUpdated.get( id ) );
+        
+        if ( itsInserted.containsKey( id ) )
+            return type.cast( itsInserted.get( id ) );
+        
         if ( itsEntities.containsKey( id ) )
             return type.cast( itsEntities.get( id ) );
         
@@ -230,6 +239,15 @@ class InMemoryUnitOfWork
     doHas(Class<T> type,K key)
     {
         EntityIdentifier id = new EntityIdentifier(type,key);
+        
+        if ( itsRemoved.containsKey( id ) )
+            return false;
+        
+        if ( itsUpdated.containsKey( id ) )
+            return true;
+        
+        if ( itsInserted.containsKey( id ) )
+            return true;
         
         if ( itsEntities.containsKey( id ) )
             return true;

@@ -30,7 +30,7 @@ package strata1.server.springserver;
 import strata1.common.springcontainerprovider.SpringContainerProvider;
 import strata1.server.bootstrap.ServerContainer;
 import strata1.server.bootstrap.IServerContainer;
-import strata1.server.bootstrap.IServerContainerFactory;
+import strata1.server.bootstrap.IServerFactory;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -43,7 +43,6 @@ import org.springframework.context.support.GenericXmlApplicationContext;
  */
 public 
 class SpringServerContainerFactory
-    implements IServerContainerFactory
 {
 
     /************************************************************************
@@ -56,7 +55,6 @@ class SpringServerContainerFactory
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
     public IServerContainer 
     createServerContainer()
     {
@@ -69,7 +67,6 @@ class SpringServerContainerFactory
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
     public IServerContainer 
     createServerContainer(String resourceLocation)
     {

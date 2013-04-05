@@ -5,10 +5,12 @@ import strata1.entity.repository.IRepositoryContext;
 import strata1.entity.repository.IRepositoryProvider;
 import strata1.entity.repository.IUnitOfWork;
 import strata1.common.datetime.DateTime;
+import strata1.common.money.Money;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.Currency;
 import java.util.List;
 
 public abstract
@@ -30,7 +32,7 @@ class PersonRepositoryTest
     tearDown() throws Exception
     {
         IFinder<IPerson> finder = itsTarget.getFinder( "GetAll" );
-        IUnitOfWork      unitOfWork = itsContext.getUnitOfWork();
+        IUnitOfWork      unitOfWork = itsTarget.getUnitOfWork();
         
         for (IPerson p : finder.getAll())
             itsTarget.removePerson( p );
@@ -45,7 +47,7 @@ class PersonRepositoryTest
     testInsertPerson() 
         throws Exception
     {
-        IUnitOfWork unitOfWork = itsContext.getUnitOfWork();
+        IUnitOfWork unitOfWork = itsTarget.getUnitOfWork();
         IPerson     expected = 
                         new Person(
                             new PersonName("John","Liebenau"),
@@ -64,7 +66,7 @@ class PersonRepositoryTest
     testUpdatePerson() 
         throws Exception
     {
-        IUnitOfWork unitOfWork = itsContext.getUnitOfWork();
+        IUnitOfWork unitOfWork = itsTarget.getUnitOfWork();
         IPerson     expected = 
                         new Person(
                             new PersonName("John","Liebenau"),
@@ -75,8 +77,9 @@ class PersonRepositoryTest
         expected = itsTarget.insertPerson( expected );
         unitOfWork.commit();
         
-        unitOfWork = itsContext.getUnitOfWork();
+        unitOfWork = itsTarget.getUnitOfWork();
         expected.getName().setMiddleName( "Friedrich" );
+        expected.setNetWorth( new Money( Currency.getInstance( "EUR" ),100.00) );
         actual = itsTarget.updatePerson( expected );
         unitOfWork.commit();
         Assert.assertEquals( expected.getName(),actual.getName() );
@@ -88,7 +91,7 @@ class PersonRepositoryTest
     testRemovePerson() 
         throws Exception
     {
-        IUnitOfWork unitOfWork = itsContext.getUnitOfWork();
+        IUnitOfWork unitOfWork = itsTarget.getUnitOfWork();
         IPerson     expected = 
                         new Person(
                             new PersonName("John","Liebenau"),
@@ -97,7 +100,7 @@ class PersonRepositoryTest
         expected = itsTarget.insertPerson( expected );
         unitOfWork.commit();
         
-        unitOfWork = itsContext.getUnitOfWork();
+        unitOfWork = itsTarget.getUnitOfWork();
         Assert.assertTrue( itsTarget.hasPersonWithPartyKey( expected.getPartyKey() ) );
         itsTarget.removePerson( expected );
         unitOfWork.commit();
@@ -110,7 +113,7 @@ class PersonRepositoryTest
     testGetPersonByPartyKey()
         throws Exception
     {
-        IUnitOfWork unitOfWork = itsContext.getUnitOfWork();
+        IUnitOfWork unitOfWork = itsTarget.getUnitOfWork();
         IPerson     expected = 
                         new Person(
                             new PersonName("John","Liebenau"),
@@ -130,7 +133,7 @@ class PersonRepositoryTest
     testGetPersonByName() 
         throws Exception
     {
-        IUnitOfWork unitOfWork = itsContext.getUnitOfWork();
+        IUnitOfWork unitOfWork = itsTarget.getUnitOfWork();
         IPerson       expected = 
                           new Person(
                               new PersonName("John","Liebenau"),
@@ -162,7 +165,7 @@ class PersonRepositoryTest
     testHasPersonWithPartyKey() 
         throws Exception
     {
-        IUnitOfWork unitOfWork = itsContext.getUnitOfWork();
+        IUnitOfWork unitOfWork = itsTarget.getUnitOfWork();
         IPerson     expected = 
                         new Person(
                             new PersonName("John","Liebenau"),
@@ -180,7 +183,7 @@ class PersonRepositoryTest
     testHasPersonWithName() 
         throws Exception
     {
-        IUnitOfWork unitOfWork = itsContext.getUnitOfWork();
+        IUnitOfWork unitOfWork = itsTarget.getUnitOfWork();
         IPerson       expected = 
                           new Person(
                               new PersonName("John","Liebenau"),

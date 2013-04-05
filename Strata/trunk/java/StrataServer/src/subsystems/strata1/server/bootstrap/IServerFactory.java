@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IBaseBootstrapper.java
+// # File Name:	IServerFactory.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,12 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.server.base;
+package strata1.server.bootstrap;
+
+import java.util.List;
+import strata1.common.logger.ILogger;
+import strata1.common.producerconsumer.ITaskConsumer;
+import strata1.common.producerconsumer.ITaskProducerConsumerManager;
 
 /**
  * 
@@ -32,10 +37,47 @@ package strata1.server.base;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBaseBootstrapper
+interface IServerFactory
 {
-    public void
-    run();
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public IServerContainer
+    createServerContainer();
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public ILogger
+    createLogger();
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public ITaskProducerConsumerManager
+    createTaskProducerConsumerManager();
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public ITaskConsumer
+    createTaskConsumer();
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public List<IServerModule>
+    createModules();
 }
 
 

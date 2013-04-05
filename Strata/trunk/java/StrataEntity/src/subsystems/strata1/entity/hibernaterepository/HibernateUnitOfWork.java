@@ -68,15 +68,13 @@ public class HibernateUnitOfWork
         {
             itsSession.flush();
             itsTransaction.commit();
+            
+            if ( itsSession.isOpen() )
+                itsSession.close(); 
         }
         catch (Throwable cause)
         {
             throw new CommitFailedException( cause );
-        }
-        finally
-        {
-            if ( itsSession.isOpen() )
-                itsSession.close(); 
         }
     }
 

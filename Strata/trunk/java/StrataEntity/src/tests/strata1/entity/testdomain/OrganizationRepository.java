@@ -27,6 +27,7 @@ package strata1.entity.testdomain;
 import strata1.entity.repository.IFinder;
 import strata1.entity.repository.IRepositoryContext;
 import strata1.entity.repository.IRepositoryProvider;
+import strata1.entity.repository.IUnitOfWork;
 import strata1.entity.repository.InsertFailedException;
 import strata1.entity.repository.InvalidInputException;
 import strata1.entity.repository.NotUniqueException;
@@ -64,6 +65,16 @@ class OrganizationRepository
     getContext()
     {
         return itsProvider.getContext();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IUnitOfWork 
+    getUnitOfWork()
+    {
+        return getContext().getUnitOfWork();
     }
 
     /************************************************************************

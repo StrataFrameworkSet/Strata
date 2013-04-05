@@ -314,7 +314,7 @@ class AbstractClientBootstrapper
         }
         catch (Exception e)
         {
-            getLogger().log( LoggingLevel.SEVERE,e.getMessage() );
+            getLogger().log( LoggingLevel.ERROR,e.getMessage() );
         }
     }
 
@@ -371,7 +371,7 @@ class AbstractClientBootstrapper
         }
         catch(RegionInitializationException e)
         {
-            getLogger().log( LoggingLevel.SEVERE,e.getMessage() );
+            getLogger().log( LoggingLevel.ERROR,e.getMessage() );
         }
     }
     

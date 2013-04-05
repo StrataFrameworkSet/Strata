@@ -55,17 +55,29 @@
                     <column name="DateOfBirth"/>
                 </property>
             </component>
+            <property 
+                name="NetWorth" 
+                type="strata1.entity.hibernaterepository.MoneyType">
+                <column name="Currency"/>
+                <column name="NetWorth"/>
+            </property>
 	        <subclass 
 	            extends="strata1.entity.testdomain.IPerson"
                 proxy="strata1.entity.testdomain.IPerson"
 	            name="strata1.entity.testdomain.Person" 
 	            discriminator-value="Person"/>
 	
+            <query 
+                fetch-size="10" 
+                name="GetByName" 
+                read-only="true">
+                select p from IPerson p where p.Name = :name
+            </query>
 	        <query 
-	            fetch-size="10" 
-	            name="GetByName" 
+	            fetch-size="2" 
+	            name="HasPersonWithName" 
 	            read-only="true">
-	            select p from IPerson p where p.Name = :name
+	            select count(p) from IPerson p where p.Name = :name
 	        </query>
 	        <query 
 	            fetch-size="100" 
