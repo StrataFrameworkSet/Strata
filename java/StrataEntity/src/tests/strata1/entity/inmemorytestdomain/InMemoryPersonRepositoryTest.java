@@ -66,6 +66,12 @@ class InMemoryPersonRepositoryTest
             IPerson.class, 
             new PersonByNamePredicate() );
         
+        new InMemoryFinder<IPerson>(
+            context, 
+            "HasPersonWithName", 
+            IPerson.class, 
+            new PersonByNamePredicate() );
+        
         return context;
     }
 
