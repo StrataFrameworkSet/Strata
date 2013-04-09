@@ -12,5 +12,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context/3.0.6.RELEASE/spring-context-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/3.0.6.RELEASE/spring-core-3.0.6.RELEASE.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegrator"/>
+	<classpathentry kind="var" path="M2_REPO/com/hexapixel/swt-ribbon/alpha/swt-ribbon-alpha.jar" sourcepath="/M2_REPO/com/hexapixel/swt-ribbon/alpha/swt-ribbon-src-alpha.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/hexapixel/swt-ribbon/alpha/swt-ribbon-src-alpha.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
