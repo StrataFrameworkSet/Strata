@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.containerprovider;
+package strata1.common.container;
 
 import java.util.List;
 
@@ -39,17 +39,12 @@ interface IConstructorInjector
     /************************************************************************
      *  
      *
-     * @param componentNames
+     * @param inputNames
+     * @return TODO
      */
     public IConstructorInjector
-    setConstructorValues(List<String> componentNames);
+    setConstructorValues(List<String> inputNames);
     
-    /************************************************************************
-     *  
-     *
-     * @param inputName
-     * @return
-     */
     public IConstructorInjector
     insertConstructorValue(String inputName);
     

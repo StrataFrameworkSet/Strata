@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IConstructorInjector.java
+// # File Name:	PropertyInjector.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,8 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.containerprovider;
+package strata1.common.container;
 
-import java.util.List;
 
 /**
  * 
@@ -34,32 +33,62 @@ import java.util.List;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IConstructorInjector
+class PropertyInjector
+    implements IPropertyInjector
 {
+
     /************************************************************************
-     *  
+     * Creates a new {@code PropertyInjector}. 
      *
-     * @param componentNames
      */
-    public IConstructorInjector
-    setConstructorValues(List<String> componentNames);
-    
+    public 
+    PropertyInjector()
+    {
+        // TODO Auto-generated constructor stub
+    }
+
     /************************************************************************
-     *  
-     *
-     * @param inputName
-     * @return
+     * {@inheritDoc} 
      */
-    public IConstructorInjector
-    insertConstructorValue(String inputName);
-    
+    @Override
+    public PropertyInjector 
+    setPropertyName(String propertyName)
+    {
+        return this;
+    }
+
     /************************************************************************
-     *  
-     *
-     * @return
+     * {@inheritDoc} 
      */
-    public List<String>
-    getConstructorValues();
+    @Override
+    public PropertyInjector 
+    setPropertyValue(String propertyValue)
+    {
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public String 
+    getPropertyName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public String 
+    getPropertyValue()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }
 
 // ##########################################################################

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IConstructorInjector.java
+// # File Name:	ILifetimeBindingBuilder.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,11 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.containerprovider;
+package strata1.common.container;
 
-import java.util.List;
-
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -34,32 +32,9 @@ import java.util.List;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IConstructorInjector
+interface ILifetimeBindingBuilder
 {
-    /************************************************************************
-     *  
-     *
-     * @param componentNames
-     */
-    public IConstructorInjector
-    setConstructorValues(List<String> componentNames);
-    
-    /************************************************************************
-     *  
-     *
-     * @param inputName
-     * @return
-     */
-    public IConstructorInjector
-    insertConstructorValue(String inputName);
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public List<String>
-    getConstructorValues();
+
 }
 
 // ##########################################################################

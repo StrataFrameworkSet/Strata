@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IConstructorInjector.java
+// # File Name:	TypeLiteral.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,44 +22,43 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.containerprovider;
+package strata1.common.container;
 
-import java.util.List;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IConstructorInjector
+public abstract 
+class AnnotationLiteral<T extends Annotation>
 {
+    private final Type itsType;
+
     /************************************************************************
-     *  
+     * Creates a new {@code TypeLiteral}. 
      *
-     * @param componentNames
      */
-    public IConstructorInjector
-    setConstructorValues(List<String> componentNames);
-    
-    /************************************************************************
-     *  
-     *
-     * @param inputName
-     * @return
-     */
-    public IConstructorInjector
-    insertConstructorValue(String inputName);
-    
+    protected 
+    AnnotationLiteral() 
+    {
+        itsType = getClass().getGenericSuperclass();
+    }
+
     /************************************************************************
      *  
      *
      * @return
      */
-    public List<String>
-    getConstructorValues();
+    public Type
+    getType()
+    {
+        return itsType;
+    }
 }
 
 // ##########################################################################
