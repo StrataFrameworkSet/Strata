@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IConstructorInjector.java
+// # File Name:	IPropertyInjector.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.containerprovider;
-
-import java.util.List;
+package strata1.common.container;
 
 /**
  * 
@@ -34,32 +32,19 @@ import java.util.List;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IConstructorInjector
+interface IPropertyInjector
 {
-    /************************************************************************
-     *  
-     *
-     * @param componentNames
-     */
-    public IConstructorInjector
-    setConstructorValues(List<String> componentNames);
+    public IPropertyInjector
+    setPropertyName(String propertyName);
     
-    /************************************************************************
-     *  
-     *
-     * @param inputName
-     * @return
-     */
-    public IConstructorInjector
-    insertConstructorValue(String inputName);
+    public IPropertyInjector 
+    setPropertyValue(String componentName);
     
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public List<String>
-    getConstructorValues();
+    public String
+    getPropertyName();
+    
+    public String
+    getPropertyValue();
 }
 
 // ##########################################################################

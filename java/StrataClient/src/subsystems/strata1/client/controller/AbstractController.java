@@ -40,7 +40,7 @@ public abstract
 class AbstractController
 	implements IController
 {
-	private Map<String,ICommand>                   itsCommands;
+	private Map<String,ICommand>                     itsCommands;
 	private Map<IChangeEvent,IHandler<IChangeEvent>> itsHandlers;
 	
 	public

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IConstructorInjector.java
+// # File Name:	ILinkedBindingBuilder.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,11 +22,12 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.containerprovider;
+package strata1.common.container;
 
-import java.util.List;
+import java.lang.annotation.Annotation;
+import javax.inject.Provider;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -34,32 +35,31 @@ import java.util.List;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IConstructorInjector
+interface ILinkedBindingBuilder<T>
 {
-    /************************************************************************
-     *  
-     *
-     * @param componentNames
-     */
-    public IConstructorInjector
-    setConstructorValues(List<String> componentNames);
+    public ILinkedBindingBuilder<T>
+    toType(Class<? extends T> type);
     
-    /************************************************************************
-     *  
-     *
-     * @param inputName
-     * @return
-     */
-    public IConstructorInjector
-    insertConstructorValue(String inputName);
+    public ILinkedBindingBuilder<T>
+    toType(TypeLiteral<? extends T> type);
     
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public List<String>
-    getConstructorValues();
+    public <P extends Provider<? extends T>> ILinkedBindingBuilder<T>
+    toProvider(Class<P> provider);
+    
+    public <P extends Provider<? extends T>> ILinkedBindingBuilder<T>
+    toProvider(TypeLiteral<? extends P> provider);
+    
+    public ILinkedBindingBuilder<T>
+    toInstance(T instance);
+    
+    public ILinkedBindingBuilder<T>
+    withKey(String key);
+    
+    public <A extends Annotation> ILinkedBindingBuilder<T>
+    withKey(A key);
+    
+    public ILinkedBindingBuilder<T>
+    withLifetime(LifetimeKind lifetime);
 }
 
 // ##########################################################################

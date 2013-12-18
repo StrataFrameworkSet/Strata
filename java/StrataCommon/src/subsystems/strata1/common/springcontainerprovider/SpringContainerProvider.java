@@ -31,7 +31,9 @@ import strata1.common.containerprovider.IContainerProvider;
 import strata1.common.containerprovider.IPropertyInjector;
 import strata1.common.containerprovider.PropertyInjectorManager;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.support.GenericApplicationContext;
 
@@ -104,16 +106,17 @@ class SpringContainerProvider
     public void 
     registerDefinition(IComponentDefinition definition)
     {
-        GenericBeanDefinition bean = new GenericBeanDefinition();
+        BeanDefinitionBuilder builder = 
+            BeanDefinitionBuilder
+                .rootBeanDefinition( definition.getComponentType() )
+                .setScope( toString(definition.getScope() ) );
         
-        bean.setBeanClass( definition.getComponentType() );
-        registerConstructorInjector( definition,bean );
-        registerPropertyInjectors( definition,bean );
-        bean.setScope( toString( definition.getScope() ) );
+        registerConstructorInjector( definition,builder );
+        registerPropertyInjectors( definition,builder );
         
         itsContext.registerBeanDefinition( 
             definition.getComponentName(),
-            bean );
+            builder.getBeanDefinition() );
     }
 
     /************************************************************************
@@ -154,6 +157,47 @@ class SpringContainerProvider
             return false;
         }
     }
+
+    /************************************************************************
+     *  
+     *
+     * @param definition
+     * @param bean
+     */
+    private void 
+    registerConstructorInjector(
+        IComponentDefinition  definition,
+        BeanDefinitionBuilder builder)
+    {
+       IConstructorInjector constructor = null;
+       
+       if ( definition.hasConstructorInjector() )
+            constructor = definition.getConstructorInjector();
+        
+        for (String value:constructor.getConstructorValues())
+            builder.addConstructorArgReference( value );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param definition
+     * @param bean
+     */
+    private void 
+    registerPropertyInjectors(
+        IComponentDefinition  definition,
+        BeanDefinitionBuilder builder)
+    {
+        PropertyInjectorManager properties = 
+            definition.getPropertyInjectorManager();
+        
+        for (IPropertyInjector injector:properties.getInjectors())
+            builder.addPropertyReference( 
+                injector.getPropertyName(),
+                injector.getPropertyValue() );
+    }
+
 
     /************************************************************************
      *  

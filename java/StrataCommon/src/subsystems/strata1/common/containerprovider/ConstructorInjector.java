@@ -52,11 +52,20 @@ class ConstructorInjector
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public ConstructorInjector 
     setConstructorValues(List<String> componentNames)
     {
-        // TODO Auto-generated method stub
+        return this;
+    }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ConstructorInjector 
+    insertConstructorValue(String inputName)
+    {
+        return this;
     }
 
     /************************************************************************

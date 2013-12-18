@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IConstructorInjector.java
+// # File Name:	ConstructorInjector.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.containerprovider;
+package strata1.common.container;
 
 import java.util.List;
 
@@ -34,32 +34,50 @@ import java.util.List;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IConstructorInjector
+class ConstructorInjector
+    implements IConstructorInjector
 {
+
     /************************************************************************
-     *  
+     * Creates a new {@code ConstructorInjector}. 
      *
-     * @param componentNames
      */
-    public IConstructorInjector
-    setConstructorValues(List<String> componentNames);
+    public 
+    ConstructorInjector() 
+    {
+        // TODO Auto-generated method stub
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ConstructorInjector 
+    setConstructorValues(List<String> inputNames)
+    {
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ConstructorInjector
+    insertConstructorValue(String inputName)
+    {
+        return this;
+    }
     
     /************************************************************************
-     *  
-     *
-     * @param inputName
-     * @return
+     * {@inheritDoc} 
      */
-    public IConstructorInjector
-    insertConstructorValue(String inputName);
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public List<String>
-    getConstructorValues();
+    @Override
+    public List<String> 
+    getConstructorValues()
+    {
+        return null;
+    }
+
 }
 
 // ##########################################################################

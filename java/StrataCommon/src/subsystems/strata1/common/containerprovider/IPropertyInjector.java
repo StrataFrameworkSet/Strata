@@ -34,10 +34,10 @@ package strata1.common.containerprovider;
 public 
 interface IPropertyInjector
 {
-    public void
+    public IPropertyInjector
     setPropertyName(String propertyName);
     
-    public void 
+    public IPropertyInjector 
     setPropertyValue(String componentName);
     
     public String

@@ -51,22 +51,20 @@ class PropertyInjector
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public PropertyInjector 
     setPropertyName(String propertyName)
     {
-        // TODO Auto-generated method stub
-
+        return this;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public PropertyInjector 
     setPropertyValue(String componentName)
     {
-        // TODO Auto-generated method stub
-
+        return this;
     }
 
     /************************************************************************
