@@ -86,11 +86,10 @@ class GuiceBindingBuilder<T>
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
     public ILinkedBindingBuilder<T> 
     toProvider(Provider<T> provider)
     {
-        itsImp.toProvider( provider );
+        
         return this;
     }
 
@@ -134,6 +133,28 @@ class GuiceBindingBuilder<T>
     withLifetime(LifetimeKind lifetime)
     {
         return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <P extends Provider<? extends T>>ILinkedBindingBuilder<T> toProvider(
+        Class<P> provider)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <P extends Provider<? extends T>>ILinkedBindingBuilder<T> toProvider(
+        TypeLiteral<? extends P> provider)
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }
