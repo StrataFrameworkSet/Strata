@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="build/subsystems" path="src/subsystems"/>
-	<classpathentry kind="src" output="build/tests" path="src/tests"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.9/junit-4.9.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-beans/3.0.6.RELEASE/spring-beans-3.0.6.RELEASE.jar"/>
@@ -10,5 +9,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/3.0.6.RELEASE/spring-core-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/google/inject/guice/4.0-beta/guice-4.0-beta.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/inject/javax.inject/1/javax.inject-1.jar"/>
-	<classpathentry kind="output" path="build/subsystems"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
