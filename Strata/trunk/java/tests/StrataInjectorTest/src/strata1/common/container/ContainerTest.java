@@ -27,6 +27,7 @@ package strata1.common.container;
 import static org.junit.Assert.*;
 import strata1.common.money.Money;
 import strata1.common.utility.ICopyable;
+import strata1.injector.container.IContainer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
