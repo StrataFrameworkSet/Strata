@@ -102,7 +102,7 @@
 		    </classpath>
 		    <test 
 		    	todir="${project.testreports}" 
-		        name="strata1.common.testsuite.CommitStageSuite"/>
+		        name="strata1.injector.testsuite.CommitStageSuite"/>
 		    </junit>
 		    <junitreport 
 		    	todir="${project.testreports}">
@@ -128,7 +128,7 @@
             </classpath>
             <test 
                 todir="${project.testreports}" 
-                name="strata1.common.testsuite.IntegrationStageSuite"/>
+                name="strata1.injector.testsuite.IntegrationStageSuite"/>
             </junit>
             <junitreport 
                 todir="${project.testreports}">

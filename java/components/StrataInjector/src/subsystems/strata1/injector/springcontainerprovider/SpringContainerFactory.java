@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	CopyableTest.java
+// # File Name:	SpringContainerFactory.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,12 +22,12 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.utility;
+package strata1.injector.springcontainerprovider;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import strata1.injector.containerprovider.AbstractContainerFactory;
+import strata1.injector.containerprovider.IContainerProvider;
+import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 
 /**
  * 
@@ -36,44 +36,39 @@ import org.junit.Test;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class CopyableTest
+public class SpringContainerFactory
+    extends AbstractContainerFactory
 {
-    /************************************************************************
-     *  
-     *
-     * @throws Exception
-     */
-    @Before
-    public void 
-    setUp() 
-        throws Exception
-    {
-    }
 
     /************************************************************************
-     *  
+     * Creates a new {@code SpringContainerFactory}. 
      *
-     * @throws java.lang.Exception
      */
-    @After
-    public void 
-    tearDown() 
-        throws Exception
-    {
-    }
+    public 
+    SpringContainerFactory() {}
 
-    /**
-     * Test method for {@link strata1.injector.utility.ICopyable#copy()}.
+    /************************************************************************
+     * {@inheritDoc} 
      */
-    @Test
-    public void 
-    testCopy()
+    @Override
+    public IContainerProvider 
+    createComponentContainer()
     {
-        CopyableObject expected = new CopyableObject( "X",23,23.57 );
-        CopyableObject actual   = expected.copy();
         
-        assertEquals( expected,actual );
+        return 
+            new SpringContainerProvider(new GenericApplicationContext());
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IContainerProvider 
+    createComponentContainer(String resourceLocation)
+    {
+        return 
+            new SpringContainerProvider(
+                new GenericXmlApplicationContext(resourceLocation));
     }
 
 }

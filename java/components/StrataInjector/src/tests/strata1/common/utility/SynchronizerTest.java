@@ -62,7 +62,7 @@ class SynchronizerTest
 
     /**
      * Test method for 
-     * {@link strata1.common.utility.ISynchronizer#lockForReading()}.
+     * {@link strata1.injector.utility.ISynchronizer#lockForReading()}.
      */
     @Test
     public void testLockForReading()
@@ -72,7 +72,7 @@ class SynchronizerTest
 
     /**
      * Test method for 
-     * {@link strata1.common.utility.ISynchronizer#lockForWriting()}.
+     * {@link strata1.injector.utility.ISynchronizer#lockForWriting()}.
      */
     @Test
     public void testLockForWriting()
@@ -81,7 +81,7 @@ class SynchronizerTest
 
     /**
      * Test method for 
-     * {@link strata1.common.utility.ISynchronizer#unlockFromReading()}.
+     * {@link strata1.injector.utility.ISynchronizer#unlockFromReading()}.
      */
     @Test
     public void testUnlockFromReading()
@@ -90,7 +90,7 @@ class SynchronizerTest
 
     /**
      * Test method for 
-     * {@link strata1.common.utility.ISynchronizer#unlockFromWriting()}.
+     * {@link strata1.injector.utility.ISynchronizer#unlockFromWriting()}.
      */
     @Test
     public void testUnlockFromWriting()

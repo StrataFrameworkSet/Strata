@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	CopyableTest.java
+// # File Name:	IConstructorInjector.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,12 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.utility;
+package strata1.injector.container;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import java.util.List;
 
 /**
  * 
@@ -37,45 +34,27 @@ import org.junit.Test;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class CopyableTest
+interface IConstructorInjector
 {
     /************************************************************************
      *  
      *
-     * @throws Exception
+     * @param inputNames
+     * @return TODO
      */
-    @Before
-    public void 
-    setUp() 
-        throws Exception
-    {
-    }
-
+    public IConstructorInjector
+    setConstructorValues(List<String> inputNames);
+    
+    public IConstructorInjector
+    insertConstructorValue(String inputName);
+    
     /************************************************************************
      *  
      *
-     * @throws java.lang.Exception
+     * @return
      */
-    @After
-    public void 
-    tearDown() 
-        throws Exception
-    {
-    }
-
-    /**
-     * Test method for {@link strata1.injector.utility.ICopyable#copy()}.
-     */
-    @Test
-    public void 
-    testCopy()
-    {
-        CopyableObject expected = new CopyableObject( "X",23,23.57 );
-        CopyableObject actual   = expected.copy();
-        
-        assertEquals( expected,actual );
-    }
-
+    public List<String>
+    getConstructorValues();
 }
 
 // ##########################################################################
