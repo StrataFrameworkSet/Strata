@@ -22,15 +22,15 @@
 // #            Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.testsuite;
+package strata1.injector.testsuite;
 
-import strata1.common.datetime.DateTimeTest;
-import strata1.common.money.CurrencyExchangerTest;
-import strata1.common.money.MoneyCalculatorTest;
-import strata1.common.money.MoneyTest;
-import strata1.common.utility.CopyableTest;
-import strata1.common.utility.SingletonProxyTest;
-import strata1.common.utility.SynchronizerTest;
+import strata1.injector.datetime.DateTimeTest;
+import strata1.injector.money.CurrencyExchangerTest;
+import strata1.injector.money.MoneyCalculatorTest;
+import strata1.injector.money.MoneyTest;
+import strata1.injector.utility.CopyableTest;
+import strata1.injector.utility.SingletonProxyTest;
+import strata1.injector.utility.SynchronizerTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

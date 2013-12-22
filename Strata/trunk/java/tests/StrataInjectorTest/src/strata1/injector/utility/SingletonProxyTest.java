@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	PrintWriterLogEntryProcessorTest.java
+// # File Name:	SingletonProxyTest.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,27 +22,25 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.logger;
+package strata1.injector.utility;
 
-import static org.junit.Assert.*;
+import strata1.common.money.Money;
+import strata1.common.utility.CopyableObject;
+import strata1.common.utility.SingletonProxy;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
-/****************************************************************************
+/**
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class PrintWriterLogEntryProcessorTest
+public class SingletonProxyTest
 {
-    private StringWriter                 itsOutput;
-    private PrintWriterLogEntryProcessor itsTarget;
+    private CopyableObject itsExpected;
     
     /************************************************************************
      *  
@@ -50,13 +48,10 @@ class PrintWriterLogEntryProcessorTest
      * @throws java.lang.Exception
      */
     @Before
-    public void 
-    setUp() 
-        throws Exception
+    public void setUp() throws Exception
     {
-        itsOutput = new StringWriter();
-        itsTarget = new PrintWriterLogEntryProcessor(
-            new PrintWriter(itsOutput) );
+        itsExpected = new CopyableObject( "TestSingleton",23,3.5 );
+        SingletonProxy.setInstance( CopyableObject.class,itsExpected );
     }
 
     /************************************************************************
@@ -65,42 +60,46 @@ class PrintWriterLogEntryProcessorTest
      * @throws java.lang.Exception
      */
     @After
-    public void 
-    tearDown() 
-        throws Exception
+    public void tearDown() throws Exception
     {
-        itsTarget = null;
-        itsOutput = null;
+        SingletonProxy.clearInstance( CopyableObject.class );
+        itsExpected = null;
     }
 
     /**
-     * Test method for {@link PrintWriterLogEntryProcessor#process(ILogEntry)}.
+     * Test method for 
+     * {@link SingletonProxy#setInstance(Class,Object)}.
      */
     @Test
-    public void 
-    testProcess()
+    public void testSetInstance()
     {
-        ILogEntry entry = new LogEntry( LoggingLevel.INFO,"This is a test." );
-        String    expected = entry.getTimestamp().toString() + "  INFO       This is a test.";
+        Money expected = new Money( 23.57 );
+        SingletonProxy.setInstance( Money.class,expected );
         
-        itsTarget.process( entry );
-        
-        assertEquals(
-            expected,
-            itsOutput.toString() );
+        //assertEquals( expected,SingletonProxy.getInstance( Money.class ) );
     }
 
     /**
-     * Test method for {@link PrintWriterLogEntryProcessor#setFormat(jString)}.
+     * Test method for 
+     * {@link SingletonProxy#clearInstance(Class)}.
      */
     @Test
-    public void 
-    testSetGetFormat()
+    public void testClearInstance()
     {
-        String expected = "%1$s %2$s %3$s";
+        SingletonProxy.clearInstance( CopyableObject.class );
+    }
+
+    /**
+     * Test method for 
+     * {@link SingletonProxy#getInstance(Class)}.
+     */
+    @Test
+    public void testGetInstance()
+    {
+        Money expected = new Money( 23.57 );
+        SingletonProxy.setInstance( Money.class,expected );
         
-        itsTarget.setFormat( expected );
-        assertEquals( expected,itsTarget.getFormat() );
+        //assertEquals( expected,SingletonProxy.getInstance( Money.class ) );
     }
 
 }

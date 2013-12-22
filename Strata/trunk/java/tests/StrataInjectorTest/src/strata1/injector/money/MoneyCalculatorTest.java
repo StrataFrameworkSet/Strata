@@ -4,12 +4,16 @@
 // #                All Rights Reserved.
 // ##########################################################################
 
-package strata1.common.money;
+package strata1.injector.money;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import strata1.common.money.ICurrencyExchanger;
+import strata1.common.money.MockCurrencyExchanger;
+import strata1.common.money.Money;
+import strata1.common.money.MoneyCalculator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

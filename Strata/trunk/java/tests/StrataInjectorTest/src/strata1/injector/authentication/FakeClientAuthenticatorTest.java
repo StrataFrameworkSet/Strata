@@ -22,9 +22,14 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.authentication;
+package strata1.injector.authentication;
 
 import static org.junit.Assert.*;
+import strata1.common.authentication.AuthenticationFailureException;
+import strata1.common.authentication.FakeClientAuthenticator;
+import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.authentication.IClientCredential;
+import strata1.common.authentication.UserNameAndPasswordCredential;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	MockCommandLineProcessor.java
+// # File Name:	SynchronizerTest.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,11 +22,14 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.commandline;
+package strata1.injector.utility;
 
 import static org.junit.Assert.assertEquals;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-/****************************************************************************
+/**
  * 
  * @author 		
  *     Sapientia Systems
@@ -34,59 +37,63 @@ import static org.junit.Assert.assertEquals;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class MockCommandLineProcessor
-    extends AbstractCommandLineProcessor
+class SynchronizerTest
 {
 
     /************************************************************************
-     * Creates a new {@code MockCommandLineProcessor}. 
+     *  
      *
+     * @throws java.lang.Exception
      */
-    public 
-    MockCommandLineProcessor()
+    @Before
+    public void setUp() throws Exception
     {
-        // TODO Auto-generated constructor stub
     }
 
     /************************************************************************
      *  
      *
-     * @param option
-     * @param value
+     * @throws java.lang.Exception
      */
-    public void
-    assertNamedArgument(String option,String value)
-    {
-        assertEquals( value,getNamedArguments().get( option ));
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @param option
-     * @param value
-     */
-    public void
-    assertPositionedArgument(Integer position,String value)
-    {
-        assertEquals( value,getPositionedArguments().get( position ));
-    }
-   
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    protected void 
-    validate()
+    @After
+    public void tearDown() throws Exception
     {
     }
 
-    /************************************************************************
-     * {@inheritDoc} 
+    /**
+     * Test method for 
+     * {@link strata1.injector.utility.ISynchronizer#lockForReading()}.
      */
-    @Override
-    protected void 
-    execute()
+    @Test
+    public void testLockForReading()
+    {
+        assertEquals( "","" );
+    }
+
+    /**
+     * Test method for 
+     * {@link strata1.injector.utility.ISynchronizer#lockForWriting()}.
+     */
+    @Test
+    public void testLockForWriting()
+    {
+    }
+
+    /**
+     * Test method for 
+     * {@link strata1.injector.utility.ISynchronizer#unlockFromReading()}.
+     */
+    @Test
+    public void testUnlockFromReading()
+    {
+    }
+
+    /**
+     * Test method for 
+     * {@link strata1.injector.utility.ISynchronizer#unlockFromWriting()}.
+     */
+    @Test
+    public void testUnlockFromWriting()
     {
     }
 

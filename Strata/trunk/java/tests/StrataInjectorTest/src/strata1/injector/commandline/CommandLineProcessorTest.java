@@ -22,9 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.commandline;
+package strata1.injector.commandline;
 
 import static org.junit.Assert.*;
+import strata1.common.commandline.MockCommandLineProcessor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,7 +75,7 @@ class CommandLineProcessorTest
     }
 
     /**
-     * Test method for {@link strata1.common.commandline.ICommandLineProcessor#setOptions(java.util.Set)}.
+     * Test method for {@link strata1.injector.commandline.ICommandLineProcessor#setOptions(java.util.Set)}.
      */
     @Test
     public void 
@@ -85,7 +86,7 @@ class CommandLineProcessorTest
     }
 
     /**
-     * Test method for {@link strata1.common.commandline.ICommandLineProcessor#getArguments()}.
+     * Test method for {@link strata1.injector.commandline.ICommandLineProcessor#getArguments()}.
      */
     @Test
     public void 
@@ -98,7 +99,7 @@ class CommandLineProcessorTest
     }
 
     /**
-     * Test method for {@link strata1.common.commandline.ICommandLineProcessor#process(java.lang.String[])}.
+     * Test method for {@link strata1.injector.commandline.ICommandLineProcessor#process(java.lang.String[])}.
      */
     @Test
     public void 

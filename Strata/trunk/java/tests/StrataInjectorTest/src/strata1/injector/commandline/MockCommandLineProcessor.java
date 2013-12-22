@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	CopyableTest.java
+// # File Name:	MockCommandLineProcessor.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,14 +22,12 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.utility;
+package strata1.injector.commandline;
 
 import static org.junit.Assert.assertEquals;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import strata1.common.commandline.AbstractCommandLineProcessor;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -37,43 +35,60 @@ import org.junit.Test;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class CopyableTest
+class MockCommandLineProcessor
+    extends AbstractCommandLineProcessor
 {
+
     /************************************************************************
-     *  
+     * Creates a new {@code MockCommandLineProcessor}. 
      *
-     * @throws Exception
      */
-    @Before
-    public void 
-    setUp() 
-        throws Exception
+    public 
+    MockCommandLineProcessor()
     {
+        // TODO Auto-generated constructor stub
     }
 
     /************************************************************************
      *  
      *
-     * @throws java.lang.Exception
+     * @param option
+     * @param value
      */
-    @After
-    public void 
-    tearDown() 
-        throws Exception
+    public void
+    assertNamedArgument(String option,String value)
+    {
+        assertEquals( value,getNamedArguments().get( option ));
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param option
+     * @param value
+     */
+    public void
+    assertPositionedArgument(Integer position,String value)
+    {
+        assertEquals( value,getPositionedArguments().get( position ));
+    }
+   
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected void 
+    validate()
     {
     }
 
-    /**
-     * Test method for {@link strata1.common.utility.ICopyable#copy()}.
+    /************************************************************************
+     * {@inheritDoc} 
      */
-    @Test
-    public void 
-    testCopy()
+    @Override
+    protected void 
+    execute()
     {
-        CopyableObject expected = new CopyableObject( "X",23,23.57 );
-        CopyableObject actual   = expected.copy();
-        
-        assertEquals( expected,actual );
     }
 
 }

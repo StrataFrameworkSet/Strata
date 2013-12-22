@@ -4,10 +4,13 @@
 // #                All Rights Reserved.
 // ##########################################################################
 
-package strata1.common.money;
+package strata1.injector.money;
 
 import static org.junit.Assert.assertEquals;
 import strata1.common.datetime.DateTime;
+import strata1.common.money.ICurrencyExchanger;
+import strata1.common.money.MockCurrencyExchanger;
+import strata1.common.money.Money;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

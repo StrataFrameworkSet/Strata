@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	SingletonProxyTest.java
+// # File Name:	PrintWriterLogEntryProcessorTest.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,23 +22,31 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.utility;
+package strata1.injector.logger;
 
-import strata1.common.money.Money;
+import static org.junit.Assert.*;
+import strata1.common.logger.ILogEntry;
+import strata1.common.logger.LogEntry;
+import strata1.common.logger.LoggingLevel;
+import strata1.common.logger.PrintWriterLogEntryProcessor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public class SingletonProxyTest
+public 
+class PrintWriterLogEntryProcessorTest
 {
-    private CopyableObject itsExpected;
+    private StringWriter                 itsOutput;
+    private PrintWriterLogEntryProcessor itsTarget;
     
     /************************************************************************
      *  
@@ -46,10 +54,13 @@ public class SingletonProxyTest
      * @throws java.lang.Exception
      */
     @Before
-    public void setUp() throws Exception
+    public void 
+    setUp() 
+        throws Exception
     {
-        itsExpected = new CopyableObject( "TestSingleton",23,3.5 );
-        SingletonProxy.setInstance( CopyableObject.class,itsExpected );
+        itsOutput = new StringWriter();
+        itsTarget = new PrintWriterLogEntryProcessor(
+            new PrintWriter(itsOutput) );
     }
 
     /************************************************************************
@@ -58,46 +69,42 @@ public class SingletonProxyTest
      * @throws java.lang.Exception
      */
     @After
-    public void tearDown() throws Exception
+    public void 
+    tearDown() 
+        throws Exception
     {
-        SingletonProxy.clearInstance( CopyableObject.class );
-        itsExpected = null;
+        itsTarget = null;
+        itsOutput = null;
     }
 
     /**
-     * Test method for 
-     * {@link SingletonProxy#setInstance(Class,Object)}.
+     * Test method for {@link PrintWriterLogEntryProcessor#process(ILogEntry)}.
      */
     @Test
-    public void testSetInstance()
+    public void 
+    testProcess()
     {
-        Money expected = new Money( 23.57 );
-        SingletonProxy.setInstance( Money.class,expected );
+        ILogEntry entry = new LogEntry( LoggingLevel.INFO,"This is a test." );
+        String    expected = entry.getTimestamp().toString() + "  INFO       This is a test.";
         
-        //assertEquals( expected,SingletonProxy.getInstance( Money.class ) );
-    }
-
-    /**
-     * Test method for 
-     * {@link SingletonProxy#clearInstance(Class)}.
-     */
-    @Test
-    public void testClearInstance()
-    {
-        SingletonProxy.clearInstance( CopyableObject.class );
-    }
-
-    /**
-     * Test method for 
-     * {@link SingletonProxy#getInstance(Class)}.
-     */
-    @Test
-    public void testGetInstance()
-    {
-        Money expected = new Money( 23.57 );
-        SingletonProxy.setInstance( Money.class,expected );
+        itsTarget.process( entry );
         
-        //assertEquals( expected,SingletonProxy.getInstance( Money.class ) );
+        assertEquals(
+            expected,
+            itsOutput.toString() );
+    }
+
+    /**
+     * Test method for {@link PrintWriterLogEntryProcessor#setFormat(jString)}.
+     */
+    @Test
+    public void 
+    testSetGetFormat()
+    {
+        String expected = "%1$s %2$s %3$s";
+        
+        itsTarget.setFormat( expected );
+        assertEquals( expected,itsTarget.getFormat() );
     }
 
 }
