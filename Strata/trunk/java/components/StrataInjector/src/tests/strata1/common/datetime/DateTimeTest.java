@@ -47,7 +47,7 @@ public class DateTimeTest
 	}
 
 	/**
-	 * Test method for {@link strata1.common.datetime.DateTime#DateTime()}.
+	 * Test method for {@link strata1.injector.datetime.DateTime#DateTime()}.
 	 */
 	@Test
 	public void testDateTime()
@@ -65,7 +65,7 @@ public class DateTimeTest
 
 	/**
 	 * Test method for 
-	 * {@link strata1.common.datetime.DateTime#DateTime(java.util.Calendar)}.
+	 * {@link strata1.injector.datetime.DateTime#DateTime(java.util.Calendar)}.
 	 */
 	@Test
 	public void testDateTimeCalendar()
@@ -78,7 +78,7 @@ public class DateTimeTest
 
 	/**
 	 * Test method for 
-	 * {@link strata1.common.datetime.DateTime#DateTime(java.util.TimeZone)}.
+	 * {@link strata1.injector.datetime.DateTime#DateTime(java.util.TimeZone)}.
 	 */
 	@Test
 	public void testDateTimeTimeZone()
@@ -98,7 +98,7 @@ public class DateTimeTest
 
 	/**
 	 * Test method for 
-	 * {@link strata1.common.datetime.DateTime#DateTime(int, int, int)}.
+	 * {@link strata1.injector.datetime.DateTime#DateTime(int, int, int)}.
 	 */
 	@Test
 	public void testDateTimeIntIntInt()

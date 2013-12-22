@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	CopyableTest.java
+// # File Name:	IProviderFactory.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,12 +22,8 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.utility;
+package strata1.injector.containerprovider;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * 
@@ -37,45 +33,22 @@ import org.junit.Test;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class CopyableTest
+interface IProviderFactory
 {
-    /************************************************************************
-     *  
-     *
-     * @throws Exception
-     */
-    @Before
-    public void 
-    setUp() 
-        throws Exception
-    {
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @throws java.lang.Exception
-     */
-    @After
-    public void 
-    tearDown() 
-        throws Exception
-    {
-    }
-
-    /**
-     * Test method for {@link strata1.injector.utility.ICopyable#copy()}.
-     */
-    @Test
-    public void 
-    testCopy()
-    {
-        CopyableObject expected = new CopyableObject( "X",23,23.57 );
-        CopyableObject actual   = expected.copy();
-        
-        assertEquals( expected,actual );
-    }
-
+    public IContainerProvider
+    createComponentContainer();
+    
+    public IContainerProvider
+    createComponentContainer(String resourceLocation);
+    
+    public IComponentDefinition
+    createComponentDefinition();
+    
+    public IConstructorInjector
+    createConstructorInjector();
+    
+    public IPropertyInjector
+    createPropertyInjector();
 }
 
 // ##########################################################################

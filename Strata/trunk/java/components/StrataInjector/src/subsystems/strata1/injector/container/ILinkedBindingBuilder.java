@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	CopyableTest.java
+// # File Name:	ILinkedBindingBuilder.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,14 +22,12 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.utility;
+package strata1.injector.container;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import java.lang.annotation.Annotation;
+import javax.inject.Provider;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -37,45 +35,31 @@ import org.junit.Test;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class CopyableTest
+interface ILinkedBindingBuilder<T>
 {
-    /************************************************************************
-     *  
-     *
-     * @throws Exception
-     */
-    @Before
-    public void 
-    setUp() 
-        throws Exception
-    {
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @throws java.lang.Exception
-     */
-    @After
-    public void 
-    tearDown() 
-        throws Exception
-    {
-    }
-
-    /**
-     * Test method for {@link strata1.injector.utility.ICopyable#copy()}.
-     */
-    @Test
-    public void 
-    testCopy()
-    {
-        CopyableObject expected = new CopyableObject( "X",23,23.57 );
-        CopyableObject actual   = expected.copy();
-        
-        assertEquals( expected,actual );
-    }
-
+    public ILinkedBindingBuilder<T>
+    toType(Class<? extends T> type);
+    
+    public ILinkedBindingBuilder<T>
+    toType(TypeLiteral<? extends T> type);
+    
+    public <P extends Provider<? extends T>> ILinkedBindingBuilder<T>
+    toProvider(Class<P> provider);
+    
+    public <P extends Provider<? extends T>> ILinkedBindingBuilder<T>
+    toProvider(TypeLiteral<? extends P> provider);
+    
+    public ILinkedBindingBuilder<T>
+    toInstance(T instance);
+    
+    public ILinkedBindingBuilder<T>
+    withKey(String key);
+    
+    public <A extends Annotation> ILinkedBindingBuilder<T>
+    withKey(A key);
+    
+    public ILinkedBindingBuilder<T>
+    withLifetime(LifetimeKind lifetime);
 }
 
 // ##########################################################################

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	CopyableTest.java
+// # File Name:	ContainerModule.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,58 +22,39 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.utility;
+package strata1.injector.guicecontainer;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import com.google.inject.Binder;
+import com.google.inject.Module;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class CopyableTest
+class ContainerModule
+    implements Module
 {
+
     /************************************************************************
-     *  
+     * Creates a new {@code ContainerModule}. 
      *
-     * @throws Exception
      */
-    @Before
-    public void 
-    setUp() 
-        throws Exception
+    public ContainerModule()
     {
+        // TODO Auto-generated constructor stub
     }
 
     /************************************************************************
-     *  
-     *
-     * @throws java.lang.Exception
+     * {@inheritDoc} 
      */
-    @After
-    public void 
-    tearDown() 
-        throws Exception
+    @Override
+    public void configure(Binder arg0)
     {
-    }
+        // TODO Auto-generated method stub
 
-    /**
-     * Test method for {@link strata1.injector.utility.ICopyable#copy()}.
-     */
-    @Test
-    public void 
-    testCopy()
-    {
-        CopyableObject expected = new CopyableObject( "X",23,23.57 );
-        CopyableObject actual   = expected.copy();
-        
-        assertEquals( expected,actual );
     }
 
 }
