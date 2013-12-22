@@ -22,7 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.utility;
+package strata1.injector.utility;
+
+import strata1.common.utility.CopyableObject;
+import strata1.common.utility.ICopyable;
 
 /**
  * 

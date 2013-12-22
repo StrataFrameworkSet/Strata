@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.container;
+package strata1.injector.container;
 
 import static org.junit.Assert.*;
 import strata1.common.money.Money;

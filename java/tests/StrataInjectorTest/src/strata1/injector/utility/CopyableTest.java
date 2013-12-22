@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	SynchronizerTest.java
+// # File Name:	CopyableTest.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.utility;
+package strata1.injector.utility;
 
 import static org.junit.Assert.assertEquals;
+import strata1.common.utility.CopyableObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,16 +38,17 @@ import org.junit.Test;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class SynchronizerTest
+class CopyableTest
 {
-
     /************************************************************************
      *  
      *
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Before
-    public void setUp() throws Exception
+    public void 
+    setUp() 
+        throws Exception
     {
     }
 
@@ -56,45 +58,23 @@ class SynchronizerTest
      * @throws java.lang.Exception
      */
     @After
-    public void tearDown() throws Exception
+    public void 
+    tearDown() 
+        throws Exception
     {
     }
 
     /**
-     * Test method for 
-     * {@link strata1.common.utility.ISynchronizer#lockForReading()}.
+     * Test method for {@link strata1.injector.utility.ICopyable#copy()}.
      */
     @Test
-    public void testLockForReading()
+    public void 
+    testCopy()
     {
-        assertEquals( "","" );
-    }
-
-    /**
-     * Test method for 
-     * {@link strata1.common.utility.ISynchronizer#lockForWriting()}.
-     */
-    @Test
-    public void testLockForWriting()
-    {
-    }
-
-    /**
-     * Test method for 
-     * {@link strata1.common.utility.ISynchronizer#unlockFromReading()}.
-     */
-    @Test
-    public void testUnlockFromReading()
-    {
-    }
-
-    /**
-     * Test method for 
-     * {@link strata1.common.utility.ISynchronizer#unlockFromWriting()}.
-     */
-    @Test
-    public void testUnlockFromWriting()
-    {
+        CopyableObject expected = new CopyableObject( "X",23,23.57 );
+        CopyableObject actual   = expected.copy();
+        
+        assertEquals( expected,actual );
     }
 
 }
