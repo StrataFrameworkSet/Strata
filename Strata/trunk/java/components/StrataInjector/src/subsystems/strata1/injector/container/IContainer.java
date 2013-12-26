@@ -25,7 +25,7 @@
 package strata1.injector.container;
 
 import java.lang.annotation.Annotation;
-import javax.inject.Provider;
+
 
 /****************************************************************************
  * 
@@ -37,12 +37,27 @@ import javax.inject.Provider;
 public 
 interface IContainer
 {
+    /************************************************************************
+     *  
+     *
+     * @param type
+     * @return
+     */
     public <T> ILinkedBindingBuilder<T>
     bindType(Class<T> type);
     
+    /************************************************************************
+     *  
+     *
+     * @param type
+     * @return
+     */
     public <T> ILinkedBindingBuilder<T>
     bindType(TypeLiteral<T> type);
-      
+    
+    public <T> void
+    bindDecorator(IBindingMatcher matcher,Class<T> decoratorType);
+    
     /************************************************************************
      *  
      *
@@ -85,7 +100,17 @@ interface IContainer
      * @return
      */
     public <T> T
-    resolveType(Class<T> type,String name);
+    resolveType(Class<T> type,String key);
+    
+    /************************************************************************
+     *  
+     *
+     * @param type
+     * @param key
+     * @return
+     */
+    public <T> T
+    resolveType(Class<T> type,Class<? extends Annotation> key);
     
     /************************************************************************
      *  

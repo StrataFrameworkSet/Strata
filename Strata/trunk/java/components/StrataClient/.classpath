@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="build" path="src/subsystems"/>
-	<classpathentry kind="src" output="build" path="src/tests"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.9/junit-4.9.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context/3.0.6.RELEASE/spring-context-3.0.6.RELEASE.jar"/>
@@ -13,5 +12,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/mockito/mockito-all/1.9.0/mockito-all-1.9.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/eclipse/swt.win32.win32.x86_64/3.7.2/swt.win32.win32.x86_64-3.7.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="output" path="build"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataInjector"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

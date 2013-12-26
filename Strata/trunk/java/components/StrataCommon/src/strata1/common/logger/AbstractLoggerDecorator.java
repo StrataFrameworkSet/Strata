@@ -1,36 +1,30 @@
 // ##########################################################################
-// # File Name:	MockClientFactory.java
+// # File Name:	AbstractLoggerDecorator.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataInitializer Framework.
+// # License:	This file is part of the StrataCommon Framework.
 // #
-// #   			The StrataInitializer Framework is free software: you 
+// #   			The StrataCommon Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataInitializer Framework is distributed in the 
+// #    		The StrataCommon Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataInitializer
+// #			General Public License along with the StrataCommon
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.client.bootstrap;
+package strata1.common.logger;
 
-import strata1.common.authentication.IClientAuthenticator;
-import strata1.common.logger.ILogger;
-import strata1.client.region.IRegionManager;
-import strata1.client.shell.IDispatcher;
-import strata1.client.view.ILoginView;
-import strata1.client.view.ISplashView;
-import org.mockito.Mockito;
+import javax.inject.*;
 
 /****************************************************************************
  * 
@@ -39,108 +33,119 @@ import org.mockito.Mockito;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class MockClientFactory
-    extends AbstractClientFactory
+public class AbstractLoggerDecorator
+    implements ILogger
 {
-
+    private ILogger itsTarget;
+    
     /************************************************************************
-     * Creates a new {@code MockClientFactory}. 
+     * Creates a new {@code AbstractLoggerDecorator}. 
      *
      */
-    public 
-    MockClientFactory()
+    protected 
+    AbstractLoggerDecorator(ILogger target)
     {
+        itsTarget = target;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public ILogger 
-    createLogger()
+    public void 
+    attachProcessor(ILogEntryProcessor processor)
     {
-        return Mockito.mock( ILogger.class );
+        itsTarget.attachProcessor( processor );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IClientModuleManager 
-    createModuleManager()
+    public void 
+    detachProcessor(ILogEntryProcessor processor)
     {
-        return Mockito.spy( super.createModuleManager() );
+        itsTarget.detachProcessor( processor );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IClientContainer 
-    createContainer()
+    public boolean 
+    hasProcessor(ILogEntryProcessor processor)
     {
-        return Mockito.mock( IClientContainer.class );
+        return itsTarget.hasProcessor( processor );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IClientContainer 
-    createContainer(String resourceLocation)
+    public void 
+    logStart(String message)
     {
-        return createContainer();
+        itsTarget.logStart( message );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IRegionManager 
-    createRegionManager()
+    public void 
+    logStop(String message)
     {
-        return Mockito.mock( IRegionManager.class );
+        itsTarget.logStop( message );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IDispatcher 
-    createDispatcher()
+    public void 
+    logDebug(String message)
     {
-        return Mockito.mock( IDispatcher.class );
+        itsTarget.logDebug( message );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public ILoginView 
-    createLoginView(IDispatcher dispatcher)
+    public void 
+    logInfo(String message)
     {
-        return null;
+        itsTarget.logInfo( message );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public ISplashView 
-    createSplashView(IDispatcher dispatcher)
+    public void 
+    logWarning(String message)
     {
-        return null;
+        itsTarget.logWarning( message );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IClientAuthenticator 
-    createAuthenticator()
+    public void 
+    logError(String message)
     {
-        return null;
+        itsTarget.logError( message );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    log(LoggingLevel level,String message)
+    {
+        itsTarget.log( level,message );
     }
 
 }
