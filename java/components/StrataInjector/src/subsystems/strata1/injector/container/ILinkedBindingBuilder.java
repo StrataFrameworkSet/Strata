@@ -56,6 +56,9 @@ interface ILinkedBindingBuilder<T>
     withKey(String key);
     
     public <A extends Annotation> ILinkedBindingBuilder<T>
+    withKey(Class<A> key);
+    
+    public <A extends Annotation> ILinkedBindingBuilder<T>
     withKey(A key);
     
     public ILinkedBindingBuilder<T>
