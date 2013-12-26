@@ -24,14 +24,15 @@
 
 package strata1.injector.container;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
+import strata1.common.logger.ILogger;
+import strata1.common.logger.Logger;
+import strata1.common.logger.MetricsCollectingLogger;
 import strata1.common.money.Money;
 import strata1.common.utility.ICopyable;
-import strata1.injector.container.IContainer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import java.util.ArrayList;
 import junit.framework.Assert;
 
 /****************************************************************************
@@ -70,6 +71,37 @@ class ContainerTest
         itsTarget = null;
     }
 
+    /************************************************************************
+     *  
+     *
+     */
+    @Test
+    public void
+    testBindType()
+    {
+        itsTarget
+            .bindType( ILogger.class )
+            .toType( Logger.class )
+            .withKey( "MainLogger" )
+            .withLifetime( LifetimeKind.PER_THREAD );
+        
+        itsTarget
+            .bindType( ILogger.class )
+            .toInstance( new Logger() )
+            .withKey( MainLogger.class );
+        
+        itsTarget
+            .bindType( ILogger.class )
+            .toProvider( LoggerProvider.class );
+        
+        itsTarget
+            .bindDecorator( 
+                BindingMatcher
+                    .bindingType(ILogger.class)
+                    .withKey( "MainLogger" ),
+                MetricsCollectingLogger.class );
+    }
+    
     /**
      * Test method for {@link IContainer#registerType(ITypeDefinition)}.
      */
