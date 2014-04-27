@@ -27,6 +27,7 @@ package strata1.server.bootstrap;
 import java.util.List;
 import strata1.common.logger.ILogger;
 import strata1.common.producerconsumer.ITaskProducerConsumerManager;
+import strata1.injector.container.IContainer;
 
 /**
  * 
@@ -38,7 +39,7 @@ import strata1.common.producerconsumer.ITaskProducerConsumerManager;
 public 
 interface IServerBootstrapper
 {
-    public IServerContainer
+    public IContainer
     getContainer();
     
     public ILogger

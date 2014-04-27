@@ -28,6 +28,7 @@ import java.util.List;
 import strata1.common.logger.ILogger;
 import strata1.common.producerconsumer.ITaskConsumer;
 import strata1.common.producerconsumer.ITaskProducerConsumerManager;
+import strata1.injector.container.IContainer;
 
 /**
  * 
@@ -44,8 +45,8 @@ interface IServerFactory
      *
      * @return
      */
-    public IServerContainer
-    createServerContainer();
+    public IContainer
+    createContainer();
     
     /************************************************************************
      *  
