@@ -14,5 +14,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-orm/3.0.6.RELEASE/spring-orm-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-beans/3.0.6.RELEASE/spring-beans-3.0.6.RELEASE.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataPersistence"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataInjector"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>

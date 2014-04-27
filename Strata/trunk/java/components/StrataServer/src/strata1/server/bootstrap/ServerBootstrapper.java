@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import strata1.common.logger.ILogger;
 import strata1.common.producerconsumer.ITaskProducerConsumerManager;
+import strata1.injector.container.IContainer;
 
 /****************************************************************************
  * 
@@ -40,7 +41,7 @@ public
 class ServerBootstrapper
     implements IServerBootstrapper
 {
-    private IServerContainer             itsContainer;
+    private IContainer                   itsContainer;
     private ILogger                      itsLogger;
     private ITaskProducerConsumerManager itsTaskManager;
     private List<IServerModule>          itsModules;
@@ -75,7 +76,7 @@ class ServerBootstrapper
      * {@inheritDoc} 
      */
     @Override
-    public IServerContainer 
+    public IContainer 
     getContainer()
     {
         return itsContainer;
@@ -144,7 +145,7 @@ class ServerBootstrapper
     private void 
     CreateContainer(IServerFactory factory)
     {
-        itsContainer = factory.createServerContainer();
+        itsContainer = factory.createContainer();
         
         if ( getContainer() == null )
             throw new IllegalStateException("container is null");
