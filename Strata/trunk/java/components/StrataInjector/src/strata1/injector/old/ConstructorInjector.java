@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	ContainerModule.java
+// # File Name:	ConstructorInjector.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,54 +22,62 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.injector.guicecontainer;
+package strata1.injector.old;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
-import com.google.inject.Module;
+import java.util.List;
 
-/****************************************************************************
+/**
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-class ContainerModule
-    implements Module
+public 
+class ConstructorInjector
+    implements IConstructorInjector
 {
-    private Binder itsBinder;
-    
+
     /************************************************************************
-     * Creates a new {@code ContainerModule}. 
+     * Creates a new {@code ConstructorInjector}. 
      *
      */
     public 
-    ContainerModule()
+    ConstructorInjector() 
     {
-        itsBinder = null;
+        // TODO Auto-generated method stub
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    configure(Binder binder)
+    public ConstructorInjector 
+    setConstructorValues(List<String> inputNames)
     {
-        itsBinder = binder;
+        return this;
     }
 
     /************************************************************************
-     *  
-     *
-     * @return
+     * {@inheritDoc} 
      */
-    public Binder
-    getBinder()
+    @Override
+    public ConstructorInjector
+    insertConstructorValue(String inputName)
     {
-        return itsBinder;
+        return this;
     }
+    
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public List<String> 
+    getConstructorValues()
+    {
+        return null;
+    }
+
 }
 
 // ##########################################################################

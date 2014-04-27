@@ -1,32 +1,33 @@
 // ##########################################################################
-// # File Name:	ContainerModule.java
+// # File Name:	GuiceBindingPair.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataInjector Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataInjector Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataInjector Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataInjector
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
 package strata1.injector.guicecontainer;
 
-import com.google.inject.AbstractModule;
+import strata1.injector.container.IBinding;
+import strata1.injector.container.IBindingVisitor;
 import com.google.inject.Binder;
-import com.google.inject.Module;
+
 
 /****************************************************************************
  * 
@@ -35,29 +36,28 @@ import com.google.inject.Module;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-class ContainerModule
-    implements Module
+public 
+class GuiceBindingPair<T>
 {
-    private Binder itsBinder;
+    private IBinding<T>            itsBinding;
+    private GuiceBindingVisitor<T> itsVisitor;
     
-    /************************************************************************
-     * Creates a new {@code ContainerModule}. 
-     *
-     */
     public 
-    ContainerModule()
+    GuiceBindingPair(IBinding<T> binding)
     {
-        itsBinder = null;
+        itsBinding = binding;
+        itsVisitor = new GuiceBindingVisitor<T>();
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     *  
+     *
+     * @param binder
      */
-    @Override
     public void 
-    configure(Binder binder)
+    setBinder(Binder binder)
     {
-        itsBinder = binder;
+        itsVisitor.setBinder( binder );
     }
 
     /************************************************************************
@@ -65,10 +65,31 @@ class ContainerModule
      *
      * @return
      */
-    public Binder
-    getBinder()
+    public IBinding<T> 
+    getBinding()
     {
-        return itsBinder;
+        return itsBinding;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public GuiceBindingVisitor<?>
+    getVisitor()
+    {
+        return itsVisitor;
+    }
+
+    /************************************************************************
+     *  
+     *
+     */
+    public void 
+    process()
+    {
+        itsBinding.accept( itsVisitor );
     }
 }
 

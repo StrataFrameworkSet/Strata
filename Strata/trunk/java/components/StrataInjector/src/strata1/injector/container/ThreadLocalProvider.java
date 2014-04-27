@@ -1,32 +1,30 @@
 // ##########################################################################
-// # File Name:	ContainerModule.java
+// # File Name:	ThreadLocalProvider.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataInjector Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataInjector Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataInjector Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataInjector
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.injector.guicecontainer;
+package strata1.injector.container;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
-import com.google.inject.Module;
+import javax.inject.Provider;
 
 /****************************************************************************
  * 
@@ -35,41 +33,43 @@ import com.google.inject.Module;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-class ContainerModule
-    implements Module
+public 
+class ThreadLocalProvider<T>
+    implements Provider<T>
 {
-    private Binder itsBinder;
+    private final Provider<T> itsSource;
+    private ThreadLocal<T>    itsInstances;
     
     /************************************************************************
-     * Creates a new {@code ContainerModule}. 
+     * Creates a new {@code ThreadLocalProvider}. 
      *
      */
     public 
-    ContainerModule()
+    ThreadLocalProvider(Provider<T> source)
     {
-        itsBinder = null;
+        itsSource = source;
+        itsInstances = 
+            new ThreadLocal<T>()
+            {
+                @Override
+                protected T 
+                initialValue()
+                {
+                    return itsSource.get();
+                }
+            };
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    configure(Binder binder)
+    public T 
+    get()
     {
-        itsBinder = binder;
+        return itsInstances.get();
     }
 
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public Binder
-    getBinder()
-    {
-        return itsBinder;
-    }
 }
 
 // ##########################################################################

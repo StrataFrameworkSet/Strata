@@ -7,9 +7,11 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context/3.0.6.RELEASE/spring-context-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context-support/3.0.6.RELEASE/spring-context-support-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/3.0.6.RELEASE/spring-core-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/google/inject/guice/4.0-beta/guice-4.0-beta.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/inject/javax.inject/1/javax.inject-1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataInjector"/>
+	<classpathentry kind="lib" path="C:/Tools/JUnit/4.9/junit-4.9-src.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/google/inject/guice/3.0/guice-3.0.jar" sourcepath="/M2_REPO/com/google/inject/guice/4.0-beta/guice-4.0-beta-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Tools/Guice/guice-3.0-src.zip"/>
 	<classpathentry kind="output" path="build/subsystems"/>
 </classpath>

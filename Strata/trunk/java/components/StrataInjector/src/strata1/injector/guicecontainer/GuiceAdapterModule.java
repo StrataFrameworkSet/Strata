@@ -1,32 +1,32 @@
 // ##########################################################################
-// # File Name:	ContainerModule.java
+// # File Name:	GuiceAdapterModule.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataInjector Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataInjector Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataInjector Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataInjector
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
 package strata1.injector.guicecontainer;
 
+import strata1.injector.container.IBinding;
 import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
-import com.google.inject.Module;
+import java.util.Queue;
 
 /****************************************************************************
  * 
@@ -35,40 +35,48 @@ import com.google.inject.Module;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-class ContainerModule
-    implements Module
+public 
+class GuiceAdapterModule
+    extends AbstractModule
 {
-    private Binder itsBinder;
+    private Queue<GuiceBindingPair<?>> itsPending;
     
     /************************************************************************
-     * Creates a new {@code ContainerModule}. 
+     * Creates a new {@code GuiceAdapterModule}. 
      *
      */
     public 
-    ContainerModule()
+    GuiceAdapterModule()
     {
-        itsBinder = null;
+        itsPending = null;
     }
+    
+    /************************************************************************
+     * Creates a new {@code GuiceAdapterModule}. 
+     *
+     * @param module
+     */
+    public 
+    GuiceAdapterModule(Queue<GuiceBindingPair<?>> pending)
+    {
+        itsPending = pending;
+    }
+
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    configure(Binder binder)
+    protected void 
+    configure()
     {
-        itsBinder = binder;
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public Binder
-    getBinder()
-    {
-        return itsBinder;
+        while (!itsPending.isEmpty())
+        {
+            GuiceBindingPair<?>    pair    = itsPending.remove();
+            
+            pair.setBinder(binder());
+            pair.process();
+        }
     }
 }
 

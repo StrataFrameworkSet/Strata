@@ -24,15 +24,17 @@
 
 package strata1.injector.springcontainer;
 
-import strata1.injector.container.ConstructorInjector;
-import strata1.injector.container.IConstructorInjector;
+import strata1.injector.container.Binder;
+import strata1.injector.container.IBinding;
+import strata1.injector.container.IBindingBuilder;
+import strata1.injector.container.IBindingIdentifier;
 import strata1.injector.container.IContainer;
-import strata1.injector.container.ILinkedBindingBuilder;
-import strata1.injector.container.IPropertyInjector;
-import strata1.injector.container.ITypeDefinition;
-import strata1.injector.container.PropertyInjector;
-import strata1.injector.container.TypeLiteral;
+import strata1.injector.old.ITargetBindingBuilder;
+import strata1.injector.old.ITypeDefinition;
 import org.springframework.context.support.GenericApplicationContext;
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.List;
 
 /****************************************************************************
  * 
@@ -71,8 +73,60 @@ class SpringContainer
      * {@inheritDoc} 
      */
     @Override
-    public <T> ILinkedBindingBuilder<T>
-    bindType(Class<T> type)
+    public <T> IContainer 
+    insertBinding(IBindingBuilder<T> builder)
+    {
+        return insertBinding( builder.getBinding() );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <T> IContainer 
+    insertBinding(IBinding<T> binding)
+    {
+        //binding.accept( new SpringBindingVisitor<T> );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <T> T 
+    getInstance(Class<T> type)
+    {
+        String beanName = type.getName();
+        
+        return getInstance( type,beanName );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <T> T 
+    getInstance(Class<T> type,String name)
+    {
+        return type.cast( itsContext.getBean( name ) );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <T>T 
+    getInstance(Class<T> type,Class<? extends Annotation> key)
+    {
+        return getInstance( type,key.toString() );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <T>T getInstance(IBindingIdentifier<T> id)
     {
         // TODO Auto-generated method stub
         return null;
@@ -82,18 +136,47 @@ class SpringContainer
      * {@inheritDoc} 
      */
     @Override
-    public <T> ILinkedBindingBuilder<T> 
-    bindType(TypeLiteral<T> type)
+    public <T>boolean hasBinding(Class<T> type)
     {
         // TODO Auto-generated method stub
-        return null;
+        return false;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public <T>boolean hasBinding(Class<T> type,String key)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <T>boolean hasBinding(Class<T> type,Class<? extends Annotation> key)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <T>boolean 
+    hasBinding(IBindingIdentifier<T> id)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /************************************************************************
+     *  
+     */
+    protected void 
     registerType(ITypeDefinition definition)
     {
         String beanName = null;
@@ -107,173 +190,6 @@ class SpringContainer
             beanName,
             ((SpringTypeDefinition)definition).getBeanDefinition() );
     }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <T> void 
-    registerInstance(T instance)
-    {
-        registerInstance( 
-            instance.getClass().getName(),
-            instance );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <T> void 
-    registerInstance(String name,T instance)
-    {
-        itsContext
-            .getBeanFactory()
-            .registerSingleton( name,instance );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <T> T 
-    resolveType(Class<T> type)
-    {
-        String beanName = type.getName();
-        
-        return type.cast( itsContext.getBean( beanName ) );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <T> T 
-    resolveType(Class<T> type,String name)
-    {
-        return type.cast( itsContext.getBean( name ) );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <T> T 
-    resolveInstance(Class<T> type)
-    {
-        String beanName = type.getName();
-        
-        return resolveInstance( type,beanName );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <T> T 
-    resolveInstance(Class<T> type,String name)
-    {
-        return 
-            type.cast( 
-                itsContext
-                    .getBeanFactory()
-                    .getSingleton( name ) );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    hasType(ITypeDefinition definition)
-    {
-        String beanName = null;
-        
-        if ( definition.hasName() )
-            beanName = definition.getName();
-        else
-            beanName = definition.getInterfaceType().getName();
-
-        return hasType( definition.getInterfaceType(),beanName );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    hasType(Class<?> type)
-    {
-        String beanName = type.getName();
-        
-        return hasType( type,beanName );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    hasType(Class<?> type,String name)
-    {
-        return itsContext.isTypeMatch( name,type );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    hasInstance(Class<?> type)
-    {
-        String beanName = type.getName();
-        
-        return hasInstance( type,beanName );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    hasInstance(Class<?> type,String name)
-    {
-        return 
-            itsContext
-                .getBeanFactory()
-                .containsSingleton( name );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public ITypeDefinition 
-    createTypeDefinition()
-    {
-        return new SpringTypeDefinition();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IConstructorInjector 
-    createConstructorInjector()
-    {
-        return new ConstructorInjector();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IPropertyInjector 
-    createPropertyInjector()
-    {
-        return new PropertyInjector();
-    }
-
 }
 
 // ##########################################################################

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	LoggerProvider.java
+// # File Name:	IFoo.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInjectorTest Framework.
 // #
@@ -24,12 +24,6 @@
 
 package strata1.injector.container;
 
-import strata1.common.logger.ILogger;
-import strata1.common.logger.Logger;
-import strata1.common.logger.PrintWriterLogEntryProcessor;
-import java.io.PrintWriter;
-import javax.inject.Provider;
-
 /****************************************************************************
  * 
  * @author 		
@@ -38,26 +32,16 @@ import javax.inject.Provider;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class LoggerProvider
-    implements Provider<ILogger>
+interface IFooBar
 {
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public ILogger 
-    get()
-    {
-        ILogger logger = new Logger();
-        
-        logger.attachProcessor( 
-            new PrintWriterLogEntryProcessor(
-                new PrintWriter( System.out ) ) );
-
-        return logger;
-    }
-
+    public void 
+    setBar(IBar bar);
+    
+    public IFoo
+    getFoo();
+    
+    public IBar
+    getBar();
 }
 
 // ##########################################################################

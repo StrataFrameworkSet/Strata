@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	BindingMatcher.java
+// # File Name:	JavaxProvider.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInjector Framework.
 // #
@@ -22,7 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.injector.container;
+package strata1.injector.guicecontainer;
+
+import javax.inject.Provider;
 
 /****************************************************************************
  * 
@@ -32,23 +34,31 @@ package strata1.injector.container;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class BindingMatcher
+class JavaxProvider<T>
+    implements Provider<T>
 {
-
+    private com.google.inject.Provider<T> itsAdaptee;
+    
     /************************************************************************
-     * Creates a new {@code BindingMatcher}. 
+     * Creates a new {@code JavaxProvider}. 
      *
      */
-    private 
-    BindingMatcher()
+    public 
+    JavaxProvider(com.google.inject.Provider<T> adaptee)
     {
+        itsAdaptee = adaptee;
     }
-    
-    public static <T> IBindingMatcher
-    bindingType(Class<T> type)
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public T 
+    get()
     {
-        return null;
+        return itsAdaptee.get();
     }
+
 }
 
 // ##########################################################################
