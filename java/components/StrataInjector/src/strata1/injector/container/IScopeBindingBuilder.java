@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ContainerModule.java
+// # File Name:	IScopeBindingBuilder.java
 // #
 // # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,8 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.injector.guicecontainer;
+package strata1.injector.container;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
-import com.google.inject.Module;
 
 /****************************************************************************
  * 
@@ -35,41 +32,12 @@ import com.google.inject.Module;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-class ContainerModule
-    implements Module
+public 
+interface IScopeBindingBuilder<T>
+    extends IBindingBuilder<T>
 {
-    private Binder itsBinder;
-    
-    /************************************************************************
-     * Creates a new {@code ContainerModule}. 
-     *
-     */
-    public 
-    ContainerModule()
-    {
-        itsBinder = null;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    configure(Binder binder)
-    {
-        itsBinder = binder;
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public Binder
-    getBinder()
-    {
-        return itsBinder;
-    }
+    public IBindingBuilder<T>
+    withScope(IBindingScope<T> scope);
 }
 
 // ##########################################################################

@@ -24,14 +24,21 @@
 
 package strata1.injector.guicecontainer;
 
-import strata1.injector.container.IConstructorInjector;
+import strata1.injector.container.IBinding;
+import strata1.injector.container.IBindingBuilder;
+import strata1.injector.container.IBindingIdentifier;
 import strata1.injector.container.IContainer;
-import strata1.injector.container.ILinkedBindingBuilder;
-import strata1.injector.container.IPropertyInjector;
-import strata1.injector.container.ITypeDefinition;
-import strata1.injector.container.TypeLiteral;
-import com.google.inject.Binder;
+import strata1.injector.container.TypeAndAnnotationBindingIdentifier;
+import strata1.injector.container.TypeAndNameBindingIdentifier;
+import strata1.injector.container.TypeBindingIdentifier;
+import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Key;
+import com.google.inject.Module;
+import com.google.inject.name.Names;
+import java.lang.annotation.Annotation;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /****************************************************************************
  * 
@@ -44,8 +51,8 @@ public
 class GuiceContainer
     implements IContainer
 {
-    private Binder   itsBinder;
-    private Injector itsInjector;
+    private Queue<GuiceBindingPair<?>> itsPending;
+    private Injector                   itsInjector;
     
     /************************************************************************
      * Creates a new {@code GuiceContainer}. 
@@ -54,112 +61,90 @@ class GuiceContainer
     public 
     GuiceContainer()
     {
-        // TODO Auto-generated constructor stub
+        itsPending = new ConcurrentLinkedQueue<GuiceBindingPair<?>>();
+        itsInjector = Guice.createInjector();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <T> ILinkedBindingBuilder 
-    bindType(Class<T> type)
+    public <T> IContainer 
+    insertBinding(IBindingBuilder<T> builder)
     {
-        return new GuiceBindingBuilder( itsBinder.bind( type ));
+        IBinding<T> binding = builder.getBinding();
+        
+        if ( hasBinding( binding.getIdentifier() ) )
+            throw 
+                new IllegalArgumentException(
+                    "binding already exists in container.");
+        
+        itsPending.add( new GuiceBindingPair<T>(binding) );
+        return this;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <T>ILinkedBindingBuilder 
-    bindType(TypeLiteral<T> type)
+    public <T> IContainer 
+    insertBinding(IBinding<T> binding)
     {
-        return null;
+        if ( hasBinding( binding.getIdentifier() ) )
+            throw 
+                new IllegalArgumentException(
+                    "binding already exists in container.");
+        
+        itsPending.add( new GuiceBindingPair<T>(binding) );
+        return this;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    registerType(ITypeDefinition definition)
+    public <T> T 
+    getInstance(Class<T> type)
     {
-        // TODO Auto-generated method stub
-
+        if ( !itsPending.isEmpty() )
+            configureBindings();
+        
+        return itsInjector.getInstance( type );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <T>void 
-    registerInstance(T instance)
+    public <T> T 
+    getInstance(Class<T> type,String name)
     {
-        // TODO Auto-generated method stub
-
+        return 
+            itsInjector.getInstance( 
+                com.google.inject.Key.get( 
+                    type,
+                    Names.named( name ) ) );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <T>void 
-    registerInstance(String name,T instance)
+    public <T> T 
+    getInstance(Class<T> type,Class<? extends Annotation> key)
     {
-        // TODO Auto-generated method stub
-
+        return 
+            itsInjector.getInstance( 
+                com.google.inject.Key.get( 
+                    type,
+                    key ) );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <T>T 
-    resolveType(Class<T> type)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <T>T 
-    resolveType(Class<T> type,String name)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <T>T 
-    resolveInstance(Class<T> type)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <T>T 
-    resolveInstance(Class<T> type,String name)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    hasType(ITypeDefinition definition)
+    public <T>boolean hasBinding(Class<T> type)
     {
         // TODO Auto-generated method stub
         return false;
@@ -169,8 +154,7 @@ class GuiceContainer
      * {@inheritDoc} 
      */
     @Override
-    public boolean 
-    hasType(Class<?> type)
+    public <T>boolean hasBinding(Class<T> type,String key)
     {
         // TODO Auto-generated method stub
         return false;
@@ -180,8 +164,7 @@ class GuiceContainer
      * {@inheritDoc} 
      */
     @Override
-    public boolean 
-    hasType(Class<?> type,String name)
+    public <T>boolean hasBinding(Class<T> type,Class<? extends Annotation> key)
     {
         // TODO Auto-generated method stub
         return false;
@@ -191,52 +174,73 @@ class GuiceContainer
      * {@inheritDoc} 
      */
     @Override
-    public boolean 
-    hasInstance(Class<?> type)
+    public <T> boolean 
+    hasBinding(IBindingIdentifier<T> id)
     {
-        // TODO Auto-generated method stub
-        return false;
+        return itsInjector.getExistingBinding( toKey(id) ) != null;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     */
+    private void
+    configureBindings()
+    {
+        Module module = new GuiceAdapterModule(itsPending);
+        
+        if ( itsInjector == null )
+            itsInjector = Guice.createInjector( module );
+        else
+            itsInjector = itsInjector.createChildInjector( module );
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param id
+     * @return
+     */
+    private <T> Key<T>
+    toKey(IBindingIdentifier<T> id)
+    {
+        if ( id instanceof TypeBindingIdentifier<?>)
+            return 
+                Key.get( id.getType());
+        
+        if ( id instanceof TypeAndNameBindingIdentifier<?>)
+            return 
+                Key.get( 
+                    id.getType(),
+                    Names.named( 
+                        ((TypeAndNameBindingIdentifier<T>)id).getKey()));
+        
+        if ( id instanceof TypeAndAnnotationBindingIdentifier<?>)
+            return 
+                Key.get( 
+                    id.getType(),
+                    ((TypeAndAnnotationBindingIdentifier<T>)id).getKey() );
+        
+        throw new IllegalArgumentException("id");
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param literal
+     * @return
+     */
+    public <T> com.google.inject.TypeLiteral<T>
+    convertToGuiceTypeLiteral(com.google.inject.TypeLiteral<T> literal)
+    {
+        return new GuiceTypeLiteralFactory().create( literal );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public boolean 
-    hasInstance(Class<?> type,String name)
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public ITypeDefinition 
-    createTypeDefinition()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IConstructorInjector 
-    createConstructorInjector()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IPropertyInjector 
-    createPropertyInjector()
+    public <T>T getInstance(IBindingIdentifier<T> id)
     {
         // TODO Auto-generated method stub
         return null;

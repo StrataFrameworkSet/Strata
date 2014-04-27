@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	ContainerModule.java
+// # File Name:	IPropertyInjector.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,54 +22,29 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.injector.guicecontainer;
+package strata1.injector.old;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
-import com.google.inject.Module;
-
-/****************************************************************************
+/**
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-class ContainerModule
-    implements Module
+public 
+interface IPropertyInjector
 {
-    private Binder itsBinder;
+    public IPropertyInjector
+    setPropertyName(String propertyName);
     
-    /************************************************************************
-     * Creates a new {@code ContainerModule}. 
-     *
-     */
-    public 
-    ContainerModule()
-    {
-        itsBinder = null;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    configure(Binder binder)
-    {
-        itsBinder = binder;
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public Binder
-    getBinder()
-    {
-        return itsBinder;
-    }
+    public IPropertyInjector 
+    setPropertyValue(String componentName);
+    
+    public String
+    getPropertyName();
+    
+    public String
+    getPropertyValue();
 }
 
 // ##########################################################################

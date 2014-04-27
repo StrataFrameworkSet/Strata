@@ -24,16 +24,12 @@
 
 package strata1.injector.container;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import strata1.common.logger.ILogger;
 import strata1.common.logger.Logger;
-import strata1.common.logger.MetricsCollectingLogger;
-import strata1.common.money.Money;
-import strata1.common.utility.ICopyable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import junit.framework.Assert;
 
 /****************************************************************************
  * 
@@ -42,7 +38,7 @@ import junit.framework.Assert;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract
+public 
 class ContainerTest
 {
     private IContainer itsTarget;
@@ -71,6 +67,129 @@ class ContainerTest
         itsTarget = null;
     }
 
+
+    /************************************************************************
+     *  
+     *
+     */
+    @Test
+    public void
+    testInsertBinding1()
+    {
+        itsTarget
+            .insertBinding( 
+                Binder
+                    .bindType( ILogger.class )
+                    .toProvider( LoggerProvider.class ) );
+        
+        ILogger logger = itsTarget.getInstance( ILogger.class );
+        
+        assertNotNull( logger );
+                
+        logger.logInfo( "Test Message" );
+    }
+    
+    /************************************************************************
+     *  
+     *
+     */
+    @Test
+    public void
+    testInsertBinding2()
+    {
+        ILogger logger1 = null;
+        ILogger logger2 = null;
+        
+        itsTarget
+            .insertBinding( 
+                Binder
+                    .bindType( ILogger.class )
+                    .toProvider( LoggerProvider.class )
+                    .withScope( new SingletonScope<ILogger>() ));
+        
+        logger1 = itsTarget.getInstance( ILogger.class );
+        logger2 = itsTarget.getInstance( ILogger.class );
+        
+        assertNotNull( logger1 );
+        assertSame( logger1,logger2 );
+                
+        logger1.logInfo( "Test Message 2" );
+    }
+    
+    /************************************************************************
+     *  
+     *
+     */
+    @Test
+    public void
+    testInsertBinding3()
+    {
+        ILogger logger1 = null;
+        ILogger logger2 = null;
+        
+        itsTarget
+            .insertBinding( 
+                Binder
+                    .bindType( ILogger.class )
+                    .toProvider( LoggerProvider.class )
+                    .withScope( new ThreadScope<ILogger>() ));
+        
+        logger1 = itsTarget.getInstance( ILogger.class );
+        logger2 = itsTarget.getInstance( ILogger.class );
+        
+        assertNotNull( logger1 );
+        assertSame( logger1,logger2 );
+                
+        logger1.logInfo( "Test Message 3" );
+    }
+    
+    /************************************************************************
+     *  
+     *
+     */
+    @Test
+    public void
+    testInsertBinding4()
+    {
+        IFooBar foobar = null;
+        
+        itsTarget
+            .insertBinding( 
+                Binder
+                    .bindType( String.class )
+                    .withKey( "test1" )
+                    .toInstance( "XXXXXXX" ) )
+            .insertBinding( 
+                Binder
+                    .bindType( String.class )
+                    .withKey( "test2" )
+                    .toInstance( "YYYYYYY" ) )
+            .insertBinding( 
+                Binder
+                    .bindType( Integer.class )
+                    .toInstance( new Integer(12345) ) )
+            .insertBinding( 
+                Binder
+                    .bindType( IFoo.class )
+                    .toType( Foo.class ) )
+            .insertBinding( 
+                Binder
+                    .bindType( IBar.class )
+                    .toType( Bar.class ) )
+            .insertBinding( 
+                Binder
+                    .bindType( IFooBar.class )
+                    .toType( FooBar.class ) );
+        
+        foobar = itsTarget.getInstance( IFooBar.class );
+        assertNotNull( foobar );
+        assertNotNull( foobar.getFoo() );
+        assertEquals( "XXXXXXX",foobar.getFoo().getFooName() );
+        assertNotNull( foobar.getBar() );
+        assertEquals( 12345,foobar.getBar().getBarId() );
+        
+    }
+    
     /************************************************************************
      *  
      *
@@ -80,51 +199,25 @@ class ContainerTest
     testBindType()
     {
         itsTarget
-            .bindType( ILogger.class )
-            .toType( Logger.class )
-            .withKey( "MainLogger" )
-            .withLifetime( LifetimeKind.PER_THREAD );
+            .insertBinding( 
+                Binder
+                    .bindType( ILogger.class )
+                    .withKey( "MainLogger" )
+                    .toType( Logger.class )
+                    .withScope( new SingletonScope<ILogger>() ) )
+            .insertBinding( 
+                Binder
+                    .bindType( ILogger.class )
+                    .withKey( MainLogger.class )
+                    .toInstance( new Logger() ) )
+            .insertBinding( 
+                Binder
+                    .bindType( ILogger.class )
+                    .toProvider( LoggerProvider.class ) );
         
-        itsTarget
-            .bindType( ILogger.class )
-            .toInstance( new Logger() )
-            .withKey( MainLogger.class );
-        
-        itsTarget
-            .bindType( ILogger.class )
-            .toProvider( LoggerProvider.class );
-        
-        itsTarget
-            .bindDecorator( 
-                BindingMatcher
-                    .bindingType(ILogger.class)
-                    .withKey( "MainLogger" ),
-                MetricsCollectingLogger.class );
+        ILogger logger = itsTarget.getInstance( ILogger.class );
     }
     
-    /**
-     * Test method for {@link IContainer#registerType(ITypeDefinition)}.
-     */
-    @Test
-    public void 
-    testRegisterType()
-    {
-        ITypeDefinition definition = 
-            itsTarget
-                .createTypeDefinition()
-                .setType( ICopyable.class,Money.class )
-                .setName( "example" )
-                .setLifetime( LifetimeKind.PER_RESOLVE )
-                .setConstructorInjector( 
-                    itsTarget
-                        .createConstructorInjector()
-                        .insertConstructorValue( "currency" )
-                        .insertConstructorValue( "amount" ) );
-                
-        Assert.assertFalse( itsTarget.hasType( definition ));
-        itsTarget.registerType( definition );
-    }
-
     /**
      * Test method for {@link IContainer#registerInstance(Object)}.
      */
@@ -166,7 +259,7 @@ class ContainerTest
     }
 
     /**
-     * Test method for {@link IContainer#resolveInstance(Class)}.
+     * Test method for {@link IContainer#getInstance(Class)}.
      */
     @Test
     public void 
@@ -176,7 +269,7 @@ class ContainerTest
     }
 
     /**
-     * Test method for {@link IContainer#resolveInstance(Class,String)}.
+     * Test method for {@link IContainer#getInstance(Class,String)}.
      */
     @Test
     public void 
@@ -215,8 +308,11 @@ class ContainerTest
         fail( "Not yet implemented" );
     }
 
-    protected abstract IContainer
-    createContainer();
+    protected IContainer
+    createContainer()
+    {
+        return new Container();
+    }
 }
 
 // ##########################################################################

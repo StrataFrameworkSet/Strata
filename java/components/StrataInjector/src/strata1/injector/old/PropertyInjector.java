@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	ContainerModule.java
+// # File Name:	PropertyInjector.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,54 +22,74 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.injector.guicecontainer;
+package strata1.injector.old;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
-import com.google.inject.Module;
 
-/****************************************************************************
+
+/**
  * 
  * @author 		
  *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-class ContainerModule
-    implements Module
+public 
+class PropertyInjector
+    implements IPropertyInjector
 {
-    private Binder itsBinder;
-    
+
     /************************************************************************
-     * Creates a new {@code ContainerModule}. 
+     * Creates a new {@code PropertyInjector}. 
      *
      */
     public 
-    ContainerModule()
+    PropertyInjector()
     {
-        itsBinder = null;
+        // TODO Auto-generated constructor stub
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    configure(Binder binder)
+    public PropertyInjector 
+    setPropertyName(String propertyName)
     {
-        itsBinder = binder;
+        return this;
     }
 
     /************************************************************************
-     *  
-     *
-     * @return
+     * {@inheritDoc} 
      */
-    public Binder
-    getBinder()
+    @Override
+    public PropertyInjector 
+    setPropertyValue(String propertyValue)
     {
-        return itsBinder;
+        return this;
     }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public String 
+    getPropertyName()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public String 
+    getPropertyValue()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }
 
 // ##########################################################################

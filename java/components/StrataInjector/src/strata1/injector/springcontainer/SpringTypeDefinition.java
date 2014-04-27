@@ -24,10 +24,9 @@
 
 package strata1.injector.springcontainer;
 
-import strata1.injector.container.IConstructorInjector;
-import strata1.injector.container.IPropertyInjector;
-import strata1.injector.container.ITypeDefinition;
-import strata1.injector.container.LifetimeKind;
+import strata1.injector.containerprovider.IConstructorInjector;
+import strata1.injector.containerprovider.IPropertyInjector;
+import strata1.injector.old.LifetimeKind;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import java.util.ArrayList;
@@ -44,7 +43,6 @@ import java.util.Map;
  */
 public 
 class SpringTypeDefinition
-    implements ITypeDefinition
 {
     private Class<?>                      itsInterfaceType;
     private Class<?>                      itsImplementationType;
@@ -63,7 +61,7 @@ class SpringTypeDefinition
         itsInterfaceType       = null;
         itsImplementationType  = null;
         itsName                = null;
-        itsLifetime            = LifetimeKind.SINGLETON;
+        itsLifetime            = LifetimeKind.INSTANCE_PER_PROCESS;
         itsConstructorInjector = null;
         itsPropertyInjectors   = new HashMap<String,IPropertyInjector>();
     }
@@ -71,9 +69,8 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
-    public ITypeDefinition 
-    setType(Class<?> type)
+    public SpringTypeDefinition 
+    setInterfaceType(Class<?> type)
     {
         itsInterfaceType      = type;
         itsImplementationType = type;
@@ -83,11 +80,9 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
-    public ITypeDefinition 
-    setType(Class<?> interfaceType,Class<?> implementationType)
+    public SpringTypeDefinition 
+    setImplementationType(Class<?> implementationType)
     {
-        itsInterfaceType      = interfaceType;
         itsImplementationType = implementationType;
         return this;
     }
@@ -95,8 +90,7 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
-    public ITypeDefinition 
+    public SpringTypeDefinition 
     setName(String name)
     {
         itsName = name;
@@ -106,8 +100,7 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
-    public ITypeDefinition 
+    public SpringTypeDefinition 
     setLifetime(LifetimeKind lifetime)
     {
         itsLifetime = lifetime;
@@ -117,8 +110,7 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
-    public ITypeDefinition 
+    public SpringTypeDefinition 
     setConstructorInjector(IConstructorInjector injector)
     {
         itsConstructorInjector = injector;
@@ -128,8 +120,7 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
-    public ITypeDefinition 
+    public SpringTypeDefinition 
     insertPropertyInjector(IPropertyInjector injector)
     {
         itsPropertyInjectors.put( injector.getPropertyName(),injector );
@@ -139,8 +130,7 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
-    public ITypeDefinition 
+    public SpringTypeDefinition 
     removeConstructorInjector()
     {
         itsConstructorInjector = null;
@@ -150,8 +140,7 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
-    public ITypeDefinition 
+    public SpringTypeDefinition 
     removePropertyInjector(String propertyName)
     {
         itsPropertyInjectors.remove( propertyName );
@@ -161,7 +150,6 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
     public Class<?> 
     getInterfaceType()
     {
@@ -171,7 +159,6 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
     public Class<?> 
     getImplementationType()
     {
@@ -181,7 +168,6 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
     public String 
     getName()
     {
@@ -191,7 +177,6 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
     public LifetimeKind 
     getLifetime()
     {
@@ -201,7 +186,6 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
     public IConstructorInjector 
     getConstructorInjector()
     {
@@ -211,7 +195,6 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
     public List<IPropertyInjector> 
     getPropertyInjectors()
     {
@@ -222,7 +205,6 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
     public boolean 
     hasName()
     {
@@ -234,7 +216,6 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
     public boolean 
     hasConstructorInjector()
     {
@@ -244,7 +225,6 @@ class SpringTypeDefinition
     /************************************************************************
      * {@inheritDoc} 
      */
-    @Override
     public boolean 
     hasPropertyInjectors()
     {
@@ -311,10 +291,10 @@ class SpringTypeDefinition
     {
         switch (scope)
         {
-        case SINGLETON:
+        case INSTANCE_PER_PROCESS:
             return "singleton";
         
-        case PER_RESOLVE:
+        case INSTANCE_PER_GET:
             return "prototype";
         
         default:

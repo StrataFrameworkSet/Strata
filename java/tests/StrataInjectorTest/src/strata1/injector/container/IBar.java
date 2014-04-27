@@ -1,32 +1,30 @@
 // ##########################################################################
-// # File Name:	IConstructorInjector.java
+// # File Name:	IBar.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataInjectorTest Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataInjectorTest Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataInjectorTest Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataInjectorTest
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
 package strata1.injector.container;
 
-import java.util.List;
-
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -34,27 +32,10 @@ import java.util.List;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IConstructorInjector
+interface IBar
 {
-    /************************************************************************
-     *  
-     *
-     * @param inputNames
-     * @return TODO
-     */
-    public IConstructorInjector
-    setConstructorValues(List<String> inputNames);
-    
-    public IConstructorInjector
-    insertConstructorValue(String inputName);
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public List<String>
-    getConstructorValues();
+    public int
+    getBarId();
 }
 
 // ##########################################################################

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBindingMatcher.java
+// # File Name:	IBindingBuilder.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataInjector Framework.
 // #
@@ -24,7 +24,6 @@
 
 package strata1.injector.container;
 
-import java.lang.annotation.Annotation;
 
 /****************************************************************************
  * 
@@ -34,16 +33,24 @@ import java.lang.annotation.Annotation;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBindingMatcher
-{
-    public <T> IBindingMatcher
-    bindingType(Class<T> type);
-    
-    public IBindingMatcher
-    withKey(String key);
-    
-    public IBindingMatcher
-    withKey(Class<? extends Annotation> key);
+interface IBindingBuilder<T>
+{    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public IBinding<T>
+    getBinding();
+
+    /************************************************************************
+     *  
+     *
+     * @param type
+     * @return
+     */
+    IScopeBindingBuilder<T> 
+    toType(Class<? extends T> type);
 }
 
 // ##########################################################################

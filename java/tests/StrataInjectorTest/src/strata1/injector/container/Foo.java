@@ -1,28 +1,31 @@
 // ##########################################################################
-// # File Name:	LifetimeKind.java
+// # File Name:	Foo.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataInjectorTest Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataInjectorTest Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataInjectorTest Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataInjectorTest
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
 package strata1.injector.container;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /****************************************************************************
  * 
@@ -32,11 +35,34 @@ package strata1.injector.container;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-enum LifetimeKind
+class Foo
+    implements IFoo
 {
-    SINGLETON,
-    PER_THREAD,
-    PER_RESOLVE
+    private String itsFooName;
+        
+    /************************************************************************
+     * Creates a new {@code Foo}. 
+     *
+     */
+    @Inject
+    public 
+    Foo(
+        @Named("test1") 
+        String name)
+    {
+        itsFooName = name;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public String 
+    getFooName()
+    {
+        return itsFooName;
+    }
+
 }
 
 // ##########################################################################

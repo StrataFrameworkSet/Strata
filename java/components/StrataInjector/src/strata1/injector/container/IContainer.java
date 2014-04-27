@@ -3,22 +3,22 @@
 // #
 // # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataInjector Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataInjector Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataInjector Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataInjector
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
@@ -28,6 +28,9 @@ import java.lang.annotation.Annotation;
 
 
 /****************************************************************************
+ * Represents a container of dependency injection bindings and provides 
+ * methods for binding types and decorators and getting instances generated
+ * from these bindings.
  * 
  * @author 		
  *     Sapientia Systems
@@ -38,169 +41,105 @@ public
 interface IContainer
 {
     /************************************************************************
-     *  
-     *
-     * @param type
-     * @return
+     * Inserts a new binding into this container via a binding builder. 
+     * 
+     * @param  builder  built the binding being inserted
+     * @return this container for method chaining
      */
-    public <T> ILinkedBindingBuilder<T>
-    bindType(Class<T> type);
+    public <T> IContainer
+    insertBinding(IBindingBuilder<T> builder);
     
     /************************************************************************
-     *  
+     * Inserts a new binding into this container. 
      *
-     * @param type
-     * @return
+     * @param  binding  the binding being inserted
+     * @return this container for method chaining
      */
-    public <T> ILinkedBindingBuilder<T>
-    bindType(TypeLiteral<T> type);
-    
-    public <T> void
-    bindDecorator(IBindingMatcher matcher,Class<T> decoratorType);
+    public <T> IContainer
+    insertBinding(IBinding<T> binding);
     
     /************************************************************************
-     *  
+     * Returns an instance created from the 
+     * binding mapped to the specified type. 
      *
-     * @param type
-     */
-    public void
-    registerType(ITypeDefinition definition);
-    
-    /************************************************************************
-     *  
-     *
-     * @param instance
-     */
-    public <T> void
-    registerInstance(T instance);
-    
-    /************************************************************************
-     *  
-     *
-     * @param name
-     * @param instance
-     */
-    public <T> void
-    registerInstance(String name,T instance);
-    
-    /************************************************************************
-     *  
-     *
-     * @param type
-     * @return
+     * @param  type the binding's type
+     * @return an instance created from the binding
      */
     public <T> T
-    resolveType(Class<T> type);
+    getInstance(Class<T> type);
     
     /************************************************************************
-     *  
+     * Returns an instance created from the binding
+     * mapped to the specified type and key.  
      *
-     * @param type
-     * @param name
-     * @return
+     * @param  type the binding's type
+     * @param  key  the binding's key
+     * @return an instance created from the binding
      */
     public <T> T
-    resolveType(Class<T> type,String key);
+    getInstance(Class<T> type,String key);
     
     /************************************************************************
-     *  
+     * Returns an instance created from the binding
+     * mapped to the specified type and key.  
      *
-     * @param type
-     * @param key
-     * @return
+     * @param  type the binding's type
+     * @param  key  the binding's key
+     * @return an instance created from the binding
      */
     public <T> T
-    resolveType(Class<T> type,Class<? extends Annotation> key);
+    getInstance(Class<T> type,Class<? extends Annotation> key);
     
     /************************************************************************
-     *  
+     * Returns an instance created from the binding
+     * mapped to the specified identifier.  
      *
-     * @param type
-     * @return
+     * @param  type the binding's type
+     * @param  key  the binding's key
+     * @return an instance created from the binding
      */
     public <T> T
-    resolveInstance(Class<T> type);
+    getInstance(IBindingIdentifier<T> id);
+
     
     /************************************************************************
-     *  
+     * Determines if the container has the specified binding. 
      *
-     * @param type
-     * @param name
-     * @return
+     * @param  type the binding's type
+     * @return true if container has specified binding, false otherwise
      */
-    public <T> T
-    resolveInstance(Class<T> type,String name);
+    public <T> boolean
+    hasBinding(Class<T> type);
     
     /************************************************************************
-     *  
+     * Determines if the container has the specified binding. 
      *
-     * @param definition
-     * @return
+     * @param  type the binding's type
+     * @param  key  the binding's key
+     * @return true if container has specified binding, false otherwise
      */
-    public boolean
-    hasType(ITypeDefinition definition);
+    public <T> boolean
+    hasBinding(Class<T> type,String key);
     
     /************************************************************************
-     *  
+     * Determines if the container has the specified binding. 
      *
-     * @param type
-     * @return
+     * @param  type the binding's type
+     * @param  key  the binding's key
+     * @return true if container has specified binding, false otherwise
      */
-    public boolean
-    hasType(Class<?> type);
+    public <T> boolean
+    hasBinding(Class<T> type,Class<? extends Annotation> key);
     
     /************************************************************************
-     *  
+     * Determines if the container has the specified binding. 
      *
-     * @param type
-     * @param name
-     * @return
+     * @param  id binding's identifier
+     * @return true if container has specified binding, false otherwise
      */
-    public boolean
-    hasType(Class<?> type,String name);
+    public <T> boolean
+    hasBinding(IBindingIdentifier<T> id);
     
-    /************************************************************************
-     *  
-     *
-     * @param type
-     * @return
-     */
-    public boolean
-    hasInstance(Class<?> type);
-    
-    /************************************************************************
-     *  
-     *
-     * @param type
-     * @param name
-     * @return
-     */
-    public boolean
-    hasInstance(Class<?> type,String name);
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public ITypeDefinition
-    createTypeDefinition();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public IConstructorInjector
-    createConstructorInjector();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public IPropertyInjector
-    createPropertyInjector();
 }
 
 // ##########################################################################

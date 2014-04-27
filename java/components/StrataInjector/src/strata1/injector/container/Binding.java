@@ -1,32 +1,28 @@
+package strata1.injector.container;
+
 // ##########################################################################
-// # File Name:	Logger.java
+// # File Name:	Binding.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataInjector Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataInjector Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataInjector Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataInjector
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
-
-package strata1.common.logger;
-
-import java.util.HashSet;
-import java.util.Set;
-import javax.inject.Inject;
 
 /****************************************************************************
  * 
@@ -36,20 +32,71 @@ import javax.inject.Inject;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class Logger
-    implements ILogger
+class Binding<T>
+    implements IBinding<T>
 {
-    private Set<ILogEntryProcessor> itsProcessors;
+    private IBindingIdentifier<T> itsIdentifier;
+    private IBindingTarget<T>     itsTarget;
+    private IBindingScope<T>      itsScope;
     
     /************************************************************************
-     * Creates a new {@code Logger}. 
+     * Creates a new {@code Binding}. 
      *
      */
-    @Inject
     public 
-    Logger()
+    Binding()
     {
-        itsProcessors = new HashSet<ILogEntryProcessor>();
+        itsIdentifier = null;
+        itsTarget     = null;
+        itsScope      = null;
+    }
+
+    /************************************************************************
+     * Creates a new {@code Binding}. 
+     *
+     * @param identifier
+     * @param target
+     * @param scope
+     */
+    public 
+    Binding(
+        IBindingIdentifier<T> identifier,
+        IBindingTarget<T>     target,
+        IBindingScope<T>      scope)
+    {
+        itsIdentifier = identifier;
+        itsTarget     = target;
+        itsScope      = scope;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IBindingIdentifier<T> 
+    getIdentifier()
+    {
+        return itsIdentifier;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IBindingTarget<T> 
+    getTarget()
+    {
+        return itsTarget;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IBindingScope<T> 
+    getScope()
+    {
+        return itsScope;
     }
 
     /************************************************************************
@@ -57,104 +104,49 @@ class Logger
      */
     @Override
     public void 
-    attachProcessor(ILogEntryProcessor processor)
+    accept(IBindingVisitor<T> visitor)
     {
-        itsProcessors.add( processor );
+        visitor.visitBinding( this );
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     *  
+     *
+     * @param identifier
+     * @return
      */
-    @Override
-    public void 
-    detachProcessor(ILogEntryProcessor processor)
+    public Binding<T>
+    setIdentifier(IBindingIdentifier<T> identifier)
     {
-        itsProcessors.remove( processor );
+        itsIdentifier = identifier;
+        return this;
     }
-
+    
     /************************************************************************
-     * {@inheritDoc} 
+     *  
+     *
+     * @param target
+     * @return
      */
-    @Override
-    public boolean 
-    hasProcessor(ILogEntryProcessor processor)
+    public Binding<T>
+    setTarget(IBindingTarget<T> target)
     {
-        return itsProcessors.contains( processor );
+        itsTarget = target;
+        return this;
     }
-
+    
     /************************************************************************
-     * {@inheritDoc} 
+     *  
+     *
+     * @param scope
+     * @return
      */
-    @Override
-    public void 
-    logStart(String message)
+    public Binding<T>
+    setScope(IBindingScope<T> scope)
     {
-        log( LoggingLevel.START,message );
+        itsScope = scope;
+        return this;
     }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    logStop(String message)
-    {
-        log( LoggingLevel.STOP,message );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    logDebug(String message)
-    {
-        log( LoggingLevel.DEBUG,message );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    logInfo(String message)
-    {
-        log( LoggingLevel.INFO,message );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    logWarning(String message)
-    {
-        log( LoggingLevel.WARNING,message );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    logError(String message)
-    {
-        log( LoggingLevel.ERROR,message );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    log(LoggingLevel level,String message)
-    {
-        ILogEntry entry = new LogEntry( level,message );
-        
-        for (ILogEntryProcessor processor:itsProcessors)
-            processor.process( entry );
-    }
-
 }
 
 // ##########################################################################

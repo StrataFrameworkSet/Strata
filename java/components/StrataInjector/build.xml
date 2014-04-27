@@ -1,6 +1,6 @@
 <project 
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
-	name="StrataCommon" 
+	name="StrataInject" 
 	default="run-commit-stage">
 
     <property name="sourceDirectory" value="${basedir}/src/subsystems"/>

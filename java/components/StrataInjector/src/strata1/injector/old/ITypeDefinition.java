@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.injector.container;
+package strata1.injector.old;
 
 import java.util.List;
 

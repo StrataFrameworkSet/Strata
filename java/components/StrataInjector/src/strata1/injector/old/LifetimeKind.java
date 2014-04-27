@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ILifetimeBindingBuilder.java
+// # File Name:	LifetimeKind.java
 // #
 // # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.injector.container;
+package strata1.injector.old;
 
 /****************************************************************************
  * 
@@ -32,9 +32,11 @@ package strata1.injector.container;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ILifetimeBindingBuilder
+enum LifetimeKind
 {
-
+    INSTANCE_PER_PROCESS,
+    INSTANCE_PER_THREAD,
+    INSTANCE_PER_GET
 }
 
 // ##########################################################################

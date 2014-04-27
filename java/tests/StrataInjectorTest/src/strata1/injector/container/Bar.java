@@ -1,32 +1,29 @@
+package strata1.injector.container;
+import javax.inject.Inject;
+
 // ##########################################################################
-// # File Name:	ContainerModule.java
+// # File Name:	Bar.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataInjectorTest Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataInjectorTest Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataInjectorTest Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataInjectorTest
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
-
-package strata1.injector.guicecontainer;
-
-import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
-import com.google.inject.Module;
 
 /****************************************************************************
  * 
@@ -35,41 +32,33 @@ import com.google.inject.Module;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-class ContainerModule
-    implements Module
+public 
+class Bar
+    implements IBar
 {
-    private Binder itsBinder;
+    private int itsBarId;
     
     /************************************************************************
-     * Creates a new {@code ContainerModule}. 
+     * Creates a new {@code Bar}. 
      *
      */
+    @Inject
     public 
-    ContainerModule()
+    Bar(Integer id)
     {
-        itsBinder = null;
+        itsBarId = id;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    configure(Binder binder)
+    public int 
+    getBarId()
     {
-        itsBinder = binder;
+        return itsBarId;
     }
 
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public Binder
-    getBinder()
-    {
-        return itsBinder;
-    }
 }
 
 // ##########################################################################
