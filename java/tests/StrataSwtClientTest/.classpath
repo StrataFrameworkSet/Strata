@@ -15,5 +15,6 @@
 	<classpathentry kind="var" path="M2_REPO/com/hexapixel/swt-ribbon/alpha/swt-ribbon-src-alpha.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataInjector"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataClientTest"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataSwtClient"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
