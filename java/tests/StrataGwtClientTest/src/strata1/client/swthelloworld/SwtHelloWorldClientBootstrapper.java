@@ -78,8 +78,10 @@ class SwtHelloWorldClientBootstrapper
     startApplication()
     {
         IHelloWorldController mainController = 
-            getContainer().getController( 
-                IHelloWorldController.class,"MainController" );
+            getContainer()
+                .getInstance( 
+                    IHelloWorldController.class,
+                    "MainController" );
         
         mainController.start();
     }
