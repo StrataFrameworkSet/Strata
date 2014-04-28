@@ -30,6 +30,7 @@ import strata1.client.region.IRegionManager;
 import strata1.client.shell.IDispatcher;
 import strata1.client.view.ILoginView;
 import strata1.client.view.ISplashView;
+import strata1.injector.container.IContainer;
 import org.mockito.Mockito;
 
 /****************************************************************************
@@ -77,17 +78,17 @@ class MockClientFactory
      * {@inheritDoc} 
      */
     @Override
-    public IClientContainer 
+    public IContainer 
     createContainer()
     {
-        return Mockito.mock( IClientContainer.class );
+        return Mockito.mock( IContainer.class );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IClientContainer 
+    public IContainer 
     createContainer(String resourceLocation)
     {
         return createContainer();

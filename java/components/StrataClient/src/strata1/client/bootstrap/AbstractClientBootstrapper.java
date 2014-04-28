@@ -24,6 +24,7 @@
 
 package strata1.client.bootstrap;
 
+import strata1.injector.container.IContainer;
 import strata1.common.authentication.IClientAuthenticator;
 import strata1.common.commandline.ICommandLineProcessor;
 import strata1.common.logger.ILogger;
@@ -55,7 +56,7 @@ class AbstractClientBootstrapper
     private ICommandLineProcessor itsProcessor;
     private ILogger               itsLogger;
     private IClientModuleManager  itsModuleManager;
-    private IClientContainer      itsContainer;
+    private IContainer            itsContainer;
     private IRegionManager        itsRegionManager;
     private IDispatcher           itsDispatcher;
     private ILoginView            itsLoginView;
@@ -116,7 +117,7 @@ class AbstractClientBootstrapper
      */
     @Override
     public void 
-    setContainer(IClientContainer container)
+    setContainer(IContainer container)
     {
         itsContainer = container;
     }
@@ -205,7 +206,7 @@ class AbstractClientBootstrapper
      * {@inheritDoc} 
      */
     @Override
-    public IClientContainer 
+    public IContainer 
     getContainer()
     {
         return itsContainer;

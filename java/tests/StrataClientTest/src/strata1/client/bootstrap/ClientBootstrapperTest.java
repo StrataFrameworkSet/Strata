@@ -27,6 +27,7 @@ package strata1.client.bootstrap;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import strata1.client.region.IRegionManager;
+import strata1.injector.container.IContainer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -92,7 +93,7 @@ class ClientBootstrapperTest
     public void 
     testSetGetContainer()
     {
-        IClientContainer expected = itsFactory.createContainer();
+        IContainer expected = itsFactory.createContainer();
         
         itsTarget.setContainer( expected );
         assertEquals( expected,itsTarget.getContainer() );

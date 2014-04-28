@@ -29,6 +29,8 @@ import strata1.client.bootstrap.IClientContainer;
 import strata1.client.bootstrap.IClientModule;
 import strata1.client.region.IRegionManager;
 import strata1.client.shell.IDispatcher;
+import strata1.injector.container.Binder;
+import strata1.injector.container.IContainer;
 //import strata1.client.swthelloworld.SwtGreetingView;
 
 /****************************************************************************
@@ -59,9 +61,9 @@ class GreetingModule
     public void 
     initialize(IClientBootstrapper bootstrapper)
     {
-        IClientContainer      container  = bootstrapper.getContainer();
-        IRegionManager        manager    = bootstrapper.getRegionManager();
-        IDispatcher           dispatcher = bootstrapper.getDispatcher();
+        IContainer      container  = bootstrapper.getContainer();
+        IRegionManager  manager    = bootstrapper.getRegionManager();
+        IDispatcher     dispatcher = bootstrapper.getDispatcher();
         
         IHelloWorldModel      model;
         IHelloWorldView       view;
@@ -73,9 +75,20 @@ class GreetingModule
         
         //manager.registerWithRegion( "Greeting",SwtGreetingView.class );
   
-        container.registerModel( model );
-        container.registerView( view );
-        container.registerController( "MainController",controller );
+        container
+            .insertBinding( 
+                Binder
+                    .bindType( IHelloWorldModel.class )
+                    .toInstance(model) )
+            .insertBinding( 
+                Binder
+                    .bindType( IHelloWorldView.class )
+                    .toInstance(view) )
+            .insertBinding( 
+                Binder
+                    .bindType( IHelloWorldController.class )
+                    .withKey(  "MainController" )
+                    .toInstance(controller) );
     }
     
     protected abstract IHelloWorldView
