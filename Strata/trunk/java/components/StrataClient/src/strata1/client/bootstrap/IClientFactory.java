@@ -24,6 +24,7 @@
 
 package strata1.client.bootstrap;
 
+import strata1.injector.container.IContainer;
 import strata1.common.authentication.IClientAuthenticator;
 import strata1.common.commandline.ICommandLineProcessor;
 import strata1.common.logger.ILogger;
@@ -71,7 +72,7 @@ interface IClientFactory
      *
      * @return
      */
-    public IClientContainer
+    public IContainer
     createContainer();
     
     /************************************************************************
@@ -80,7 +81,7 @@ interface IClientFactory
      * @param resourceLocation
      * @return
      */
-    public IClientContainer
+    public IContainer
     createContainer(String resourceLocation);
     
     /************************************************************************

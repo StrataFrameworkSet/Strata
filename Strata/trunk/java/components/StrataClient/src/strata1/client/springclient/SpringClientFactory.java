@@ -31,12 +31,12 @@ import strata1.common.authentication.IClientAuthenticator;
 import strata1.common.logger.ILogger;
 import strata1.client.bootstrap.AbstractClientFactory;
 import strata1.client.bootstrap.ClientContainer;
-import strata1.client.bootstrap.IClientContainer;
 import strata1.client.bootstrap.IClientModuleManager;
 import strata1.client.region.IRegionManager;
 import strata1.client.shell.IDispatcher;
 import strata1.client.view.ILoginView;
 import strata1.client.view.ISplashView;
+import strata1.injector.container.IContainer;
 import strata1.injector.springcontainerprovider.SpringContainerProvider;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -83,26 +83,29 @@ class SpringClientFactory
      * {@inheritDoc} 
      */
     @Override
-    public IClientContainer 
+    public IContainer 
     createContainer()
     {
-        return 
+        return null;
+        /*
             new ClientContainer(
                 new SpringContainerProvider(
-                    new GenericApplicationContext()));
+                    new GenericApplicationContext())); */
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IClientContainer 
+    public IContainer 
     createContainer(String resourceLocation)
     {
-        return 
+        return null;
+        /*
             new ClientContainer(
                 new SpringContainerProvider(
                     new GenericXmlApplicationContext(resourceLocation)));
+                    */
     }
 
     /************************************************************************

@@ -24,8 +24,11 @@
 
 package strata1.client.bootstrap;
 
+import strata1.injector.container.Binder;
+import strata1.injector.container.IContainer;
 import strata1.common.authentication.AuthenticationFailureException;
 import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.authentication.IPrincipal;
 import strata1.common.logger.ILogger;
 import strata1.common.logger.LoggingLevel;
 import strata1.client.command.ExecutionException;
@@ -47,7 +50,7 @@ class StartUpController
     implements IStartUpController
 {
     private ILogger              itsLogger;
-    private IClientContainer     itsContainer;
+    private IContainer           itsContainer;
     private ILoginView           itsLoginView;
     private ISplashView          itsSplashView;
     private IClientAuthenticator itsAuthenticator;
@@ -119,7 +122,7 @@ class StartUpController
      */
     @Override
     public void 
-    setContainer(IClientContainer container)
+    setContainer(IContainer container)
     {
         itsContainer = container;
     }
@@ -228,9 +231,13 @@ class StartUpController
         
         try
         {
-            itsContainer.registerPrincipal(  
-                itsAuthenticator.authenticate( 
-                     itsLoginView.getCredential() ) );
+            itsContainer
+                .insertBinding(  
+                    Binder
+                        .bindType( IPrincipal.class )
+                        .toInstance( 
+                            itsAuthenticator.authenticate( 
+                                itsLoginView.getCredential() ) ) );
             
             itsLoginView.stop();
             itsSplashView.start();

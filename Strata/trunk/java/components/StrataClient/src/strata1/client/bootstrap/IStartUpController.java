@@ -24,6 +24,7 @@
 
 package strata1.client.bootstrap;
 
+import strata1.injector.container.IContainer;
 import strata1.common.authentication.IClientAuthenticator;
 import strata1.common.logger.ILogger;
 import strata1.client.controller.IController;
@@ -45,7 +46,7 @@ interface IStartUpController
     setLogger(ILogger logger);
     
     public void
-    setContainer(IClientContainer container);
+    setContainer(IContainer container);
     
     public void
     setLoginView(ILoginView loginView);

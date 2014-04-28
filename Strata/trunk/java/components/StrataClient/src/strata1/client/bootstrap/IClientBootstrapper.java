@@ -24,6 +24,7 @@
 
 package strata1.client.bootstrap;
 
+import strata1.injector.container.IContainer;
 import strata1.common.authentication.IClientAuthenticator;
 import strata1.common.commandline.ICommandLineProcessor;
 import strata1.common.logger.ILogger;
@@ -52,7 +53,7 @@ interface IClientBootstrapper
     setModuleManager(IClientModuleManager modules);
 
     public void 
-    setContainer(IClientContainer container);
+    setContainer(IContainer container);
     
     public void
     setRegionManager(IRegionManager manager);
@@ -78,7 +79,7 @@ interface IClientBootstrapper
     public IClientModuleManager
     getModuleManager();
 
-    public IClientContainer
+    public IContainer
     getContainer();
     
     public IRegionManager
