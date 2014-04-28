@@ -86,7 +86,7 @@ class ContainerTest
         
         assertNotNull( logger );
                 
-        logger.logInfo( "Test Message" );
+        logger.logInfo( "Test Message 1" );
     }
     
     /************************************************************************
@@ -188,6 +188,35 @@ class ContainerTest
         assertNotNull( foobar.getBar() );
         assertEquals( 12345,foobar.getBar().getBarId() );
         
+    }
+    
+    /************************************************************************
+     *  
+     *
+     */
+    @Test
+    public void
+    testInsertBinding5()
+    {
+        ILogger logger = null;
+        
+        itsTarget
+            .insertBinding( 
+                Binder
+                    .bindType( ILogger.class )
+                    .withKey( MainLogger.class )
+                    .toProvider( new LoggerProvider() ) );
+        
+        logger = 
+            itsTarget.getInstance( ILogger.class,MainLogger.class );
+        
+        assertNotNull( logger );
+        logger.logInfo( "Test Message 5" );
+        
+        logger = 
+            itsTarget.getInstance( ILogger.class );
+        
+        assertNull( logger );
     }
     
     /************************************************************************

@@ -104,7 +104,6 @@ class BindingVisitor<T>
     public void 
     visitTarget(ClassBindingTarget<T> target)
     {
-        System.out.println("visitTarget(ClassBindingTarget<T>)");
         Class<? extends T> type        = target.getType();
         Constructor<?>     constructor = getInjectionConstructor(type);
           
@@ -123,7 +122,6 @@ class BindingVisitor<T>
     public void 
     visitTarget(ProviderBindingTarget<T> target)
     {
-        System.out.println("visitTarget(ProviderBindingTarget<T>)");
         Class<?>       providerType = target.getProviderType();
         Constructor<?> constructor = null;
         
@@ -147,7 +145,6 @@ class BindingVisitor<T>
     public void 
     visitTarget(InstanceBindingTarget<T> target)
     {
-        System.out.println("visitTarget(InstanceBindingTarget<T>)");
         itsProvider = new InstanceProvider<T>( target.getInstance() );
     }
 
@@ -158,7 +155,6 @@ class BindingVisitor<T>
     public void 
     visitScope(IBindingScope<T> scope)
     {
-        System.out.println("visitScope(IBindingScope<T>)");
         itsProvider = scope.getScopedProvider(itsProvider);
     }
 
