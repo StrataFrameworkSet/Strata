@@ -24,19 +24,20 @@
 
 package strata1.client.swthelloworld;
 
+import strata1.injector.container.Container;
+import strata1.injector.container.IContainer;
+import strata1.injector.springcontainerprovider.SpringContainerProvider;
+import strata1.client.bootstrap.AbstractClientFactory;
+import strata1.client.bootstrap.ClientContainer;
+import strata1.client.region.IRegionManager;
+import strata1.client.shell.IDispatcher;
+import strata1.client.view.ILoginView;
+import strata1.client.view.ISplashView;
 import strata1.common.authentication.FakeClientAuthenticator;
 import strata1.common.authentication.IClientAuthenticator;
 import strata1.common.logger.ILogger;
 import strata1.common.logger.Logger;
 import strata1.common.logger.PrintWriterLogEntryProcessor;
-import strata1.common.springcontainerprovider.SpringContainerProvider;
-import strata1.client.bootstrap.AbstractClientFactory;
-import strata1.client.bootstrap.ClientContainer;
-import strata1.client.bootstrap.IClientContainer;
-import strata1.client.region.IRegionManager;
-import strata1.client.shell.IDispatcher;
-import strata1.client.view.ILoginView;
-import strata1.client.view.ISplashView;
 import strata1.swtclient.swtregion.SwtRegionManager;
 import strata1.swtclient.swtshell.SwtDispatcher;
 import strata1.swtclient.swtview.SwtLoginView;
@@ -86,26 +87,20 @@ class SwtHelloWorldClientFactory
      * {@inheritDoc} 
      */
     @Override
-    public IClientContainer 
+    public IContainer 
     createContainer()
     {
-        return 
-            new ClientContainer(
-                new SpringContainerProvider(
-                    new GenericApplicationContext()));
+        return new Container();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IClientContainer 
+    public IContainer 
     createContainer(String resourceLocation)
     {
-        return 
-            new ClientContainer(
-                new SpringContainerProvider(
-                    new GenericXmlApplicationContext(resourceLocation)));
+        return new Container();
     }
 
     /************************************************************************

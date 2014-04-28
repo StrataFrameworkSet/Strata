@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="build" path="src/subsystems"/>
 	<classpathentry kind="src" output="build" path="src/tests"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.9/junit-4.9.jar"/>
@@ -14,5 +13,10 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegrator"/>
 	<classpathentry kind="var" path="M2_REPO/com/hexapixel/swt-ribbon/alpha/swt-ribbon-alpha.jar" sourcepath="/M2_REPO/com/hexapixel/swt-ribbon/alpha/swt-ribbon-src-alpha.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/hexapixel/swt-ribbon/alpha/swt-ribbon-src-alpha.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataClientTest"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataGwtClient"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataInjector"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataSwtClient"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataAndroidClient"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
