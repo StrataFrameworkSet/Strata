@@ -1,7 +1,0 @@
-<module>
-	<inherits name="com.google.gwt.user.User"/>
-	<stylesheet src="GwtInteractor.css"/>
-    <source path="sessionclient"/>
-    <source path="commandclient"/>
-	<source path="updateclient"/>
-</module>
