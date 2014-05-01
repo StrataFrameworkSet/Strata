@@ -24,6 +24,8 @@
 
 package strata1.client.bootstrap;
 
+import strata1.injector.container.IModule;
+
 
 /****************************************************************************
  * 
@@ -34,10 +36,10 @@ package strata1.client.bootstrap;
  */
 public 
 interface IClientModuleManager
-    extends Iterable<IClientModule>
+    extends Iterable<IModule>
 {
     public void
-    registerModule(IClientModule module);
+    registerModule(IModule module);
     
     public int
     getNumberOfModules();

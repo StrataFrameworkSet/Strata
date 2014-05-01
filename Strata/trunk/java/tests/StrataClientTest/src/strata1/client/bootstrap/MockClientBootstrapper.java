@@ -24,6 +24,7 @@
 
 package strata1.client.bootstrap;
 
+import strata1.injector.container.IModule;
 import org.mockito.Mockito;
 
 /****************************************************************************
@@ -55,7 +56,7 @@ class MockClientBootstrapper
     configureModules()
     {
         getModuleManager()
-            .registerModule( Mockito.mock( IClientModule.class ) );
+            .registerModule( Mockito.mock( IModule.class ) );
     }
 
     /************************************************************************

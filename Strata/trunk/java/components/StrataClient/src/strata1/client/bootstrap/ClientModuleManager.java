@@ -24,6 +24,7 @@
 
 package strata1.client.bootstrap;
 
+import strata1.injector.container.IModule;
 import strata1.common.logger.LoggingLevel;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,7 +41,7 @@ public
 class ClientModuleManager
     implements IClientModuleManager
 {
-    private Map<String,IClientModule> itsModules;
+    private Map<String,IModule> itsModules;
     
     /************************************************************************
      * Creates a new {@code ClientModuleManager}. 
@@ -49,14 +50,14 @@ class ClientModuleManager
     public 
     ClientModuleManager()
     {
-        itsModules = new HashMap<String,IClientModule>();
+        itsModules = new HashMap<String,IModule>();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public Iterator<IClientModule> 
+    public Iterator<IModule> 
     iterator()
     {
         return itsModules.values().iterator();
@@ -67,7 +68,7 @@ class ClientModuleManager
      */
     @Override
     public void 
-    registerModule(IClientModule module)
+    registerModule(IModule module)
     {
         itsModules.put( module.getClass().getName(),module );
     }
@@ -91,7 +92,7 @@ class ClientModuleManager
     {
         IStartUpController controller = bootstrapper.getController();
         
-        for (IClientModule module:itsModules.values())
+        for (IModule module:itsModules.values())
         {
             String message = 
                 "Initializing module: " +
@@ -108,7 +109,7 @@ class ClientModuleManager
                 .getDispatcher()
                 .processWork();
             
-            module.initialize( bootstrapper );  
+            module.initialize( bootstrapper.getContainer() );  
             
         }
     }

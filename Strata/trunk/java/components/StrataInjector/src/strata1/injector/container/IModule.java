@@ -34,6 +34,9 @@ package strata1.injector.container;
 public 
 interface IModule
 {
+    public String
+    getName();
+    
     public void
     initialize(IContainer container);
 }

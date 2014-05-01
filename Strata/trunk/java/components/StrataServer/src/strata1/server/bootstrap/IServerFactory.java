@@ -29,6 +29,7 @@ import strata1.common.logger.ILogger;
 import strata1.common.producerconsumer.ITaskConsumer;
 import strata1.common.producerconsumer.ITaskProducerConsumerManager;
 import strata1.injector.container.IContainer;
+import strata1.injector.container.IModule;
 
 /**
  * 
@@ -77,7 +78,7 @@ interface IServerFactory
      *
      * @return
      */
-    public List<IServerModule>
+    public List<IModule>
     createModules();
 }
 
