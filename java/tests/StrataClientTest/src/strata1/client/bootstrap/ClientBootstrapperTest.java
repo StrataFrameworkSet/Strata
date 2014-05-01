@@ -28,6 +28,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import strata1.client.region.IRegionManager;
 import strata1.injector.container.IContainer;
+import strata1.injector.container.IModule;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -124,9 +125,9 @@ class ClientBootstrapperTest
         verify(itsTarget.getModuleManager())
             .initialize( itsTarget );
         
-        for (IClientModule module:itsTarget.getModuleManager())
+        for (IModule module:itsTarget.getModuleManager())
             verify(module)
-                .initialize( itsTarget );
+                .initialize( itsTarget.getContainer() );
         
 
     }

@@ -27,19 +27,15 @@
 
 package strata1.client.springclient;
 
-import strata1.common.authentication.IClientAuthenticator;
-import strata1.common.logger.ILogger;
+import strata1.injector.container.IContainer;
 import strata1.client.bootstrap.AbstractClientFactory;
-import strata1.client.bootstrap.ClientContainer;
 import strata1.client.bootstrap.IClientModuleManager;
 import strata1.client.region.IRegionManager;
 import strata1.client.shell.IDispatcher;
 import strata1.client.view.ILoginView;
 import strata1.client.view.ISplashView;
-import strata1.injector.container.IContainer;
-import strata1.injector.springcontainerprovider.SpringContainerProvider;
-import org.springframework.context.support.GenericApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
+import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.logger.ILogger;
 
 /**
  * 

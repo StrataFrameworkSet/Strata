@@ -47,6 +47,7 @@ class SwtGreetingModule
     public 
     SwtGreetingModule()
     {
+        super("SwtGreetingModule");
     }
 
     /************************************************************************

@@ -28,7 +28,9 @@ import java.util.Collections;
 import java.util.List;
 import strata1.common.logger.ILogger;
 import strata1.common.producerconsumer.ITaskProducerConsumerManager;
+import strata1.injector.container.Binder;
 import strata1.injector.container.IContainer;
+import strata1.injector.container.IModule;
 
 /****************************************************************************
  * 
@@ -44,7 +46,7 @@ class ServerBootstrapper
     private IContainer                   itsContainer;
     private ILogger                      itsLogger;
     private ITaskProducerConsumerManager itsTaskManager;
-    private List<IServerModule>          itsModules;
+    private List<IModule>                itsModules;
     private boolean                      itsStartIndicator;
     
     /************************************************************************
@@ -106,7 +108,7 @@ class ServerBootstrapper
      * {@inheritDoc} 
      */
     @Override
-    public List<IServerModule> 
+    public List<IModule> 
     getModules()
     {
         return Collections.unmodifiableList( itsModules );
@@ -121,14 +123,14 @@ class ServerBootstrapper
     {
         try
         {
-            CreateContainer(factory);
-            CreateLogger(factory);
-            CreateTaskManager(factory);
-            CreateModules(factory);
-            InitializeModules();
+            createContainer(factory);
+            createLogger(factory);
+            createTaskManager(factory);
+            createModules(factory);
+            initializeModules();
             
-            if ( MustStartServer() )
-                StartServer();
+            if ( mustStartServer() )
+                startServer();
         }
         catch (Exception e)
         {
@@ -143,7 +145,7 @@ class ServerBootstrapper
      * @param factory
      */
     private void 
-    CreateContainer(IServerFactory factory)
+    createContainer(IServerFactory factory)
     {
         itsContainer = factory.createContainer();
         
@@ -157,7 +159,7 @@ class ServerBootstrapper
      * @param factory
      */
     private void 
-    CreateLogger(IServerFactory factory)
+    createLogger(IServerFactory factory)
     {
         itsLogger = factory.createLogger();
         
@@ -165,7 +167,11 @@ class ServerBootstrapper
             throw new IllegalStateException("logger is null");
         
         getLogger().logInfo( "Registering logger with container" );
-        //getContainer().registerLogger(itsLogger);
+        getContainer()
+            .insertBinding(
+                Binder
+                    .bindType( ILogger.class )
+                    .toInstance( itsLogger ) );
     }
 
     /************************************************************************
@@ -174,7 +180,7 @@ class ServerBootstrapper
      * @param factory
      */
     private void 
-    CreateTaskManager(IServerFactory factory)
+    createTaskManager(IServerFactory factory)
     {
         getLogger().logInfo( "Creating task manager." );
         itsTaskManager = factory.createTaskProducerConsumerManager();
@@ -186,7 +192,11 @@ class ServerBootstrapper
         getTaskManager().attachConsumer( factory.createTaskConsumer() );
         
         getLogger().logInfo( "Registering task manager with container." );
-        //getContainer().registerTaskProducerConsumerManager(getTaskManager());
+        getContainer()
+            .insertBinding(
+                Binder
+                    .bindType( ITaskProducerConsumerManager.class )
+                    .toInstance( itsTaskManager ) );
     }
 
     /************************************************************************
@@ -195,7 +205,7 @@ class ServerBootstrapper
      * @param factory
      */
     private void 
-    CreateModules(IServerFactory factory)
+    createModules(IServerFactory factory)
     {
         getLogger().logInfo( "Creating server modules." );
         itsModules = factory.createModules();
@@ -212,15 +222,15 @@ class ServerBootstrapper
      *
      */
     private void 
-    InitializeModules()
+    initializeModules()
     {
         getLogger().logInfo( "Initializing server modules." );
         
-        for (IServerModule module : getModules())
+        for (IModule module : getModules())
         {
             getLogger()
                 .logInfo("Initalizaing module: " + module.getName() + ".");
-            module.initialize( this );
+            module.initialize( getContainer() );
         }
     }
 
@@ -230,7 +240,7 @@ class ServerBootstrapper
      * @return
      */
     private boolean 
-    MustStartServer()
+    mustStartServer()
     {
         return itsStartIndicator;
     }
@@ -240,7 +250,7 @@ class ServerBootstrapper
      *
      */
     private void 
-    StartServer()
+    startServer()
     {
         getTaskManager().startUp();
     }

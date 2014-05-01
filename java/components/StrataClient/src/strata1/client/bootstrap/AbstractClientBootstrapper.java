@@ -24,6 +24,7 @@
 
 package strata1.client.bootstrap;
 
+import strata1.injector.container.Binder;
 import strata1.injector.container.IContainer;
 import strata1.common.authentication.IClientAuthenticator;
 import strata1.common.commandline.ICommandLineProcessor;
@@ -120,6 +121,11 @@ class AbstractClientBootstrapper
     setContainer(IContainer container)
     {
         itsContainer = container;
+        itsContainer
+            .insertBinding(
+                Binder
+                    .bindType( ILogger.class )
+                    .toInstance( getLogger() ) );
     }
 
     /************************************************************************
@@ -130,6 +136,11 @@ class AbstractClientBootstrapper
     setRegionManager(IRegionManager manager)
     {
         itsRegionManager = manager;
+        getContainer()
+            .insertBinding(
+                Binder
+                    .bindType( IRegionManager.class )
+                    .toInstance( itsRegionManager ) );        
     }
 
     /************************************************************************
@@ -140,6 +151,11 @@ class AbstractClientBootstrapper
     setDispatcher(IDispatcher dispatcher)
     {
         itsDispatcher = dispatcher;
+        getContainer()
+            .insertBinding(
+                Binder
+                    .bindType( IDispatcher.class )
+                    .toInstance( itsDispatcher ) );        
     }
 
     /************************************************************************
@@ -150,6 +166,11 @@ class AbstractClientBootstrapper
     setLoginView(ILoginView loginView)
     {
         itsLoginView = loginView;
+        getContainer()
+            .insertBinding(
+                Binder
+                    .bindType( ILoginView.class )
+                    .toInstance( itsLoginView ) );        
     }
 
     /************************************************************************
@@ -160,6 +181,11 @@ class AbstractClientBootstrapper
     setSplashView(ISplashView splashView)
     {
         itsSplashView = splashView;
+        getContainer()
+            .insertBinding(
+                Binder
+                    .bindType( ISplashView.class )
+                    .toInstance( itsSplashView ) );        
     }
 
     /************************************************************************
@@ -170,6 +196,11 @@ class AbstractClientBootstrapper
     setAuthenticator(IClientAuthenticator authenticator)
     {
         itsAuthenticator = authenticator;
+        getContainer()
+            .insertBinding(
+                Binder
+                    .bindType( IClientAuthenticator.class )
+                    .toInstance( itsAuthenticator ) );        
     }
 
     /************************************************************************
@@ -282,16 +313,16 @@ class AbstractClientBootstrapper
     {
         try
         {
-            setCommandLineProcessor( factory.createCommandLineProcessor() );
             setLogger( factory.createLogger() );
+            getLogger().log( LoggingLevel.INFO,"Creating container." );
+            setContainer( factory.createContainer() );
+            setCommandLineProcessor( factory.createCommandLineProcessor() );
             getLogger().log( 
                 LoggingLevel.INFO,"Processing command line arguments." );
             processCommandLineArguments( arguments );
             
             getLogger().log( LoggingLevel.INFO,"Creating module manager." );
             setModuleManager( factory.createModuleManager() );
-            getLogger().log( LoggingLevel.INFO,"Creating container." );
-            setContainer( factory.createContainer() );
             getLogger().log( LoggingLevel.INFO,"Creating region manager." );
             setRegionManager( factory.createRegionManager() );
             

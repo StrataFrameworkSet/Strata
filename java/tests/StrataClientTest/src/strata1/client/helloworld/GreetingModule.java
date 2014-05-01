@@ -24,13 +24,12 @@
 
 package strata1.client.helloworld;
 
-import strata1.client.bootstrap.IClientBootstrapper;
-import strata1.client.bootstrap.IClientContainer;
-import strata1.client.bootstrap.IClientModule;
 import strata1.client.region.IRegionManager;
 import strata1.client.shell.IDispatcher;
+import strata1.injector.container.AbstractModule;
 import strata1.injector.container.Binder;
 import strata1.injector.container.IContainer;
+import strata1.injector.container.IModule;
 //import strata1.client.swthelloworld.SwtGreetingView;
 
 /****************************************************************************
@@ -42,16 +41,18 @@ import strata1.injector.container.IContainer;
  */
 public abstract
 class GreetingModule
-    implements IClientModule
+    extends AbstractModule
+    implements IModule
 {
-
+ 
     /************************************************************************
      * Creates a new {@code SwtGreetingModule}. 
      *
      */
     public 
-    GreetingModule()
+    GreetingModule(String name)
     {
+        super(name);
     }
 
     /************************************************************************
@@ -59,16 +60,17 @@ class GreetingModule
      */
     @Override
     public void 
-    initialize(IClientBootstrapper bootstrapper)
+    initialize(IContainer container)
     {
-        IContainer      container  = bootstrapper.getContainer();
-        IRegionManager  manager    = bootstrapper.getRegionManager();
-        IDispatcher     dispatcher = bootstrapper.getDispatcher();
+        IRegionManager  manager    = null;
+        IDispatcher     dispatcher = null;
         
-        IHelloWorldModel      model;
-        IHelloWorldView       view;
-        IHelloWorldController controller;
+        IHelloWorldModel      model      = null;
+        IHelloWorldView       view       = null;
+        IHelloWorldController controller = null;
         
+        manager    = container.getInstance(IRegionManager.class);
+        dispatcher = container.getInstance(IDispatcher.class);
         model      = new HelloWorldModel();
         view       = createHelloWorldView( dispatcher );
         controller = new HelloWorldController( model,view );

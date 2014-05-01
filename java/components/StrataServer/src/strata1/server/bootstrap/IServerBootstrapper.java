@@ -28,6 +28,7 @@ import java.util.List;
 import strata1.common.logger.ILogger;
 import strata1.common.producerconsumer.ITaskProducerConsumerManager;
 import strata1.injector.container.IContainer;
+import strata1.injector.container.IModule;
 
 /**
  * 
@@ -48,7 +49,7 @@ interface IServerBootstrapper
     public ITaskProducerConsumerManager
     getTaskManager();
     
-    public List<IServerModule>
+    public List<IModule>
     getModules();
     
     public void
