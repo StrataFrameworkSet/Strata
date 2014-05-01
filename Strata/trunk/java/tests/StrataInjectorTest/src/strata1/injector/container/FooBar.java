@@ -25,6 +25,7 @@
 package strata1.injector.container;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /****************************************************************************
  * 
@@ -37,8 +38,12 @@ public
 class FooBar
     implements IFooBar
 {
-    private IFoo itsFoo;
-    private IBar itsBar;
+    private IFoo   itsFoo;
+    private IBar   itsBar;
+    
+    @Inject
+    @Named("test2")
+    private String itsBaz;
     
     /************************************************************************
      * Creates a new {@code FooBar}. 
@@ -50,6 +55,7 @@ class FooBar
     {
         itsFoo = foo;
         itsBar = null;
+        itsBaz = null;
     }
 
     /************************************************************************
@@ -81,6 +87,16 @@ class FooBar
     getBar()
     {
         return itsBar;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public String 
+    getBaz()
+    {
+        return itsBaz;
     }
 
 }

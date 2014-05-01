@@ -187,6 +187,7 @@ class ContainerTest
         assertEquals( "XXXXXXX",foobar.getFoo().getFooName() );
         assertNotNull( foobar.getBar() );
         assertEquals( 12345,foobar.getBar().getBarId() );
+        assertEquals( "YYYYYYY",foobar.getBaz() );
         
     }
     
