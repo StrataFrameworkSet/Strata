@@ -42,6 +42,9 @@ interface IFooBar
     
     public IBar
     getBar();
+    
+    public String
+    getBaz();
 }
 
 // ##########################################################################

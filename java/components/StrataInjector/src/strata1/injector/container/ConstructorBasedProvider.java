@@ -26,12 +26,14 @@ package strata1.injector.container;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
+import javax.inject.Qualifier;
 
 /****************************************************************************
  * 
@@ -76,7 +78,8 @@ class ConstructorBasedProvider<T>
                 itsType.cast( 
                     itsConstructor.newInstance( getArguments() ) );       
             
-            performMemberInjection(instance);
+            performFieldInjection(instance);
+            performMethodInjection(instance);
             return instance;
         }
         catch (Exception e)
@@ -105,6 +108,23 @@ class ConstructorBasedProvider<T>
         }
         
         return arguments.toArray();
+    }
+
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    private Object 
+    getArgument(Field field)
+    {
+        IBindingIdentifier<?> identifier = getBindingIdentifier(field);
+        
+        if ( !itsContainer.hasBinding( identifier ) )
+            throw new IllegalStateException();
+        
+        return itsContainer.getInstance( identifier );
     }
 
     /************************************************************************
@@ -157,6 +177,37 @@ class ConstructorBasedProvider<T>
      * @return
      */
     @SuppressWarnings("unchecked")
+    private IBindingIdentifier<?> 
+    getBindingIdentifier(Field field)
+    {
+        Class<?>     type = field.getType();
+        Annotation[] annotations = field.getAnnotations();
+        
+        if ( annotations.length == 1 )
+            return new TypeBindingIdentifier<Object>((Class<Object>)type );
+        else if ( annotations.length == 2 )
+        {
+            if ( annotations[1].annotationType().equals( Named.class ))
+                return 
+                    new TypeAndNameBindingIdentifier<Object>(
+                        (Class<Object>)type,
+                            ((Named)annotations[1]).value());
+            else
+                return
+                    new TypeAndAnnotationBindingIdentifier<Object>(
+                        (Class<Object>)type,
+                        annotations[1].annotationType());
+        }
+        
+        throw new IllegalStateException("field annotation error");
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    @SuppressWarnings("unchecked")
     private List<IBindingIdentifier<?>> 
     getBindingIdentifiers(Method method)
     {
@@ -201,7 +252,20 @@ class ConstructorBasedProvider<T>
      * @param instance
      */
     private void 
-    performMemberInjection(T instance)
+    performFieldInjection(T instance)
+    {
+        for (Field field : itsType.getDeclaredFields())
+            if ( field.isAnnotationPresent( Inject.class ))
+                injectMember( instance,field );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param instance
+     */
+    private void 
+    performMethodInjection(T instance)
     {
         for (Method method : itsType.getMethods())
             if ( method.isAnnotationPresent( Inject.class ))
@@ -214,10 +278,30 @@ class ConstructorBasedProvider<T>
      * @param method
      */
     private void 
+    injectMember(T instance,Field field)
+    {
+        try
+        {
+            field.setAccessible( true );
+            field.set( instance,getArgument(field) );
+        }
+        catch(Exception e)
+        {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param method
+     */
+    private void 
     injectMember(T instance,Method method)
     {
         try
         {
+            method.setAccessible( true );
             method.invoke( instance,getArguments(method) );
         }
         catch(Exception e)
