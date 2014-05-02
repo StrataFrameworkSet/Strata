@@ -55,16 +55,6 @@ class SwtHelloWorldClientBootstrapper
      */
     @Override
     protected void 
-    configureModules()
-    {
-        getModuleManager().registerModule( new SwtGreetingModule() );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    protected void 
     configureRegionManager()
     {
         SwtRegion.setManager( (SwtRegionManager)getRegionManager() );

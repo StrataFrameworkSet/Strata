@@ -32,6 +32,7 @@ import strata1.injector.container.IModule;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.List;
 
 /****************************************************************************
  * 
@@ -75,16 +76,16 @@ class ClientBootstrapperTest
     }
 
     /**
-     * Test method for {@link IClientBootstrapper#setModuleManager(IClientModuleManager)}.
+     * Test method for {@link IClientBootstrapper#setModules(List)}.
      */
     @Test
     public void 
     testSetGetModuleManager()
     {
-        IClientModuleManager expected = itsFactory.createModuleManager();
+        List<IModule> expected = itsFactory.createModules();
         
-        itsTarget.setModuleManager( expected );
-        assertEquals( expected,itsTarget.getModuleManager() );
+        itsTarget.setModules( expected );
+        assertEquals( expected,itsTarget.getModules() );
     }
 
     /**
@@ -122,10 +123,7 @@ class ClientBootstrapperTest
     {
         itsTarget.run( itsFactory, null );
         
-        verify(itsTarget.getModuleManager())
-            .initialize( itsTarget );
-        
-        for (IModule module:itsTarget.getModuleManager())
+        for (IModule module:itsTarget.getModules())
             verify(module)
                 .initialize( itsTarget.getContainer() );
         

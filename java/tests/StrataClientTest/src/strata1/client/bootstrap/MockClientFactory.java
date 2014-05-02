@@ -31,7 +31,10 @@ import strata1.client.shell.IDispatcher;
 import strata1.client.view.ILoginView;
 import strata1.client.view.ISplashView;
 import strata1.injector.container.IContainer;
+import strata1.injector.container.IModule;
 import org.mockito.Mockito;
+import java.util.ArrayList;
+import java.util.List;
 
 /****************************************************************************
  * 
@@ -68,10 +71,10 @@ class MockClientFactory
      * {@inheritDoc} 
      */
     @Override
-    public IClientModuleManager 
-    createModuleManager()
+    public List<IModule> 
+    createModules()
     {
-        return Mockito.spy( super.createModuleManager() );
+        return Mockito.spy( new ArrayList<IModule>() );
     }
 
     /************************************************************************

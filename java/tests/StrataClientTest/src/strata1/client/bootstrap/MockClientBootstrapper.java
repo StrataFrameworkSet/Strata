@@ -53,17 +53,6 @@ class MockClientBootstrapper
      */
     @Override
     protected void 
-    configureModules()
-    {
-        getModuleManager()
-            .registerModule( Mockito.mock( IModule.class ) );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    protected void 
     configureRegionManager()
     {
         
