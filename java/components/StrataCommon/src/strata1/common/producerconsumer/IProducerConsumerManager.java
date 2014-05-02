@@ -34,43 +34,47 @@ import java.util.Set;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IProducerConsumerManager<T>
+interface IProducerConsumerManager<
+    T,
+    P extends IProducer<T,C,R>,
+    C extends IConsumer<T,C,R>,
+    R extends IRouter<T,C,R>>
 {
     public void
-    attachProducer(IProducer<T> producer);
+    attachProducer(P producer);
     
     public void
-    attachConsumer(IConsumer<T> consumer);
+    attachConsumer(C consumer);
     
     public void
-    detachProducer(IProducer<T> producer);
+    detachProducer(P producer);
     
-    public IConsumer<T>
-    detachConsumer();
+    public void
+    detachConsumer(C consumer);
     
-    public Set<IProducer<T>>
+    public Set<P>
     getProducers();
     
-    public IConsumer<T>
-    getConsumer();
+    public Set<C>
+    getConsumers();
     
     public boolean
-    hasProducer(IProducer<T> producer);
+    hasProducer(P producer);
     
     public boolean
-    hasConsumer(IConsumer<T> consumer);
+    hasConsumer(C consumer);
     
     public void
     startProducers();
     
     public void
-    startConsumer();
+    startConsumers();
     
     public void
     stopProducers();
     
     public void
-    stopConsumer();
+    stopConsumers();
     
     public void
     startUp();

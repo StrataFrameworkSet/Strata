@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	AbstractProducer.java
+// # File Name:	TaskRouter.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,6 +24,11 @@
 
 package strata1.common.producerconsumer;
 
+import strata1.common.utility.ISynchronizer;
+import strata1.common.utility.ReadWriteLockSynchronizer;
+import java.util.HashSet;
+import java.util.Set;
+
 /****************************************************************************
  * 
  * @author 		
@@ -31,23 +36,22 @@ package strata1.common.producerconsumer;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract 
-class AbstractProducer<
-    T,
-    C extends IConsumer<T,C,R>,
-    R extends IRouter<T,C,R>>
-    implements IProducer<T,C,R>
+public 
+class TaskRouter
+    implements ITaskRouter
 {
-    private R itsSink;
+    private Set<ITaskConsumer> itsConsumers;
+    private ISynchronizer      itsSynchronizer;
     
     /************************************************************************
-     * Creates a new {@code AbstractProducer}. 
+     * Creates a new {@code TaskRouter}. 
      *
      */
     public 
-    AbstractProducer()
+    TaskRouter()
     {
-        itsSink = null;
+        itsConsumers = new HashSet<ITaskConsumer>();
+        itsSynchronizer = new ReadWriteLockSynchronizer();
     }
 
     /************************************************************************
@@ -55,9 +59,20 @@ class AbstractProducer<
      */
     @Override
     public void 
-    setSink(R sink)
+    attachConsumer(ITaskConsumer consumer)
     {
-        itsSink = sink;
+        try
+        {
+            itsSynchronizer.lockForWriting();
+            
+            if ( !hasConsumer( consumer ) )
+                itsConsumers.add( consumer );
+                
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromWriting();
+        }
     }
 
     /************************************************************************
@@ -65,19 +80,32 @@ class AbstractProducer<
      */
     @Override
     public void 
-    clearSink()
+    detachConsumer(ITaskConsumer consumer)
     {
-        itsSink = null;
+        // TODO Auto-generated method stub
+
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public R 
-    getSink()
+    public void 
+    routeElement(ITask element)
     {
-        return itsSink;
+        // TODO Auto-generated method stub
+
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    hasConsumer(ITaskConsumer consumer)
+    {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

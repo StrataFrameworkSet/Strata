@@ -33,8 +33,14 @@ package strata1.common.producerconsumer;
  */
 public 
 class TaskProducerConsumerManager
-    extends    ProducerConsumerManager<ITask>
-    implements ITaskProducerConsumerManager
+    extends
+        ProducerConsumerManager<
+            ITask,
+            ITaskProducer,
+            ITaskConsumer,
+            ITaskRouter>
+    implements 
+        ITaskProducerConsumerManager
 {
 
     /************************************************************************
@@ -53,9 +59,9 @@ class TaskProducerConsumerManager
      * @param channel
      */
     public 
-    TaskProducerConsumerManager(IBlockingCollection<ITask> channel)
+    TaskProducerConsumerManager(ITaskRouter router)
     {
-        super( channel );
+        super( router );
     }
     
 }
