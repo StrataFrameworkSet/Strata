@@ -151,7 +151,7 @@ class TaskRouter
     {
         List<ITaskConsumer> matching = new ArrayList<ITaskConsumer>();
         
-        matching = filterOnSelector(matching,task);
+        matching = filterOnSelector(itsConsumers,task);
         matching = filterOnMin(matching,findMin(matching));
         return matching.get( generateRandomIndex(matching.size()) );
     }
@@ -164,7 +164,7 @@ class TaskRouter
      * @return
      */
     private List<ITaskConsumer> 
-    filterOnSelector(List<ITaskConsumer> consumers,ITask task)
+    filterOnSelector(Set<ITaskConsumer> consumers,ITask task)
     {
         List<ITaskConsumer> selected = new ArrayList<ITaskConsumer>();
         
@@ -178,16 +178,16 @@ class TaskRouter
     /************************************************************************
      *  
      *
-     * @param consumers
+     * @param matching
      * @param findMin
      * @return
      */
     private List<ITaskConsumer> 
-    filterOnMin(List<ITaskConsumer> consumers,int min)
+    filterOnMin(List<ITaskConsumer> matching,int min)
     {
         List<ITaskConsumer> selected = new ArrayList<ITaskConsumer>();
         
-        for (ITaskConsumer consumer:consumers)
+        for (ITaskConsumer consumer:matching)
             if ( consumer.getWaitingCount() == min )
                 selected.add( consumer );
         
@@ -197,15 +197,15 @@ class TaskRouter
     /************************************************************************
      *  
      *
-     * @param consumers
+     * @param matching
      * @return
      */
     private int 
-    findMin(List<ITaskConsumer> consumers)
+    findMin(List<ITaskConsumer> matching)
     {
         int min = Integer.MAX_VALUE;
         
-        for (ITaskConsumer consumer:consumers)
+        for (ITaskConsumer consumer:matching)
             if ( consumer.getWaitingCount() < min )
                 min = consumer.getWaitingCount();
         
