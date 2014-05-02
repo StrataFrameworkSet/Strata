@@ -48,7 +48,11 @@ interface IConsumer<
     clearSource();
     
     public void
-    putElement(T element);
+    putElement(T element) 
+        throws 
+            BlockingCollectionClosedException, 
+            BlockingCollectionCompletedException, 
+            InterruptedException;
     
     public R
     getSource();

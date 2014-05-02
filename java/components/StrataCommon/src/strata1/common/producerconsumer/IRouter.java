@@ -45,7 +45,11 @@ interface IRouter<
     detachConsumer(C consumer);
     
     public void
-    routeElement(T element);
+    routeElement(T element) 
+        throws 
+            BlockingCollectionClosedException, 
+            BlockingCollectionCompletedException, 
+            InterruptedException;
     
     public boolean
     hasConsumer(C consumer);

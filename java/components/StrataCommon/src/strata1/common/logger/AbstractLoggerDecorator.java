@@ -113,6 +113,16 @@ public class AbstractLoggerDecorator
      */
     @Override
     public void 
+    logVerbose(String message)
+    {
+        itsTarget.logVerbose( message );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
     logInfo(String message)
     {
         itsTarget.logInfo( message );

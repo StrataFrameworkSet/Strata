@@ -37,6 +37,7 @@ enum LoggingLevel
     START,
     STOP,
     DEBUG,
+    VERBOSE,
     INFO,
     WARNING,
     ERROR

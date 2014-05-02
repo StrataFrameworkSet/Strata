@@ -24,6 +24,8 @@
 
 package strata1.common.task;
 
+import strata1.common.producerconsumer.BlockingCollectionClosedException;
+import strata1.common.producerconsumer.BlockingCollectionCompletedException;
 import strata1.common.utility.ISynchronizer;
 import strata1.common.utility.ReadWriteLockSynchronizer;
 import java.security.SecureRandom;
@@ -103,10 +105,13 @@ class TaskRouter
 
     /************************************************************************
      * {@inheritDoc} 
+     * @throws InterruptedException 
+     * @throws BlockingCollectionCompletedException 
+     * @throws BlockingCollectionClosedException 
      */
     @Override
     public void 
-    routeElement(ITask task)
+    routeElement(ITask task) throws BlockingCollectionClosedException, BlockingCollectionCompletedException, InterruptedException
     {
         try
         {

@@ -167,6 +167,24 @@ class BlockingQueue<T>
      * {@inheritDoc} 
      */
     @Override
+    public int 
+    getElementCount()
+    {
+        try
+        {
+            return itsImp.size();
+        }
+        finally
+        {
+            
+        }
+
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
     public boolean 
     isClosed()
     {
