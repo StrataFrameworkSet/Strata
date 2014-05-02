@@ -38,10 +38,11 @@ import java.util.Set;
 public 
 class ProducerConsumerManager<
     T,
-    P extends IProducer<T,C,R>,
-    C extends IConsumer<T,C,R>,
-    R extends IRouter<T,C,R>>
-    implements IProducerConsumerManager<T,P,C,R>
+    P extends IProducer<T,C,R,S>,
+    C extends IConsumer<T,C,R,S>,
+    R extends IRouter<T,C,R,S>,
+    S extends ISelector<T>>
+    implements IProducerConsumerManager<T,P,C,R,S>
 {
     private Set<P> itsProducers;
     private R      itsRouter;  

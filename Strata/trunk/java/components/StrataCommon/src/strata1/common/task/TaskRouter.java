@@ -26,7 +26,12 @@ package strata1.common.task;
 
 import strata1.common.utility.ISynchronizer;
 import strata1.common.utility.ReadWriteLockSynchronizer;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 /****************************************************************************
@@ -82,8 +87,18 @@ class TaskRouter
     public void 
     detachConsumer(ITaskConsumer consumer)
     {
-        // TODO Auto-generated method stub
-
+        try
+        {
+            itsSynchronizer.lockForWriting();
+            
+            if ( hasConsumer( consumer ) )
+                itsConsumers.remove( consumer );
+                
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromWriting();
+        }
     }
 
     /************************************************************************
@@ -91,10 +106,20 @@ class TaskRouter
      */
     @Override
     public void 
-    routeElement(ITask element)
+    routeElement(ITask task)
     {
-        // TODO Auto-generated method stub
-
+        try
+        {
+            ITaskConsumer consumer = null;
+            
+            itsSynchronizer.lockForReading();
+            consumer = selectConsumer(task);
+            consumer.putElement(task);
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromReading();
+        }
     }
 
     /************************************************************************
@@ -104,8 +129,101 @@ class TaskRouter
     public boolean 
     hasConsumer(ITaskConsumer consumer)
     {
-        // TODO Auto-generated method stub
-        return false;
+        try
+        {
+            itsSynchronizer.lockForReading();
+            return itsConsumers.contains( consumer );
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromReading();
+        }
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param task
+     * @return
+     */
+    private ITaskConsumer 
+    selectConsumer(ITask task)
+    {
+        List<ITaskConsumer> matching = new ArrayList<ITaskConsumer>();
+        
+        matching = filterOnSelector(matching,task);
+        matching = filterOnMin(matching,findMin(matching));
+        return matching.get( generateRandomIndex(matching.size()) );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param consumers
+     * @param task
+     * @return
+     */
+    private List<ITaskConsumer> 
+    filterOnSelector(List<ITaskConsumer> consumers,ITask task)
+    {
+        List<ITaskConsumer> selected = new ArrayList<ITaskConsumer>();
+        
+        for (ITaskConsumer consumer:consumers)
+            if ( consumer.getSelector().match( task ) )
+                selected.add( consumer );
+        
+        return selected;
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param consumers
+     * @param findMin
+     * @return
+     */
+    private List<ITaskConsumer> 
+    filterOnMin(List<ITaskConsumer> consumers,int min)
+    {
+        List<ITaskConsumer> selected = new ArrayList<ITaskConsumer>();
+        
+        for (ITaskConsumer consumer:consumers)
+            if ( consumer.getWaitingCount() == min )
+                selected.add( consumer );
+        
+        return selected;
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param consumers
+     * @return
+     */
+    private int 
+    findMin(List<ITaskConsumer> consumers)
+    {
+        int min = Integer.MAX_VALUE;
+        
+        for (ITaskConsumer consumer:consumers)
+            if ( consumer.getWaitingCount() < min )
+                min = consumer.getWaitingCount();
+        
+        return min;
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param size
+     * @return
+     */
+    private int 
+    generateRandomIndex(int size)
+    {
+        Random random = new SecureRandom();
+        
+        return random.nextInt( size );
     }
 
 }

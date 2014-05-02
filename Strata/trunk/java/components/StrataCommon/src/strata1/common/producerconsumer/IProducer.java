@@ -34,8 +34,9 @@ package strata1.common.producerconsumer;
 public 
 interface IProducer<
     T,
-    C extends IConsumer<T,C,R>,
-    R extends IRouter<T,C,R>>
+    C extends IConsumer<T,C,R,S>,
+    R extends IRouter<T,C,R,S>,
+    S extends ISelector<T>>
 {
     public void
     setSink(R sink);

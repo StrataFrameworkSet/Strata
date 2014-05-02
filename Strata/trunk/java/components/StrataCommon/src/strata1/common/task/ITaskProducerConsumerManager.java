@@ -39,6 +39,7 @@ interface ITaskProducerConsumerManager
         ITask,
         ITaskProducer,
         ITaskConsumer,
-        ITaskRouter> {}
+        ITaskRouter,
+        ITaskSelector> {}
 
 // ##########################################################################
