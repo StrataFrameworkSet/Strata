@@ -117,6 +117,16 @@ class Logger
      */
     @Override
     public void 
+    logVerbose(String message)
+    {
+        log( LoggingLevel.VERBOSE,message );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
     logInfo(String message)
     {
         log( LoggingLevel.INFO,message );

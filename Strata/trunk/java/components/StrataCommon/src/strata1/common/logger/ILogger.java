@@ -53,6 +53,9 @@ interface ILogger
     logDebug(String message);
     
     public void
+    logVerbose(String message);
+    
+    public void
     logInfo(String message);
     
     public void
