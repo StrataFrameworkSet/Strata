@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	TaskProducerConsumerManager.java
+// # File Name:	TaskCoordinator.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,7 +24,7 @@
 
 package strata1.common.task;
 
-import strata1.common.producerconsumer.ProducerConsumerManager;
+import strata1.common.producerconsumer.Coordinator;
 
 /****************************************************************************
  * 
@@ -34,35 +34,35 @@ import strata1.common.producerconsumer.ProducerConsumerManager;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class TaskProducerConsumerManager
+class TaskCoordinator
     extends
-        ProducerConsumerManager<
+        Coordinator<
             ITask,
             ITaskProducer,
             ITaskConsumer,
             ITaskRouter,
             ITaskSelector>
     implements 
-        ITaskProducerConsumerManager
+        ITaskCoordinator
 {
 
     /************************************************************************
-     * Creates a new {@code TaskProducerConsumerManager}. 
+     * Creates a new {@code TaskCoordinator}. 
      *
      */
     public 
-    TaskProducerConsumerManager()
+    TaskCoordinator()
     {
         super();
     }
 
     /************************************************************************
-     * Creates a new {@code TaskProducerConsumerManager}. 
+     * Creates a new {@code TaskCoordinator}. 
      *
      * @param channel
      */
     public 
-    TaskProducerConsumerManager(ITaskRouter router)
+    TaskCoordinator(ITaskRouter router)
     {
         super( router );
     }

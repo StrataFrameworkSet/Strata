@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ITaskProducerConsumerManager.java
+// # File Name:	ICoordinator.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.task;
+package strata1.common.producerconsumer;
 
-import strata1.common.producerconsumer.IProducerConsumerManager;
+import java.util.Set;
 
 /****************************************************************************
  * 
@@ -34,12 +34,54 @@ import strata1.common.producerconsumer.IProducerConsumerManager;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ITaskProducerConsumerManager
-    extends IProducerConsumerManager<
-        ITask,
-        ITaskProducer,
-        ITaskConsumer,
-        ITaskRouter,
-        ITaskSelector> {}
+interface ICoordinator<
+    T,
+    P extends IProducer<T,C,R,S>,
+    C extends IConsumer<T,C,R,S>,
+    R extends IRouter<T,C,R,S>,
+    S extends ISelector<T>>
+{
+    public void
+    attachProducer(P producer);
+    
+    public void
+    attachConsumer(C consumer);
+    
+    public void
+    detachProducer(P producer);
+    
+    public void
+    detachConsumer(C consumer);
+    
+    public Set<P>
+    getProducers();
+    
+    public Set<C>
+    getConsumers();
+    
+    public boolean
+    hasProducer(P producer);
+    
+    public boolean
+    hasConsumer(C consumer);
+    
+    public void
+    startProducers();
+    
+    public void
+    startConsumers();
+    
+    public void
+    stopProducers();
+    
+    public void
+    stopConsumers();
+    
+    public void
+    startUp();
+    
+    public void
+    shutDown();
+} 
 
 // ##########################################################################
