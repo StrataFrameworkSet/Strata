@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ProducerConsumerManager.java
+// # File Name:	Coordinator.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -36,36 +36,36 @@ import java.util.Set;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class ProducerConsumerManager<
+class Coordinator<
     T,
     P extends IProducer<T,C,R,S>,
     C extends IConsumer<T,C,R,S>,
     R extends IRouter<T,C,R,S>,
     S extends ISelector<T>>
-    implements IProducerConsumerManager<T,P,C,R,S>
+    implements ICoordinator<T,P,C,R,S>
 {
     private Set<P> itsProducers;
     private R      itsRouter;  
     private Set<C> itsConsumers;
     
     /************************************************************************
-     * Creates a new {@code ProducerConsumerManager}. 
+     * Creates a new {@code Coordinator}. 
      *
      */
     public 
-    ProducerConsumerManager()
+    Coordinator()
     {
         itsProducers = new HashSet<P>();
         itsConsumers = new HashSet<C>();
     }
 
     /************************************************************************
-     * Creates a new {@code ProducerConsumerManager}. 
+     * Creates a new {@code Coordinator}. 
      *
      * @param channel
      */
     public
-    ProducerConsumerManager(R router)
+    Coordinator(R router)
     {
         this();
         itsRouter = router;
