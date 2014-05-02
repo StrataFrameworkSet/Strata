@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	TaskProducerConsumerManager.java
+// # File Name:	ITaskProducerConsumerManager.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.task;
+
+import strata1.common.producerconsumer.IProducerConsumerManager;
 
 /****************************************************************************
  * 
@@ -32,38 +34,11 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class TaskProducerConsumerManager
-    extends
-        ProducerConsumerManager<
-            ITask,
-            ITaskProducer,
-            ITaskConsumer,
-            ITaskRouter>
-    implements 
-        ITaskProducerConsumerManager
-{
-
-    /************************************************************************
-     * Creates a new {@code TaskProducerConsumerManager}. 
-     *
-     */
-    public 
-    TaskProducerConsumerManager()
-    {
-        super();
-    }
-
-    /************************************************************************
-     * Creates a new {@code TaskProducerConsumerManager}. 
-     *
-     * @param channel
-     */
-    public 
-    TaskProducerConsumerManager(ITaskRouter router)
-    {
-        super( router );
-    }
-    
-}
+interface ITaskProducerConsumerManager
+    extends IProducerConsumerManager<
+        ITask,
+        ITaskProducer,
+        ITaskConsumer,
+        ITaskRouter> {}
 
 // ##########################################################################

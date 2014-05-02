@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ITaskProducer.java
+// # File Name:	ITaskConsumer.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.task;
+
+import strata1.common.producerconsumer.IConsumer;
 
 /****************************************************************************
  * 
@@ -32,7 +34,7 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ITaskProducer
-    extends IProducer<ITask,ITaskConsumer,ITaskRouter> {}
+interface ITaskConsumer
+    extends IConsumer<ITask,ITaskConsumer,ITaskRouter> {}
 
 // ##########################################################################

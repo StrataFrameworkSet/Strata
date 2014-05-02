@@ -22,7 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.task;
+
+import strata1.common.producerconsumer.IRouter;
 
 /****************************************************************************
  * 
