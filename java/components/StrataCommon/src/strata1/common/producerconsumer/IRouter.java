@@ -34,8 +34,9 @@ package strata1.common.producerconsumer;
 public 
 interface IRouter<
     T,
-    C extends IConsumer<T,C,R>,
-    R extends IRouter<T,C,R>>
+    C extends IConsumer<T,C,R,S>,
+    R extends IRouter<T,C,R,S>,
+    S extends ISelector<T>>
 {
     public void
     attachConsumer(C consumer);

@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ITaskRouter.java
+// # File Name:	ITaskSelector.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,7 +24,7 @@
 
 package strata1.common.task;
 
-import strata1.common.producerconsumer.IRouter;
+import strata1.common.producerconsumer.ISelector;
 
 /****************************************************************************
  * 
@@ -34,7 +34,7 @@ import strata1.common.producerconsumer.IRouter;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ITaskRouter
-    extends IRouter<ITask,ITaskConsumer,ITaskRouter,ITaskSelector> {}
+interface ITaskSelector
+    extends ISelector<ITask> {}
 
 // ##########################################################################

@@ -36,9 +36,10 @@ import java.util.Set;
 public 
 interface IProducerConsumerManager<
     T,
-    P extends IProducer<T,C,R>,
-    C extends IConsumer<T,C,R>,
-    R extends IRouter<T,C,R>>
+    P extends IProducer<T,C,R,S>,
+    C extends IConsumer<T,C,R,S>,
+    R extends IRouter<T,C,R,S>,
+    S extends ISelector<T>>
 {
     public void
     attachProducer(P producer);

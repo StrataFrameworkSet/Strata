@@ -40,7 +40,8 @@ class TaskProducerConsumerManager
             ITask,
             ITaskProducer,
             ITaskConsumer,
-            ITaskRouter>
+            ITaskRouter,
+            ITaskSelector>
     implements 
         ITaskProducerConsumerManager
 {

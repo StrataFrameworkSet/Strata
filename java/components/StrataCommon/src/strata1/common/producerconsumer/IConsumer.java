@@ -34,17 +34,30 @@ package strata1.common.producerconsumer;
 public 
 interface IConsumer<
     T,
-    C extends IConsumer<T,C,R>,
-    R extends IRouter<T,C,R>>
+    C extends IConsumer<T,C,R,S>,
+    R extends IRouter<T,C,R,S>,
+    S extends ISelector<T>>
 {
     public void
     setSource(R source);
     
     public void
+    setSelector(S selector);
+    
+    public void
     clearSource();
+    
+    public void
+    putElement(T element);
     
     public R
     getSource();
+    
+    public S
+    getSelector();
+    
+    public int
+    getWaitingCount();
     
     public void
     startConsuming();

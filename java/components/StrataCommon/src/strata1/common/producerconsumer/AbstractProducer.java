@@ -34,9 +34,10 @@ package strata1.common.producerconsumer;
 public abstract 
 class AbstractProducer<
     T,
-    C extends IConsumer<T,C,R>,
-    R extends IRouter<T,C,R>>
-    implements IProducer<T,C,R>
+    C extends IConsumer<T,C,R,S>,
+    R extends IRouter<T,C,R,S>,
+    S extends ISelector<T>>
+    implements IProducer<T,C,R,S>
 {
     private R itsSink;
     
