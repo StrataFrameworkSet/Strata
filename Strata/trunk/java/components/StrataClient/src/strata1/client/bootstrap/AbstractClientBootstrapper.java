@@ -26,6 +26,7 @@ package strata1.client.bootstrap;
 
 import strata1.injector.container.Binder;
 import strata1.injector.container.IContainer;
+import strata1.injector.container.IModule;
 import strata1.common.authentication.IClientAuthenticator;
 import strata1.common.commandline.ICommandLineProcessor;
 import strata1.common.logger.ILogger;
@@ -35,6 +36,8 @@ import strata1.client.region.RegionInitializationException;
 import strata1.client.shell.IDispatcher;
 import strata1.client.view.ILoginView;
 import strata1.client.view.ISplashView;
+import java.util.Collections;
+import java.util.List;
 
 /****************************************************************************
  * 
@@ -56,7 +59,7 @@ class AbstractClientBootstrapper
 {
     private ICommandLineProcessor itsProcessor;
     private ILogger               itsLogger;
-    private IClientModuleManager  itsModuleManager;
+    private List<IModule>         itsModules;
     private IContainer            itsContainer;
     private IRegionManager        itsRegionManager;
     private IDispatcher           itsDispatcher;
@@ -74,7 +77,7 @@ class AbstractClientBootstrapper
     {
         itsProcessor     = null;
         itsLogger        = null;
-        itsModuleManager = null;
+        itsModules       = null;
         itsContainer     = null;
         itsRegionManager = null;
         itsLoginView     = null;
@@ -108,9 +111,9 @@ class AbstractClientBootstrapper
      */
     @Override
     public void 
-    setModuleManager(IClientModuleManager modules)
+    setModules(List<IModule> modules)
     {
-        itsModuleManager = modules;
+        itsModules = modules;
     }
 
     /************************************************************************
@@ -227,10 +230,10 @@ class AbstractClientBootstrapper
      * {@inheritDoc} 
      */
     @Override
-    public IClientModuleManager 
-    getModuleManager()
+    public List<IModule> 
+    getModules()
     {
-        return itsModuleManager;
+        return Collections.unmodifiableList( itsModules );
     }
 
     /************************************************************************
@@ -321,13 +324,11 @@ class AbstractClientBootstrapper
                 LoggingLevel.INFO,"Processing command line arguments." );
             processCommandLineArguments( arguments );
             
-            getLogger().log( LoggingLevel.INFO,"Creating module manager." );
-            setModuleManager( factory.createModuleManager() );
+            getLogger().log( LoggingLevel.INFO,"Creating modules." );
+            setModules( factory.createModules() );
             getLogger().log( LoggingLevel.INFO,"Creating region manager." );
             setRegionManager( factory.createRegionManager() );
             
-            getLogger().log( LoggingLevel.INFO,"Configuring modules." );
-            configureModules();
             getLogger().log( LoggingLevel.INFO,"Configuring region manager." );
             configureRegionManager();
 
@@ -366,13 +367,6 @@ class AbstractClientBootstrapper
      *
      */
     protected abstract void
-    configureModules();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    protected abstract void
     configureRegionManager();
         
     /************************************************************************
@@ -384,7 +378,12 @@ class AbstractClientBootstrapper
     {
         getLogger().log( LoggingLevel.INFO,"Initializing modules." );
         getController().incrementInitializationProgress();
-        getModuleManager().initialize( this );
+        
+        for (IModule module:getModules())
+        {
+            module.initialize( getContainer() );
+            getController().incrementInitializationProgress();
+        }
     }
 
     /************************************************************************
@@ -419,8 +418,7 @@ class AbstractClientBootstrapper
         itsController.setLoginView( getLoginView() );
         itsController.setSplashView( getSplashView() );
         itsController.setAuthenticator( getAuthenticator() );
-        itsController.setInitializationIncrements( 
-            getModuleManager().getNumberOfModules()+2 );        
+        itsController.setInitializationIncrements( getModules().size()+2 );        
     }
     
     /************************************************************************

@@ -24,8 +24,10 @@
 
 package strata1.client.bootstrap;
 
+import strata1.injector.container.IModule;
 import strata1.common.commandline.ICommandLineProcessor;
 import strata1.common.commandline.NullCommandLineProcessor;
+import java.util.List;
 
 /****************************************************************************
  * 
@@ -34,7 +36,8 @@ import strata1.common.commandline.NullCommandLineProcessor;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract class AbstractClientFactory
+public abstract 
+class AbstractClientFactory
     implements IClientFactory
 {
 
@@ -56,17 +59,6 @@ public abstract class AbstractClientFactory
     {
         return new NullCommandLineProcessor();
     }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IClientModuleManager 
-    createModuleManager()
-    {
-        return new ClientModuleManager();
-    }
-
     
 }
 

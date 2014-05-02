@@ -26,6 +26,7 @@ package strata1.client.swthelloworld;
 
 import strata1.injector.container.Container;
 import strata1.injector.container.IContainer;
+import strata1.injector.container.IModule;
 import strata1.client.bootstrap.AbstractClientFactory;
 import strata1.client.region.IRegionManager;
 import strata1.client.shell.IDispatcher;
@@ -41,7 +42,9 @@ import strata1.swtclient.swtshell.SwtDispatcher;
 import strata1.swtclient.swtview.SwtLoginView;
 import strata1.swtclient.swtview.SwtSplashView;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /****************************************************************************
  * 
@@ -87,6 +90,19 @@ class SwtHelloWorldClientFactory
     createContainer()
     {
         return new Container();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public List<IModule> 
+    createModules()
+    {
+        List<IModule> modules = new ArrayList<IModule>();
+        
+        modules.add( new SwtGreetingModule() );
+        return modules;
     }
 
     /************************************************************************
