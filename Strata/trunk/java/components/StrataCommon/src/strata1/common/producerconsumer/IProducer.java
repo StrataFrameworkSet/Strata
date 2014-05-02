@@ -32,15 +32,18 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IProducer<T>
+interface IProducer<
+    T,
+    C extends IConsumer<T,C,R>,
+    R extends IRouter<T,C,R>>
 {
     public void
-    setSink(IBlockingCollection<T> sink);
+    setSink(R sink);
     
     public void
     clearSink();
     
-    public IBlockingCollection<T>
+    public R
     getSink();
     
     public void

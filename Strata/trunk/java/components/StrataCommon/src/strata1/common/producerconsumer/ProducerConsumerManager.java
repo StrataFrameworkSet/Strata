@@ -36,12 +36,16 @@ import java.util.Set;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class ProducerConsumerManager<T>
-    implements IProducerConsumerManager<T>
+class ProducerConsumerManager<
+    T,
+    P extends IProducer<T,C,R>,
+    C extends IConsumer<T,C,R>,
+    R extends IRouter<T,C,R>>
+    implements IProducerConsumerManager<T,P,C,R>
 {
-    private IBlockingCollection<T> itsChannel;
-    private Set<IProducer<T>>      itsProducers;
-    private IConsumer<T>           itsConsumer;
+    private Set<P> itsProducers;
+    private R      itsRouter;  
+    private Set<C> itsConsumers;
     
     /************************************************************************
      * Creates a new {@code ProducerConsumerManager}. 
@@ -50,8 +54,8 @@ class ProducerConsumerManager<T>
     public 
     ProducerConsumerManager()
     {
-        itsChannel   = new BlockingQueue<T>();
-        itsProducers = new HashSet<IProducer<T>>();
+        itsProducers = new HashSet<P>();
+        itsConsumers = new HashSet<C>();
     }
 
     /************************************************************************
@@ -60,10 +64,10 @@ class ProducerConsumerManager<T>
      * @param channel
      */
     public
-    ProducerConsumerManager(IBlockingCollection<T> channel)
+    ProducerConsumerManager(R router)
     {
-        itsChannel   = channel;
-        itsProducers = new HashSet<IProducer<T>>();
+        this();
+        itsRouter = router;
     }
     
     /************************************************************************
@@ -71,13 +75,13 @@ class ProducerConsumerManager<T>
      */
     @Override
     public void 
-    attachProducer(IProducer<T> producer)
+    attachProducer(P producer)
     {
         if ( producer == null )
             return;
         
         itsProducers.add( producer );
-        producer.setSink( itsChannel );
+        producer.setSink( itsRouter );
     }
 
     /************************************************************************
@@ -85,13 +89,13 @@ class ProducerConsumerManager<T>
      */
     @Override
     public void 
-    attachConsumer(IConsumer<T> consumer)
+    attachConsumer(C consumer)
     {
         if ( consumer == null )
             return;
         
-        itsConsumer = consumer;
-        itsConsumer.setSource( itsChannel );
+        itsConsumers.add( consumer );
+        consumer.setSource( itsRouter );
     }
 
     /************************************************************************
@@ -99,7 +103,7 @@ class ProducerConsumerManager<T>
      */
     @Override
     public void 
-    detachProducer(IProducer<T> producer)
+    detachProducer(P producer)
     {
         if ( hasProducer( producer ))
         {
@@ -112,24 +116,21 @@ class ProducerConsumerManager<T>
      * {@inheritDoc} 
      */
     @Override
-    public IConsumer<T> 
-    detachConsumer()
+    public void 
+    detachConsumer(C consumer)
     {
-        IConsumer<T> consumer = itsConsumer;
-        
-        itsConsumer = null;
-        
-        if ( consumer != null )
+        if ( hasConsumer( consumer ))
+        {
+            itsConsumers.remove( consumer );
             consumer.clearSource();
-        
-        return consumer;
+        }
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public Set<IProducer<T>> 
+    public Set<P> 
     getProducers()
     {
         return Collections.unmodifiableSet( itsProducers );
@@ -139,10 +140,10 @@ class ProducerConsumerManager<T>
      * {@inheritDoc} 
      */
     @Override
-    public IConsumer<T> 
-    getConsumer()
+    public Set<C> 
+    getConsumers()
     {
-        return itsConsumer;
+        return Collections.unmodifiableSet( itsConsumers );
     }
 
     /************************************************************************
@@ -150,7 +151,7 @@ class ProducerConsumerManager<T>
      */
     @Override
     public boolean 
-    hasProducer(IProducer<T> producer)
+    hasProducer(P producer)
     {
         return itsProducers.contains( producer );
     }
@@ -160,9 +161,9 @@ class ProducerConsumerManager<T>
      */
     @Override
     public boolean 
-    hasConsumer(IConsumer<T> consumer)
+    hasConsumer(C consumer)
     {
-        return itsConsumer == consumer;
+        return itsProducers.contains( consumer );
     }
 
     /************************************************************************
@@ -172,7 +173,7 @@ class ProducerConsumerManager<T>
     public void 
     startProducers()
     {
-        for (IProducer<T> producer : itsProducers)
+        for (P producer : itsProducers)
             producer.startProducing();
     }
 
@@ -181,12 +182,10 @@ class ProducerConsumerManager<T>
      */
     @Override
     public void 
-    startConsumer()
+    startConsumers()
     {
-        if ( itsConsumer == null )
-            throw new IllegalStateException("consumer is null");
-        
-        itsConsumer.startConsuming();
+        for (C consumer : itsConsumers)
+            consumer.startConsuming();
     }
 
     /************************************************************************
@@ -196,7 +195,7 @@ class ProducerConsumerManager<T>
     public void 
     stopProducers()
     {
-        for (IProducer<T> producer : itsProducers)
+        for (P producer : itsProducers)
             producer.stopProducing();        
     }
 
@@ -205,12 +204,10 @@ class ProducerConsumerManager<T>
      */
     @Override
     public void 
-    stopConsumer()
+    stopConsumers()
     {
-        if ( itsConsumer == null )
-            throw new IllegalStateException("consumer is null");
-        
-        itsConsumer.stopConsuming();
+        for (C consumer : itsConsumers)
+            consumer.stopConsuming();
     }
 
     /************************************************************************
@@ -221,7 +218,7 @@ class ProducerConsumerManager<T>
     startUp()
     {
         startProducers();
-        startConsumer();
+        startConsumers();
     }
 
     /************************************************************************
@@ -232,7 +229,7 @@ class ProducerConsumerManager<T>
     shutDown()
     {
         stopProducers();
-        stopConsumer();
+        stopConsumers();
     }
 
 }

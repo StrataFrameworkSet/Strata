@@ -32,10 +32,13 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public abstract
-class AbstractConsumer<T>
-    implements IConsumer<T>
+class AbstractConsumer<
+    T,
+    C extends IConsumer<T,C,R>,
+    R extends IRouter<T,C,R>>
+    implements IConsumer<T,C,R>
 {
-    private IBlockingCollection<T> itsSource;
+    private R itsSource;
     
     /************************************************************************
      * Creates a new {@code AbstractConsumer}. 
@@ -52,7 +55,7 @@ class AbstractConsumer<T>
      */
     @Override
     public void 
-    setSource(IBlockingCollection<T> source)
+    setSource(R source)
     {
         itsSource = source;
     }
@@ -71,7 +74,7 @@ class AbstractConsumer<T>
      * {@inheritDoc} 
      */
     @Override
-    public IBlockingCollection<T> 
+    public R 
     getSource()
     {
         return itsSource;

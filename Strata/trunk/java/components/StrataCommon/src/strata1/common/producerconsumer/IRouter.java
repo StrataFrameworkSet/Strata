@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	AbstractProducer.java
+// # File Name:	IRouter.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -31,55 +31,23 @@ package strata1.common.producerconsumer;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract 
-class AbstractProducer<
+public 
+interface IRouter<
     T,
     C extends IConsumer<T,C,R>,
     R extends IRouter<T,C,R>>
-    implements IProducer<T,C,R>
 {
-    private R itsSink;
+    public void
+    attachConsumer(C consumer);
     
-    /************************************************************************
-     * Creates a new {@code AbstractProducer}. 
-     *
-     */
-    public 
-    AbstractProducer()
-    {
-        itsSink = null;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    setSink(R sink)
-    {
-        itsSink = sink;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    clearSink()
-    {
-        itsSink = null;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public R 
-    getSink()
-    {
-        return itsSink;
-    }
-
+    public void
+    detachConsumer(C consumer);
+    
+    public void
+    routeElement(T element);
+    
+    public boolean
+    hasConsumer(C consumer);
 }
 
 // ##########################################################################

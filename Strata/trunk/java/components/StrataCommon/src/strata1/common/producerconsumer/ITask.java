@@ -34,8 +34,14 @@ package strata1.common.producerconsumer;
 public 
 interface ITask
 {
+    public <T> void
+    setProperty(String key,T property);
+    
     public String
     getName();
+    
+    public <T> T
+    getProperty(Class<T> type,String key);
     
     public void
     execute();

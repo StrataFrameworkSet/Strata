@@ -33,6 +33,6 @@ package strata1.common.producerconsumer;
  */
 public 
 interface ITaskConsumer
-    extends IConsumer<ITask> {}
+    extends IConsumer<ITask,ITaskConsumer,ITaskRouter> {}
 
 // ##########################################################################
