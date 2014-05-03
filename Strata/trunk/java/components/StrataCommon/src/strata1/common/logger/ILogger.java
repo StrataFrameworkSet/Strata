@@ -34,10 +34,10 @@ package strata1.common.logger;
 public 
 interface ILogger
 {
-    public void
+    public ILogger
     attachProcessor(ILogEntryProcessor processor);
     
-    public void
+    public ILogger
     detachProcessor(ILogEntryProcessor processor);
     
     public boolean

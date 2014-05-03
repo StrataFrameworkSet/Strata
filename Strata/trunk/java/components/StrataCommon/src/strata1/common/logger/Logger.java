@@ -56,20 +56,22 @@ class Logger
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public ILogger 
     attachProcessor(ILogEntryProcessor processor)
     {
         itsProcessors.add( processor );
+        return this;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public ILogger 
     detachProcessor(ILogEntryProcessor processor)
     {
         itsProcessors.remove( processor );
+        return this;
     }
 
     /************************************************************************

@@ -238,11 +238,11 @@ class TaskConsumer
         return !itsWaiting.isCompleted();
     }
 
-    /**
-     * @throws BlockingCollectionCompletedException 
-     * @throws InterruptedException **********************************************************************
+    /************************************************************************
      *  
      *
+     * @throws BlockingCollectionCompletedException
+     * @throws InterruptedException
      */
     private void 
     consumeTask() 

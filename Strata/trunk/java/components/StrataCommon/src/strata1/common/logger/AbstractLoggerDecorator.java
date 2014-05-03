@@ -52,20 +52,22 @@ public class AbstractLoggerDecorator
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public ILogger 
     attachProcessor(ILogEntryProcessor processor)
     {
         itsTarget.attachProcessor( processor );
+        return this;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public ILogger 
     detachProcessor(ILogEntryProcessor processor)
     {
         itsTarget.detachProcessor( processor );
+        return this;
     }
 
     /************************************************************************

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	TaskCoordinator.java
+// # File Name:	AbstractTask.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,7 +24,8 @@
 
 package strata1.common.task;
 
-import strata1.common.producerconsumer.Coordinator;
+import java.util.HashMap;
+import java.util.Map;
 
 /****************************************************************************
  * 
@@ -33,39 +34,72 @@ import strata1.common.producerconsumer.Coordinator;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class TaskCoordinator
-    extends
-        Coordinator<
-            ITask,
-            ITaskProducer,
-            ITaskConsumer,
-            ITaskRouter,
-            ITaskSelector>
-    implements 
-        ITaskCoordinator
+public abstract
+class AbstractTask
+    implements ITask
 {
-
+    private String             itsName;
+    private Map<String,Object> itsProperties;
+    
     /************************************************************************
-     * Creates a new {@code TaskCoordinator}. 
+     * Creates a new {@code AbstractTask}. 
      *
      */
-    public 
-    TaskCoordinator()
+    protected 
+    AbstractTask(String name)
     {
-        super( new TaskRouter() );
+        itsName       = name;
+        itsProperties = new HashMap<String,Object>();
     }
 
     /************************************************************************
-     * Creates a new {@code TaskCoordinator}. 
-     *
-     * @param channel
+     * {@inheritDoc} 
      */
-    public 
-    TaskCoordinator(ITaskRouter router)
+    @Override
+    public <T> void 
+    setProperty(String key,T property)
     {
-        super( router );
+        itsProperties.put( key,property );
     }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public String 
+    getName()
+    {
+        return itsName;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <T> T 
+    getProperty(Class<T> type,String key)
+    {
+        if ( hasProperty(type,key) )
+            return type.cast(itsProperties.get( key ));
+        
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public <T> boolean 
+    hasProperty(Class<T> type,String key)
+    {
+        return 
+            itsProperties.containsKey( key ) &&
+            itsProperties
+                .get( key )
+                .getClass()
+                .isAssignableFrom( type );
+    }
+    
     
 }
 
