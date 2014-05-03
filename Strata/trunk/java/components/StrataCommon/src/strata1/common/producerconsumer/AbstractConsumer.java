@@ -54,11 +54,13 @@ class AbstractConsumer<
     /************************************************************************
      * {@inheritDoc} 
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void 
     setSource(R source)
     {
         itsSource = source;
+        itsSource.attachConsumer( (C)this );
     }
 
     /************************************************************************

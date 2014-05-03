@@ -41,16 +41,16 @@ interface ICoordinator<
     R extends IRouter<T,C,R,S>,
     S extends ISelector<T>>
 {
-    public void
+    public ICoordinator<T,P,C,R,S>
     attachProducer(P producer);
     
-    public void
+    public ICoordinator<T,P,C,R,S>
     attachConsumer(C consumer);
     
-    public void
+    public ICoordinator<T,P,C,R,S>
     detachProducer(P producer);
     
-    public void
+    public ICoordinator<T,P,C,R,S>
     detachConsumer(C consumer);
     
     public Set<P>

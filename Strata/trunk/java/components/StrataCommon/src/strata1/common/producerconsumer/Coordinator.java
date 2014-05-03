@@ -75,35 +75,39 @@ class Coordinator<
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public Coordinator<T,P,C,R,S> 
     attachProducer(P producer)
     {
-        if ( producer == null )
-            return;
+        if ( producer != null )
+        {
+            itsProducers.add( producer );
+            producer.setSink( itsRouter );
+        }
         
-        itsProducers.add( producer );
-        producer.setSink( itsRouter );
+        return this;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public Coordinator<T,P,C,R,S> 
     attachConsumer(C consumer)
     {
-        if ( consumer == null )
-            return;
+        if ( consumer != null )
+        {
+            itsConsumers.add( consumer );
+            consumer.setSource( itsRouter );
+        }
         
-        itsConsumers.add( consumer );
-        consumer.setSource( itsRouter );
+        return this;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public Coordinator<T,P,C,R,S> 
     detachProducer(P producer)
     {
         if ( hasProducer( producer ))
@@ -111,13 +115,15 @@ class Coordinator<
             itsProducers.remove( producer );
             producer.clearSink();
         }
+        
+        return this;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public Coordinator<T,P,C,R,S> 
     detachConsumer(C consumer)
     {
         if ( hasConsumer( consumer ))
@@ -125,6 +131,8 @@ class Coordinator<
             itsConsumers.remove( consumer );
             consumer.clearSource();
         }
+        
+        return this;
     }
 
     /************************************************************************
@@ -164,7 +172,7 @@ class Coordinator<
     public boolean 
     hasConsumer(C consumer)
     {
-        return itsProducers.contains( consumer );
+        return itsConsumers.contains( consumer );
     }
 
     /************************************************************************
