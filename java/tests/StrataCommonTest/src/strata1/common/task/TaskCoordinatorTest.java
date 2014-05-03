@@ -32,6 +32,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import java.io.PrintWriter;
+import java.util.Set;
 
 /****************************************************************************
  * 
@@ -62,13 +63,25 @@ class TaskCoordinatorTest
     setUp() throws Exception
     {
         itsTarget = new TaskCoordinator();
+        
+        itsLogger = 
+            new Logger()
+                .attachProcessor( 
+                    new PrintWriterLogEntryProcessor(new PrintWriter(System.out)));
+        
         itsProducer1 = new TestTaskProducer();
         itsProducer2 = new TestTaskProducer();
         
-        itsLogger    = new Logger();
-        itsLogger.attachProcessor( 
-            new PrintWriterLogEntryProcessor(new PrintWriter(System.out)));
+        itsProducer1
+            .insertTask( new TestTask("TestA",1,itsLogger) )
+            .insertTask( new TestTask("TestB",2,itsLogger) )
+            .insertTask( new TestTask("TestC",3,itsLogger) );
         
+        itsProducer2
+            .insertTask( new TestTask("TestD",1,itsLogger) )
+            .insertTask( new TestTask("TestE",2,itsLogger) )
+            .insertTask( new TestTask("TestF",3,itsLogger) );
+       
         itsConsumer1 = 
             new TaskConsumer(
                 new ITaskSelector()
@@ -122,7 +135,11 @@ class TaskCoordinatorTest
                 itsLogger);
         
         itsTarget
-            .attachProducer( itsProducer1 );
+            .attachProducer( itsProducer1 )
+            .attachProducer( itsProducer2 )
+            .attachConsumer( itsConsumer1 )
+            .attachConsumer( itsConsumer2 )
+            .attachConsumer( itsConsumer3 );
     }
 
     /************************************************************************
@@ -134,6 +151,7 @@ class TaskCoordinatorTest
     public void 
     tearDown() throws Exception
     {
+        itsTarget.shutDown();
     }
 
     /**
@@ -143,7 +161,11 @@ class TaskCoordinatorTest
     public void 
     testAttachProducer()
     {
-        fail( "Not yet implemented" );
+        ITaskProducer producer = new TestTaskProducer();
+        
+        assertFalse( itsTarget.hasProducer( producer ));
+        itsTarget.attachProducer( producer );
+        assertTrue( itsTarget.hasProducer( producer ));
     }
 
     /**
@@ -153,7 +175,11 @@ class TaskCoordinatorTest
     public void 
     testAttachConsumer()
     {
-        fail( "Not yet implemented" );
+        ITaskConsumer consumer = new TaskConsumer(null,null);
+        
+        assertFalse( itsTarget.hasConsumer( consumer ));
+        itsTarget.attachConsumer( consumer );
+        assertTrue( itsTarget.hasConsumer( consumer ));
     }
 
     /**
@@ -163,7 +189,13 @@ class TaskCoordinatorTest
     public void 
     testDetachProducer()
     {
-        fail( "Not yet implemented" );
+        ITaskProducer producer = new TestTaskProducer();
+        
+        assertFalse( itsTarget.hasProducer( producer ));
+        itsTarget.attachProducer( producer );
+        assertTrue( itsTarget.hasProducer( producer ));
+        itsTarget.detachProducer( producer );
+        assertFalse( itsTarget.hasProducer( producer ));
     }
 
     /**
@@ -173,7 +205,13 @@ class TaskCoordinatorTest
     public void 
     testDetachConsumer()
     {
-        fail( "Not yet implemented" );
+        ITaskConsumer consumer = new TaskConsumer(null,null);
+        
+        assertFalse( itsTarget.hasConsumer( consumer ));
+        itsTarget.attachConsumer( consumer );
+        assertTrue( itsTarget.hasConsumer( consumer ));
+        itsTarget.detachConsumer( consumer );
+        assertFalse( itsTarget.hasConsumer( consumer ));
     }
 
     /**
@@ -183,7 +221,11 @@ class TaskCoordinatorTest
     public void 
     testGetProducers()
     {
-        fail( "Not yet implemented" );
+        Set<ITaskProducer> producers = itsTarget.getProducers();
+        
+        assertEquals( 2,producers.size() );
+        assertTrue( producers.contains( itsProducer1 ));
+        assertTrue( producers.contains( itsProducer2 ));
     }
 
     /**
@@ -193,7 +235,12 @@ class TaskCoordinatorTest
     public void 
     testGetConsumers()
     {
-        fail( "Not yet implemented" );
+        Set<ITaskConsumer> consumers = itsTarget.getConsumers();
+        
+        assertEquals( 3,consumers.size() );
+        assertTrue( consumers.contains( itsConsumer1 ) );
+        assertTrue( consumers.contains( itsConsumer2 ) );
+        assertTrue( consumers.contains( itsConsumer3 ) );
     }
 
     /**
@@ -203,7 +250,13 @@ class TaskCoordinatorTest
     public void 
     testHasProducer()
     {
-        fail( "Not yet implemented" );
+        ITaskProducer producer = new TestTaskProducer();
+        
+        assertFalse( itsTarget.hasProducer( producer ));
+        itsTarget.attachProducer( producer );
+        assertTrue( itsTarget.hasProducer( producer ));
+        itsTarget.detachProducer( producer );
+        assertFalse( itsTarget.hasProducer( producer ));
     }
 
     /**
@@ -213,7 +266,13 @@ class TaskCoordinatorTest
     public void 
     testHasConsumer()
     {
-        fail( "Not yet implemented" );
+        ITaskConsumer consumer = new TaskConsumer(null,null);
+        
+        assertFalse( itsTarget.hasConsumer( consumer ));
+        itsTarget.attachConsumer( consumer );
+        assertTrue( itsTarget.hasConsumer( consumer ));
+        itsTarget.detachConsumer( consumer );
+        assertFalse( itsTarget.hasConsumer( consumer ));
     }
 
     /**
@@ -223,7 +282,7 @@ class TaskCoordinatorTest
     public void 
     testStartProducers()
     {
-        fail( "Not yet implemented" );
+        itsTarget.startProducers();
     }
 
     /**
@@ -233,7 +292,7 @@ class TaskCoordinatorTest
     public void 
     testStartConsumers()
     {
-        fail( "Not yet implemented" );
+        itsTarget.startConsumers();
     }
 
     /**
@@ -243,7 +302,7 @@ class TaskCoordinatorTest
     public void 
     testStopProducers()
     {
-        fail( "Not yet implemented" );
+        itsTarget.stopProducers();
     }
 
     /**
@@ -253,7 +312,7 @@ class TaskCoordinatorTest
     public void 
     testStopConsumers()
     {
-        fail( "Not yet implemented" );
+        itsTarget.stopConsumers();
     }
 
     /**
@@ -263,7 +322,7 @@ class TaskCoordinatorTest
     public void 
     testStartUp()
     {
-        fail( "Not yet implemented" );
+        itsTarget.startUp();
     }
 
     /**
@@ -273,7 +332,7 @@ class TaskCoordinatorTest
     public void 
     testShutDown()
     {
-        fail( "Not yet implemented" );
+        itsTarget.shutDown();
     }
 
 }

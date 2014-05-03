@@ -111,7 +111,11 @@ class TaskRouter
      */
     @Override
     public void 
-    routeElement(ITask task) throws BlockingCollectionClosedException, BlockingCollectionCompletedException, InterruptedException
+    routeElement(ITask task) 
+        throws 
+            BlockingCollectionClosedException, 
+            BlockingCollectionCompletedException, 
+            InterruptedException
     {
         try
         {
@@ -188,11 +192,11 @@ class TaskRouter
      * @return
      */
     private List<ITaskConsumer> 
-    filterOnMin(List<ITaskConsumer> matching,int min)
+    filterOnMin(List<ITaskConsumer> consumers,int min)
     {
         List<ITaskConsumer> selected = new ArrayList<ITaskConsumer>();
         
-        for (ITaskConsumer consumer:matching)
+        for (ITaskConsumer consumer:consumers)
             if ( consumer.getWaitingCount() == min )
                 selected.add( consumer );
         
@@ -206,11 +210,11 @@ class TaskRouter
      * @return
      */
     private int 
-    findMin(List<ITaskConsumer> matching)
+    findMin(List<ITaskConsumer> consumers)
     {
         int min = Integer.MAX_VALUE;
         
-        for (ITaskConsumer consumer:matching)
+        for (ITaskConsumer consumer:consumers)
             if ( consumer.getWaitingCount() < min )
                 min = consumer.getWaitingCount();
         
@@ -228,7 +232,7 @@ class TaskRouter
     {
         Random random = new SecureRandom();
         
-        return random.nextInt( size );
+        return size == 0 ? 0 : random.nextInt( size );
     }
 
 }
