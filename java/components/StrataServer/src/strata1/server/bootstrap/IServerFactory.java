@@ -26,8 +26,8 @@ package strata1.server.bootstrap;
 
 import java.util.List;
 import strata1.common.logger.ILogger;
-import strata1.common.producerconsumer.ITaskConsumer;
-import strata1.common.producerconsumer.ITaskProducerConsumerManager;
+import strata1.common.task.ITaskConsumer;
+import strata1.common.task.ITaskCoordinator;
 import strata1.injector.container.IContainer;
 import strata1.injector.container.IModule;
 
@@ -62,7 +62,7 @@ interface IServerFactory
      *
      * @return
      */
-    public ITaskProducerConsumerManager
+    public ITaskCoordinator
     createTaskProducerConsumerManager();
     
     /************************************************************************

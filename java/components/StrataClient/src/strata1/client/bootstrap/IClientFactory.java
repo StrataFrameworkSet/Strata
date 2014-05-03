@@ -66,17 +66,9 @@ interface IClientFactory
      *
      * @return
      */
-    public List<IModule>
-    createModules();
-
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
     public IContainer
     createContainer();
-    
+
     /************************************************************************
      *  
      *
@@ -85,7 +77,15 @@ interface IClientFactory
      */
     public IContainer
     createContainer(String resourceLocation);
-    
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public List<IModule>
+    createModules();
+
     /************************************************************************
      *  
      *

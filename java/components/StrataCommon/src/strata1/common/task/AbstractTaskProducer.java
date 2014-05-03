@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	ITask.java
+// # File Name:	AbstractTaskProducer.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,6 +24,8 @@
 
 package strata1.common.task;
 
+import strata1.common.producerconsumer.AbstractProducer;
+
 /****************************************************************************
  * 
  * @author 		
@@ -31,23 +33,11 @@ package strata1.common.task;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface ITask
-{
-    public <T> void
-    setProperty(String key,T property);
-    
-    public String
-    getName();
-    
-    public <T> T
-    getProperty(Class<T> type,String key);
-    
-    public <T> boolean
-    hasProperty(Class<T> type,String key);
-    
-    public void
-    execute();
-}
+public abstract
+class AbstractTaskProducer
+    extends 
+        AbstractProducer<ITask,ITaskConsumer,ITaskRouter,ITaskSelector>
+    implements 
+        ITaskProducer {}
 
 // ##########################################################################

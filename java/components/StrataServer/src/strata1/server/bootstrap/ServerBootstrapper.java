@@ -27,7 +27,7 @@ package strata1.server.bootstrap;
 import java.util.Collections;
 import java.util.List;
 import strata1.common.logger.ILogger;
-import strata1.common.producerconsumer.ITaskProducerConsumerManager;
+import strata1.common.task.ITaskCoordinator;
 import strata1.injector.container.Binder;
 import strata1.injector.container.IContainer;
 import strata1.injector.container.IModule;
@@ -45,7 +45,7 @@ class ServerBootstrapper
 {
     private IContainer                   itsContainer;
     private ILogger                      itsLogger;
-    private ITaskProducerConsumerManager itsTaskManager;
+    private ITaskCoordinator itsTaskManager;
     private List<IModule>                itsModules;
     private boolean                      itsStartIndicator;
     
@@ -98,7 +98,7 @@ class ServerBootstrapper
      * {@inheritDoc} 
      */
     @Override
-    public ITaskProducerConsumerManager 
+    public ITaskCoordinator 
     getTaskManager()
     {
         return itsTaskManager;
@@ -195,7 +195,7 @@ class ServerBootstrapper
         getContainer()
             .insertBinding(
                 Binder
-                    .bindType( ITaskProducerConsumerManager.class )
+                    .bindType( ITaskCoordinator.class )
                     .toInstance( itsTaskManager ) );
     }
 
