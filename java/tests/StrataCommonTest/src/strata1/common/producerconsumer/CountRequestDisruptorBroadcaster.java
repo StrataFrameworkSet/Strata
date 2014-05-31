@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	TestTask.java
+// # File Name:	CountRequestDisruptorRouter.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.task;
-
-import strata1.common.logger.ILogger;
+package strata1.common.producerconsumer;
 
 /****************************************************************************
  * 
@@ -34,43 +32,21 @@ import strata1.common.logger.ILogger;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class TestTask
-    extends AbstractTask
+class CountRequestDisruptorBroadcaster
+    extends    DisruptorBroadcaster<CountRequest>
+    implements ICountRequestDispatcher
 {
-    private ILogger itsLogger;
-    
-    /************************************************************************
-     * Creates a new {@code TestTask}. 
-     *
-     * @param name
-     */
-    public 
-    TestTask(String name,Integer taskId,ILogger logger)
-    {
-        super( name );
-        itsLogger = logger;
-        setProperty( "taskId",taskId );
-    }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * Creates a new {@code CountRequestDisruptorRouter}. 
+     *
+     * @param factory
+     * @param bufferSize
      */
-    @Override
-    public void 
-    execute()
+    public 
+    CountRequestDisruptorBroadcaster(int bufferSize)
     {
-        StringBuilder builder = new StringBuilder();
-        
-        builder
-            .append( "execute()\n" )
-            .append( "      name = " )
-            .append( getName() ).append( "\n" )
-            .append( "    taskId = ")
-            .append( getProperty(Integer.class,"taskId")).append( "\n" )
-            .append( "    thread = " )
-            .append( Thread.currentThread().getName() ).append( "\n" );
-        
-        itsLogger.logInfo( builder.toString() );
+        super( new CountRequestEventFactory(),bufferSize );
     }
 
 }

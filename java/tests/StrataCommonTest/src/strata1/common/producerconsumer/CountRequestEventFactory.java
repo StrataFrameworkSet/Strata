@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	TestTaskProducer.java
+// # File Name:	CountRequestEventFactory.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.task;
-
-import java.util.LinkedList;
-import java.util.Queue;
-
+package strata1.common.producerconsumer;
 
 /****************************************************************************
  * 
@@ -36,77 +32,27 @@ import java.util.Queue;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class TestTaskProducer
-    extends    AbstractTaskProducer
-    implements ITaskProducer
+class CountRequestEventFactory
+    implements IEventFactory<CountRequest>
 {
-    private Queue<ITask> itsTasks;
-    
+
     /************************************************************************
-     * Creates a new {@code TestTaskProducer}. 
+     * Creates a new {@code CountRequestEventFactory}. 
      *
      */
     public 
-    TestTaskProducer()
-    {
-        itsTasks = new LinkedList<ITask>();
-    }
-    
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    startProducing()
-    {
-        if ( getDispatcher() == null )
-            throw new IllegalStateException("no sink available");
-        
-        for (ITask task: itsTasks)
-        {
-            try
-            {
-                getDispatcher().dispatch( task );
-            }
-            catch(Exception e)
-            {
-                throw new IllegalStateException(e);
-            }
-        }
-    }
+    CountRequestEventFactory() {}
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    stopProducing()
+    public Event<CountRequest> 
+    newInstance()
     {
+        return new Event<CountRequest>();
     }
 
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    isProducing()
-    {
-        return !itsTasks.isEmpty();
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @param task
-     * @return
-     */
-    public TestTaskProducer
-    insertTask(ITask task)
-    {
-        itsTasks.add( task );
-        return this;
-    }
-    
 }
 
 // ##########################################################################
