@@ -32,45 +32,25 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IConsumer<
-    T,
-    C extends IConsumer<T,C,R,S>,
-    R extends IRouter<T,C,R,S>,
-    S extends ISelector<T>>
+interface IConsumer<T>
 {
-    public void
-    setSource(R source);
+    public IConsumer<T>
+    setSelector(ISelector<T> selector);
+    
+    public IConsumer<T>
+    setExceptionHandler(IExceptionHandler handler);
     
     public void
-    setSelector(S selector);
+    consume(T element);
     
-    public void
-    clearSource();
-    
-    public void
-    putElement(T element) 
-        throws 
-            BlockingCollectionClosedException, 
-            BlockingCollectionCompletedException, 
-            InterruptedException;
-    
-    public R
-    getSource();
-    
-    public S
+    public ISelector<T>
     getSelector();
+    
+    public IExceptionHandler
+    getExceptionHandler();
     
     public int
     getWaitingCount();
-    
-    public void
-    startConsuming();
-    
-    public void
-    stopConsuming();
-    
-    public boolean
-    isConsuming();
 }
 
 // ##########################################################################

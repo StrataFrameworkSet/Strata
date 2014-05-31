@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	DisruptorExceptionHandler.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,6 +24,8 @@
 
 package strata1.common.producerconsumer;
 
+import com.lmax.disruptor.ExceptionHandler;
+
 /****************************************************************************
  * 
  * @author 		
@@ -32,62 +34,51 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class DisruptorExceptionHandler
+    implements ExceptionHandler
 {
-    /************************************************************************
-     *  
-     *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    private IExceptionHandler itsAdaptee;
     
     /************************************************************************
-     *  
+     * Creates a new {@code DisruptorExceptionHandler}. 
      *
-     * @return
-     * @throws BlockingCollectionCompletedException
      */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
+    public 
+    DisruptorExceptionHandler(IExceptionHandler adaptee)
+    {
+        itsAdaptee = adaptee;
+    }
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public void
-    close();
-    
+    @Override
+    public void 
+    handleEventException(Throwable ex,long sequence,Object event)
+    {
+        itsAdaptee.onException( ex );
+    }
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public int
-    getCount();
-    
+    @Override
+    public void 
+    handleOnStartException(Throwable ex)
+    {
+        itsAdaptee.onException( ex );
+    }
+
     /************************************************************************
-     *  
-     *
-     * @return
+     * {@inheritDoc} 
      */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    @Override
+    public void 
+    handleOnShutdownException(Throwable ex)
+    {
+        itsAdaptee.onException( ex );
+    }
+
 }
 
 // ##########################################################################

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	AbstractPoolable.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.pool;
 
 /****************************************************************************
  * 
@@ -31,63 +31,77 @@ package strata1.common.producerconsumer;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IBlockingCollection<T>
+public abstract 
+class AbstractPoolable
+    implements IPoolable
 {
-    /************************************************************************
-     *  
-     *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    private final IPool<? super AbstractPoolable> itsPool;
+    private boolean                               itsAvailability;
     
     /************************************************************************
-     *  
+     * Creates a new {@code AbstractPoolable}. 
      *
-     * @return
-     * @throws BlockingCollectionCompletedException
      */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
+    protected 
+    AbstractPoolable(IPool<? super AbstractPoolable> pool)
+    {
+        itsPool         = pool;
+        itsAvailability = true;
+    }
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public void
-    close();
-    
+    @Override
+    public void 
+    recycle()
+    {
+        if ( !itsPool.containsInstance(this))
+            throw
+                new IllegalStateException(
+                    "Instance is not contained in pool." );
+        
+        itsPool.recyleInstance( this );
+    }
+
+   /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IPool<? super AbstractPoolable> 
+    getPool()
+    {
+        return itsPool;
+    }
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public int
-    getCount();
-    
+    @Override
+    public boolean 
+    isAvailable()
+    {
+        return itsAvailability;
+    }
+
     /************************************************************************
-     *  
-     *
-     * @return
+     * {@inheritDoc} 
      */
-    public boolean
-    isClosed();
-    
+    void 
+    markAvailable()
+    {
+        itsAvailability = false;
+    }
+
     /************************************************************************
-     *  
-     *
-     * @return
+     * {@inheritDoc} 
      */
-    public boolean
-    isCompleted();
+    void 
+    markUnavailable()
+    {
+        itsAvailability = true;
+    }
+
 }
 
 // ##########################################################################

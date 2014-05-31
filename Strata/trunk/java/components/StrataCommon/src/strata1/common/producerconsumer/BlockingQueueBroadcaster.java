@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	BlockingQueueBroadcaster.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,6 +24,10 @@
 
 package strata1.common.producerconsumer;
 
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+
 /****************************************************************************
  * 
  * @author 		
@@ -32,62 +36,47 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class BlockingQueueBroadcaster<T>
+    extends BlockingQueueDispatcher<T>
 {
+
     /************************************************************************
-     *  
-     *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     * @throws BlockingCollectionCompletedException
-     */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
+     * Creates a new {@code BlockingQueueRouter}. 
      *
      */
-    public void
-    close();
-    
+    public 
+    BlockingQueueBroadcaster()
+    {
+    }
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    @Override
+    public void 
+    startDispatching()
+    {
+        if ( !isDispatching() )
+        {
+            getRunningFlag().compareAndSet( false,true );
+            setExecutor( Executors.newCachedThreadPool() );
+           
+            for (ISelector<T> selector:getConsumers().getKeys())                
+            {
+                for (IConsumer<T> consumer:getConsumers().get( selector ))
+                {
+                    BlockingQueue<T> queue = new LinkedBlockingQueue<T>();
+                    
+                    addToQueues( selector,queue );
+                    getExecutor().execute( 
+                        new BlockingCollectionProcessor<T>(
+                            queue,
+                            consumer,
+                            getRunningFlag()) );
+                }
+            }
+        }
+    }
 }
 
 // ##########################################################################

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	ArrayPool.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,7 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.pool;
+
+import java.lang.reflect.Array;
+import javax.inject.Provider;
 
 /****************************************************************************
  * 
@@ -32,62 +35,55 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class ArrayPool<T extends AbstractPoolable>
+    extends AbstractPool<T>
 {
-    /************************************************************************
-     *  
-     *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    private final T[] itsInstances;
     
     /************************************************************************
-     *  
+     * Creates a new {@code ArrayPool}. 
      *
-     * @return
-     * @throws BlockingCollectionCompletedException
      */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
+    @SuppressWarnings("unchecked")
+    public 
+    ArrayPool(Provider<T> provider,Class<T> type,int poolSize)
+    {
+        super( provider );
+        itsInstances = (T[])Array.newInstance( type,poolSize );
+        
+        for (int i=0;i<itsInstances.length;i++)
+            itsInstances[i] = provider.get();
+    }
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public void
-    close();
-    
+    @Override
+    protected T 
+    getAvailableInstance()
+    {
+        for (int i=0;i<itsInstances.length;i++)
+            if ( itsInstances[i].isAvailable() )
+                return itsInstances[i];
+        
+        throw new IllegalStateException("No available instances.");
+    }
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    @Override
+    protected boolean 
+    hasInstance(T instance)
+    {
+        for (int i=0;i<itsInstances.length;i++)
+            if ( itsInstances[i] == instance )
+                return true;
+        
+        return false;
+    }
+
+
 }
 
 // ##########################################################################

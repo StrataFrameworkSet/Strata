@@ -37,9 +37,21 @@ public
 class LogEntry
     implements ILogEntry
 {
-    private final DateTime     itsTimestamp;
-    private final LoggingLevel itsLevel;
-    private final String       itsMessage;
+    private DateTime     itsTimestamp;
+    private LoggingLevel itsLevel;
+    private String       itsMessage;
+    
+    /************************************************************************
+     * Creates a new {@code LogEntry}. 
+     *
+     */
+    public
+    LogEntry()
+    {
+        itsTimestamp = null;
+        itsLevel     = LoggingLevel.DEBUG;
+        itsMessage   = null;
+    }
     
     /************************************************************************
      * Creates a new {@code LogEntry}. 
@@ -83,6 +95,13 @@ class LogEntry
         return itsMessage;
     }
 
+    public void
+    initialize(ILogEntry other)
+    {
+        itsTimestamp = other.getTimestamp();
+        itsLevel     = other.getLevel();
+        itsMessage   = other.getMessage();
+    }
 }
 
 // ##########################################################################

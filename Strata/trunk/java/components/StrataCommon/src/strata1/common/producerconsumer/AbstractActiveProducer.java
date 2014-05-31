@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	AbstractActiveProducer.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,6 +24,9 @@
 
 package strata1.common.producerconsumer;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /****************************************************************************
  * 
  * @author 		
@@ -31,63 +34,75 @@ package strata1.common.producerconsumer;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IBlockingCollection<T>
+public abstract 
+class AbstractActiveProducer<T>
+    extends AbstractProducer<T>
 {
-    /************************************************************************
-     *  
-     *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    private ExecutorService itsExecutor;
     
+    /************************************************************************
+     * Creates a new {@code AbstractActiveProducer}. 
+     *
+     */
+    public 
+    AbstractActiveProducer()
+    {
+        itsExecutor = null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    startProducing()
+    {
+        if ( !isProducing() )
+        {
+            itsExecutor = Executors.newFixedThreadPool( 3 );
+            itsExecutor.execute( getRunnable() );
+        }
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    stopProducing()
+    {
+        stopRunnable();
+        
+        if ( itsExecutor != null )
+            itsExecutor.shutdown();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    isProducing()
+    {
+        return 
+            (itsExecutor != null) &&
+            (!itsExecutor.isTerminated());
+    }
+
     /************************************************************************
      *  
      *
      * @return
-     * @throws BlockingCollectionCompletedException
      */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    protected abstract Runnable
+    getRunnable();
     
     /************************************************************************
      *  
      *
      */
-    public void
-    close();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    protected void
+    stopRunnable() {}
 }
 
 // ##########################################################################

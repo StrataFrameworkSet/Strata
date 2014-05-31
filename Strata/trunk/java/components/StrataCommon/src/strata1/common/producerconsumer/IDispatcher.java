@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	IDispatcher.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -32,62 +32,28 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+interface IDispatcher<T>
 {
-    /************************************************************************
-     *  
-     *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
+    public IDispatcher<T>
+    attachConsumer(IConsumer<T> consumer);
+    
+    public IDispatcher<T>
+    detachConsumer(IConsumer<T> consumer);
+    
     public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    dispatch(T payload);
     
-    /************************************************************************
-     *  
-     *
-     * @return
-     * @throws BlockingCollectionCompletedException
-     */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    public boolean
+    hasConsumer(IConsumer<T> consumer);
     
-    /************************************************************************
-     *  
-     *
-     */
     public void
-    close();
+    startDispatching();
     
-    /************************************************************************
-     *  
-     *
-     */
-    public int
-    getCount();
+    public void
+    stopDispatching();
     
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
     public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    isDispatching();
 }
 
 // ##########################################################################

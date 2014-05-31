@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	DisruptorRouter.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,6 +24,7 @@
 
 package strata1.common.producerconsumer;
 
+
 /****************************************************************************
  * 
  * @author 		
@@ -32,62 +33,33 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class DisruptorRouter<T> 
+    extends DisruptorDispatcher<T>
 {
     /************************************************************************
-     *  
+     * Creates a new {@code DisruptorRouter}. 
      *
-     * @param element
-     * @throws BlockingCollectionClosedException
      */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
+    public 
+    DisruptorRouter(IEventFactory<T> factory,int bufferSize)
+    {
+        super( factory,bufferSize );
+    }
+
     /************************************************************************
-     *  
-     *
-     * @return
-     * @throws BlockingCollectionCompletedException
+     * {@inheritDoc} 
      */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    close();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    @Override
+    protected DisruptorEventHandler<T> 
+    createHandler(
+        long         index,
+        long         cardinality,
+        IConsumer<T> consumer)
+    {
+        return 
+            new DisruptorRouterEventHandler<T>(index,cardinality,consumer);
+    }
+
 }
 
 // ##########################################################################

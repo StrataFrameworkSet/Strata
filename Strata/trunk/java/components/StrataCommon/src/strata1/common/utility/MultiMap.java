@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	Logger.java
+// # File Name:	MultiMap.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,11 +22,13 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.logger;
+package strata1.common.utility;
 
-import java.util.HashSet;
-import java.util.Set;
-import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /****************************************************************************
  * 
@@ -36,135 +38,156 @@ import javax.inject.Inject;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class Logger
-    implements ILogger
+class MultiMap<K,V>
+    implements IMultiMap<K,V>
 {
-    private Set<ILogEntryProcessor> itsProcessors;
+    private Map<K,List<V>> itsImp;
     
     /************************************************************************
-     * Creates a new {@code Logger}. 
+     * Creates a new {@code MultiMap}. 
      *
      */
-    @Inject
+    public 
+    MultiMap()
+    {
+        itsImp = new ConcurrentHashMap<K,List<V>>();
+    }
+
+    /************************************************************************
+     * Creates a new {@code MultiMap}. 
+     *
+     * @param type
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
     public
-    Logger()
+    MultiMap(Class<? extends Map<K,List<V>>> type) 
+        throws 
+            InstantiationException, 
+            IllegalAccessException
     {
-        itsProcessors = new HashSet<ILogEntryProcessor>();
+        itsImp = type.newInstance();
     }
-
+    
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public synchronized ILogger 
-    attachProcessor(ILogEntryProcessor processor)
+    public MultiMap<K,V> 
+    put(K key,V value)
     {
-        itsProcessors.add( processor );
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public synchronized ILogger 
-    detachProcessor(ILogEntryProcessor processor)
-    {
-        itsProcessors.remove( processor );
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public synchronized boolean 
-    hasProcessor(ILogEntryProcessor processor)
-    {
-        return itsProcessors.contains( processor );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public synchronized void 
-    logStart(String message)
-    {
-        log( LoggingLevel.START,message );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public synchronized void 
-    logStop(String message)
-    {
-        log( LoggingLevel.STOP,message );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public synchronized void 
-    logDebug(String message)
-    {
-        log( LoggingLevel.DEBUG,message );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public synchronized void 
-    logVerbose(String message)
-    {
-        log( LoggingLevel.VERBOSE,message );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public synchronized void 
-    logInfo(String message)
-    {
-        log( LoggingLevel.INFO,message );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public synchronized void 
-    logWarning(String message)
-    {
-        log( LoggingLevel.WARNING,message );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public synchronized void 
-    logError(String message)
-    {
-        log( LoggingLevel.ERROR,message );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public synchronized void 
-    log(LoggingLevel level,String message)
-    {
-        ILogEntry entry = new LogEntry( level,message );
+        if ( key == null )
+            throw new IllegalArgumentException("key is null");
         
-        for (ILogEntryProcessor processor:itsProcessors)
-            processor.process( entry );
+        if ( !itsImp.containsKey( key ))
+            itsImp.put( key,new ArrayList<V>() );
+        
+        itsImp.get( key ).add( value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMultiMap<K,V> 
+    remove(K key)
+    {
+        if ( itsImp.containsKey( key ))
+            itsImp.remove( key );
+        
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMultiMap<K,V> 
+    remove(K key,V value)
+    {
+        if ( itsImp.containsKey( key ))
+            itsImp.get( key ).remove( value );
+        
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public Collection<V> 
+    get(K key)
+    {
+        return itsImp.get( key );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public V 
+    get(K key,int index)
+    {
+        List<V> values = itsImp.get( key );
+        
+        return values.get( index );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public int 
+    getCardinality(K key)
+    {
+        if ( itsImp.containsKey( key ))
+            return get( key ).size();
+        
+        return 0;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public Collection<K> 
+    getKeys()
+    {
+        return itsImp.keySet();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public Collection<List<V>> 
+    getValues()
+    {
+        return itsImp.values();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    containsKey(K key)
+    {
+        return itsImp.containsKey( key );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    containsValue(K key,V value)
+    {
+        if ( itsImp.containsKey( key ))
+            return itsImp.get( key ).contains( value );
+        
+        return false;
     }
 
 }

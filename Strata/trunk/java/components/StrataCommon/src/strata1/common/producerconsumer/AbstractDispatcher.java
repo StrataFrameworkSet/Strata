@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	TaskCoordinator.java
+// # File Name:	AbstractDispatcher.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,9 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.task;
+package strata1.common.producerconsumer;
 
-import strata1.common.producerconsumer.Coordinator;
+import strata1.common.utility.IMultiMap;
+import strata1.common.utility.MultiMap;
 
 /****************************************************************************
  * 
@@ -33,40 +34,65 @@ import strata1.common.producerconsumer.Coordinator;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class TaskCoordinator
-    extends
-        Coordinator<
-            ITask,
-            ITaskProducer,
-            ITaskConsumer,
-            ITaskRouter,
-            ITaskSelector>
-    implements 
-        ITaskCoordinator
+public abstract 
+class AbstractDispatcher<T>
+    implements IDispatcher<T>
 {
+    private IMultiMap<ISelector<T>,IConsumer<T>> itsConsumers;
 
     /************************************************************************
-     * Creates a new {@code TaskCoordinator}. 
+     * Creates a new {@code AbstractDispatcher}. 
      *
      */
     public 
-    TaskCoordinator()
+    AbstractDispatcher()
     {
-        super( new TaskRouter() );
+        itsConsumers = new MultiMap<ISelector<T>,IConsumer<T>>();
     }
 
     /************************************************************************
-     * Creates a new {@code TaskCoordinator}. 
-     *
-     * @param channel
+     * {@inheritDoc} 
      */
-    public 
-    TaskCoordinator(ITaskRouter router)
+    @Override
+    public AbstractDispatcher<T> 
+    attachConsumer(IConsumer<T> consumer)
     {
-        super( router );
+        itsConsumers.put( consumer.getSelector(),consumer );
+        return this;
     }
-    
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public AbstractDispatcher<T> 
+    detachConsumer(IConsumer<T> consumer)
+    {
+        itsConsumers.remove( consumer.getSelector(),consumer );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    hasConsumer(IConsumer<T> consumer)
+    {
+        return itsConsumers.containsValue(consumer.getSelector(),consumer);
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    protected IMultiMap<ISelector<T>,IConsumer<T>>
+    getConsumers()
+    {
+        return itsConsumers;
+    }
+
 }
 
 // ##########################################################################

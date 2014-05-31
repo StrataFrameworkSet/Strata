@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	AbstractPool.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,7 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.pool;
+
+import javax.inject.Provider;
 
 /****************************************************************************
  * 
@@ -31,63 +33,60 @@ package strata1.common.producerconsumer;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IBlockingCollection<T>
+public abstract
+class AbstractPool<T extends AbstractPoolable>
+    implements IPool<T>
 {
-    /************************************************************************
-     *  
-     *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    private Provider<T> itsProvider;
     
     /************************************************************************
-     *  
+     * Creates a new {@code AbstractPool}. 
      *
-     * @return
-     * @throws BlockingCollectionCompletedException
      */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
+    protected 
+    AbstractPool(Provider<T> provider) 
+    {
+        itsProvider = provider;
+    }
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public void
-    close();
-    
+    @Override
+    public T 
+    obtainInstance()
+    {
+        T instance = getAvailableInstance();
+        
+        instance.markAvailable();
+        return instance;
+    }
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public int
-    getCount();
-    
+    @Override
+    public void 
+    recyleInstance(T instance)
+    {
+        instance.markUnavailable();
+    }
+
     /************************************************************************
-     *  
-     *
-     * @return
+     * {@inheritDoc} 
      */
-    public boolean
-    isClosed();
+    @Override
+    public boolean 
+    containsInstance(T instance)
+    {
+        return hasInstance( instance );
+    }
     
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    protected abstract T
+    getAvailableInstance();
+    
+    protected abstract boolean
+    hasInstance(T instance);
 }
 
 // ##########################################################################

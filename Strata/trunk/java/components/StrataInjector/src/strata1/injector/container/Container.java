@@ -24,6 +24,9 @@
 
 package strata1.injector.container;
 
+import strata1.common.utility.ISynchronizer;
+import strata1.common.utility.ISynchronizerProvider;
+import strata1.common.utility.ReadWriteLockSynchronizer;
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +44,7 @@ class Container
     implements IContainer
 {
     private Map<IBindingIdentifier<?>,Provider<?>> itsBindings;
+    private final ISynchronizer                    itsSynchronizer;
     
     /************************************************************************
      * Creates a new {@code Container}. 
@@ -49,7 +53,20 @@ class Container
     public 
     Container()
     {
-        itsBindings = new HashMap<IBindingIdentifier<?>,Provider<?>>();
+        itsBindings     = new HashMap<IBindingIdentifier<?>,Provider<?>>();
+        itsSynchronizer = new ReadWriteLockSynchronizer();
+    }
+
+    
+    /************************************************************************
+     * Creates a new {@code Container}. 
+     *
+     */
+    public 
+    Container(ISynchronizerProvider provider)
+    {
+        itsBindings     = new HashMap<IBindingIdentifier<?>,Provider<?>>();
+        itsSynchronizer = provider.get();
     }
 
     /************************************************************************
@@ -59,7 +76,15 @@ class Container
     public <T> IContainer 
     insertBinding(IBindingBuilder<T> builder)
     {
-         return insertBinding( builder.getBinding() );
+        try
+        {
+            itsSynchronizer.lockForWriting();
+            return insertBinding( builder.getBinding() );
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromWriting();
+        }
     }
 
     /************************************************************************
@@ -69,14 +94,25 @@ class Container
     public <T> IContainer 
     insertBinding(IBinding<T> binding)
     {
-        BindingVisitor<T> visitor = new BindingVisitor<T>(this);
+        BindingVisitor<T> visitor = null;
         
-        if ( itsBindings.containsKey( binding.getIdentifier() ) )
-            throw new IllegalArgumentException();
-
-        binding.accept( visitor );     
-        itsBindings.put( visitor.getIdentifier(),visitor.getProvider() );
-        return this;
+        try
+        {
+            itsSynchronizer.lockForWriting();
+            visitor = new BindingVisitor<T>(this);
+            
+            if ( itsBindings.containsKey( binding.getIdentifier() ) )
+                throw new IllegalArgumentException();
+    
+            binding.accept( visitor );     
+            itsBindings.put( visitor.getIdentifier(),visitor.getProvider() );
+            return this;
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromWriting();
+        }
+        
     }
 
     /************************************************************************
@@ -86,18 +122,28 @@ class Container
     public <T> T 
     getInstance(Class<T> type)
     {
-        IBindingIdentifier<T> id = new TypeBindingIdentifier<T>(type);
+        IBindingIdentifier<T> id = null;
         Provider<?>           provider = null;
         
-        if ( !hasBinding( id ) )
-            return null;
-        
-        provider = itsBindings.get( id );
-        
-        if ( provider == null )
-            throw new IllegalStateException("provider is null.");
-        
-        return type.cast( provider.get() );
+        try
+        {
+            itsSynchronizer.lockForReading();
+            id = new TypeBindingIdentifier<T>(type);
+            
+            if ( !hasBinding( id ) )
+                return null;
+            
+            provider = itsBindings.get( id );
+            
+            if ( provider == null )
+                throw new IllegalStateException("provider is null.");
+            
+            return type.cast( provider.get() );
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromReading();
+        }
     }
 
     /************************************************************************
@@ -107,19 +153,28 @@ class Container
     public <T> T 
     getInstance(Class<T> type,String key)
     {
-        IBindingIdentifier<T> id = 
-            new TypeAndNameBindingIdentifier<T>(type,key);
+        IBindingIdentifier<T> id = null;
         Provider<?>           provider = null;
         
-        if ( !hasBinding( id ) )
-            return null;
-        
-        provider = itsBindings.get( id );
-        
-        if ( provider == null )
-            throw new IllegalStateException("provider is null.");
-        
-        return type.cast( provider.get() );
+        try
+        {
+            itsSynchronizer.lockForReading();
+            id = new TypeAndNameBindingIdentifier<T>(type,key);
+           
+            if ( !hasBinding( id ) )
+                return null;
+            
+            provider = itsBindings.get( id );
+            
+            if ( provider == null )
+                throw new IllegalStateException("provider is null.");
+            
+            return type.cast( provider.get() );
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromReading();
+        }
     }
 
     /************************************************************************
@@ -129,19 +184,29 @@ class Container
     public <T> T 
     getInstance(Class<T> type,Class<? extends Annotation> key)
     {
-        IBindingIdentifier<T> id = 
-            new TypeAndAnnotationBindingIdentifier<T>(type,key);
+        IBindingIdentifier<T> id = null;   
         Provider<?>           provider = null;
         
-        if ( !hasBinding( id ) )
-            return null;
-        
-        provider = itsBindings.get( id );
-        
-        if ( provider == null )
-            throw new IllegalStateException("provider is null.");
-        
-        return type.cast( provider.get() );
+        try
+        {
+            itsSynchronizer.lockForReading();
+            id = new TypeAndAnnotationBindingIdentifier<T>(type,key);
+            
+            if ( !hasBinding( id ) )
+                return null;
+            
+            provider = itsBindings.get( id );
+            
+            if ( provider == null )
+                throw new IllegalStateException("provider is null.");
+            
+            return type.cast( provider.get() );
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromReading();
+        }
+
     }
 
     /************************************************************************
@@ -153,15 +218,24 @@ class Container
     {
         Provider<?> provider = null;
         
-        if ( !hasBinding( id ) )
-            return null;
-        
-        provider = itsBindings.get( id );
-        
-        if ( provider == null )
-            throw new IllegalStateException("provider is null.");
-        
-        return id.getType().cast( provider.get() );
+        try
+        {
+            itsSynchronizer.lockForReading();
+            
+            if ( !hasBinding( id ) )
+                return null;
+            
+            provider = itsBindings.get( id );
+            
+            if ( provider == null )
+                throw new IllegalStateException("provider is null.");
+            
+            return id.getType().cast( provider.get() );
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromReading();
+        }
     }
 
     /************************************************************************
@@ -171,7 +245,15 @@ class Container
     public <T> boolean 
     hasBinding(Class<T> type)
     {
-        return hasBinding( new TypeBindingIdentifier<T>(type) );
+        try
+        {
+            itsSynchronizer.lockForReading();
+            return hasBinding( new TypeBindingIdentifier<T>(type) );
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromReading();
+        }
     }
 
     /************************************************************************
@@ -181,7 +263,15 @@ class Container
     public <T> boolean 
     hasBinding(Class<T> type,String key)
     {
-        return hasBinding(new TypeAndNameBindingIdentifier<T>(type,key));
+        try
+        {
+            itsSynchronizer.lockForReading();
+            return hasBinding(new TypeAndNameBindingIdentifier<T>(type,key));
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromReading();
+        }
     }
 
     /************************************************************************
@@ -191,9 +281,17 @@ class Container
     public <T> boolean 
     hasBinding(Class<T> type,Class<? extends Annotation> key)
     {
-        return 
-            hasBinding(
-                new TypeAndAnnotationBindingIdentifier<T>(type,key));
+        try
+        {
+            itsSynchronizer.lockForReading();
+            return 
+                hasBinding(
+                    new TypeAndAnnotationBindingIdentifier<T>(type,key));
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromReading();
+        }
     }
 
     /************************************************************************
@@ -203,7 +301,15 @@ class Container
     public <T> boolean 
     hasBinding(IBindingIdentifier<T> id)
     {
-        return itsBindings.containsKey( id );
+        try
+        {
+            itsSynchronizer.lockForReading();
+            return itsBindings.containsKey( id );
+        }
+        finally
+        {
+            itsSynchronizer.unlockFromReading();
+        }
     }
 
 }

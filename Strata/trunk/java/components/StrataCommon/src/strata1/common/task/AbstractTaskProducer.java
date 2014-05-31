@@ -36,7 +36,7 @@ import strata1.common.producerconsumer.AbstractProducer;
 public abstract
 class AbstractTaskProducer
     extends 
-        AbstractProducer<ITask,ITaskConsumer,ITaskRouter,ITaskSelector>
+        AbstractProducer<ITask>
     implements 
         ITaskProducer {}
 

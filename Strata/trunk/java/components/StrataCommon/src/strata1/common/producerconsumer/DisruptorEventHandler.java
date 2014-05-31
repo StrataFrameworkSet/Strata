@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	DisruptorEventHandler.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,6 +24,11 @@
 
 package strata1.common.producerconsumer;
 
+import com.lmax.disruptor.EventHandler;
+import com.lmax.disruptor.LifecycleAware;
+import com.lmax.disruptor.TimeoutHandler;
+
+
 /****************************************************************************
  * 
  * @author 		
@@ -31,63 +36,99 @@ package strata1.common.producerconsumer;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IBlockingCollection<T>
+public abstract
+class DisruptorEventHandler<T>
+    implements 
+        EventHandler<Event<T>>,
+        TimeoutHandler,
+        LifecycleAware
 {
-    /************************************************************************
-     *  
-     *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    private IConsumer<T> itsConsumer;
     
+    /************************************************************************
+     * Creates a new {@code DisruptorEventHandler}. 
+     *
+     * @param index
+     * @param cardinality
+     * @param consumer
+     * @param singleConsumer
+     */
+    protected 
+    DisruptorEventHandler(IConsumer<T> consumer)
+    {
+        itsConsumer = consumer;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    onEvent(
+        Event<T> event,
+        long     sequence,
+        boolean  endOfBatch)
+        throws   Exception
+    {   
+        try
+        {
+            if ( mustConsume( event,sequence ) )
+                itsConsumer.consume( event.getPayload() );
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    onStart()
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    onShutdown()
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    onTimeout(long sequence) throws Exception
+    {
+    }
+
     /************************************************************************
      *  
      *
      * @return
-     * @throws BlockingCollectionCompletedException
      */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    protected IConsumer<T>
+    getConsumer()
+    {
+        return itsConsumer;
+    }
     
     /************************************************************************
      *  
      *
-     */
-    public void
-    close();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
+     * @param event
+     * @param sequence
      * @return
      */
-    public boolean
-    isClosed();
+    protected abstract boolean
+    mustConsume(Event<T> event,long sequence);
     
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
 }
 
 // ##########################################################################

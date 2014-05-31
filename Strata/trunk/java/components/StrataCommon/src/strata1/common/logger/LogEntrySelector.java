@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	LogEntrySelector.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.logger;
 
 /****************************************************************************
  * 
@@ -32,62 +32,44 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class LogEntrySelector
+    implements ILogEntrySelector
 {
-    /************************************************************************
-     *  
-     *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    private LoggingLevel itsLowerBound;
     
     /************************************************************************
-     *  
+     * Creates a new {@code LogEntrySelector}. 
      *
-     * @return
-     * @throws BlockingCollectionCompletedException
      */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    public 
+    LogEntrySelector()
+    {
+        this( LoggingLevel.INFO );
+    }
     
     /************************************************************************
-     *  
+     * Creates a new {@code LogEntrySelector}. 
      *
      */
-    public void
-    close();
-    
+    public 
+    LogEntrySelector(LoggingLevel lowerBound)
+    {
+        itsLowerBound = lowerBound;
+    }
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    @Override
+    public boolean 
+    match(ILogEntry entry)
+    {
+        return 
+            entry
+                .getLevel()
+                .isGreaterOrEqual( itsLowerBound );
+    }
+
 }
 
 // ##########################################################################

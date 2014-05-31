@@ -27,7 +27,7 @@ package strata1.common.utility;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-/**
+/****************************************************************************
  * Implements the {@code ISynchronizer} interface by wrapping
  * the standard {@code ReadWriteLock}. 
  * 

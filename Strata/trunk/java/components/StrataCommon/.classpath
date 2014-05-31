@@ -9,5 +9,11 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/3.0.6.RELEASE/spring-core-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/inject/javax.inject/1/javax.inject-1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/google/inject/guice/3.0/guice-3.0.jar" sourcepath="/M2_REPO/com/google/inject/guice/4.0-beta/guice-4.0-beta-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/lmax/disruptor/3.2.1/disruptor-3.2.1.jar" sourcepath="/M2_REPO/com/lmax/disruptor/3.2.1/disruptor-3.2.1-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/John/.m2/repository/com/lmax/disruptor/3.2.1/disruptor-3.2.1-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/com/lmax/disruptor/3.2.1/disruptor-3.2.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
