@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	TestTaskProducer.java
+// # File Name:	CountRequestConsumer.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.task;
+package strata1.common.producerconsumer;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
+import java.util.concurrent.atomic.AtomicInteger;
 
 /****************************************************************************
  * 
@@ -36,77 +34,44 @@ import java.util.Queue;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class TestTaskProducer
-    extends    AbstractTaskProducer
-    implements ITaskProducer
+class CountRequestConsumer
+    extends    AbstractConsumer<CountRequest>
+    implements ICountRequestConsumer
 {
-    private Queue<ITask> itsTasks;
+    private final AtomicInteger itsCount;
     
     /************************************************************************
-     * Creates a new {@code TestTaskProducer}. 
+     * Creates a new {@code CountRequestConsumer}. 
      *
      */
     public 
-    TestTaskProducer()
+    CountRequestConsumer(int typeId)
     {
-        itsTasks = new LinkedList<ITask>();
+        super( new CountRequestSelector(typeId));
+        setExceptionHandler( new PrintStackTraceExceptionHandler() );
+        itsCount = new AtomicInteger(0);
     }
-    
-    /************************************************************************
+
+     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    startProducing()
+    public int 
+    getCount()
     {
-        if ( getDispatcher() == null )
-            throw new IllegalStateException("no sink available");
-        
-        for (ITask task: itsTasks)
-        {
-            try
-            {
-                getDispatcher().dispatch( task );
-            }
-            catch(Exception e)
-            {
-                throw new IllegalStateException(e);
-            }
-        }
+        return itsCount.get();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    stopProducing()
+    protected void 
+    doConsume(CountRequest element)
     {
+        itsCount.incrementAndGet();
     }
 
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    isProducing()
-    {
-        return !itsTasks.isEmpty();
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @param task
-     * @return
-     */
-    public TestTaskProducer
-    insertTask(ITask task)
-    {
-        itsTasks.add( task );
-        return this;
-    }
-    
 }
 
 // ##########################################################################

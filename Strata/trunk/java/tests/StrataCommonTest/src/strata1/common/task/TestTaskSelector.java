@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	TestTaskProducer.java
+// # File Name:	TestTaskSelector.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,10 +24,6 @@
 
 package strata1.common.task;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
-
 /****************************************************************************
  * 
  * @author 		
@@ -36,52 +32,19 @@ import java.util.Queue;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class TestTaskProducer
-    extends    AbstractTaskProducer
-    implements ITaskProducer
+class TestTaskSelector
+    implements ITaskSelector
 {
-    private Queue<ITask> itsTasks;
+    private int itsTaskId;
     
     /************************************************************************
-     * Creates a new {@code TestTaskProducer}. 
+     * Creates a new {@code TestTaskSelector}. 
      *
      */
     public 
-    TestTaskProducer()
+    TestTaskSelector(int taskId)
     {
-        itsTasks = new LinkedList<ITask>();
-    }
-    
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    startProducing()
-    {
-        if ( getDispatcher() == null )
-            throw new IllegalStateException("no sink available");
-        
-        for (ITask task: itsTasks)
-        {
-            try
-            {
-                getDispatcher().dispatch( task );
-            }
-            catch(Exception e)
-            {
-                throw new IllegalStateException(e);
-            }
-        }
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    stopProducing()
-    {
+        itsTaskId = taskId;
     }
 
     /************************************************************************
@@ -89,24 +52,17 @@ class TestTaskProducer
      */
     @Override
     public boolean 
-    isProducing()
+    match(ITask task)
     {
-        return !itsTasks.isEmpty();
+        if ( task.hasProperty( Integer.class,"taskId" ) )
+            return 
+                task
+                    .getProperty( Integer.class,"taskId" )
+                    .equals(itsTaskId);
+            
+        return false;
     }
 
-    /************************************************************************
-     *  
-     *
-     * @param task
-     * @return
-     */
-    public TestTaskProducer
-    insertTask(ITask task)
-    {
-        itsTasks.add( task );
-        return this;
-    }
-    
 }
 
 // ##########################################################################

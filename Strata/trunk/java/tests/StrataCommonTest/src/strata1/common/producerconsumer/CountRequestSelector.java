@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	TestTaskProducer.java
+// # File Name:	CountRequestSelector.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.task;
-
-import java.util.LinkedList;
-import java.util.Queue;
-
+package strata1.common.producerconsumer;
 
 /****************************************************************************
  * 
@@ -36,52 +32,19 @@ import java.util.Queue;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class TestTaskProducer
-    extends    AbstractTaskProducer
-    implements ITaskProducer
+class CountRequestSelector
+    implements ICountRequestSelector
 {
-    private Queue<ITask> itsTasks;
+    private final int itsTypeId;
     
     /************************************************************************
-     * Creates a new {@code TestTaskProducer}. 
+     * Creates a new {@code CountRequestSelector}. 
      *
      */
     public 
-    TestTaskProducer()
+    CountRequestSelector(int typeId)
     {
-        itsTasks = new LinkedList<ITask>();
-    }
-    
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    startProducing()
-    {
-        if ( getDispatcher() == null )
-            throw new IllegalStateException("no sink available");
-        
-        for (ITask task: itsTasks)
-        {
-            try
-            {
-                getDispatcher().dispatch( task );
-            }
-            catch(Exception e)
-            {
-                throw new IllegalStateException(e);
-            }
-        }
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    stopProducing()
-    {
+        itsTypeId = typeId;
     }
 
     /************************************************************************
@@ -89,24 +52,47 @@ class TestTaskProducer
      */
     @Override
     public boolean 
-    isProducing()
+    equals(Object other)
     {
-        return !itsTasks.isEmpty();
+        if ( other instanceof CountRequestSelector )
+            return itsTypeId == ((CountRequestSelector)other).itsTypeId;
+        
+        return false;
     }
 
     /************************************************************************
-     *  
-     *
-     * @param task
-     * @return
+     * {@inheritDoc} 
      */
-    public TestTaskProducer
-    insertTask(ITask task)
+    @Override
+    public int 
+    hashCode()
     {
-        itsTasks.add( task );
-        return this;
+        int hash = 7;
+        
+        hash = 31 * hash + itsTypeId;
+        return hash;
     }
-    
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public String 
+    toString()
+    {
+        return "CountRequestSelector:"+itsTypeId;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    match(CountRequest element)
+    {
+        return element.getTypeId() == itsTypeId;
+    }
+
 }
 
 // ##########################################################################

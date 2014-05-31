@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	TestTaskProducer.java
+// # File Name:	CountRequestProducer.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.task;
+package strata1.common.producerconsumer;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
+import java.util.concurrent.atomic.AtomicInteger;
 
 /****************************************************************************
  * 
@@ -36,76 +34,81 @@ import java.util.Queue;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class TestTaskProducer
-    extends    AbstractTaskProducer
-    implements ITaskProducer
+class CountRequestProducer
+    extends    AbstractActiveProducer<CountRequest>
+    implements ICountRequestProducer
 {
-    private Queue<ITask> itsTasks;
+    private final int           itsTypeId;
+    private final int           itsMaxCount;
+    private final AtomicInteger itsCurrentCount;
     
     /************************************************************************
-     * Creates a new {@code TestTaskProducer}. 
+     * Creates a new {@code CountRequestProducer}. 
      *
      */
     public 
-    TestTaskProducer()
+    CountRequestProducer(int typeId,int max)
     {
-        itsTasks = new LinkedList<ITask>();
+        itsTypeId       = typeId;
+        itsMaxCount     = max;
+        itsCurrentCount = new AtomicInteger(0);
     }
-    
+
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    startProducing()
+    public int 
+    getCount()
     {
-        if ( getDispatcher() == null )
-            throw new IllegalStateException("no sink available");
-        
-        for (ITask task: itsTasks)
-        {
-            try
+        return itsCurrentCount.get();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected Runnable 
+    getRunnable()
+    {
+        return 
+            new Runnable()
             {
-                getDispatcher().dispatch( task );
-            }
-            catch(Exception e)
-            {
-                throw new IllegalStateException(e);
-            }
-        }
+                @Override
+                public void 
+                run()
+                {
+                    for (int i=0;i<itsMaxCount;i++)
+                    {
+                        itsCurrentCount.incrementAndGet();
+                        getDispatcher().dispatch( new CountRequest(itsTypeId) );
+                    }
+                    
+                    System
+                        .out
+                        .println( 
+                            "debug: Producer " + itsTypeId + " " +
+                            "dispatched all " + itsMaxCount + " requests");
+                }
+            };
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    stopProducing()
+    protected void 
+    stopRunnable()
     {
+        if ( isProducing() )
+            while ( itsCurrentCount.get() < itsMaxCount )
+                try
+                {
+                    Thread.sleep( 100 );
+                }
+                catch(InterruptedException e) {}
     }
 
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    isProducing()
-    {
-        return !itsTasks.isEmpty();
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @param task
-     * @return
-     */
-    public TestTaskProducer
-    insertTask(ITask task)
-    {
-        itsTasks.add( task );
-        return this;
-    }
     
 }
 
