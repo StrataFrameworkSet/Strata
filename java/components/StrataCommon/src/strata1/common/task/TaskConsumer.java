@@ -26,10 +26,6 @@ package strata1.common.task;
 
 import strata1.common.logger.ILogger;
 import strata1.common.producerconsumer.AbstractConsumer;
-import strata1.common.producerconsumer.BlockingCollectionClosedException;
-import strata1.common.producerconsumer.BlockingCollectionCompletedException;
-import strata1.common.producerconsumer.BlockingQueue;
-import strata1.common.producerconsumer.IBlockingCollection;
 
 /****************************************************************************
  * 
@@ -40,19 +36,9 @@ import strata1.common.producerconsumer.IBlockingCollection;
  */
 public 
 class TaskConsumer
-    extends 
-        AbstractConsumer<ITask,ITaskConsumer,ITaskRouter,ITaskSelector>
-    implements 
-        ITaskConsumer
+    extends AbstractConsumer<ITask>
+    implements ITaskConsumer
 {
-    private ITaskSelector              itsSelector;
-    private IBlockingCollection<ITask> itsWaiting;
-    private ILogger                    itsLogger;
-    private boolean                    itsContinueLoop;
-    private Thread                     itsConsumer;
-    
-    private static final int WARNING_LIMIT = 25;
-    
     /************************************************************************
      * Creates a new {@code TaskConsumer}. 
      *
@@ -60,215 +46,17 @@ class TaskConsumer
     public 
     TaskConsumer(ITaskSelector selector,ILogger logger)
     {
-        itsSelector     = selector;
-        itsWaiting      = new BlockingQueue<ITask>();
-        itsLogger       = logger;
-        itsContinueLoop = true;
-        itsConsumer     = null;
+        super( selector );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    setSelector(ITaskSelector selector)
+    protected void 
+    doConsume(ITask task)
     {
-        itsSelector = selector;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     * @throws InterruptedException 
-     * @throws BlockingCollectionCompletedException 
-     * @throws BlockingCollectionClosedException 
-     */
-    @Override
-    public void 
-    putElement(ITask task) 
-        throws 
-            BlockingCollectionClosedException, 
-            BlockingCollectionCompletedException, 
-            InterruptedException
-    {
-        itsWaiting.putElement( task );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public ITaskSelector 
-    getSelector()
-    {
-        return itsSelector;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public int 
-    getWaitingCount()
-    {
-        return itsWaiting.getElementCount();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    startConsuming()
-    {
-        if ( itsConsumer != null )
-        {
-            itsLogger.logWarning( 
-                "TaskConsumer is already consuming tasks. " +
-                "Ignoring redundant start request." );
-            return;
-        }
-        
-        itsConsumer = new Thread(
-            new Runnable()
-            {
-                @Override
-                public void 
-                run()
-                {
-                    doConsumeTaskLoop();
-                }
-                
-            });
-        itsConsumer.start();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    stopConsuming()
-    {
-        synchronized (this)
-        {
-            itsContinueLoop = false;
-        }
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    isConsuming()
-    {
-        return
-            itsConsumer != null &&
-            itsConsumer.getState() == Thread.State.RUNNABLE;
-    }
-
-    /************************************************************************
-     *  
-     *
-     */
-    protected void
-    doConsumeTaskLoop()
-    {
-        try
-        {
-            while ( continueLoop() )
-            {
-                checkWaitingCount();
-                consumeTask();
-            }
-            
-            while ( hasTasks() )
-                consumeTask();
-        }
-        catch(BlockingCollectionCompletedException e)
-        {
-        }
-        catch(Exception e)
-        {
-            itsLogger.logError( "This should not happen: " + e.getMessage() );
-        }
-        finally
-        {
-            itsLogger.logInfo( "Stopping TaskConsumer." );
-        }
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    private boolean 
-    continueLoop()
-    {
-        synchronized (this)
-        {
-            return itsContinueLoop;
-        }
-    }
-
-    /************************************************************************
-     *  
-     *
-     */
-    private void 
-    checkWaitingCount()
-    {
-        if ( getWaitingCount() >= WARNING_LIMIT )
-            itsLogger
-                .logWarning( 
-                    "TaskConsumer has " + getWaitingCount() + 
-                    " tasks waiting to be processed." );
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    private boolean 
-    hasTasks()
-    {
-        return !itsWaiting.isCompleted();
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @throws BlockingCollectionCompletedException
-     * @throws InterruptedException
-     */
-    private void 
-    consumeTask() 
-        throws 
-            BlockingCollectionCompletedException, 
-            InterruptedException
-    {
-        try
-        {
-            itsLogger.logVerbose( "Consuming task." );
-            itsWaiting
-                .takeElement()
-                .execute();
-        }
-        catch(BlockingCollectionCompletedException e)
-        {
-            throw e;
-        }
-        catch(InterruptedException e)
-        {
-            throw e;
-        }
-        catch (Exception e)
-        {
-            itsLogger.logError(  "Caught exception during consumeTask: " + e.getMessage() );
-        }
+        task.execute();
     }
 }
 

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	NullSynchronizer.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,9 +22,11 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.utility;
 
 /****************************************************************************
+ * Implements the {@code ISynchronizer} interface as a <b>Null Object</b> 
+ * that does not do anything.
  * 
  * @author 		
  *     Sapientia Systems
@@ -32,62 +34,48 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class NullSynchronizer
+    implements ISynchronizer
 {
+
     /************************************************************************
-     *  
+     * Creates a new {@code NullSynchronizer}. 
      *
-     * @param element
-     * @throws BlockingCollectionClosedException
      */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    public 
+    NullSynchronizer() {}
+
+    /************************************************************************
+     * {@inheritDoc}
+     * Null Object methods do nothing. 
+     */
+    @Override
+    public void 
+    lockForReading() {}
+
+    /************************************************************************
+     * {@inheritDoc} 
+     * Null Object methods do nothing. 
+     */
+    @Override
+    public void 
+    lockForWriting() {}
+
+    /************************************************************************
+     * {@inheritDoc} 
+     * Null Object methods do nothing. 
+     */
+    @Override
+    public void 
+    unlockFromReading() {}
     
     /************************************************************************
-     *  
-     *
-     * @return
-     * @throws BlockingCollectionCompletedException
+     * {@inheritDoc} 
+     * Null Object methods do nothing. 
      */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    close();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    @Override
+    public void 
+    unlockFromWriting() {}
 }
 
 // ##########################################################################

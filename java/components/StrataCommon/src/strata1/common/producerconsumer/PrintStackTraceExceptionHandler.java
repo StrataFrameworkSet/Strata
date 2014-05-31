@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	PrintStackTraceExceptionHandler.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -32,62 +32,27 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class PrintStackTraceExceptionHandler
+    implements IExceptionHandler
 {
+
     /************************************************************************
-     *  
-     *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     * @throws BlockingCollectionCompletedException
-     */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
+     * Creates a new {@code PrintStackTraceExceptionHandler}. 
      *
      */
-    public void
-    close();
-    
+    public 
+    PrintStackTraceExceptionHandler() {}
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    @Override
+    public void 
+    onException(Throwable e)
+    {
+        e.printStackTrace();
+    }
+
 }
 
 // ##########################################################################

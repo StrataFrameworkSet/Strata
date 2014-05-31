@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	ICoordinator.java
+// # File Name:	DisruptorRouterEventHandler.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,8 +24,6 @@
 
 package strata1.common.producerconsumer;
 
-import java.util.Set;
-
 /****************************************************************************
  * 
  * @author 		
@@ -34,54 +32,39 @@ import java.util.Set;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ICoordinator<
-    T,
-    P extends IProducer<T,C,R,S>,
-    C extends IConsumer<T,C,R,S>,
-    R extends IRouter<T,C,R,S>,
-    S extends ISelector<T>>
+class DisruptorBroadcasterEventHandler<T>
+    extends DisruptorEventHandler<T>
 {
-    public ICoordinator<T,P,C,R,S>
-    attachProducer(P producer);
+    /************************************************************************
+     * Creates a new {@code DisruptorRouterEventHandler}. 
+     *
+     * @param index
+     * @param cardinality
+     * @param consumer
+     * @param singleConsumer
+     */
+    public 
+    DisruptorBroadcasterEventHandler(IConsumer<T> consumer)
+    {
+        super( consumer );
+    }
     
-    public ICoordinator<T,P,C,R,S>
-    attachConsumer(C consumer);
+    /************************************************************************
+     *  
+     *
+     * @param event
+     * @param sequence
+     * @return
+     */
+    protected boolean
+    mustConsume(Event<T> event,long sequence)
+    {
+        ISelector<T> selector = getConsumer().getSelector();
+ 
+        return selector.match( event.getPayload() );
+
+    }
     
-    public ICoordinator<T,P,C,R,S>
-    detachProducer(P producer);
-    
-    public ICoordinator<T,P,C,R,S>
-    detachConsumer(C consumer);
-    
-    public Set<P>
-    getProducers();
-    
-    public Set<C>
-    getConsumers();
-    
-    public boolean
-    hasProducer(P producer);
-    
-    public boolean
-    hasConsumer(C consumer);
-    
-    public void
-    startProducers();
-    
-    public void
-    startConsumers();
-    
-    public void
-    stopProducers();
-    
-    public void
-    stopConsumers();
-    
-    public void
-    startUp();
-    
-    public void
-    shutDown();
-} 
+}
 
 // ##########################################################################

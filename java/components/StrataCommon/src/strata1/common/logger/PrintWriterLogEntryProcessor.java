@@ -55,7 +55,7 @@ class PrintWriterLogEntryProcessor
      * {@inheritDoc} 
      */
     @Override
-    public void 
+    public synchronized void 
     process(ILogEntry entry)
     {
         itsOutput.printf( 
@@ -71,7 +71,7 @@ class PrintWriterLogEntryProcessor
      *
      * @param format
      */
-    public void 
+    public synchronized void 
     setFormat(String format)
     {
         itsFormat = format;
@@ -82,7 +82,7 @@ class PrintWriterLogEntryProcessor
      *
      * @return
      */
-    public String
+    public synchronized String
     getFormat()
     {
         return itsFormat;

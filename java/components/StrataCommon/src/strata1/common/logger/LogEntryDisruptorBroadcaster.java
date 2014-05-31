@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ITaskRouter.java
+// # File Name:	LogEntryDisruptorBroadcaster.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,9 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.task;
+package strata1.common.logger;
 
-import strata1.common.producerconsumer.IRouter;
+import strata1.common.producerconsumer.DisruptorBroadcaster;
 
 /****************************************************************************
  * 
@@ -34,7 +34,23 @@ import strata1.common.producerconsumer.IRouter;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ITaskRouter
-    extends IRouter<ITask,ITaskConsumer,ITaskRouter,ITaskSelector> {}
+class LogEntryDisruptorBroadcaster
+    extends    DisruptorBroadcaster<ILogEntry>
+    implements ILogEntryDispatcher
+{
+
+    /************************************************************************
+     * Creates a new {@code LogEntryDisruptorBroadcaster}. 
+     *
+     * @param factory
+     * @param bufferSize
+     */
+    public 
+    LogEntryDisruptorBroadcaster(int bufferSize)
+    {
+        super( new LogEntryFactory(),bufferSize );
+    }
+
+}
 
 // ##########################################################################

@@ -26,6 +26,8 @@ package strata1.common.task;
 
 import strata1.common.producerconsumer.BlockingCollectionClosedException;
 import strata1.common.producerconsumer.BlockingCollectionCompletedException;
+import strata1.common.producerconsumer.IConsumer;
+import strata1.common.producerconsumer.IDispatcher;
 import strata1.common.utility.ISynchronizer;
 import strata1.common.utility.ReadWriteLockSynchronizer;
 import java.security.SecureRandom;
@@ -45,10 +47,10 @@ import java.util.Set;
  */
 public 
 class TaskRouter
-    implements ITaskRouter
+    implements ITaskDispatcher
 {
-    private Set<ITaskConsumer> itsConsumers;
-    private ISynchronizer      itsSynchronizer;
+    private Set<IConsumer<ITask>> itsConsumers;
+    private ISynchronizer         itsSynchronizer;
     
     /************************************************************************
      * Creates a new {@code TaskRouter}. 
@@ -57,7 +59,7 @@ class TaskRouter
     public 
     TaskRouter()
     {
-        itsConsumers = new HashSet<ITaskConsumer>();
+        itsConsumers = new HashSet<IConsumer<ITask>>();
         itsSynchronizer = new ReadWriteLockSynchronizer();
     }
 
@@ -65,8 +67,8 @@ class TaskRouter
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    attachConsumer(ITaskConsumer consumer)
+    public IDispatcher<ITask> 
+    attachConsumer(IConsumer<ITask> consumer)
     {
         try
         {
@@ -74,7 +76,8 @@ class TaskRouter
             
             if ( !hasConsumer( consumer ) )
                 itsConsumers.add( consumer );
-                
+            
+            return this;    
         }
         finally
         {
@@ -86,8 +89,8 @@ class TaskRouter
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    detachConsumer(ITaskConsumer consumer)
+    public IDispatcher<ITask> 
+    detachConsumer(IConsumer<ITask> consumer)
     {
         try
         {
@@ -96,6 +99,7 @@ class TaskRouter
             if ( hasConsumer( consumer ) )
                 itsConsumers.remove( consumer );
                 
+            return this;
         }
         finally
         {
@@ -111,19 +115,15 @@ class TaskRouter
      */
     @Override
     public void 
-    routeElement(ITask task) 
-        throws 
-            BlockingCollectionClosedException, 
-            BlockingCollectionCompletedException, 
-            InterruptedException
+    dispatch(ITask task)
     {
         try
         {
-            ITaskConsumer consumer = null;
+            IConsumer<ITask> consumer = null;
             
             itsSynchronizer.lockForReading();
             consumer = selectConsumer(task);
-            consumer.putElement(task);
+            consumer.consume(task);
         }
         finally
         {
@@ -135,8 +135,36 @@ class TaskRouter
      * {@inheritDoc} 
      */
     @Override
+    public void 
+    startDispatching()
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    stopDispatching()
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
     public boolean 
-    hasConsumer(ITaskConsumer consumer)
+    isDispatching()
+    {
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    hasConsumer(IConsumer<ITask> consumer)
     {
         try
         {
@@ -155,13 +183,12 @@ class TaskRouter
      * @param task
      * @return
      */
-    private ITaskConsumer 
+    private IConsumer<ITask> 
     selectConsumer(ITask task)
     {
-        List<ITaskConsumer> matching = new ArrayList<ITaskConsumer>();
+        List<IConsumer<ITask>> matching = new ArrayList<IConsumer<ITask>>();
         
         matching = filterOnSelector(itsConsumers,task);
-        matching = filterOnMin(matching,findMin(matching));
         return matching.get( generateRandomIndex(matching.size()) );
     }
 
@@ -172,53 +199,16 @@ class TaskRouter
      * @param task
      * @return
      */
-    private List<ITaskConsumer> 
-    filterOnSelector(Set<ITaskConsumer> consumers,ITask task)
+    private List<IConsumer<ITask>> 
+    filterOnSelector(Set<IConsumer<ITask>> consumers,ITask task)
     {
-        List<ITaskConsumer> selected = new ArrayList<ITaskConsumer>();
+        List<IConsumer<ITask>> selected = new ArrayList<IConsumer<ITask>>();
         
-        for (ITaskConsumer consumer:consumers)
+        for (IConsumer<ITask> consumer:consumers)
             if ( consumer.getSelector().match( task ) )
                 selected.add( consumer );
         
         return selected;
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @param matching
-     * @param findMin
-     * @return
-     */
-    private List<ITaskConsumer> 
-    filterOnMin(List<ITaskConsumer> consumers,int min)
-    {
-        List<ITaskConsumer> selected = new ArrayList<ITaskConsumer>();
-        
-        for (ITaskConsumer consumer:consumers)
-            if ( consumer.getWaitingCount() == min )
-                selected.add( consumer );
-        
-        return selected;
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @param matching
-     * @return
-     */
-    private int 
-    findMin(List<ITaskConsumer> consumers)
-    {
-        int min = Integer.MAX_VALUE;
-        
-        for (ITaskConsumer consumer:consumers)
-            if ( consumer.getWaitingCount() < min )
-                min = consumer.getWaitingCount();
-        
-        return min;
     }
 
     /************************************************************************

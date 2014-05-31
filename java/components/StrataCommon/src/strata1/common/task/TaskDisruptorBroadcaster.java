@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IRouter.java
+// # File Name:	TaskDisruptorBroadcaster.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,18 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.task;
+
+import strata1.common.producerconsumer.DisruptorBroadcaster;
+import strata1.common.producerconsumer.DisruptorRouter;
+import strata1.common.producerconsumer.IConsumer;
+import strata1.common.producerconsumer.ISelector;
+import strata1.common.utility.IMultiMap;
+import strata1.common.utility.MultiMap;
+import com.lmax.disruptor.SleepingWaitStrategy;
+import com.lmax.disruptor.dsl.Disruptor;
+import com.lmax.disruptor.dsl.ProducerType;
+import java.util.concurrent.Executors;
 
 /****************************************************************************
  * 
@@ -32,27 +43,20 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IRouter<
-    T,
-    C extends IConsumer<T,C,R,S>,
-    R extends IRouter<T,C,R,S>,
-    S extends ISelector<T>>
-{
-    public void
-    attachConsumer(C consumer);
-    
-    public void
-    detachConsumer(C consumer);
-    
-    public void
-    routeElement(T element) 
-        throws 
-            BlockingCollectionClosedException, 
-            BlockingCollectionCompletedException, 
-            InterruptedException;
-    
-    public boolean
-    hasConsumer(C consumer);
+class TaskDisruptorBroadcaster
+    extends    DisruptorBroadcaster<ITask>
+    implements ITaskDispatcher
+{    
+    /************************************************************************
+     * Creates a new {@code TaskDisruptorRouter}. 
+     *
+     */
+    public 
+    TaskDisruptorBroadcaster(int bufferSize)
+    {
+        super( new TaskEventFactory(),bufferSize );
+    }
+
 }
 
 // ##########################################################################

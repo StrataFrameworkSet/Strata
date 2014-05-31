@@ -32,20 +32,16 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IProducer<
-    T,
-    C extends IConsumer<T,C,R,S>,
-    R extends IRouter<T,C,R,S>,
-    S extends ISelector<T>>
+interface IProducer<T>
 {
     public void
-    setSink(R sink);
+    setDispatcher(IDispatcher<T> router);
     
     public void
-    clearSink();
+    clearDispatcher();
     
-    public R
-    getSink();
+    public IDispatcher<T>
+    getDispatcher();
     
     public void
     startProducing();

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	BlockingCollectionProcessor.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,6 +24,9 @@
 
 package strata1.common.producerconsumer;
 
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /****************************************************************************
  * 
  * @author 		
@@ -31,63 +34,58 @@ package strata1.common.producerconsumer;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IBlockingCollection<T>
+public
+class BlockingCollectionProcessor<T>
+    implements Runnable
 {
+    private final BlockingQueue<T> itsSource;
+    private final IConsumer<T>     itsConsumer;
+    private final AtomicBoolean    itsContinueFlag;
+    
+    /************************************************************************
+     * Creates a new {@code BlockingCollectionProcessor}. 
+     *
+     */
+    public 
+    BlockingCollectionProcessor(
+        BlockingQueue<T> source,
+        IConsumer<T>     consumer,
+        AtomicBoolean    continueFlag)
+    {
+        itsSource       = source;
+        itsConsumer     = consumer;
+        itsContinueFlag = continueFlag;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    run()
+    {
+        while (itsContinueFlag.get())
+        {
+            try
+            {
+                itsConsumer.consume( itsSource.take() );
+            }
+            catch(InterruptedException e)
+            {
+            }
+        }
+    }
+    
     /************************************************************************
      *  
      *
-     * @param element
-     * @throws BlockingCollectionClosedException
      */
     public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     * @throws BlockingCollectionCompletedException
-     */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    close();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    shutdown()
+    {
+        itsContinueFlag.compareAndSet( true,false );
+    }
+
 }
 
 // ##########################################################################

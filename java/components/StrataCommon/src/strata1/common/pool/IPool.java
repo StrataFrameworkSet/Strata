@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	IPool.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.pool;
 
 /****************************************************************************
  * 
@@ -32,62 +32,33 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+interface IPool<T extends IPoolable>
 {
     /************************************************************************
-     *  
+     * Obtains an instance from the pool of available instances. 
      *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     * @throws BlockingCollectionCompletedException
+     * @return an available instance
      */
     public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    obtainInstance();
     
     /************************************************************************
-     *  
+     * Recycles an instance by clearing the instance and putting it back 
+     * into the pool of available instances. 
      *
+     * @param instance  the instance being recycled
      */
     public void
-    close();
+    recyleInstance(T instance);
     
     /************************************************************************
-     *  
+     * Determines if the specified instance is contained within the pool. 
      *
-     */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
+     * @param  instance the instance under scrutiny
+     * @return true     if instance is contained in the pool
      */
     public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    containsInstance(T instance);
 }
 
 // ##########################################################################

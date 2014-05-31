@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	Coordinator.java
+// # File Name:	ProducerConsumerManager.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -36,36 +36,31 @@ import java.util.Set;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class Coordinator<
-    T,
-    P extends IProducer<T,C,R,S>,
-    C extends IConsumer<T,C,R,S>,
-    R extends IRouter<T,C,R,S>,
-    S extends ISelector<T>>
-    implements ICoordinator<T,P,C,R,S>
+class ProducerConsumerManager<T>
+    implements IProducerConsumerManager<T>
 {
-    private Set<P> itsProducers;
-    private R      itsRouter;  
-    private Set<C> itsConsumers;
+    private Set<IProducer<T>> itsProducers;
+    private IDispatcher<T>        itsRouter;  
+    private Set<IConsumer<T>> itsConsumers;
     
     /************************************************************************
-     * Creates a new {@code Coordinator}. 
+     * Creates a new {@code ProducerConsumerManager}. 
      *
      */
     public 
-    Coordinator()
+    ProducerConsumerManager()
     {
-        itsProducers = new HashSet<P>();
-        itsConsumers = new HashSet<C>();
+        itsProducers = new HashSet<IProducer<T>>();
+        itsConsumers = new HashSet<IConsumer<T>>();
     }
 
     /************************************************************************
-     * Creates a new {@code Coordinator}. 
+     * Creates a new {@code ProducerConsumerManager}. 
      *
      * @param channel
      */
     public
-    Coordinator(R router)
+    ProducerConsumerManager(IDispatcher<T> router)
     {
         this();
         itsRouter = router;
@@ -75,13 +70,13 @@ class Coordinator<
      * {@inheritDoc} 
      */
     @Override
-    public Coordinator<T,P,C,R,S> 
-    attachProducer(P producer)
+    public ProducerConsumerManager<T>
+    attachProducer(IProducer<T> producer)
     {
         if ( producer != null )
         {
             itsProducers.add( producer );
-            producer.setSink( itsRouter );
+            producer.setDispatcher( itsRouter );
         }
         
         return this;
@@ -91,13 +86,13 @@ class Coordinator<
      * {@inheritDoc} 
      */
     @Override
-    public Coordinator<T,P,C,R,S> 
-    attachConsumer(C consumer)
+    public ProducerConsumerManager<T> 
+    attachConsumer(IConsumer<T> consumer)
     {
         if ( consumer != null )
         {
             itsConsumers.add( consumer );
-            consumer.setSource( itsRouter );
+            itsRouter.attachConsumer( consumer );
         }
         
         return this;
@@ -107,13 +102,13 @@ class Coordinator<
      * {@inheritDoc} 
      */
     @Override
-    public Coordinator<T,P,C,R,S> 
-    detachProducer(P producer)
+    public ProducerConsumerManager<T> 
+    detachProducer(IProducer<T> producer)
     {
         if ( hasProducer( producer ))
         {
             itsProducers.remove( producer );
-            producer.clearSink();
+            producer.clearDispatcher();
         }
         
         return this;
@@ -123,13 +118,13 @@ class Coordinator<
      * {@inheritDoc} 
      */
     @Override
-    public Coordinator<T,P,C,R,S> 
-    detachConsumer(C consumer)
+    public ProducerConsumerManager<T> 
+    detachConsumer(IConsumer<T> consumer)
     {
         if ( hasConsumer( consumer ))
         {
             itsConsumers.remove( consumer );
-            consumer.clearSource();
+            itsRouter.detachConsumer( consumer );
         }
         
         return this;
@@ -139,7 +134,7 @@ class Coordinator<
      * {@inheritDoc} 
      */
     @Override
-    public Set<P> 
+    public Set<IProducer<T>> 
     getProducers()
     {
         return Collections.unmodifiableSet( itsProducers );
@@ -149,7 +144,7 @@ class Coordinator<
      * {@inheritDoc} 
      */
     @Override
-    public Set<C> 
+    public Set<IConsumer<T>> 
     getConsumers()
     {
         return Collections.unmodifiableSet( itsConsumers );
@@ -160,7 +155,7 @@ class Coordinator<
      */
     @Override
     public boolean 
-    hasProducer(P producer)
+    hasProducer(IProducer<T> producer)
     {
         return itsProducers.contains( producer );
     }
@@ -170,7 +165,7 @@ class Coordinator<
      */
     @Override
     public boolean 
-    hasConsumer(C consumer)
+    hasConsumer(IConsumer<T> consumer)
     {
         return itsConsumers.contains( consumer );
     }
@@ -182,7 +177,7 @@ class Coordinator<
     public void 
     startProducers()
     {
-        for (P producer : itsProducers)
+        for (IProducer<T> producer : itsProducers)
             producer.startProducing();
     }
 
@@ -193,8 +188,8 @@ class Coordinator<
     public void 
     startConsumers()
     {
-        for (C consumer : itsConsumers)
-            consumer.startConsuming();
+        for (IConsumer<T> consumer : itsConsumers);
+            //consumer.startConsuming();
     }
 
     /************************************************************************
@@ -204,7 +199,7 @@ class Coordinator<
     public void 
     stopProducers()
     {
-        for (P producer : itsProducers)
+        for (IProducer<T> producer : itsProducers)
             producer.stopProducing();        
     }
 
@@ -215,8 +210,7 @@ class Coordinator<
     public void 
     stopConsumers()
     {
-        for (C consumer : itsConsumers)
-            consumer.stopConsuming();
+        for (IConsumer<T> consumer : itsConsumers);
     }
 
     /************************************************************************

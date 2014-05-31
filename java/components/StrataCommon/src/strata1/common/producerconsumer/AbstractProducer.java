@@ -32,14 +32,10 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public abstract 
-class AbstractProducer<
-    T,
-    C extends IConsumer<T,C,R,S>,
-    R extends IRouter<T,C,R,S>,
-    S extends ISelector<T>>
-    implements IProducer<T,C,R,S>
+class AbstractProducer<T>
+    implements IProducer<T>
 {
-    private R itsSink;
+    private IDispatcher<T> itsRouter;
     
     /************************************************************************
      * Creates a new {@code AbstractProducer}. 
@@ -48,7 +44,7 @@ class AbstractProducer<
     public 
     AbstractProducer()
     {
-        itsSink = null;
+        itsRouter = null;
     }
 
     /************************************************************************
@@ -56,9 +52,9 @@ class AbstractProducer<
      */
     @Override
     public void 
-    setSink(R sink)
+    setDispatcher(IDispatcher<T> router)
     {
-        itsSink = sink;
+        itsRouter = router;
     }
 
     /************************************************************************
@@ -66,19 +62,19 @@ class AbstractProducer<
      */
     @Override
     public void 
-    clearSink()
+    clearDispatcher()
     {
-        itsSink = null;
+        itsRouter = null;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public R 
-    getSink()
+    public IDispatcher<T> 
+    getDispatcher()
     {
-        return itsSink;
+        return itsRouter;
     }
 
 }

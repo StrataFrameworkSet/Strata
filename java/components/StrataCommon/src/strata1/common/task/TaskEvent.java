@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	TaskEvent.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.task;
 
 /****************************************************************************
  * 
@@ -32,62 +32,41 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class TaskEvent
 {
+    private ITask itsTask;
+    
+    /************************************************************************
+     * Creates a new {@code TaskEvent}. 
+     *
+     */
+    public 
+    TaskEvent()
+    {
+        itsTask = null;
+    }
+
     /************************************************************************
      *  
      *
-     * @param element
-     * @throws BlockingCollectionClosedException
+     * @param task
      */
     public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     * @throws BlockingCollectionCompletedException
-     */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    close();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public int
-    getCount();
+    setTask(ITask task)
+    {
+        itsTask = task;
+    }
     
     /************************************************************************
      *  
      *
      * @return
      */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    public ITask
+    getTask()
+    {
+        return itsTask;
+    }
 }
 
 // ##########################################################################

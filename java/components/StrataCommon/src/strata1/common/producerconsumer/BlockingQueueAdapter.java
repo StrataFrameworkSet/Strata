@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	BlockingQueue.java
+// # File Name:	BlockingQueueAdapter.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -35,23 +35,21 @@ import strata1.common.utility.ReadWriteLockSynchronizer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class BlockingQueue<T>
+class BlockingQueueAdapter<T>
     implements IBlockingCollection<T>
 {
     private java.util.concurrent.BlockingQueue<T> itsImp;
     private BlockingCollectionState               itsState;
-    private ISynchronizer                         itsSynchronizer;
     
     /************************************************************************
      * Creates a new {@code BlockingCollection}. 
      *
      */
     public 
-    BlockingQueue()
+    BlockingQueueAdapter()
     {
         itsImp          = new java.util.concurrent.LinkedBlockingQueue<T>();
         itsState        = BlockingCollectionState.OPEN;
-        itsSynchronizer = new ReadWriteLockSynchronizer();
     }
 
     /************************************************************************
@@ -59,16 +57,12 @@ class BlockingQueue<T>
      */
     @Override
     public void 
-    putElement(T element) 
+    put(T element) 
         throws 
             BlockingCollectionClosedException,
             BlockingCollectionCompletedException,
             InterruptedException
     {
-        try
-        {
-            itsSynchronizer.lockForWriting();
-            
             switch ( itsState )
             {
             case OPEN:
@@ -81,11 +75,6 @@ class BlockingQueue<T>
             case COMPLETED:
                 throw new BlockingCollectionCompletedException();
             }
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromWriting();
-        }
     }
 
     /************************************************************************
@@ -93,15 +82,11 @@ class BlockingQueue<T>
      */
     @Override
     public T 
-    takeElement() 
+    take() 
         throws 
             BlockingCollectionCompletedException,
             InterruptedException
     {
-        try
-        {
-            itsSynchronizer.lockForWriting();
-            
             switch ( itsState )
             {
             case OPEN:
@@ -124,12 +109,6 @@ class BlockingQueue<T>
             default:
                 throw new BlockingCollectionCompletedException();
             }
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromWriting();
-        }
-
     }
 
     /************************************************************************
@@ -139,10 +118,6 @@ class BlockingQueue<T>
     public void 
     close()
     {
-        try
-        {
-            itsSynchronizer.lockForWriting();
-            
             switch ( itsState )
             {
             case OPEN:
@@ -156,11 +131,6 @@ class BlockingQueue<T>
             case COMPLETED:
                 break;
             }
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromWriting();
-        }
     }
 
     /************************************************************************
@@ -168,16 +138,9 @@ class BlockingQueue<T>
      */
     @Override
     public int 
-    getElementCount()
+    getCount()
     {
-        try
-        {
             return itsImp.size();
-        }
-        finally
-        {
-            
-        }
 
     }
 
@@ -188,15 +151,7 @@ class BlockingQueue<T>
     public boolean 
     isClosed()
     {
-        try
-        {
-            itsSynchronizer.lockForReading();
             return itsState == BlockingCollectionState.CLOSED;
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromReading();
-        }
     }
 
     /************************************************************************
@@ -206,15 +161,7 @@ class BlockingQueue<T>
     public boolean 
     isCompleted()
     {
-        try
-        {
-            itsSynchronizer.lockForReading();
             return itsState == BlockingCollectionState.CLOSED;
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromReading();
-        }
     }
 
 }

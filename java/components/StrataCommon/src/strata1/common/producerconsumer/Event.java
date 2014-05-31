@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	Event.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,6 +24,8 @@
 
 package strata1.common.producerconsumer;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /****************************************************************************
  * 
  * @author 		
@@ -32,46 +34,68 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class Event<T>
 {
+    private T             itsPayload;
+    private AtomicBoolean itsConsumedIndicator;
+    
+    /************************************************************************
+     * Creates a new {@code Event}. 
+     *
+     */
+    public 
+    Event()
+    {
+        itsPayload = null;
+        itsConsumedIndicator = new AtomicBoolean(false);
+    }
+
     /************************************************************************
      *  
      *
-     * @param element
-     * @throws BlockingCollectionClosedException
+     * @return
+     */
+    public Event<T>
+    reset()
+    {
+        itsConsumedIndicator.set( false );
+        return this;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param payload
      */
     public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    setPayload(T payload)
+    {
+        itsPayload = payload;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @throws AlreadyConsumedException
+     */
+    public void
+    markConsumed() 
+        throws AlreadyConsumedException
+    {
+        if ( !itsConsumedIndicator.compareAndSet( false,true ) )
+            throw new AlreadyConsumedException();
+    }
     
     /************************************************************************
      *  
      *
      * @return
-     * @throws BlockingCollectionCompletedException
      */
     public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    close();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public int
-    getCount();
+    getPayload()
+    {
+        return itsPayload;
+    }
     
     /************************************************************************
      *  
@@ -79,15 +103,10 @@ interface IBlockingCollection<T>
      * @return
      */
     public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    notConsumed()
+    {
+        return itsConsumedIndicator.get() == false;
+    }
 }
 
 // ##########################################################################

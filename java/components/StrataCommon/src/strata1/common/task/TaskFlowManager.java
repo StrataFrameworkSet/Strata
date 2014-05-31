@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	TaskFlowManager.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.task;
+
+import strata1.common.producerconsumer.ProducerConsumerManager;
 
 /****************************************************************************
  * 
@@ -32,62 +34,32 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class TaskFlowManager
+    extends    ProducerConsumerManager<ITask>
+    implements ITaskFlowManager
 {
+
     /************************************************************************
-     *  
+     * Creates a new {@code TaskFlowManager}. 
      *
-     * @param element
-     * @throws BlockingCollectionClosedException
      */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    public 
+    TaskFlowManager()
+    {
+        super( new TaskRouter() );
+    }
+
+    /************************************************************************
+     * Creates a new {@code TaskFlowManager}. 
+     *
+     * @param channel
+     */
+    public 
+    TaskFlowManager(ITaskDispatcher router)
+    {
+        super( router );
+    }
     
-    /************************************************************************
-     *  
-     *
-     * @return
-     * @throws BlockingCollectionCompletedException
-     */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    close();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
 }
 
 // ##########################################################################

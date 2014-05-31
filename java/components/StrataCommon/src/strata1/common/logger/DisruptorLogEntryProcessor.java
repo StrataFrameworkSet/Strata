@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	DisruptorLogEntryProcessor.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,7 +22,8 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.logger;
+
 
 /****************************************************************************
  * 
@@ -32,62 +33,31 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class DisruptorLogEntryProcessor
+    implements ILogEntryProcessor
 {
-    /************************************************************************
-     *  
-     *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    private ILogEntryDispatcher itsDispatcher;
     
     /************************************************************************
-     *  
+     * Creates a new {@code DisruptorLogEntryProcessor}. 
      *
-     * @return
-     * @throws BlockingCollectionCompletedException
      */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
+    public 
+    DisruptorLogEntryProcessor(ILogEntryDispatcher dispatcher)
+    {
+        itsDispatcher = dispatcher;
+    }
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public void
-    close();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    @Override
+    public void 
+    process(ILogEntry entry)
+    {
+        itsDispatcher.dispatch( entry );
+    }
+
 }
 
 // ##########################################################################

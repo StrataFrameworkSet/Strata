@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	PrintWriterLogEntryConsumer.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,7 +22,14 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.logger;
+
+import strata1.common.producerconsumer.AbstractConsumer;
+import strata1.common.producerconsumer.BlockingCollectionClosedException;
+import strata1.common.producerconsumer.BlockingCollectionCompletedException;
+import strata1.common.producerconsumer.IBlockingCollection;
+import strata1.common.producerconsumer.NullSelector;
+import java.io.PrintWriter;
 
 /****************************************************************************
  * 
@@ -32,62 +39,40 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class PrintWriterLogEntryConsumer
+    extends AbstractConsumer<ILogEntry>
+    implements ILogEntryConsumer
 {
+    private PrintWriter itsWriter;
+    private String      itsFormat;
+   
     /************************************************************************
-     *  
+     * Creates a new {@code PrintWriterLogEntryConsumer}. 
      *
-     * @param element
-     * @throws BlockingCollectionClosedException
      */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    public
+    PrintWriterLogEntryConsumer(PrintWriter writer)
+    {
+        super(new NullSelector<ILogEntry>());
+        itsWriter = writer;
+        itsFormat = "%1$-28s %2$-10s %3$s\n\n";
+   }
     
     /************************************************************************
-     *  
-     *
-     * @return
-     * @throws BlockingCollectionCompletedException
+     * {@inheritDoc} 
      */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    close();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    @Override
+    protected void 
+    doConsume(ILogEntry entry) 
+    {
+        itsWriter
+            .printf( 
+                itsFormat,
+                entry.getTimestamp(),
+                entry.getLevel().name(),
+                entry.getMessage() )
+            .flush();   
+    }
 }
 
 // ##########################################################################

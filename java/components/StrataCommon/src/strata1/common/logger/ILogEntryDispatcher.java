@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	LoggingLevel.java
+// # File Name:	ILogEntryDispatcher.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,6 +24,8 @@
 
 package strata1.common.logger;
 
+import strata1.common.producerconsumer.IDispatcher;
+
 /****************************************************************************
  * 
  * @author 		
@@ -32,53 +34,9 @@ package strata1.common.logger;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-enum LoggingLevel
+interface ILogEntryDispatcher
+    extends IDispatcher<ILogEntry>
 {
-    DEBUG(0),
-    VERBOSE(1),
-    INFO(2),
-    WARNING(3),
-    ERROR(4),
-    START(5),
-    STOP(5);
-    
-    private final int itsValue;
-    
-    private 
-    LoggingLevel(int value)
-    {
-        itsValue = value;
-    }
-    
-    public boolean 
-    isEqual(LoggingLevel other)
-    {
-        return itsValue == other.itsValue;
-    }
-
-    public boolean 
-    isLess(LoggingLevel other)
-    {
-        return itsValue < other.itsValue;
-    }
-
-    public boolean 
-    isLessOrEqual(LoggingLevel other)
-    {
-        return itsValue <= other.itsValue;
-    }
-    
-    public boolean 
-    isGreater(LoggingLevel other)
-    {
-        return itsValue > other.itsValue;
-    }
-       
-    public boolean 
-    isGreaterOrEqual(LoggingLevel other)
-    {
-        return itsValue >= other.itsValue;
-    }
 
 }
 

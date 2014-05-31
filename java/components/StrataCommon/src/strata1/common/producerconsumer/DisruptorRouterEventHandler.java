@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	DisruptorRouterEventHandler.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -31,63 +31,60 @@ package strata1.common.producerconsumer;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IBlockingCollection<T>
+public class DisruptorRouterEventHandler<T>
+    extends DisruptorEventHandler<T>
 {
+    private long         itsIndex;
+    private long         itsCardinality;
+
     /************************************************************************
-     *  
+     * Creates a new {@code DisruptorRouterEventHandler}. 
      *
-     * @param element
-     * @throws BlockingCollectionClosedException
+     * @param index
+     * @param cardinality
+     * @param consumer
+     * @param singleConsumer
      */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
+    public 
+    DisruptorRouterEventHandler(
+        long index,long cardinality,IConsumer<T> consumer)
+    {
+        super( consumer );
+        itsIndex       = index;
+        itsCardinality = cardinality;
+    }
     
     /************************************************************************
      *  
      *
-     * @return
-     * @throws BlockingCollectionCompletedException
-     */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    close();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
+     * @param event
+     * @param sequence
      * @return
      */
-    public boolean
-    isClosed();
+    protected boolean
+    mustConsume(Event<T> event,long sequence)
+    {
+        ISelector<T> selector = getConsumer().getSelector();
+ 
+        return
+            selector.match( event.getPayload() ) &&
+            event.notConsumed() &&
+            itsIndex == getIndex(sequence);
+
+    }
     
     /************************************************************************
      *  
      *
+     * @param sequence
      * @return
      */
-    public boolean
-    isCompleted();
+    private long
+    getIndex(long sequence)
+    {
+        return sequence % itsCardinality;
+    }
+
 }
 
 // ##########################################################################

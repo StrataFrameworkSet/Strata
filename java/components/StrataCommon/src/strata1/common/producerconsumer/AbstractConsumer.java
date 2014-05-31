@@ -32,56 +32,109 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public abstract
-class AbstractConsumer<
-    T,
-    C extends IConsumer<T,C,R,S>,
-    R extends IRouter<T,C,R,S>,
-    S extends ISelector<T>>
-    implements IConsumer<T,C,R,S>
+class AbstractConsumer<T>
+    implements IConsumer<T>
 {
-    private R itsSource;
+    private ISelector<T>      itsSelector;
+    private IExceptionHandler itsExceptionHandler;
     
     /************************************************************************
      * Creates a new {@code AbstractConsumer}. 
      *
      */
-    public 
+    protected 
     AbstractConsumer()
     {
-        itsSource = null;
+        this( null );
+    }
+
+    /************************************************************************
+     * Creates a new {@code AbstractConsumer}. 
+     *
+     */
+    protected 
+    AbstractConsumer(ISelector<T> selector)
+    {
+        itsSelector         = selector;
+        itsExceptionHandler = new NullExceptionHandler();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
-    @SuppressWarnings("unchecked")
+    @Override
+    public IConsumer<T> 
+    setSelector(ISelector<T> selector)
+    {
+        itsSelector = selector;
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IConsumer<T> 
+    setExceptionHandler(IExceptionHandler handler)
+    {
+        itsExceptionHandler = handler;
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
     @Override
     public void 
-    setSource(R source)
+    consume(T element)
     {
-        itsSource = source;
-        itsSource.attachConsumer( (C)this );
+        try
+        {
+            doConsume( element );
+        }
+        catch (Exception e)
+        {
+            getExceptionHandler().onException( e );
+        }
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    clearSource()
+    public ISelector<T>
+    getSelector()
     {
-        itsSource = null;
+        return itsSelector;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public R 
-    getSource()
+    public IExceptionHandler 
+    getExceptionHandler()
     {
-        return itsSource;
+        return itsExceptionHandler;
     }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public int 
+    getWaitingCount()
+    {
+        return 0;
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param element
+     */
+    protected abstract void 
+    doConsume(T element);
 
 }
 

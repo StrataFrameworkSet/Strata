@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	ILoggerContainer.java
+// # File Name:	IPoolable.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.logger;
+package strata1.common.pool;
 
 /****************************************************************************
  * 
@@ -32,16 +32,16 @@ package strata1.common.logger;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ILoggerContainer
+interface IPoolable
 {
     public void
-    registerLogger(ILogger logger);
+    recycle();
     
-    public ILogger
-    getLogger();
+    public IPool<?>
+    getPool();
     
     public boolean
-    hasLogger();
+    isAvailable();
 }
 
 // ##########################################################################

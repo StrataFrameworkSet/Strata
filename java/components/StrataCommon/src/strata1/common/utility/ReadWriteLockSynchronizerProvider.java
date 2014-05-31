@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IBlockingCollection.java
+// # File Name:	ReadWriteLockSynchronizerProvider.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.utility;
 
 /****************************************************************************
  * 
@@ -32,62 +32,27 @@ package strata1.common.producerconsumer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBlockingCollection<T>
+class ReadWriteLockSynchronizerProvider
+    implements ISynchronizerProvider
 {
+
     /************************************************************************
-     *  
-     *
-     * @param element
-     * @throws BlockingCollectionClosedException
-     */
-    public void
-    put(T element)
-        throws 
-            BlockingCollectionClosedException,
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     * @throws BlockingCollectionCompletedException
-     */
-    public T
-    take()
-        throws 
-            BlockingCollectionCompletedException,
-            InterruptedException;
-    
-    /************************************************************************
-     *  
+     * Creates a new {@code ReadWriteLockSynchronizerProvider}. 
      *
      */
-    public void
-    close();
-    
+    public 
+    ReadWriteLockSynchronizerProvider() {}
+
     /************************************************************************
-     *  
-     *
+     * {@inheritDoc} 
      */
-    public int
-    getCount();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isClosed();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public boolean
-    isCompleted();
+    @Override
+    public ISynchronizer 
+    get()
+    {
+        return new ReadWriteLockSynchronizer();
+    }
+
 }
 
 // ##########################################################################
