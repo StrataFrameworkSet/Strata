@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	TaskFlowManager.java
+// # File Name:	DispatchKind.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,9 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.task;
-
-import strata1.common.producerconsumer.ProducerConsumerManager;
+package strata1.common.producerconsumer;
 
 /****************************************************************************
  * 
@@ -34,32 +32,10 @@ import strata1.common.producerconsumer.ProducerConsumerManager;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class TaskFlowManager
-    extends    ProducerConsumerManager<ITask>
-    implements ITaskFlowManager
+enum DispatchKind
 {
-
-    /************************************************************************
-     * Creates a new {@code TaskFlowManager}. 
-     *
-     */
-    public 
-    TaskFlowManager()
-    {
-        super( new TaskRouter() );
-    }
-
-    /************************************************************************
-     * Creates a new {@code TaskFlowManager}. 
-     *
-     * @param channel
-     */
-    public 
-    TaskFlowManager(ITaskDispatcher router)
-    {
-        super( router );
-    }
-    
+    ROUTE,
+    BROADCAST
 }
 
 // ##########################################################################

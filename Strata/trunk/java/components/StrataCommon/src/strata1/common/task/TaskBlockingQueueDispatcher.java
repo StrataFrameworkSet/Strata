@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	BlockingQueueBroadcaster.java
+// # File Name:	TaskBlockingQueueDispatcher.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,11 +22,9 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.producerconsumer;
+package strata1.common.task;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
+import strata1.common.producerconsumer.BlockingQueueDispatcher;
 
 /****************************************************************************
  * 
@@ -36,18 +34,8 @@ import java.util.concurrent.LinkedBlockingQueue;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class BlockingQueueBroadcaster<T>
-    extends BlockingQueueDispatcher<T>
-{
-
-    /************************************************************************
-     * Creates a new {@code BlockingQueueRouter}. 
-     *
-     */
-    public 
-    BlockingQueueBroadcaster()
-    {
-    }
-}
+class TaskBlockingQueueDispatcher
+    extends    BlockingQueueDispatcher<ITask>
+    implements ITaskDispatcher {}
 
 // ##########################################################################

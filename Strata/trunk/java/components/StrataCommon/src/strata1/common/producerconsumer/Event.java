@@ -24,7 +24,6 @@
 
 package strata1.common.producerconsumer;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /****************************************************************************
  * 
@@ -36,8 +35,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public 
 class Event<T>
 {
-    private T             itsPayload;
-    private AtomicBoolean itsConsumedIndicator;
+    private T            itsPayload;
+    private DispatchKind itsKind;
     
     /************************************************************************
      * Creates a new {@code Event}. 
@@ -47,21 +46,9 @@ class Event<T>
     Event()
     {
         itsPayload = null;
-        itsConsumedIndicator = new AtomicBoolean(false);
+        itsKind    = DispatchKind.ROUTE;
     }
 
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public Event<T>
-    reset()
-    {
-        itsConsumedIndicator.set( false );
-        return this;
-    }
-    
     /************************************************************************
      *  
      *
@@ -72,18 +59,16 @@ class Event<T>
     {
         itsPayload = payload;
     }
-    
+        
     /************************************************************************
      *  
      *
-     * @throws AlreadyConsumedException
+     * @param kind
      */
     public void
-    markConsumed() 
-        throws AlreadyConsumedException
+    setKind(DispatchKind kind)
     {
-        if ( !itsConsumedIndicator.compareAndSet( false,true ) )
-            throw new AlreadyConsumedException();
+        itsKind = kind;
     }
     
     /************************************************************************
@@ -102,10 +87,10 @@ class Event<T>
      *
      * @return
      */
-    public boolean
-    notConsumed()
+    public DispatchKind
+    getKind()
     {
-        return itsConsumedIndicator.get() == false;
+        return itsKind;
     }
 }
 

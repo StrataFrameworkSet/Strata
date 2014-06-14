@@ -28,7 +28,11 @@ import strata1.common.utility.IMultiMap;
 import strata1.common.utility.MultiMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 /****************************************************************************
  * 
@@ -37,14 +41,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract
+public
 class BlockingQueueDispatcher<T>
     extends    AbstractDispatcher<T>
     implements IDispatcher<T>
 {
-    private ExecutorService                          itsPool;
-    private IMultiMap<ISelector<T>,BlockingQueue<T>> itsQueues;
-    private AtomicBoolean                            itsRunningFlag;
+    private ExecutorService                                 itsPool;
+    private IMultiMap<ISelector<T>,BlockingQueue<Entry<T>>> itsQueues;
+    private AtomicBoolean                                   itsRunningFlag;
+    private AtomicLong                                      itsSequence;
     
     /************************************************************************
      * Creates a new {@code BlockingQueueDispatcher}. 
@@ -54,17 +59,59 @@ class BlockingQueueDispatcher<T>
     BlockingQueueDispatcher()
     {
         itsPool   = null;
-        itsQueues = new MultiMap<ISelector<T>,BlockingQueue<T>>();
+        itsQueues = new MultiMap<ISelector<T>,BlockingQueue<Entry<T>>>();
         itsRunningFlag = new AtomicBoolean(false);
+        itsSequence = new AtomicLong(0L);
     }
-
+    
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    dispatch(T payload)
+    public void
+    route(int priority, T payload)
     {
+        long sequence = 0L;
+        
+        if ( priority < 0 )
+            throw 
+                new IllegalArgumentException("priority cannot be negative.");
+        
+        if ( !isDispatching() )
+            throw new IllegalStateException("Not dispatching.");
+        
+        sequence = itsSequence.getAndIncrement();
+        
+        for (ISelector<T> selector:itsQueues.getKeys())
+        {
+            if ( selector.match( payload ) )
+            {
+                BlockingQueue<Entry<T>> queue = 
+                    getQueue( selector,sequence );
+                
+                try
+                {
+                    queue.put( new Entry<T>(priority,payload ) );
+                }
+                catch(InterruptedException e)
+                {
+                }
+            }
+        }
+        
+    }
+    
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void
+    broadcast(int priority,T payload)
+    {
+        if ( priority < 0 )
+            throw 
+                new IllegalArgumentException("priority cannot be negative.");
+
         if ( !isDispatching() )
             throw new IllegalStateException("Not dispatching.");
         
@@ -72,15 +119,45 @@ class BlockingQueueDispatcher<T>
         {
             if ( selector.match( payload ) )
             {
-                for (BlockingQueue<T> queue:itsQueues.get( selector ) )
+                for (BlockingQueue<Entry<T>> queue:itsQueues.get( selector ) )
                 {
                     try
                     {
-                        queue.put( payload );
+                        queue.put( new Entry<T>(priority,payload ) );
                     }
                     catch(InterruptedException e)
                     {
                     }
+                }
+            }
+        }        
+    }
+    
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    startDispatching()
+    {
+        if ( !isDispatching() )
+        {
+            getRunningFlag().compareAndSet( false,true );
+            setExecutor( Executors.newCachedThreadPool() );
+           
+            for (ISelector<T> selector:getConsumers().getKeys())                
+            {
+                for (IConsumer<T> consumer:getConsumers().get( selector ))
+                {
+                    BlockingQueue<Entry<T>> queue = 
+                        new PriorityBlockingQueue<Entry<T>>();
+                    
+                    addToQueues( selector,queue );
+                    getExecutor().execute( 
+                        new BlockingCollectionProcessor<T>(
+                            queue,
+                            consumer,
+                            getRunningFlag()) );
                 }
             }
         }
@@ -132,7 +209,7 @@ class BlockingQueueDispatcher<T>
      * @param queue
      */
     protected void
-    addToQueues(ISelector<T> selector,BlockingQueue<T> queue)
+    addToQueues(ISelector<T> selector,BlockingQueue<Entry<T>> queue)
     {
         itsQueues.put( selector,queue );
     }
@@ -157,6 +234,23 @@ class BlockingQueueDispatcher<T>
     getRunningFlag()
     {
         return itsRunningFlag;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param queues
+     * @param sequence
+     * @return
+     */
+    protected BlockingQueue<Entry<T>>
+    getQueue(ISelector<T> selector,long sequence)
+    {
+        int cardinality = itsQueues.getCardinality( selector );
+        
+        return 
+            itsQueues
+                .get( selector,(int)sequence % cardinality );
     }
 }
 

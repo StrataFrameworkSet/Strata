@@ -46,25 +46,9 @@ class DisruptorBroadcasterEventHandler<T>
     public 
     DisruptorBroadcasterEventHandler(IConsumer<T> consumer)
     {
-        super( consumer );
+        super( 0,0,consumer );
     }
-    
-    /************************************************************************
-     *  
-     *
-     * @param event
-     * @param sequence
-     * @return
-     */
-    protected boolean
-    mustConsume(Event<T> event,long sequence)
-    {
-        ISelector<T> selector = getConsumer().getSelector();
- 
-        return selector.match( event.getPayload() );
-
-    }
-    
+        
 }
 
 // ##########################################################################

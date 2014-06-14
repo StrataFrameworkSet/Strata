@@ -34,9 +34,6 @@ package strata1.common.producerconsumer;
 public class DisruptorRouterEventHandler<T>
     extends DisruptorEventHandler<T>
 {
-    private long         itsIndex;
-    private long         itsCardinality;
-
     /************************************************************************
      * Creates a new {@code DisruptorRouterEventHandler}. 
      *
@@ -47,44 +44,13 @@ public class DisruptorRouterEventHandler<T>
      */
     public 
     DisruptorRouterEventHandler(
-        long index,long cardinality,IConsumer<T> consumer)
+        long         index,
+        long         cardinality,
+        IConsumer<T> consumer)
     {
-        super( consumer );
-        itsIndex       = index;
-        itsCardinality = cardinality;
+        super( index,cardinality,consumer );
     }
     
-    /************************************************************************
-     *  
-     *
-     * @param event
-     * @param sequence
-     * @return
-     */
-    protected boolean
-    mustConsume(Event<T> event,long sequence)
-    {
-        ISelector<T> selector = getConsumer().getSelector();
- 
-        return
-            selector.match( event.getPayload() ) &&
-            event.notConsumed() &&
-            itsIndex == getIndex(sequence);
-
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @param sequence
-     * @return
-     */
-    private long
-    getIndex(long sequence)
-    {
-        return sequence % itsCardinality;
-    }
-
 }
 
 // ##########################################################################

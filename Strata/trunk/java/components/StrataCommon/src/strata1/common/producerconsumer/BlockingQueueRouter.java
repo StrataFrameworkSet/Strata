@@ -49,34 +49,6 @@ class BlockingQueueRouter<T>
     BlockingQueueRouter()
     {
     }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    startDispatching()
-    {
-        if ( !isDispatching() )
-        {
-            getRunningFlag().compareAndSet( false,true );
-            setExecutor( Executors.newCachedThreadPool() );
-           
-            for (ISelector<T> selector:getConsumers().getKeys())                
-            {
-                BlockingQueue<T> queue = new LinkedBlockingQueue<T>();
-                
-                addToQueues( selector,queue );
-    
-                for (IConsumer<T> consumer:getConsumers().get( selector ))
-                    getExecutor().execute( 
-                        new BlockingCollectionProcessor<T>(
-                            queue,
-                            consumer,
-                            getRunningFlag()) );              
-            }
-        }
-    }
 }
 
 // ##########################################################################
