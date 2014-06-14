@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	BlockingQueueBroadcaster.java
+// # File Name:	DisruptorPriorityLevel.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,9 +24,11 @@
 
 package strata1.common.producerconsumer;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
+import com.lmax.disruptor.RingBuffer;
+import com.lmax.disruptor.Sequence;
+import com.lmax.disruptor.SequenceBarrier;
+import com.lmax.disruptor.Sequencer;
+import java.util.List;
 
 /****************************************************************************
  * 
@@ -36,17 +38,57 @@ import java.util.concurrent.LinkedBlockingQueue;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class BlockingQueueBroadcaster<T>
-    extends BlockingQueueDispatcher<T>
+class DisruptorPriorityLevel<T>
 {
+    private final RingBuffer<Event<T>> itsBuffer;
+    private final Sequence             itsSequence;
+    private final SequenceBarrier      itsBarrier;
+    
+    private final static Sequence[]    EMPTY = new Sequence[0];
 
     /************************************************************************
-     * Creates a new {@code BlockingQueueRouter}. 
+     * Creates a new {@code DisruptorPriorityLevel}. 
      *
      */
     public 
-    BlockingQueueBroadcaster()
+    DisruptorPriorityLevel(RingBuffer<Event<T>> buffer)
     {
+        itsBuffer   = buffer;
+        itsSequence = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
+        itsBarrier  = itsBuffer.newBarrier( EMPTY );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public RingBuffer<Event<T>>
+    getBuffer()
+    {
+        return itsBuffer;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public Sequence
+    getSequence()
+    {
+        return itsSequence;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public SequenceBarrier
+    getBarrier()
+    {
+        return itsBarrier;
     }
 }
 

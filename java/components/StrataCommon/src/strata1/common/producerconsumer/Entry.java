@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	BlockingQueueBroadcaster.java
+// # File Name:	Entry.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,9 +24,7 @@
 
 package strata1.common.producerconsumer;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicLong;
 
 /****************************************************************************
  * 
@@ -36,17 +34,50 @@ import java.util.concurrent.LinkedBlockingQueue;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class BlockingQueueBroadcaster<T>
-    extends BlockingQueueDispatcher<T>
+class Entry<T>
+    implements Comparable<Entry<T>>
 {
-
+    private static final AtomicLong theirSequence = new AtomicLong(0);
+    private final long              itsSequence;
+    private final int               itsPriority;
+    private final T                 itsPayload;
+    
     /************************************************************************
-     * Creates a new {@code BlockingQueueRouter}. 
+     * Creates a new {@code Entry}. 
      *
      */
     public 
-    BlockingQueueBroadcaster()
+    Entry(int priority,T payload)
     {
+        itsSequence = theirSequence.getAndIncrement();
+        itsPriority = priority;
+        itsPayload  = payload;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public int 
+    compareTo(Entry<T> other)
+    {
+        int result = itsPriority - other.itsPriority;
+        
+        if ( result != 0 )
+            return result;
+        
+        return (int)(itsSequence - other.itsSequence);    
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public T
+    getPayload()
+    {
+        return itsPayload;
     }
 }
 

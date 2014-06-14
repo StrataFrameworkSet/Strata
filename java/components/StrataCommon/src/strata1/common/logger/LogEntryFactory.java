@@ -24,6 +24,7 @@
 
 package strata1.common.logger;
 
+import strata1.common.producerconsumer.DispatchKind;
 import strata1.common.producerconsumer.Event;
 import strata1.common.producerconsumer.IEventFactory;
 

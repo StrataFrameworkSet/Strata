@@ -38,9 +38,9 @@ public
 class BlockingCollectionProcessor<T>
     implements Runnable
 {
-    private final BlockingQueue<T> itsSource;
-    private final IConsumer<T>     itsConsumer;
-    private final AtomicBoolean    itsContinueFlag;
+    private final BlockingQueue<Entry<T>> itsSource;
+    private final IConsumer<T>            itsConsumer;
+    private final AtomicBoolean           itsContinueFlag;
     
     /************************************************************************
      * Creates a new {@code BlockingCollectionProcessor}. 
@@ -48,9 +48,9 @@ class BlockingCollectionProcessor<T>
      */
     public 
     BlockingCollectionProcessor(
-        BlockingQueue<T> source,
-        IConsumer<T>     consumer,
-        AtomicBoolean    continueFlag)
+        BlockingQueue<Entry<T>> source,
+        IConsumer<T>            consumer,
+        AtomicBoolean           continueFlag)
     {
         itsSource       = source;
         itsConsumer     = consumer;
@@ -68,7 +68,7 @@ class BlockingCollectionProcessor<T>
         {
             try
             {
-                itsConsumer.consume( itsSource.take() );
+                itsConsumer.consume( itsSource.take().getPayload() );
             }
             catch(InterruptedException e)
             {

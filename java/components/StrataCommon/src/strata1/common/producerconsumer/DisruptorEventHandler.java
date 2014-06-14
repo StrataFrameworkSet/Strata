@@ -36,13 +36,15 @@ import com.lmax.disruptor.TimeoutHandler;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract
+public
 class DisruptorEventHandler<T>
     implements 
         EventHandler<Event<T>>,
         TimeoutHandler,
         LifecycleAware
 {
+    private long         itsIndex;
+    private long         itsCardinality;
     private IConsumer<T> itsConsumer;
     
     /************************************************************************
@@ -54,9 +56,14 @@ class DisruptorEventHandler<T>
      * @param singleConsumer
      */
     protected 
-    DisruptorEventHandler(IConsumer<T> consumer)
+    DisruptorEventHandler(
+        long         index,
+        long         cardinality,
+        IConsumer<T> consumer)
     {
-        itsConsumer = consumer;
+        itsIndex       = index;
+        itsCardinality = cardinality;
+        itsConsumer    = consumer;
     }
 
     /************************************************************************
@@ -126,9 +133,20 @@ class DisruptorEventHandler<T>
      * @param sequence
      * @return
      */
-    protected abstract boolean
-    mustConsume(Event<T> event,long sequence);
-    
+    protected boolean
+    mustConsume(Event<T> event,long sequence)
+    {
+        ISelector<T> selector = getConsumer().getSelector();
+
+        return
+            event.getKind() == DispatchKind.ROUTE
+                ? 
+                    selector.match( event.getPayload() ) &&
+                    itsIndex == (sequence % itsCardinality)
+                :
+                    selector.match(event.getPayload());
+    }
+        
 }
 
 // ##########################################################################

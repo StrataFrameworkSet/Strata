@@ -24,8 +24,6 @@
 
 package strata1.common.producerconsumer;
 
-import strata1.common.utility.IMultiMap;
-import strata1.common.utility.MultiMap;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.SleepingWaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
@@ -43,14 +41,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  * @param <T>
  */
-public abstract
+public
 class DisruptorDispatcher<T>
     extends    AbstractDispatcher<T>
     implements IDispatcher<T>
 {
     private Disruptor<Event<T>>                  itsDisruptor;
     private AtomicBoolean                        itsRoutingIndicator;
-    
 
     /************************************************************************
      * Creates a new {@code DisruptorDispatcher}. 
@@ -79,20 +76,34 @@ class DisruptorDispatcher<T>
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    dispatch(T payload)
+    public void
+    route(int priority,T payload)
     {
         RingBuffer<Event<T>> buffer   = itsDisruptor.getRingBuffer();
         long                 sequence = buffer.next();
         Event<T>             event    = buffer.get( sequence );
         
-        event
-            .reset()
-            .setPayload( payload );
-        
+        event.setKind( DispatchKind.ROUTE );
+        event.setPayload( payload );        
         buffer.publish(sequence);
     }
-
+    
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void
+    broadcast(int priority,T payload)
+    {
+        RingBuffer<Event<T>> buffer   = itsDisruptor.getRingBuffer();
+        long                 sequence = buffer.next();
+        Event<T>             event    = buffer.get( sequence );
+        
+        event.setKind( DispatchKind.BROADCAST );
+        event.setPayload( payload );        
+        buffer.publish(sequence);
+    }
+    
     /************************************************************************
      * {@inheritDoc} 
      */
@@ -154,7 +165,10 @@ class DisruptorDispatcher<T>
      * @param consumer
      * @return
      */
-    protected abstract DisruptorEventHandler<T>
-    createHandler(long index,long cardinality,IConsumer<T> consumer);
+    protected DisruptorEventHandler<T>
+    createHandler(long index,long cardinality,IConsumer<T> consumer)
+    {
+        return new DisruptorEventHandler<T>(index,cardinality,consumer);
+    }
 }
 // ##########################################################################

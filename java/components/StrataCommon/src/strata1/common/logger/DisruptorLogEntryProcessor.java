@@ -55,7 +55,7 @@ class DisruptorLogEntryProcessor
     public void 
     process(ILogEntry entry)
     {
-        itsDispatcher.dispatch( entry );
+        itsDispatcher.broadcast( 0, entry );
     }
 
 }
