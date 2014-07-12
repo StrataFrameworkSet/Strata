@@ -1,10 +1,9 @@
 <project 
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
-	name="StrataCommon" 
+	name="StrataInjectorTest" 
 	default="run-commit-stage">
 
-    <property name="sourceDirectory" value="${basedir}/src/subsystems"/>
-    <property name="testSourceDirectory" value="${basedir}/src/tests"/>
+    <property name="sourceDirectory" value="${basedir}/src"/>
     <property name="outputDirectory" value="${basedir}/build/subsystems"/>
     <property name="testOutputDirectory" value="${basedir}/build/tests"/>
     <property name="directory" value="${basedir}/lib"/>
