@@ -56,6 +56,18 @@ class AbstractModule
     {
         return itsName;
     }
+    
+    /************************************************************************
+     *  
+     *
+     * @param type
+     * @return
+     */
+    protected <T> IKeyBindingBuilder<T>
+    bindType(Class<T> type)
+    {
+        return Binder.bindType( type );
+    }
 }
 
 // ##########################################################################
