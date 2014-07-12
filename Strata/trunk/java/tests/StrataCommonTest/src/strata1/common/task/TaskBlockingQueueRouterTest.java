@@ -33,6 +33,7 @@ import strata1.common.logger.ILogger;
 import strata1.common.logger.LogEntryDisruptorBroadcaster;
 import strata1.common.logger.Logger;
 import strata1.common.logger.PrintWriterLogEntryConsumer;
+import strata1.common.producerconsumer.DispatchKind;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,13 +68,13 @@ class TaskBlockingQueueRouterTest
     public void 
     setUp() throws Exception
     {
-        itsTarget = new TaskBlockingQueueRouter();
+        itsTarget = new TaskBlockingQueueDispatcher();
         
         itsWriter = new StringWriter();       
         itsLogger = createLogger();
         
-        itsProducer1 = new TestTaskProducer();
-        itsProducer2 = new TestTaskProducer();
+        itsProducer1 = new TestTaskProducer(DispatchKind.ROUTE);
+        itsProducer2 = new TestTaskProducer(DispatchKind.ROUTE);
         
         itsProducer1
             .insertTask( new TestTask("TestA",1,itsLogger) )

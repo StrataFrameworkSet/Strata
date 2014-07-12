@@ -58,10 +58,10 @@ class BlockingQueueBroadcasterTest
     public void 
     setUp() throws Exception
     {
-        itsTarget = new CountRequestBlockingQueueBroadcaster();
-        itsProducer1 = new CountRequestProducer(1,MAX);
-        itsProducer2 = new CountRequestProducer(2,MAX);
-        itsProducer3 = new CountRequestProducer(3,MAX);
+        itsTarget = new CountRequestBlockingQueueDispatcher();
+        itsProducer1 = new CountRequestProducer(1,MAX,DispatchKind.BROADCAST);
+        itsProducer2 = new CountRequestProducer(2,MAX,DispatchKind.BROADCAST);
+        itsProducer3 = new CountRequestProducer(3,MAX,DispatchKind.BROADCAST);
         itsConsumer1 = new CountRequestConsumer(1);
         itsConsumer2 = new CountRequestConsumer(2);
         itsConsumer3 = new CountRequestConsumer(3);
@@ -92,7 +92,7 @@ class BlockingQueueBroadcasterTest
     }
 
     /**
-     * Test method for {@link strata1.common.producerconsumer.DisruptorRouter#attachConsumer(strata1.common.producerconsumer.IConsumer)}.
+     * Test method for {@link #attachConsumer(strata1.common.producerconsumer.IConsumer)}.
      */
     @Test
     public void 

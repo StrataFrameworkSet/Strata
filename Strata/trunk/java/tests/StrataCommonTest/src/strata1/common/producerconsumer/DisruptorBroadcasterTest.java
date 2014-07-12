@@ -58,10 +58,10 @@ class DisruptorBroadcasterTest
     public void 
     setUp() throws Exception
     {
-        itsTarget = new CountRequestDisruptorBroadcaster(16384);
-        itsProducer1 = new CountRequestProducer(1,MAX);
-        itsProducer2 = new CountRequestProducer(2,MAX);
-        itsProducer3 = new CountRequestProducer(3,MAX);
+        itsTarget = new CountRequestDisruptorDispatcher(2,16384);
+        itsProducer1 = new CountRequestProducer(1,MAX,DispatchKind.BROADCAST);
+        itsProducer2 = new CountRequestProducer(2,MAX,DispatchKind.BROADCAST);
+        itsProducer3 = new CountRequestProducer(3,MAX,DispatchKind.BROADCAST);
         itsConsumer1 = new CountRequestConsumer(1);
         itsConsumer2 = new CountRequestConsumer(2);
         itsConsumer3 = new CountRequestConsumer(3);

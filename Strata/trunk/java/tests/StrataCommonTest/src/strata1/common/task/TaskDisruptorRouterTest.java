@@ -24,7 +24,8 @@
 
 package strata1.common.task;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import strata1.common.logger.DisruptorLogEntryProcessor;
 import strata1.common.logger.ILogEntryConsumer;
 import strata1.common.logger.ILogEntryDispatcher;
@@ -32,14 +33,12 @@ import strata1.common.logger.ILogger;
 import strata1.common.logger.LogEntryDisruptorBroadcaster;
 import strata1.common.logger.Logger;
 import strata1.common.logger.PrintWriterLogEntryConsumer;
-import strata1.common.logger.PrintWriterLogEntryProcessor;
+import strata1.common.producerconsumer.DispatchKind;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Set;
 
 /****************************************************************************
  * 
@@ -69,13 +68,13 @@ class TaskDisruptorRouterTest
     public void 
     setUp() throws Exception
     {
-        itsTarget = new TaskDisruptorRouter(1024);
+        itsTarget = new TaskDisruptorDispatcher(2,1024);
         
         itsWriter = new StringWriter();       
         itsLogger = createLogger();
         
-        itsProducer1 = new TestTaskProducer();
-        itsProducer2 = new TestTaskProducer();
+        itsProducer1 = new TestTaskProducer(DispatchKind.ROUTE);
+        itsProducer2 = new TestTaskProducer(DispatchKind.ROUTE);
         
         itsProducer1
             .insertTask( new TestTask("TestA",1,itsLogger) )
