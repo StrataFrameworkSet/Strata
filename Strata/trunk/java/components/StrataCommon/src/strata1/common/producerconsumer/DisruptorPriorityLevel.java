@@ -28,7 +28,6 @@ import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.Sequence;
 import com.lmax.disruptor.SequenceBarrier;
 import com.lmax.disruptor.Sequencer;
-import java.util.List;
 
 /****************************************************************************
  * 
@@ -40,22 +39,22 @@ import java.util.List;
 public 
 class DisruptorPriorityLevel<T>
 {
-    private final RingBuffer<Event<T>> itsBuffer;
-    private final Sequence             itsSequence;
-    private final SequenceBarrier      itsBarrier;
-    
-    private final static Sequence[]    EMPTY = new Sequence[0];
+    private final RingBuffer<T>     itsBuffer;
+    private final SequenceBarrier   itsBarrier;
+    private final Sequence          itsSequence;
 
     /************************************************************************
      * Creates a new {@code DisruptorPriorityLevel}. 
      *
      */
     public 
-    DisruptorPriorityLevel(RingBuffer<Event<T>> buffer)
+    DisruptorPriorityLevel(RingBuffer<T> buffer)
     {
         itsBuffer   = buffer;
-        itsSequence = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
-        itsBarrier  = itsBuffer.newBarrier( EMPTY );
+        itsBarrier  = itsBuffer.newBarrier();
+        itsSequence = new Sequence();
+        
+        itsBuffer.addGatingSequences( itsSequence );
     }
 
     /************************************************************************
@@ -63,21 +62,10 @@ class DisruptorPriorityLevel<T>
      *
      * @return
      */
-    public RingBuffer<Event<T>>
+    public RingBuffer<T>
     getBuffer()
     {
         return itsBuffer;
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    public Sequence
-    getSequence()
-    {
-        return itsSequence;
     }
     
     /************************************************************************
@@ -89,6 +77,17 @@ class DisruptorPriorityLevel<T>
     getBarrier()
     {
         return itsBarrier;
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public Sequence
+    getSequence()
+    {
+        return itsSequence;
     }
 }
 

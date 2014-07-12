@@ -97,8 +97,7 @@ class BlockingQueueDispatcher<T>
                 {
                 }
             }
-        }
-        
+        } 
     }
     
     /************************************************************************
@@ -154,7 +153,7 @@ class BlockingQueueDispatcher<T>
                     
                     addToQueues( selector,queue );
                     getExecutor().execute( 
-                        new BlockingCollectionProcessor<T>(
+                        new BlockingQueueProcessor<T>(
                             queue,
                             consumer,
                             getRunningFlag()) );

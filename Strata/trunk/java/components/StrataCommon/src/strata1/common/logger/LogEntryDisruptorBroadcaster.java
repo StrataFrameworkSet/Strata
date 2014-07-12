@@ -24,7 +24,7 @@
 
 package strata1.common.logger;
 
-import strata1.common.producerconsumer.DisruptorBroadcaster;
+import strata1.common.producerconsumer.DisruptorDispatcher;
 
 /****************************************************************************
  * 
@@ -35,7 +35,7 @@ import strata1.common.producerconsumer.DisruptorBroadcaster;
  */
 public 
 class LogEntryDisruptorBroadcaster
-    extends    DisruptorBroadcaster<ILogEntry>
+    extends    DisruptorDispatcher<ILogEntry>
     implements ILogEntryDispatcher
 {
 
@@ -48,7 +48,7 @@ class LogEntryDisruptorBroadcaster
     public 
     LogEntryDisruptorBroadcaster(int bufferSize)
     {
-        super( new LogEntryFactory(),bufferSize );
+        super( new LogEntryFactory(),1,bufferSize );
     }
 
 }
