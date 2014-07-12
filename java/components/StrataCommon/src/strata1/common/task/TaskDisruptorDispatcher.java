@@ -43,9 +43,9 @@ class TaskDisruptorDispatcher
      *
      */
     public 
-    TaskDisruptorDispatcher(int bufferSize)
+    TaskDisruptorDispatcher(int numPriorities,int bufferSize)
     {
-        super( new TaskEventFactory(),bufferSize );
+        super( new TaskEventFactory(),numPriorities,bufferSize );
     }
 
 }

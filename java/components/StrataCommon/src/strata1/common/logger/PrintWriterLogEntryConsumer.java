@@ -25,9 +25,6 @@
 package strata1.common.logger;
 
 import strata1.common.producerconsumer.AbstractConsumer;
-import strata1.common.producerconsumer.BlockingCollectionClosedException;
-import strata1.common.producerconsumer.BlockingCollectionCompletedException;
-import strata1.common.producerconsumer.IBlockingCollection;
 import strata1.common.producerconsumer.NullSelector;
 import java.io.PrintWriter;
 

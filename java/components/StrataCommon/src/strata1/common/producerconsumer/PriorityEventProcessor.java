@@ -25,11 +25,17 @@
 package strata1.common.producerconsumer;
 
 import com.lmax.disruptor.AlertException;
+import com.lmax.disruptor.DataProvider;
+import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.EventProcessor;
 import com.lmax.disruptor.ExceptionHandler;
+import com.lmax.disruptor.LifecycleAware;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.Sequence;
+import com.lmax.disruptor.SequenceBarrier;
+import com.lmax.disruptor.Sequencer;
 import com.lmax.disruptor.TimeoutException;
+import com.lmax.disruptor.TimeoutHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -46,31 +52,36 @@ public
 class PriorityEventProcessor<T>
     implements EventProcessor
 {
-    private final List<DisruptorPriorityLevel<T>> itsPriorities;
-    private final List<DisruptorEventHandler<T>>  itsHandlers; 
-    private final ExceptionHandler                itsHandler;
-    private final AtomicBoolean                   itsRunningFlag;
+    private static final int RETRIES_YEILD = 50;
     
-    private static final int RETRY_SPIN  = 100;
-    private static final int RETRY_YEILD = 50;
+    private final DisruptorPriorityLevel<T>[] itsPriorities;
+    private final Sequence[]                  itsSequences;
+    private final EventHandler<T>             itsEventHandler; 
+    private final ExceptionHandler            itsExceptionHandler;
+    private final AtomicBoolean               itsRunningFlag;
     
     /************************************************************************
      * Creates a new {@code PriorityEventProcessor}. 
      *
      */
+    @SuppressWarnings("unchecked")
     public 
     PriorityEventProcessor(
-        final List<RingBuffer<Event<T>>>     buffers,
-        final List<DisruptorEventHandler<T>> handlers,
-        final ExceptionHandler               handler)
+        final RingBuffer<T>[]  buffers,
+        final EventHandler<T>  eventHandler,
+        final ExceptionHandler exceptionHandler)
     {
-        itsPriorities  = new ArrayList<DisruptorPriorityLevel<T>>();
-        itsHandlers    = new ArrayList<DisruptorEventHandler<T>>(handlers);
-        itsHandler     = handler;
-        itsRunningFlag = new AtomicBoolean(false);
+        itsPriorities       = new DisruptorPriorityLevel[buffers.length];
+        itsSequences        = new Sequence[buffers.length];
+        itsEventHandler     = eventHandler;
+        itsExceptionHandler = exceptionHandler;
+        itsRunningFlag      = new AtomicBoolean(false);
         
-        for (RingBuffer<Event<T>> buffer:buffers)
-            itsPriorities.add( new DisruptorPriorityLevel<T>(buffer) );
+        for (int i=0;i<buffers.length;i++)
+        {
+            itsPriorities[i] = new DisruptorPriorityLevel<T>(buffers[i]);
+            itsSequences[i] = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
+        }
     }
 
     /************************************************************************
@@ -80,8 +91,16 @@ class PriorityEventProcessor<T>
     public void 
     run()
     {
+        final int numPriorities = itsPriorities.length;
+        boolean[] processedSequence = new boolean[numPriorities];
+        long[]    cachedAvailableSequence = new long[numPriorities];
+        long[]    nextSequence = new long[numPriorities];
+        T         event = null;
+       
         if (!itsRunningFlag.compareAndSet(false, true))
-            throw new IllegalStateException("EventProcessor is already running");
+            throw 
+                new IllegalStateException(
+                    "EventProcessor is already running");
         
         for (DisruptorPriorityLevel<T> priority : itsPriorities)
             priority
@@ -90,29 +109,81 @@ class PriorityEventProcessor<T>
         
         notifyStart();
         
-        try 
+        for (int i=0;i<numPriorities;i++)
         {
-            int counter = RETRY_SPIN;
-            
-            while ( itsRunningFlag.get() ) 
-            {
-                boolean allEmpty = true;
-                
-                for (DisruptorPriorityLevel<T> priority:itsPriorities) 
-                    if ( process( priority ) > 0 )
-                        allEmpty = false;
-                                    
-                if (allEmpty)
-                    counter = waitWhenAllEmpty(counter);
-                else 
-                    counter = RETRY_SPIN;
-            }
-        } 
-        finally 
-        {
-            notifyShutdown();
-            itsRunningFlag.set(false);
+            processedSequence[i] = true;
+            cachedAvailableSequence[i] = Long.MIN_VALUE;
         }
+        
+        while (true)
+        {
+            try
+            {
+                for (int i = 0; i < numPriorities; i++)
+                {
+                    processEvents( 
+                        processedSequence,
+                        cachedAvailableSequence,
+                        nextSequence,
+                        i );
+                }
+            }
+            catch (AlertException e)
+            {
+                if (!isRunning())
+                    break;
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+            catch (TimeoutException e)
+            {
+                e.printStackTrace();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                break;
+            }
+            finally 
+            {
+                notifyShutdown();
+                itsRunningFlag.set(false);
+            }
+        }
+        
+            /*
+        while (true)
+        {
+            try
+            {
+                for (int i = 0; i < numPriorities; i++)
+                {
+                    DisruptorPriorityLevel<T> priority  = itsPriorities[i];
+                    long                      available = priority.getBarrier().waitFor(-1);
+                    Sequence                  sequence  = priority.getSequence();
+                    long                      previous  = sequence.get();
+
+                    for (long n = previous + 1; n <= available; n++)
+                    {
+                        T event = 
+                            priority
+                                .getBuffer()
+                                .get(n);
+                       
+                        itsEventHandler.onEvent( 
+                            event,
+                            n,
+                            previous == available );
+                    }
+                    
+                    sequence.set(available);
+                }
+    
+                Thread.yield();
+            }
+            */
     }
 
     /************************************************************************
@@ -127,6 +198,30 @@ class PriorityEventProcessor<T>
                 "Call getSequence(int) instead!");    
     }
 
+    /************************************************************************
+     *  
+     *
+     * @param i
+     * @return
+     */
+    public Sequence
+    getSequence(int i)
+    {
+        return 
+            itsPriorities[i].getSequence();
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public DisruptorPriorityLevel<T>[]
+    getPriorities()
+    {
+        return itsPriorities;
+    }
+    
     /************************************************************************
      * {@inheritDoc} 
      */
@@ -151,94 +246,70 @@ class PriorityEventProcessor<T>
     {
         return itsRunningFlag.get();
     }
-
-    /************************************************************************
-     *  
-     *
-     * @param i
-     * @return
-     */
-    public Sequence
-    getSequence(int i)
-    {
-        return 
-            itsPriorities
-                .get( i )
-                .getSequence();
-    }
     
     /************************************************************************
      *  
      *
-     * @param priority
-     * @return
+     * @param processedSequence
+     * @param cachedAvailableSequence
+     * @param nextSequence
+     * @param i
+     * @throws AlertException
+     * @throws InterruptedException
+     * @throws TimeoutException
+     * @throws Exception
      */
     private int 
-    process(DisruptorPriorityLevel<T> priority)
+    processEvents(
+        boolean[] processedSequence,
+        long[]    cachedAvailableSequence,
+        long[]    nextSequence,
+        int       i)
+        throws 
+            AlertException,
+            InterruptedException,
+            TimeoutException,Exception
     {
-        Event<T> event        = null;
-        long     beginSeq     = priority.getSequence().get();
-        long     curSeq       = beginSeq + 1;
-        long     availableSeq = beginSeq;
-        int      batch        = 1;
-        
-        try 
+        T event;
+        DisruptorPriorityLevel<T> priority  = itsPriorities[i];
+        long                      available = priority.getBarrier().waitFor(-1);
+        Sequence                  workSequence  = priority.getSequence();
+    
+        // if previous sequence was processed - fetch the next sequence and set
+        // that we have successfully processed the previous sequence
+        // typically, this will be true
+        // this prevents the sequence getting too far forward if an exception
+        // is thrown from the WorkHandler
+        if (processedSequence[i])
         {
-            availableSeq = 
-                priority
-                    .getBarrier()
-                    .waitFor(curSeq);
-            
-            if ( availableSeq <= beginSeq )
-                return 0;
-            
-            while ((curSeq <= availableSeq) && (curSeq - beginSeq <= batch)) 
+            processedSequence[i] = false;
+            do
             {
-                event = 
-                    priority
-                        .getBuffer()
-                        .get(curSeq);
-                
-                for (DisruptorEventHandler<T> handler:itsHandlers)
-                {
-                    try 
-                    {
-                        handler.onEvent(event, curSeq, curSeq == availableSeq);
-                    } 
-                    catch (final Throwable e) 
-                    {
-                        itsHandler.handleEventException( e,curSeq,event );
-                    }
-                }
-               
-                
-                curSeq++;
+                nextSequence[i] = workSequence.get() + 1L;
+                itsSequences[i].set(nextSequence[i] - 1L);
             }
-            
-            curSeq--;
-            
-            priority
-                .getSequence()
-                .set(curSeq);
-            
-        } 
-        catch (final TimeoutException e) 
-        {
-            notifyTimeout(priority.getSequence().get());
-        } 
-        catch (final AlertException e) 
-        {
-            if (!itsRunningFlag.get())
-                return -1;
-        } 
-        catch (final Throwable e) 
-        {
-            itsHandler.handleEventException( e,curSeq,event );
-            priority
-                .getSequence()
-                .set(curSeq);
+            while (!workSequence.compareAndSet(nextSequence[i] - 1L, nextSequence[i]));
         }
-        return (int) (curSeq - beginSeq);
+    
+        if (cachedAvailableSequence[i] >= nextSequence[i])
+        {
+            event = 
+                priority
+                    .getBuffer()
+                    .get(nextSequence[i]);
+           
+            itsEventHandler.onEvent( 
+                event,
+                nextSequence[i],
+                nextSequence[i] == cachedAvailableSequence[i] );
+            processedSequence[i] = true;
+            return 1;
+        }
+        else
+        {
+            cachedAvailableSequence[i] = priority.getBarrier().waitFor(nextSequence[i]);
+            return 0;
+        }
     }
 
     /************************************************************************
@@ -248,15 +319,13 @@ class PriorityEventProcessor<T>
      * @return
      */
     private int 
-    waitWhenAllEmpty(int counter)
+    waitWhenAllEmpty(int counter) 
     {
         for (DisruptorPriorityLevel<T> priority:itsPriorities) 
         {
             try 
             {
-                priority
-                    .getBarrier()
-                    .checkAlert();
+                priority.getBarrier().checkAlert();
             } 
             catch (AlertException ex) 
             {
@@ -264,16 +333,20 @@ class PriorityEventProcessor<T>
             }
         }
         
-        if (counter > RETRY_YEILD) 
+        if (counter > RETRIES_YEILD) 
+        {
             --counter;
+        } 
         else if (counter > 0) 
         {
             --counter;
             Thread.yield();
         } 
-        else
+        else 
+        {
             LockSupport.parkNanos(1L);
-       
+        }
+        
         return counter;
     }
 
@@ -282,20 +355,19 @@ class PriorityEventProcessor<T>
      *
      * @param availableSequence
      */
+    @SuppressWarnings("unused")
     private void 
     notifyTimeout(final long sequence) 
     {
-        for (DisruptorEventHandler<T> handler:itsHandlers)
+        try 
         {
-            try 
-            {
-                handler.onTimeout( sequence );
-            } 
-            catch (final Throwable e) 
-            {
-                itsHandler.handleEventException( e,sequence,null );
-            }
-        }       
+            if ( itsEventHandler instanceof TimeoutHandler)
+                ((TimeoutHandler)itsEventHandler).onTimeout( sequence );
+        } 
+        catch (final Throwable e) 
+        {
+            itsExceptionHandler.handleEventException( e,sequence,null );
+        }
     }
 
     /************************************************************************
@@ -305,16 +377,14 @@ class PriorityEventProcessor<T>
     private void 
     notifyStart() 
     {
-        for (DisruptorEventHandler<T> handler:itsHandlers)
+        try 
         {
-            try 
-            {
-                handler.onStart();
-            } 
-            catch (final Throwable e) 
-            {
-                itsHandler.handleOnStartException( e );
-            }
+            if ( itsEventHandler instanceof LifecycleAware)
+                ((LifecycleAware)itsEventHandler).onStart();
+        } 
+        catch (final Throwable e) 
+        {
+            itsExceptionHandler.handleOnStartException( e );
         }
     }
 
@@ -325,16 +395,14 @@ class PriorityEventProcessor<T>
     private void 
     notifyShutdown() 
     {
-        for (DisruptorEventHandler<T> handler:itsHandlers)
+        try 
         {
-            try 
-            {
-                handler.onShutdown();
-            } 
-            catch (final Throwable e) 
-            {
-                itsHandler.handleOnShutdownException( e );
-            }
+            if ( itsEventHandler instanceof LifecycleAware)
+                ((LifecycleAware)itsEventHandler).onShutdown();
+        } 
+        catch (final Throwable e) 
+        {
+            itsExceptionHandler.handleOnShutdownException( e );
         }
     }
 }

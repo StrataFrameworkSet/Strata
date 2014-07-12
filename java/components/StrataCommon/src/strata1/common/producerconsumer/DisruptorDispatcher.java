@@ -46,8 +46,8 @@ class DisruptorDispatcher<T>
     extends    AbstractDispatcher<T>
     implements IDispatcher<T>
 {
-    private Disruptor<Event<T>>                  itsDisruptor;
-    private AtomicBoolean                        itsRoutingIndicator;
+    private final PriorityDisruptor<Event<T>> itsDisruptor;
+    private final AtomicBoolean               itsRoutingIndicator;
 
     /************************************************************************
      * Creates a new {@code DisruptorDispatcher}. 
@@ -56,15 +56,15 @@ class DisruptorDispatcher<T>
     protected 
     DisruptorDispatcher(
         IEventFactory<T> factory,
+        int              numPriorities,
         int              bufferSize)
     {
         itsDisruptor = 
-            new Disruptor<Event<T>>(
+            new PriorityDisruptor<Event<T>>(
                 factory,
+                numPriorities,
                 bufferSize,
-                Executors.newCachedThreadPool(),
-                ProducerType.MULTI,
-                new SleepingWaitStrategy());
+                ProducerType.MULTI);
         itsDisruptor.handleExceptionsWith( 
             new DisruptorExceptionHandler(
                 new PrintStackTraceExceptionHandler()) );
@@ -79,7 +79,7 @@ class DisruptorDispatcher<T>
     public void
     route(int priority,T payload)
     {
-        RingBuffer<Event<T>> buffer   = itsDisruptor.getRingBuffer();
+        RingBuffer<Event<T>> buffer = itsDisruptor.getRingBuffer(priority);
         long                 sequence = buffer.next();
         Event<T>             event    = buffer.get( sequence );
         
@@ -95,7 +95,7 @@ class DisruptorDispatcher<T>
     public void
     broadcast(int priority,T payload)
     {
-        RingBuffer<Event<T>> buffer   = itsDisruptor.getRingBuffer();
+        RingBuffer<Event<T>> buffer = itsDisruptor.getRingBuffer(priority);
         long                 sequence = buffer.next();
         Event<T>             event    = buffer.get( sequence );
         
