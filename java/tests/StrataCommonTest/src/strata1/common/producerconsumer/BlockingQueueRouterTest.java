@@ -58,10 +58,10 @@ class BlockingQueueRouterTest
     public void 
     setUp() throws Exception
     {
-        itsTarget = new CountRequestBlockingQueueRouter();
-        itsProducer1 = new CountRequestProducer(1,MAX);
-        itsProducer2 = new CountRequestProducer(2,MAX);
-        itsProducer3 = new CountRequestProducer(3,MAX);
+        itsTarget = new CountRequestBlockingQueueDispatcher();
+        itsProducer1 = new CountRequestProducer(1,MAX,DispatchKind.ROUTE);
+        itsProducer2 = new CountRequestProducer(2,MAX,DispatchKind.ROUTE);
+        itsProducer3 = new CountRequestProducer(3,MAX,DispatchKind.ROUTE);
         itsConsumer1 = new CountRequestConsumer(1);
         itsConsumer2 = new CountRequestConsumer(2);
         itsConsumer3 = new CountRequestConsumer(3);

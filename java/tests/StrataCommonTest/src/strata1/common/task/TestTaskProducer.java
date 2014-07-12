@@ -24,6 +24,7 @@
 
 package strata1.common.task;
 
+import strata1.common.producerconsumer.DispatchKind;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -41,15 +42,17 @@ class TestTaskProducer
     implements ITaskProducer
 {
     private Queue<ITask> itsTasks;
+    private DispatchKind itsKind;
     
     /************************************************************************
      * Creates a new {@code TestTaskProducer}. 
      *
      */
     public 
-    TestTaskProducer()
+    TestTaskProducer(DispatchKind kind)
     {
         itsTasks = new LinkedList<ITask>();
+        itsKind  = kind;
     }
     
     /************************************************************************
@@ -66,7 +69,10 @@ class TestTaskProducer
         {
             try
             {
-                getDispatcher().dispatch( task );
+                if ( itsKind == DispatchKind.ROUTE )
+                    getDispatcher().route( 0,task );
+                else
+                    getDispatcher().broadcast( 0,task );
             }
             catch(Exception e)
             {

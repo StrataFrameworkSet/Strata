@@ -40,6 +40,7 @@ class CountRequestProducer
 {
     private final int           itsTypeId;
     private final int           itsMaxCount;
+    private final DispatchKind  itsKind;
     private final AtomicInteger itsCurrentCount;
     
     /************************************************************************
@@ -47,10 +48,11 @@ class CountRequestProducer
      *
      */
     public 
-    CountRequestProducer(int typeId,int max)
+    CountRequestProducer(int typeId,int max,DispatchKind kind)
     {
         itsTypeId       = typeId;
         itsMaxCount     = max;
+        itsKind         = kind;
         itsCurrentCount = new AtomicInteger(0);
     }
 
@@ -81,7 +83,11 @@ class CountRequestProducer
                     for (int i=0;i<itsMaxCount;i++)
                     {
                         itsCurrentCount.incrementAndGet();
-                        getDispatcher().dispatch( new CountRequest(itsTypeId) );
+                        
+                        if ( itsKind == DispatchKind.ROUTE )
+                            getDispatcher().route( 0,new CountRequest(itsTypeId));
+                        else
+                            getDispatcher().broadcast( 0,new CountRequest(itsTypeId));
                     }
                     
                     System

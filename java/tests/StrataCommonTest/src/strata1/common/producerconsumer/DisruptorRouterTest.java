@@ -28,6 +28,7 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.concurrent.locks.LockSupport;
 
 /****************************************************************************
  * 
@@ -39,7 +40,7 @@ import org.junit.Test;
 public 
 class DisruptorRouterTest
 {
-    private static final int        MAX = 10000000;
+    private static final int        MAX = 10;
     
     private ICountRequestDispatcher itsTarget;
     private ICountRequestProducer   itsProducer1;    
@@ -58,10 +59,10 @@ class DisruptorRouterTest
     public void 
     setUp() throws Exception
     {
-        itsTarget = new CountRequestDisruptorRouter(16384);
-        itsProducer1 = new CountRequestProducer(1,MAX);
-        itsProducer2 = new CountRequestProducer(2,MAX);
-        itsProducer3 = new CountRequestProducer(3,MAX);
+        itsTarget = new CountRequestDisruptorDispatcher(1,8);
+        itsProducer1 = new CountRequestProducer(1,MAX,DispatchKind.ROUTE);
+        itsProducer2 = new CountRequestProducer(2,MAX,DispatchKind.ROUTE);
+        itsProducer3 = new CountRequestProducer(3,MAX,DispatchKind.ROUTE);
         itsConsumer1 = new CountRequestConsumer(1);
         itsConsumer2 = new CountRequestConsumer(2);
         itsConsumer3 = new CountRequestConsumer(3);
@@ -147,6 +148,8 @@ class DisruptorRouterTest
         itsProducer1.stopProducing();
         itsProducer2.stopProducing();
         itsProducer3.stopProducing();
+        
+        LockSupport.parkNanos( 100000 );
         
         assertEquals( MAX,itsProducer1.getCount() );
         assertEquals( MAX,itsProducer2.getCount() );
