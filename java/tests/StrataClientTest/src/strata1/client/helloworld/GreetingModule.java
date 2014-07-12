@@ -79,17 +79,14 @@ class GreetingModule
   
         container
             .insertBinding( 
-                Binder
-                    .bindType( IHelloWorldModel.class )
+                bindType( IHelloWorldModel.class )
                     .toInstance(model) )
             .insertBinding( 
-                Binder
-                    .bindType( IHelloWorldView.class )
+                bindType( IHelloWorldView.class )
                     .toInstance(view) )
             .insertBinding( 
-                Binder
-                    .bindType( IHelloWorldController.class )
-                    .withKey(  "MainController" )
+                bindType( IHelloWorldController.class )
+                    .withKey( "MainController" )
                     .toInstance(controller) );
     }
     
