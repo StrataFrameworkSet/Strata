@@ -157,8 +157,8 @@ class BindingBuilder<T>
         itsImplementationType = null;
         itsProviderType = null;
         itsInstance = instance;
-        itsScopeType = (Class<? extends IBindingScope<T>>)SingletonScope.class;
         itsScope = new SingletonScope<T>();
+        itsScopeType = (Class<? extends IBindingScope<T>>)itsScope.getClass();
         return this;
     }
 
