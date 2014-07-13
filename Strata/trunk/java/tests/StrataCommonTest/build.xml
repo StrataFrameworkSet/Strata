@@ -35,13 +35,11 @@
 	
     <target name="clean">
         <delete dir="${outputDirectory}"/>
-        <delete dir="${testOutputDirectory}"/>
         <delete file="${project.tests}"/>
     </target>
     
     <target name="init">
         <mkdir dir="${outputDirectory}"/>
-        <mkdir dir="${testOutputDirectory}"/>
         <delete dir="${project.testreports}"/>
         <mkdir dir="${project.testreports}"/>
     </target>
