@@ -1,0 +1,5 @@
+<project name="CompilerProperty">
+
+	<property name="compiler" value="javac1.7"/>
+    
+</project>	
