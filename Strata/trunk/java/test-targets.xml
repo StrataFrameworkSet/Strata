@@ -1,0 +1,120 @@
+<project 
+	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+	name="TestTargets"
+	default="run-commit-stage">
+
+    <import file="compiler-property.xml"/>
+    
+    <!--  
+    <property name="source.dir" value="src"/>
+    <property name="output.dir" value="bin"/>
+    <property name="distribution.dir" value="lib"/>
+    <property name="component" value="<componentName>"/>
+    <property name="version" value="DEV"/>
+    <property name="artifact.name" value="${ant.project.name}-${version}"/>
+    <property name="component.artifact" value="../../components/${component}/lib/${component}-${version}.jar"/>
+    <property name="test.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
+    
+    <artifact:dependencies pathId="partial.classpath">
+    	<artifact:dependency groupId="junit" artifactId="junit" version="4.9"/>
+        <artifact:dependency groupId="com.google.inject" artifactId="guice" version="4.0-beta"/>
+        <artifact:dependency groupId="javax.inject" artifactId="javax.inject" version="1"/>
+        <artifact:dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
+        <artifact:dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
+        <artifact:dependency groupId="org.eclipse" artifactId="swt.win32.win32.x86_64" version="3.6.1"/>
+        <artifact:dependency groupId="org.mockito" artifactId="mockito-all" version="1.9.0"/>
+    </artifact:dependencies>
+
+    <path 
+        id="dependency.classpath">
+        <pathelement location="${test.artifact}" /> 
+        <path refid="partial.classpath"/> 
+    </path>
+	-->
+	    
+    <target 
+        name="init"
+        depends="define-properties">
+        <mkdir dir="${output.dir}"/>
+        <mkdir dir="${test.reports}"/>
+    </target>
+
+    <target 
+        name="clean"
+        depends="define-properties">
+        <delete dir="${output.dir}"/>
+    	<delete file="${test.artifact}"/>
+    </target>
+	
+	<target 
+		name="compile" 
+		depends="init">
+		<javac 
+			srcdir="${source.dir}" 
+			destdir="${output.dir}" 
+			classpathref="${test.classpath}" 
+			compiler="${compiler}"
+			includeantruntime="false"/>
+	</target>
+	
+	<target
+	    name="package"
+	    depends="compile">
+	    <jar 
+	    	destfile="${test.artifact}"
+		    basedir="${output.dir}"/>
+	</target>
+	
+	<target 
+		name="run-commit-stage"
+		depends="package">
+		<junit 
+			printsummary="true" 
+			showoutput="true" 
+			haltonfailure="true">
+		    <formatter type="brief" usefile="false"/>
+		    <formatter type="xml"/>
+		    <classpath>
+		        <pathelement location="${test.artifact}"/>
+		        <path refid="${test.classpath}"/>
+		    </classpath>
+		    <test 
+		    	todir="${test.reports}" 
+		        name="${commit.test.suite}"/>
+		    </junit>
+		    <junitreport 
+		    	todir="${test.reports}">
+		        <fileset dir="${test.reports}">
+		            <include name="TEST-*.xml"/>
+		        </fileset>
+		        <report format="frames" todir="${test.reports}"/>
+		    </junitreport>
+		</target>
+	
+    <target 
+        name="run-integration-stage"
+    	depends="init">
+		<junit 
+			printsummary="true" 
+			showoutput="true" 
+			haltonfailure="true">
+		    <formatter type="brief" usefile="false"/>
+		    <formatter type="xml"/>
+		    <classpath>
+		        <pathelement location="${test.artifact}"/>
+		        <path refid="${test.classpath}"/>
+		    </classpath>
+		    <test 
+		    	todir="${test.reports}" 
+		        name="${integration.test.suite}"/>
+		    </junit>
+		    <junitreport 
+		    	todir="${test.reports}">
+		        <fileset dir="${test.reports}">
+		            <include name="TEST-*.xml"/>
+		        </fileset>
+		        <report format="frames" todir="${test.reports}"/>
+		    </junitreport>
+    </target>
+    
+</project>	
