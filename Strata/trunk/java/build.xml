@@ -79,7 +79,7 @@
             target="clean"/>
         <ant 
             dir="${androidclienttest.root}" 
-            antfile="${swtclienttest.root}/build.xml" 
+            antfile="${androidclienttest.root}/build.xml" 
             target="clean"/>
         <ant 
             dir="${gwtclient.root}" 
@@ -111,7 +111,7 @@
             target="clean"/>
         <ant 
             dir="${servertest.root}" 
-            antfile="${server.root}/build.xml" 
+            antfile="${servertest.root}/build.xml" 
             target="clean"/>
     </target>
 
@@ -162,7 +162,7 @@
             target="run-commit-stage"/>
         <ant 
             dir="${androidclienttest.root}" 
-            antfile="${swtclienttest.root}/build.xml" 
+            antfile="${androidclienttest.root}/build.xml" 
             target="run-commit-stage"/>
         <ant 
             dir="${gwtclient.root}" 
@@ -194,7 +194,7 @@
             target="run-commit-stage"/>
         <ant 
             dir="${servertest.root}" 
-            antfile="${server.root}/build.xml" 
+            antfile="${servertest.root}/build.xml" 
             target="run-commit-stage"/>
     </target>
 	
@@ -245,7 +245,7 @@
             target="run-integration-stage"/>
         <ant 
             dir="${androidclienttest.root}" 
-            antfile="${swtclienttest.root}/build.xml" 
+            antfile="${androidclienttest.root}/build.xml" 
             target="run-integration-stage"/>
         <ant 
             dir="${gwtclient.root}" 
@@ -277,7 +277,7 @@
             target="run-integration-stage"/>
         <ant 
             dir="${servertest.root}" 
-            antfile="${server.root}/build.xml" 
+            antfile="${servertest.root}/build.xml" 
             target="run-integration-stage"/>
     </target>
 	

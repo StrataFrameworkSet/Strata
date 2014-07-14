@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name: IntegrationStageSuite.java
+// # File Name: CommitStageSuite.java
 // #
 // # Copyright: 2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,7 +22,7 @@
 // #            Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.swtclient.testsuite;
+package strata1.androidclient.testsuite;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -37,6 +37,6 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({NullTest.class})
 public 
-class IntegrationStageSuite {}
+class CommitStageSuite {}
 
 // ##########################################################################

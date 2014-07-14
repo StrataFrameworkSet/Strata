@@ -22,7 +22,7 @@
 // #            Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.swtclient.testsuite;
+package strata1.androidclient.testsuite;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
