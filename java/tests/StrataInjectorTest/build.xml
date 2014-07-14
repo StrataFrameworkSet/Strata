@@ -2,140 +2,44 @@
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
 	name="StrataInjectorTest" 
 	default="run-commit-stage">
-
-    <property name="sourceDirectory" value="${basedir}/src"/>
-    <property name="outputDirectory" value="${basedir}/build/subsystems"/>
-    <property name="testOutputDirectory" value="${basedir}/build/tests"/>
-    <property name="directory" value="${basedir}/lib"/>
-    <property name="version" value="DEV"/>
-    <property name="artifactName" value="${ant.project.name}-${version}"/>
-    <property name="testArtifactName" value="${ant.project.name}Test-${version}"/>
-    <property name="project.subsystems" value="${directory}/${artifactName}.jar"/>
-    <property name="project.tests" value="${directory}/${testArtifactName}.jar"/>
-    <property name="project.testreports" value="${testOutputDirectory}/reports"/>
-
-    <artifact:dependencies pathId="dependency.classpath">
-    	<artifact:dependency groupId="junit" artifactId="junit" version="4.9"/>
-        <artifact:dependency groupId="com.google.inject" artifactId="guice" version="4.0-beta"/>
-        <artifact:dependency groupId="javax.inject" artifactId="javax.inject" version="1"/>
-        <artifact:dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
-        <artifact:dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
-        <artifact:dependency groupId="org.eclipse" artifactId="swt.win32.win32.x86_64" version="3.6.1"/>
-        <artifact:dependency groupId="org.mockito" artifactId="mockito-all" version="1.9.0"/>
-    </artifact:dependencies>
-
-	<path 
-	    id="testDependency.classpath">
-		<pathelement location="${project.subsystems}" /> 
-		<path refid="dependency.classpath"/> 
-    </path>
 	
-	<target name="generate-classpath">
-
+	<import file="../../test-targets.xml"/>
+	
+	<target name="define-properties">
+		
+	    <property name="source.dir" value="src"/>
+	    <property name="output.dir" value="bin"/>
+	    <property name="distribution.dir" value="lib"/>
+		<property name="component" value="StrataInjector"/>
+	    <property name="version" value="DEV"/>
+		<property name="component.artifact" value="../../components/${component}/lib/${component}-${version}.jar"/>
+	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
+	    <property name="test.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
+    	<property name="common.artifact" value="../../components/StrataCommon/lib/StrataCommon-${version}.jar"/>
+	    <property name="commit.test.suite" value="strata1.injector.testsuite.CommitStageSuite"/>
+		<property name="integration.test.suite" value="strata1.injector.testsuite.IntegrationStageSuite"/>
+	    <property name="test.reports" value="${output.dir}/reports"/>
+		
+	    <artifact:dependencies pathId="partial.classpath">
+	    	<artifact:dependency groupId="junit" artifactId="junit" version="4.9"/>
+	        <artifact:dependency groupId="com.google.inject" artifactId="guice" version="4.0-beta"/>
+	        <artifact:dependency groupId="com.lmax" artifactId="disruptor" version="3.2.1"/>
+	        <artifact:dependency groupId="javax.inject" artifactId="javax.inject" version="1"/>
+	        <artifact:dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
+	        <artifact:dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
+	        <artifact:dependency groupId="org.eclipse" artifactId="swt.win32.win32.x86_64" version="3.6.1"/>
+	        <artifact:dependency groupId="org.mockito" artifactId="mockito-all" version="1.9.0"/>
+	    </artifact:dependencies>
+		
+		<path 
+		    id="dependency.classpath">
+			<pathelement location="${component.artifact}" /> 
+		    <pathelement location="${common.artifact}" /> 
+			<path refid="partial.classpath"/> 
+	    </path>
+		
+		<property name="test.classpath" value="dependency.classpath"/>
+		
 	</target>
-	
-    <target name="clean">
-        <delete dir="${outputDirectory}"/>
-        <delete dir="${testOutputDirectory}"/>
-    	<delete file="${project.subsystems}"/>
-        <delete file="${project.tests}"/>
-    </target>
-    
-    <target name="init">
-        <mkdir dir="${outputDirectory}"/>
-        <mkdir dir="${testOutputDirectory}"/>
-        <delete dir="${project.testreports}"/>
-        <mkdir dir="${project.testreports}"/>
-    </target>
-	
-	<target 
-		name="compile" 
-		depends="init">
-		<javac 
-			srcdir="${sourceDirectory}" 
-			destdir="${outputDirectory}" 
-			classpathref="dependency.classpath" 
-			compiler="javac1.7"
-			includeantruntime="false"/>
-	</target>
-	
-	<target
-	    name="package"
-	    depends="compile">
-	    <jar 
-	    	destfile="${project.subsystems}"
-		    basedir="${outputDirectory}"/>
-	</target>
-	
-	<target
-		name="test-compile"
-		depends="package">
-        <javac 
-            srcdir="${testSourceDirectory}" 
-            destdir="${testOutputDirectory}" 
-            classpathref="testDependency.classpath" 
-            compiler="javac1.7"
-            includeantruntime="false"/>
-	</target>
-
-	<target
-	    name="test-package"
-	    depends="test-compile">
-	    <jar 
-	        destfile="${project.tests}"
-	        basedir="${testOutputDirectory}"/>
-	</target> 
-	
-	<target 
-		name="run-commit-stage"
-		depends="test-package">
-		<junit 
-			printsummary="true" 
-			showoutput="true" 
-			haltonfailure="true">
-		    <formatter type="brief" usefile="false"/>
-		    <formatter type="xml"/>
-		    <classpath>
-		        <pathelement location="${project.tests}"/>
-		        <path refid="testDependency.classpath"/>
-		    </classpath>
-		    <test 
-		    	todir="${project.testreports}" 
-		        name="strata1.injector.testsuite.CommitStageSuite"/>
-		    </junit>
-		    <junitreport 
-		    	todir="${project.testreports}">
-		        <fileset dir="${project.testreports}">
-		            <include name="TEST-*.xml"/>
-		        </fileset>
-		        <report format="frames" todir="${project.testreports}"/>
-		    </junitreport>
-	</target>
-	
-    <target 
-        name="run-integration-stage"
-    	depends="init">
-        <junit 
-            printsummary="true" 
-            showoutput="true" 
-            haltonfailure="true">
-            <formatter type="brief" usefile="false"/>
-            <formatter type="xml"/>
-            <classpath>
-                <pathelement location="${project.tests}"/>
-                <path refid="testDependency.classpath"/>
-            </classpath>
-            <test 
-                todir="${project.testreports}" 
-                name="strata1.injector.testsuite.IntegrationStageSuite"/>
-            </junit>
-            <junitreport 
-                todir="${project.testreports}">
-                <fileset dir="${project.testreports}">
-                    <include name="TEST-*.xml"/>
-                </fileset>
-                <report format="frames" todir="${project.testreports}"/>
-            </junitreport>
-    </target>
     
 </project>	

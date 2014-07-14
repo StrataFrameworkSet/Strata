@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.client.swthelloworld;
+package strata1.client.gwthelloworld;
 
 import strata1.injector.container.Container;
 import strata1.injector.container.IContainer;

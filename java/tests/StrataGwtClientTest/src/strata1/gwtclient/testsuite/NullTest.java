@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.swtclient.testsuite;
+package strata1.gwtclient.testsuite;
 
 import org.junit.Test;
 

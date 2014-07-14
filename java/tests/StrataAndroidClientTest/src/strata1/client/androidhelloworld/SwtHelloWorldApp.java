@@ -1,33 +1,30 @@
 // ##########################################################################
-// # File Name:	SwtHelloWorldClientBootstrapper.java
+// # File Name:	SwtHelloWorldApp.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataInitializer Framework.
+// # License:	This file is part of the StrataSwtClient Framework.
 // #
-// #   			The StrataInitializer Framework is free software: you 
+// #   			The StrataSwtClient Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataInitializer Framework is distributed in the 
+// #    		The StrataSwtClient Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataInitializer
+// #			General Public License along with the StrataSwtClient
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.client.swthelloworld;
+package strata1.client.androidhelloworld;
 
-import strata1.client.bootstrap.AbstractClientBootstrapper;
-import strata1.client.helloworld.IHelloWorldController;
-import strata1.swtclient.swtregion.SwtRegion;
-import strata1.swtclient.swtregion.SwtRegionManager;
+import strata1.client.application.ClientApplication;
 
 /****************************************************************************
  * 
@@ -36,45 +33,42 @@ import strata1.swtclient.swtregion.SwtRegionManager;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class SwtHelloWorldClientBootstrapper
-    extends AbstractClientBootstrapper
+public class SwtHelloWorldApp
+    extends ClientApplication
 {
 
     /************************************************************************
-     * Creates a new {@code SwtHelloWorldClientBootstrapper}. 
+     * Creates a new {@code SwtHelloWorldApp}. 
      *
+     * @param bootstrapper
+     * @param factory
      */
-    public 
-    SwtHelloWorldClientBootstrapper()
+    public SwtHelloWorldApp()
     {
+        super( 
+            new SwtHelloWorldClientBootstrapper(),
+            new SwtHelloWorldClientFactory() );
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     *  
+     *
+     * @param args
      */
-    @Override
-    protected void 
-    configureRegionManager()
+    public static void 
+    main(String[] args)
     {
-        SwtRegion.setManager( (SwtRegionManager)getRegionManager() );
+        try
+        {
+            new SwtHelloWorldApp().run( args );
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    protected void 
-    startApplication()
-    {
-        IHelloWorldController mainController = 
-            getContainer()
-                .getInstance( 
-                    IHelloWorldController.class,
-                    "MainController" );
-        
-        mainController.start();
-    }
+
 }
 
 // ##########################################################################
