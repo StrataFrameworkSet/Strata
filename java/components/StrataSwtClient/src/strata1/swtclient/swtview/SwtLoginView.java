@@ -29,7 +29,7 @@ import strata1.client.shell.IDispatcher;
 import strata1.client.view.AbstractView;
 import strata1.client.view.ILoginView;
 import strata1.swtclient.swtshell.ISwtDispatcher;
-import strata1.common.authentication.IClientCredential;
+import strata1.common.authentication.ICredential;
 import strata1.common.authentication.UserNameAndPasswordCredential;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -218,7 +218,7 @@ class SwtLoginView
      * {@inheritDoc} 
      */
     @Override
-    public IClientCredential 
+    public ICredential 
     getCredential()
     {
         return 

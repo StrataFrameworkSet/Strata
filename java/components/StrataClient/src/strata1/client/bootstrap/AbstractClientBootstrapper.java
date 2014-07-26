@@ -27,8 +27,8 @@ package strata1.client.bootstrap;
 import strata1.injector.container.Binder;
 import strata1.injector.container.IContainer;
 import strata1.injector.container.IModule;
-import strata1.common.authentication.IClientAuthenticator;
-import strata1.common.commandline.ICommandLineProcessor;
+import strata1.common.authentication.IAuthenticator;
+import strata1.common.commandline.ICommandLineParser;
 import strata1.common.logger.ILogger;
 import strata1.common.logger.LoggingLevel;
 import strata1.client.region.IRegionManager;
@@ -57,7 +57,7 @@ public abstract
 class AbstractClientBootstrapper
     implements IClientBootstrapper
 {
-    private ICommandLineProcessor itsProcessor;
+    private ICommandLineParser    itsParser;
     private ILogger               itsLogger;
     private List<IModule>         itsModules;
     private IContainer            itsContainer;
@@ -65,7 +65,7 @@ class AbstractClientBootstrapper
     private IDispatcher           itsDispatcher;
     private ILoginView            itsLoginView;
     private ISplashView           itsSplashView;
-    private IClientAuthenticator  itsAuthenticator;
+    private IAuthenticator  itsAuthenticator;
     private IStartUpController    itsController;
     
     /************************************************************************
@@ -75,7 +75,7 @@ class AbstractClientBootstrapper
     public 
     AbstractClientBootstrapper()
     {
-        itsProcessor     = null;
+        itsParser     = null;
         itsLogger        = null;
         itsModules       = null;
         itsContainer     = null;
@@ -91,9 +91,9 @@ class AbstractClientBootstrapper
      */
     @Override
     public void 
-    setCommandLineProcessor(ICommandLineProcessor processor)
+    setCommandLineParser(ICommandLineParser parser)
     {
-        itsProcessor = processor;
+        itsParser = parser;
     }
 
     /************************************************************************
@@ -196,13 +196,13 @@ class AbstractClientBootstrapper
      */
     @Override
     public void 
-    setAuthenticator(IClientAuthenticator authenticator)
+    setAuthenticator(IAuthenticator authenticator)
     {
         itsAuthenticator = authenticator;
         getContainer()
             .insertBinding(
                 Binder
-                    .bindType( IClientAuthenticator.class )
+                    .bindType( IAuthenticator.class )
                     .toInstance( itsAuthenticator ) );        
     }
 
@@ -210,10 +210,10 @@ class AbstractClientBootstrapper
      * {@inheritDoc} 
      */
     @Override
-    public ICommandLineProcessor 
-    getCommandLineProcessor()
+    public ICommandLineParser 
+    getCommandLineParser()
     {
-        return itsProcessor;
+        return itsParser;
     }
 
     /************************************************************************
@@ -290,7 +290,7 @@ class AbstractClientBootstrapper
      * {@inheritDoc} 
      */
     @Override
-    public IClientAuthenticator 
+    public IAuthenticator 
     getAuthenticator()
     {
         return itsAuthenticator;
@@ -319,7 +319,7 @@ class AbstractClientBootstrapper
             setLogger( factory.createLogger() );
             getLogger().log( LoggingLevel.INFO,"Creating container." );
             setContainer( factory.createContainer() );
-            setCommandLineProcessor( factory.createCommandLineProcessor() );
+            setCommandLineParser( factory.createCommandLineParser() );
             getLogger().log( 
                 LoggingLevel.INFO,"Processing command line arguments." );
             processCommandLineArguments( arguments );
@@ -359,7 +359,7 @@ class AbstractClientBootstrapper
     protected void 
     processCommandLineArguments(String[] arguments)
     {        
-        getCommandLineProcessor().process( arguments );
+        getCommandLineParser().parse( arguments );
     }
 
     /************************************************************************

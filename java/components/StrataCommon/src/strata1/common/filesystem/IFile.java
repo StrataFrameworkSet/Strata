@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	ICommandLineProcessor.java
+// # File Name:	IFile.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,8 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.commandline;
-
+package strata1.common.filesystem;
 
 /****************************************************************************
  * 
@@ -33,22 +32,10 @@ package strata1.common.commandline;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ICommandLineProcessor
+interface IFile
+    extends IFileSystemElement
 {
-    public ICommandLineProcessor
-    setHelpText(String helpText);
-    
-    public void
-    onCommandOption(ICommandOption option);
-    
-    public void
-    onCommandParameter(ICommandParameter parameter);
-    
-    public void
-    onCommandLineException(CommandLineException exception);
-    
-    public void
-    onException(Exception exception);
+
 }
 
 // ##########################################################################

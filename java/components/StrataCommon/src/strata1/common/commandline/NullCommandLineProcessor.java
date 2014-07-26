@@ -24,10 +24,6 @@
 
 package strata1.common.commandline;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 /****************************************************************************
  * 
@@ -38,56 +34,45 @@ import java.util.Set;
  */
 public 
 class NullCommandLineProcessor
+    extends    AbstractCommandLineProcessor
     implements ICommandLineProcessor
 {
-    private List<String> itsArguments;
     
     /************************************************************************
      * Creates a new {@code NullCommandLineProcessor}. 
      *
      */
     public 
-    NullCommandLineProcessor() 
-    {
-        itsArguments = Collections.emptyList();
-    }
+    NullCommandLineProcessor() {}
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
     public void 
-    setOptions(Set<String> options) {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public Set<String> 
-    getOptions()
-    {
-        return Collections.emptySet();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public List<String> 
-    getArguments()
-    {
-        return itsArguments;
-    }
+    onCommandOption(ICommandOption option) {}
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
     public void 
-    process(String[] arguments) 
-    {
-        itsArguments = Arrays.asList( arguments );
-    }
+    onCommandParameter(ICommandParameter parameter) {}
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    onCommandLineException(CommandLineException exception) {}
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    onException(Exception exception) {}
+
 
 }
 

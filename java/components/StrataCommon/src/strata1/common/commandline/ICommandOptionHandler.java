@@ -1,28 +1,28 @@
 // ##########################################################################
-// # File Name:	NullClientAuthenticator.java
+// # File Name:	ICommandOptionHandler.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataClient Framework.
+// # License:	This file is part of the StrataCommon Framework.
 // #
-// #   			The StrataClient Framework is free software: you 
+// #   			The StrataCommon Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataClient Framework is distributed in the 
+// #    		The StrataCommon Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataClient
+// #			General Public License along with the StrataCommon
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.authentication;
+package strata1.common.commandline;
 
 /****************************************************************************
  * 
@@ -32,30 +32,10 @@ package strata1.common.authentication;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class NullClientAuthenticator
-    implements IClientAuthenticator
+interface ICommandOptionHandler
 {
-
-    /************************************************************************
-     * Creates a new {@code NullClientAuthenticator}. 
-     *
-     */
-    public 
-    NullClientAuthenticator()
-    {
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IPrincipal 
-    authenticate(IClientCredential credential)
-        throws AuthenticationFailureException
-    {
-        return new NullPrincipal();
-    }
-
+    public void
+    handle(String optionName,boolean exists);
 }
 
 // ##########################################################################

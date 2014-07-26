@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	CommandLineProcessorTest.java
+// # File Name:	FakeAuthenticator.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,16 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.commandline;
+package strata1.common.authentication;
 
-import static org.junit.Assert.*;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /****************************************************************************
  * 
@@ -41,38 +35,57 @@ import java.util.Set;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class CommandLineProcessorTest
+class FakeAuthenticator
+    implements IAuthenticator
 {
-    private MockCommandLineProcessor itsTarget;
-    private Set<String>              itsOptions;
+    private Map<String,String> itsUsers;
     
     /************************************************************************
-     *  
+     * Creates a new {@code FakeAuthenticator}. 
      *
-     * @throws java.lang.Exception
      */
-    @Before
-    public void 
-    setUp() 
-        throws Exception
+    public 
+    FakeAuthenticator(Map<String,String> users)
     {
-        itsTarget  = new MockCommandLineProcessor();
-        itsOptions = new HashSet<String>(Arrays.asList( "-a","-b","-c" ));
+        itsUsers = new HashMap<String,String>();
+        
+        for (String userName:users.keySet())
+            itsUsers.put( userName.toLowerCase(),users.get( userName ) );
     }
 
     /************************************************************************
-     *  
-     *
-     * @throws java.lang.Exception
+     * {@inheritDoc} 
      */
-    @After
-    public void 
-    tearDown() 
-        throws Exception
+    @Override
+    public IPrincipal 
+    authenticate(ICredential credential)
+        throws AuthenticationFailureException
     {
-        itsTarget = null;
+        String userName = null;
+        String password = null;
+        
+        try
+        {
+            userName = 
+                credential
+                    .getField(String.class,"UserName")
+                    .toLowerCase();
+            
+            password = credential.getField( String.class,"Password" );        
+        }
+        catch (Throwable t)
+        {
+            throw new AuthenticationFailureException( t );
+        }
+        
+        if ( !itsUsers.containsKey( userName ) )
+            throw new AuthenticationFailureException( userName,"UserName" );
+        
+        if ( !itsUsers.get( userName ).equals( password ) )
+            throw new AuthenticationFailureException( userName,"Password" );
+           
+        return new NullPrincipal();
     }
-
 
 }
 

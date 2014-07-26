@@ -49,45 +49,43 @@ class MockCommandLineProcessor
     }
 
     /************************************************************************
-     *  
-     *
-     * @param option
-     * @param value
-     */
-    public void
-    assertNamedArgument(String option,String value)
-    {
-        assertEquals( value,getNamedArguments().get( option ));
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @param option
-     * @param value
-     */
-    public void
-    assertPositionedArgument(Integer position,String value)
-    {
-        assertEquals( value,getPositionedArguments().get( position ));
-    }
-   
-    /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    protected void 
-    validate()
+    public void onCommandOption(ICommandOption option)
     {
+        // TODO Auto-generated method stub
+        
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    protected void 
-    execute()
+    public void onCommandParameter(ICommandParameter parameter)
     {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void onCommandLineException(CommandLineException exception)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void onException(Exception exception)
+    {
+        // TODO Auto-generated method stub
+        
     }
 
 }

@@ -28,7 +28,7 @@ import strata1.gwtclient.updateclient.UpdateResponse;
 import strata1.gwtclient.updateserver.IUpdatableManager;
 import strata1.client.command.ICommandInvokerManager;
 import strata1.client.view.ILoginView;
-import strata1.common.authentication.IClientCredential;
+import strata1.common.authentication.ICredential;
 import strata1.common.authentication.UserNameAndPasswordCredential;
 
 /****************************************************************************
@@ -124,7 +124,7 @@ class ProxyLoginView
      * {@inheritDoc} 
      */
     @Override
-    public IClientCredential 
+    public ICredential 
     getCredential()
     {
         return 
