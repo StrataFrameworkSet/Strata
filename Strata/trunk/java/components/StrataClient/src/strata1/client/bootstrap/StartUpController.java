@@ -27,7 +27,7 @@ package strata1.client.bootstrap;
 import strata1.injector.container.Binder;
 import strata1.injector.container.IContainer;
 import strata1.common.authentication.AuthenticationFailureException;
-import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.authentication.IAuthenticator;
 import strata1.common.authentication.IPrincipal;
 import strata1.common.logger.ILogger;
 import strata1.common.logger.LoggingLevel;
@@ -53,7 +53,7 @@ class StartUpController
     private IContainer           itsContainer;
     private ILoginView           itsLoginView;
     private ISplashView          itsSplashView;
-    private IClientAuthenticator itsAuthenticator;
+    private IAuthenticator itsAuthenticator;
     private Runnable             itsInitializer;
     private Runnable             itsActivator;
     
@@ -154,7 +154,7 @@ class StartUpController
      */
     @Override
     public void 
-    setAuthenticator(IClientAuthenticator authenticator)
+    setAuthenticator(IAuthenticator authenticator)
     {
         itsAuthenticator = authenticator;
     }

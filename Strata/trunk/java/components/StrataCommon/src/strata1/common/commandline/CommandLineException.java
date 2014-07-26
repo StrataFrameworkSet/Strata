@@ -1,28 +1,28 @@
 // ##########################################################################
-// # File Name:	UserNameAndPasswordCredential.java
+// # File Name:	CommandLineException.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataClient Framework.
+// # License:	This file is part of the StrataCommon Framework.
 // #
-// #   			The StrataClient Framework is free software: you 
+// #   			The StrataCommon Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataClient Framework is distributed in the 
+// #    		The StrataCommon Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataClient
+// #			General Public License along with the StrataCommon
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.authentication;
+package strata1.common.commandline;
 
 /****************************************************************************
  * 
@@ -32,52 +32,55 @@ package strata1.common.authentication;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class UserNameAndPasswordCredential
-    implements ICredential
+class CommandLineException
+    extends Exception
 {
-    private String itsUserName;
-    private String itsPassword;
-    
+
+    private static final long serialVersionUID = 2869646853125061329L;
+
     /************************************************************************
-     * Creates a new {@code UserNameAndPasswordCredential}. 
+     * Creates a new {@code CommandLineException}. 
      *
      */
     public 
-    UserNameAndPasswordCredential(String userName,String password)
+    CommandLineException()
     {
-        itsUserName = userName;
-        itsPassword = password;
+        // TODO Auto-generated constructor stub
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * Creates a new {@code CommandLineException}. 
+     *
+     * @param message
      */
-    @Override
-    public <T> void 
-    setField(String name,T field)
+    public 
+    CommandLineException(String message)
     {
-        if ( "UserName".equalsIgnoreCase( name ) )
-            itsUserName = (String)field;
-        else if ( "Password".equalsIgnoreCase( name ) )
-            itsPassword = (String)field;
+        super( message );
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * Creates a new {@code CommandLineException}. 
+     *
+     * @param cause
      */
-    @Override
-    public <T> T 
-    getField(Class<T> type,String name)
+    public 
+    CommandLineException(Throwable cause)
     {
-        if ( "UserName".equalsIgnoreCase( name ) )
-            return type.cast( itsUserName );
-        else if ( "Password".equalsIgnoreCase( name ) )
-            return type.cast( itsPassword );
-        
-        throw new IllegalArgumentException();
+        super( cause );
     }
 
-    
+    /************************************************************************
+     * Creates a new {@code CommandLineException}. 
+     *
+     * @param message
+     * @param cause
+     */
+    public 
+    CommandLineException(String message,Throwable cause)
+    {
+        super( message,cause );
+    }
 }
 
 // ##########################################################################

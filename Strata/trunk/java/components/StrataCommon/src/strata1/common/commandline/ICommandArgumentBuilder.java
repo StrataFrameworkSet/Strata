@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	ICommandLineProcessor.java
+// # File Name:	ICommandArgumentBuilder.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,7 +24,6 @@
 
 package strata1.common.commandline;
 
-
 /****************************************************************************
  * 
  * @author 		
@@ -33,22 +32,17 @@ package strata1.common.commandline;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ICommandLineProcessor
+interface ICommandArgumentBuilder
+    extends ICommandArgumentProvider
 {
-    public ICommandLineProcessor
-    setHelpText(String helpText);
+    public ICommandOptionBuilder
+    newOption(String name);
     
-    public void
-    onCommandOption(ICommandOption option);
+    public ICommandArgumentProvider
+    newOption(String name,ICommandOptionHandler handler);
     
-    public void
-    onCommandParameter(ICommandParameter parameter);
-    
-    public void
-    onCommandLineException(CommandLineException exception);
-    
-    public void
-    onException(Exception exception);
+    public ICommandArgumentProvider
+    newParameter(ICommandParameterHandler handler); 
 }
 
 // ##########################################################################

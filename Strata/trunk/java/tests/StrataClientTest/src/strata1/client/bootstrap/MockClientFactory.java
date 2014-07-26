@@ -24,7 +24,10 @@
 
 package strata1.client.bootstrap;
 
-import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.authentication.IAuthenticator;
+import strata1.common.commandline.CommandLineParser;
+import strata1.common.commandline.ICommandLineParser;
+import strata1.common.commandline.NullCommandLineProcessor;
 import strata1.common.logger.ILogger;
 import strata1.client.region.IRegionManager;
 import strata1.client.shell.IDispatcher;
@@ -56,6 +59,19 @@ class MockClientFactory
     MockClientFactory()
     {
     }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ICommandLineParser 
+    createCommandLineParser()
+    {
+        return 
+            new CommandLineParser()
+                .setProcessor( new NullCommandLineProcessor() );
+    }
+
 
     /************************************************************************
      * {@inheritDoc} 
@@ -141,7 +157,7 @@ class MockClientFactory
      * {@inheritDoc} 
      */
     @Override
-    public IClientAuthenticator 
+    public IAuthenticator 
     createAuthenticator()
     {
         return null;

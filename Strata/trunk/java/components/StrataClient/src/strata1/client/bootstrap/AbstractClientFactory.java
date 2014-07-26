@@ -25,7 +25,13 @@
 package strata1.client.bootstrap;
 
 import strata1.injector.container.IModule;
-import strata1.common.commandline.ICommandLineProcessor;
+import strata1.common.commandline.CommandLineParser;
+import strata1.common.commandline.ICommandArgumentBuilder;
+import strata1.common.commandline.ICommandArgumentProvider;
+import strata1.common.commandline.ICommandLineParser;
+import strata1.common.commandline.ICommandOptionBuilder;
+import strata1.common.commandline.ICommandOptionHandler;
+import strata1.common.commandline.ICommandParameterHandler;
 import strata1.common.commandline.NullCommandLineProcessor;
 import java.util.List;
 
@@ -54,12 +60,13 @@ class AbstractClientFactory
      * {@inheritDoc} 
      */
     @Override
-    public ICommandLineProcessor 
-    createCommandLineProcessor()
+    public ICommandLineParser 
+    createCommandLineParser()
     {
-        return new NullCommandLineProcessor();
-    }
-    
+        return 
+            new CommandLineParser()
+                .setProcessor( new NullCommandLineProcessor() );
+    }    
 }
 
 // ##########################################################################

@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	ICommandLineProcessor.java
+// # File Name:	ICommandOption.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,6 +24,10 @@
 
 package strata1.common.commandline;
 
+import strata1.common.datetime.DateTime;
+import strata1.common.money.Money;
+import java.math.BigDecimal;
+import java.nio.file.Path;
 
 /****************************************************************************
  * 
@@ -33,22 +37,44 @@ package strata1.common.commandline;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ICommandLineProcessor
+interface ICommandOption
+    extends ICommandArgument
 {
-    public ICommandLineProcessor
-    setHelpText(String helpText);
+    public String
+    getName();
     
-    public void
-    onCommandOption(ICommandOption option);
+    public boolean
+    getBoolean();
     
-    public void
-    onCommandParameter(ICommandParameter parameter);
+    public int
+    getInteger();
     
-    public void
-    onCommandLineException(CommandLineException exception);
+    public long
+    getLong();
     
-    public void
-    onException(Exception exception);
+    public float
+    getFloat();
+    
+    public Double
+    getDouble();
+    
+    public BigDecimal
+    getBigDecimal();
+    
+    public String
+    getString();
+    
+    public Path
+    getPath();
+    
+    public Money
+    getMoney();
+    
+    public DateTime
+    getDateTime();
+    
+    public boolean
+    hasValue();
 }
 
 // ##########################################################################

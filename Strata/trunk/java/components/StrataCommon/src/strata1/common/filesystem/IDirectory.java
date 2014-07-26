@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IPrincipalContainer.java
+// # File Name:	IDirectory.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,7 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.authentication;
+package strata1.common.filesystem;
 
 /****************************************************************************
  * 
@@ -32,25 +32,9 @@ package strata1.common.authentication;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IPrincipalContainer
+interface IDirectory
+    extends IFileSystemElement
 {
-    public <P extends IPrincipal> void
-    registerPrincipal(P principal);
-    
-    public <P extends IPrincipal> void
-    registerPrincipal(String principalName,P principal);
-    
-    public <P extends IPrincipal> P
-    getPrincipal(Class<P> principalType);
-    
-    public <P extends IPrincipal> P
-    getPrincipal(Class<P> principalType,String principalName);
-    
-    public <P extends IPrincipal> boolean
-    hasPrincipal(Class<P> principalType);
-    
-    public <P extends IPrincipal> boolean
-    hasPrincipal(Class<P> principalType,String principalName);
 
 }
 

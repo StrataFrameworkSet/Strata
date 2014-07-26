@@ -25,7 +25,7 @@
 package strata1.client.bootstrap;
 
 import strata1.injector.container.IContainer;
-import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.authentication.IAuthenticator;
 import strata1.common.logger.ILogger;
 import strata1.client.controller.IController;
 import strata1.client.view.ILoginView;
@@ -55,7 +55,7 @@ interface IStartUpController
     setSplashView(ISplashView splashView);
     
     public void 
-    setAuthenticator(IClientAuthenticator authenticator);
+    setAuthenticator(IAuthenticator authenticator);
     
     public void
     setInitializer(Runnable initializer);

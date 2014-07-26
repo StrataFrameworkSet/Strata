@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	UserNameAndPasswordCredential.java
+// # File Name:	IAuthenticator.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -32,52 +32,11 @@ package strata1.common.authentication;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class UserNameAndPasswordCredential
-    implements ICredential
+interface IAuthenticator
 {
-    private String itsUserName;
-    private String itsPassword;
-    
-    /************************************************************************
-     * Creates a new {@code UserNameAndPasswordCredential}. 
-     *
-     */
-    public 
-    UserNameAndPasswordCredential(String userName,String password)
-    {
-        itsUserName = userName;
-        itsPassword = password;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <T> void 
-    setField(String name,T field)
-    {
-        if ( "UserName".equalsIgnoreCase( name ) )
-            itsUserName = (String)field;
-        else if ( "Password".equalsIgnoreCase( name ) )
-            itsPassword = (String)field;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <T> T 
-    getField(Class<T> type,String name)
-    {
-        if ( "UserName".equalsIgnoreCase( name ) )
-            return type.cast( itsUserName );
-        else if ( "Password".equalsIgnoreCase( name ) )
-            return type.cast( itsPassword );
-        
-        throw new IllegalArgumentException();
-    }
-
-    
+    public IPrincipal
+    authenticate(ICredential credential)
+        throws AuthenticationFailureException;
 }
 
 // ##########################################################################

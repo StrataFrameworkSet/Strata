@@ -44,11 +44,11 @@ public abstract
 class AbstractCommandLineProcessor
     implements ICommandLineProcessor
 {
-    private Set<String>         itsOptions;
-    private List<String>        itsArguments;
-    private Map<String,String>  itsNamedArguments;
-    private Map<Integer,String> itsPositionedArguments;
-    private int                 itsCurrentPosition;
+    private String                         itsHelpText;
+    private List<ICommandArgument>         itsArguments;
+    private Map<String,ICommandOption>     itsOptions;
+    private Map<Integer,ICommandParameter> itsParameters;
+    private int                            itsCurrentPosition;
     
     /************************************************************************
      * Creates a new {@code AbstractCommandLineProcessor}. 
@@ -57,175 +57,24 @@ class AbstractCommandLineProcessor
     public 
     AbstractCommandLineProcessor()
     {
-        itsOptions             = new TreeSet<String>();
-        itsArguments           = new ArrayList<String>();
-        itsNamedArguments      = new TreeMap<String,String>();
-        itsPositionedArguments = new TreeMap<Integer,String>();
-        itsCurrentPosition     = 0;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    setOptions(Set<String> options)
-    {
-        itsOptions.clear();
-        itsOptions.addAll( options );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public Set<String> 
-    getOptions()
-    {
-        return itsOptions;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public List<String> 
-    getArguments()
-    {
-        return itsArguments;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    process(String[] arguments)
-    {
-        parse( arguments );
-        validate();
-        execute();
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @param arguments
-     */
-    protected void
-    setArguments(String[] arguments)
-    {
-        itsArguments = Arrays.asList( arguments );
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    protected Map<String,String>
-    getNamedArguments()
-    {
-        return itsNamedArguments;
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    protected Map<Integer,String>
-    getPositionedArguments()
-    {
-        return itsPositionedArguments;
-    }
-    /************************************************************************
-     *  
-     *
-     * @param arguments
-     */
-    protected void
-    parse(String[] arguments)
-    {
-        Iterator<String> argument = null;
-        
-        setArguments( arguments );
-        itsNamedArguments.clear();
-        itsPositionedArguments.clear();
-        
-        argument           = getArguments().iterator();
+        itsHelpText        = "";
+        itsArguments       = new ArrayList<ICommandArgument>();
+        itsOptions         = new TreeMap<String,ICommandOption>();
+        itsParameters      = new TreeMap<Integer,ICommandParameter>();
         itsCurrentPosition = 0;
-        
-        while ( argument.hasNext() )
-            parseArgument( argument );
-    }
-    
-    /************************************************************************
-     *  
-     *
-     */
-    protected abstract void
-    validate();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    protected abstract void
-    execute();
-
-    /************************************************************************
-     *  
-     *
-     * @param argument
-     */
-    private void
-    parseArgument(Iterator<String> argument)
-    {
-        String token = argument.next();
-        
-        if ( itsOptions.contains( token ) )
-            parseNamedArgument( token,argument );
-        else
-            parsePositionedArgument( token );
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @param token
-     * @param argument
-     */
-    private void
-    parseNamedArgument(String token,Iterator<String> argument)
-    {
-        if ( argument.hasNext() )
-        {
-            String nextToken = argument.next();
-            
-            if ( itsOptions.contains( nextToken ) )
-            {
-                itsNamedArguments.put( token,"" );
-                parseNamedArgument( nextToken,argument );
-            }
-            else
-                itsNamedArguments.put( token,nextToken );
-            
-        }
-        else
-            itsNamedArguments.put( token,"" );
     }
 
     /************************************************************************
-     *  
-     *
-     * @param token
+     * {@inheritDoc} 
      */
-    private void
-    parsePositionedArgument(String token)
+    @Override
+    public ICommandLineProcessor 
+    setHelpText(String helpText)
     {
-        itsPositionedArguments.put( itsCurrentPosition++,token );
+        itsHelpText = helpText;
+        return null;
     }
+
 }
 
 // ##########################################################################

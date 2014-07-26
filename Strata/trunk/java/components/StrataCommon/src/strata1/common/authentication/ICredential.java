@@ -1,7 +1,7 @@
 package strata1.common.authentication;
 
 public 
-interface IClientCredential
+interface ICredential
 {
     public <T> void 
     setField(String name,T field);

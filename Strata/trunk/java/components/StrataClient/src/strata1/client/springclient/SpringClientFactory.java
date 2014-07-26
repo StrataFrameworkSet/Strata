@@ -34,7 +34,7 @@ import strata1.client.region.IRegionManager;
 import strata1.client.shell.IDispatcher;
 import strata1.client.view.ILoginView;
 import strata1.client.view.ISplashView;
-import strata1.common.authentication.IClientAuthenticator;
+import strata1.common.authentication.IAuthenticator;
 import strata1.common.logger.ILogger;
 import java.util.List;
 
@@ -164,7 +164,7 @@ class SpringClientFactory
      * {@inheritDoc} 
      */
     @Override
-    public IClientAuthenticator 
+    public IAuthenticator 
     createAuthenticator()
     {
         // TODO Auto-generated method stub

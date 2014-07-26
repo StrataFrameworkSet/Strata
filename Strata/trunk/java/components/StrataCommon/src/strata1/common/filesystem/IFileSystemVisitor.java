@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	ICommandLineProcessor.java
+// # File Name:	IFileSystemVisitor.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -22,8 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.commandline;
-
+package strata1.common.filesystem;
 
 /****************************************************************************
  * 
@@ -33,22 +32,15 @@ package strata1.common.commandline;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ICommandLineProcessor
+interface IFileSystemVisitor
 {
-    public ICommandLineProcessor
-    setHelpText(String helpText);
+    public void
+    visitDirectory(IDirectory directory);
     
     public void
-    onCommandOption(ICommandOption option);
+    visitFile(IFile file);
     
-    public void
-    onCommandParameter(ICommandParameter parameter);
     
-    public void
-    onCommandLineException(CommandLineException exception);
-    
-    public void
-    onException(Exception exception);
 }
 
 // ##########################################################################

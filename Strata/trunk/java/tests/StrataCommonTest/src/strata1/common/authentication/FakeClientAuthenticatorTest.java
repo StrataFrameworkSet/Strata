@@ -40,7 +40,7 @@ import java.util.HashMap;
 public 
 class FakeClientAuthenticatorTest
 {
-    private IClientAuthenticator itsTarget;
+    private IAuthenticator itsTarget;
     
     /************************************************************************
      *  
@@ -52,7 +52,7 @@ class FakeClientAuthenticatorTest
     setUp() throws Exception
     {
         itsTarget = 
-            new FakeClientAuthenticator(
+            new FakeAuthenticator(
                 new HashMap<String,String>()
                 {
                     private static final long serialVersionUID = 1L;
@@ -78,7 +78,7 @@ class FakeClientAuthenticatorTest
 
     /**
      * Test method for 
-     * {@link FakeClientAuthenticator#authenticate(IClientCredential)}.
+     * {@link FakeAuthenticator#authenticate(ICredential)}.
      */
     @Test
     public void 
@@ -97,7 +97,7 @@ class FakeClientAuthenticatorTest
 
     /**
      * Test method for 
-     * {@link FakeClientAuthenticator#authenticate(IClientCredential)}.
+     * {@link FakeAuthenticator#authenticate(ICredential)}.
      */
     @Test
     public void 
@@ -118,7 +118,7 @@ class FakeClientAuthenticatorTest
 
     /**
      * Test method for 
-     * {@link FakeClientAuthenticator#authenticate(IClientCredential)}.
+     * {@link FakeAuthenticator#authenticate(ICredential)}.
      */
     @Test
     public void 
