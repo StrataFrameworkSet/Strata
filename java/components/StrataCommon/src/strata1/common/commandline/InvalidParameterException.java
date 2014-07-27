@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ICommandOptionHandler.java
+// # File Name:	InvalidParameterException.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -32,10 +32,28 @@ package strata1.common.commandline;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ICommandOptionHandler
+class InvalidParameterException
+    extends CommandLineException
 {
-    public void
-    handle(String optionName,boolean exists);
+
+    private static final long serialVersionUID = 566286798553894885L;
+    
+    private final ICommandParameter itsParameter;
+
+    /************************************************************************
+     * Creates a new {@code InvalidParameterException}. 
+     *
+     * @param parameter
+     */
+    public
+    InvalidParameterException(ICommandParameter parameter)
+    {
+        super( "Invalid commandline parameter: " + parameter.toString() );
+        itsParameter = parameter;
+    }
+    
+
+
 }
 
 // ##########################################################################

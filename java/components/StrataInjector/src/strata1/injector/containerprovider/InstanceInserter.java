@@ -24,7 +24,6 @@
 
 package strata1.injector.containerprovider;
 
-import strata1.injector.containerprovider.IContainerProvider;
 import java.lang.annotation.Annotation;
 
 /****************************************************************************

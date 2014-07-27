@@ -26,7 +26,6 @@ package strata1.inspector.networkdiagnostic;
 
 import strata1.inspector.diagnostic.DiagnosticCheck;
 import strata1.inspector.diagnostic.DiagnosticException;
-
 import java.io.IOException;
 import java.net.InetAddress;
 

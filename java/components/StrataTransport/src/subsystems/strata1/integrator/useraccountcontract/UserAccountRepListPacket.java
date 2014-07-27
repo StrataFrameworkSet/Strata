@@ -24,9 +24,9 @@
 
 package strata1.integrator.useraccountcontract;
 
-import java.util.*;
-
-import strata1.integrator.sessioncontract.*;
+import strata1.integrator.sessioncontract.PayloadPacket;
+import strata1.integrator.sessioncontract.SessionRep;
+import java.util.Collection;
 
 /**
  * 

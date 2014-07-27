@@ -24,7 +24,7 @@
 
 package strata1.integrator.sessioncontract;
 
-import java.util.*;
+import java.util.Set;
 
 /**
  * Provides a data representation of users that can be transfered between

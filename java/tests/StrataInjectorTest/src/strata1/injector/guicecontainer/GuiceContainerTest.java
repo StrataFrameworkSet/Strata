@@ -24,7 +24,7 @@
 
 package strata1.injector.guicecontainer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import strata1.injector.container.ContainerTest;
 import strata1.injector.container.IContainer;
 import com.google.inject.TypeLiteral;

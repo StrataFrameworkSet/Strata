@@ -26,7 +26,6 @@ package strata1.inspector.databasediagnostic;
 
 import strata1.inspector.diagnostic.DiagnosticCheck;
 import strata1.inspector.diagnostic.DiagnosticException;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

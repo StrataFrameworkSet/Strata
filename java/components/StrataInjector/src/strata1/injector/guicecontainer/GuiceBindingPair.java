@@ -25,7 +25,6 @@
 package strata1.injector.guicecontainer;
 
 import strata1.injector.container.IBinding;
-import strata1.injector.container.IBindingVisitor;
 import com.google.inject.Binder;
 
 

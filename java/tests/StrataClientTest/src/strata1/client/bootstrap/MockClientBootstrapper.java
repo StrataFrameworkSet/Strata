@@ -24,8 +24,6 @@
 
 package strata1.client.bootstrap;
 
-import strata1.injector.container.IModule;
-import org.mockito.Mockito;
 
 /****************************************************************************
  * 

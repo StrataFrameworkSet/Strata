@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ICommandParameterBuilder.java
+// # File Name:	InvalidOptionException.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -32,10 +32,50 @@ package strata1.common.commandline;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ICommandParameterBuilder
-    extends ICommandArgumentProvider
+class InvalidOptionException
+    extends CommandLineException
 {
+
+    private static final long serialVersionUID = -4768027356266954628L;
     
+    private final ICommandOption itsOption;
+    private final String         itsHelpText;
+
+    /************************************************************************
+     * Creates a new {@code InvalidOptionException}. 
+     *
+     * @param option
+     * @param helpText
+     */
+    public 
+    InvalidOptionException(ICommandOption option,String helpText)
+    {
+        super( "Invalid commandline option: " + option.getName() );
+        itsOption = option;
+        itsHelpText = helpText;
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public ICommandOption
+    getInvalidOption()
+    {
+        return itsOption;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public String
+    getHelpText()
+    {
+        return itsHelpText;
+    }
 }
 
 // ##########################################################################

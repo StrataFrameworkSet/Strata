@@ -24,9 +24,9 @@
 
 package strata1.client.view;
 
+import strata1.client.command.ExecutionException;
 import strata1.common.authentication.ICredential;
 import strata1.common.authentication.UserNameAndPasswordCredential;
-import strata1.client.command.ExecutionException;
 
 /****************************************************************************
  * 

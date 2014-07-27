@@ -29,7 +29,6 @@ import com.lmax.disruptor.Sequence;
 import com.lmax.disruptor.SequenceBarrier;
 import com.lmax.disruptor.TimeoutException;
 import com.lmax.disruptor.WaitStrategy;
-import java.util.concurrent.locks.LockSupport;
 
 /****************************************************************************
  * 

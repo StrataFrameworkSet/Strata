@@ -26,7 +26,6 @@ package strata1.inspector.filesystemdiagnostic;
 
 import strata1.inspector.diagnostic.DiagnosticCheck;
 import strata1.inspector.diagnostic.DiagnosticException;
-
 import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;

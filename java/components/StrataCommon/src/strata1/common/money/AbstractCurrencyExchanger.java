@@ -25,7 +25,6 @@
 package strata1.common.money;
 
 import strata1.common.datetime.DateTime;
-
 import java.util.Currency;
 
 /**

@@ -24,7 +24,7 @@
 
 package strata1.entity.hibernaterepository;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 import strata1.entity.testdomain.EmailAddress;
 import strata1.entity.testdomain.IParty;
 import org.junit.After;

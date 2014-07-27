@@ -27,7 +27,6 @@ package strata1.common.producerconsumer;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.Sequence;
 import com.lmax.disruptor.SequenceBarrier;
-import com.lmax.disruptor.Sequencer;
 
 /****************************************************************************
  * 

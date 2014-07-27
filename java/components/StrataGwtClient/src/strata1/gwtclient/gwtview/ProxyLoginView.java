@@ -24,12 +24,12 @@
 
 package strata1.gwtclient.gwtview;
 
-import strata1.gwtclient.updateclient.UpdateResponse;
-import strata1.gwtclient.updateserver.IUpdatableManager;
 import strata1.client.command.ICommandInvokerManager;
 import strata1.client.view.ILoginView;
 import strata1.common.authentication.ICredential;
 import strata1.common.authentication.UserNameAndPasswordCredential;
+import strata1.gwtclient.updateclient.UpdateResponse;
+import strata1.gwtclient.updateserver.IUpdatableManager;
 
 /****************************************************************************
  * 

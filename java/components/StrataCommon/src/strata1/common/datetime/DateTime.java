@@ -26,11 +26,11 @@ package strata1.common.datetime;
 
 import strata1.common.utility.ICopyable;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-import java.sql.Timestamp;
 
 /**
  * Provides a simplified abstraction for representing date/time values
@@ -451,6 +451,7 @@ class DateTime
 		Formatter     formatter = new Formatter( output );
 		
 		formatter.format( "%1$tY/%1$tm/%1$td-%1$tT:%1$tL-%1$tZ",itsImp );
+		formatter.close();
 		return output.toString();
 	}
 

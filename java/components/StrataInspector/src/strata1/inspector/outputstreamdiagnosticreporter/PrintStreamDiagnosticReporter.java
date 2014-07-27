@@ -26,7 +26,6 @@ package strata1.inspector.outputstreamdiagnosticreporter;
 
 import strata1.inspector.diagnostic.DiagnosticOutput;
 import strata1.inspector.diagnostic.IDiagnosticReporter;
-
 import java.io.PrintStream;
 
 /**

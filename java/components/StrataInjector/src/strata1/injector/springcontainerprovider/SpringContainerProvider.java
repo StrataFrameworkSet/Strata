@@ -31,7 +31,6 @@ import strata1.injector.containerprovider.IContainerProvider;
 import strata1.injector.containerprovider.IPropertyInjector;
 import strata1.injector.containerprovider.PropertyInjectorManager;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.GenericBeanDefinition;

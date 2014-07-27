@@ -24,13 +24,10 @@
 
 package strata1.common.commandline;
 
-import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /****************************************************************************
@@ -56,7 +53,7 @@ class CommandLineProcessorTest
     setUp() 
         throws Exception
     {
-        itsTarget  = new MockCommandLineProcessor();
+        itsTarget  = new MockCommandLineProcessor("-a -b -c" );
         itsOptions = new HashSet<String>(Arrays.asList( "-a","-b","-c" ));
     }
 

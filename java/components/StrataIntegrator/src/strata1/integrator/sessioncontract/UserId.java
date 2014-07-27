@@ -24,7 +24,7 @@
 
 package strata1.integrator.sessioncontract;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * Indentifies a user.

@@ -35,7 +35,6 @@ import strata1.injector.container.TypeAndAnnotationBindingIdentifier;
 import strata1.injector.container.TypeAndNameBindingIdentifier;
 import strata1.injector.container.TypeBindingIdentifier;
 import com.google.inject.Binder;
-import com.google.inject.CreationException;
 import com.google.inject.ProvisionException;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;

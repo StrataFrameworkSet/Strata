@@ -24,7 +24,9 @@
 
 package strata1.integrator.sessioncontract;
 
-import strata1.integrator.annotation.*;
+import strata1.integrator.annotation.Asynchronous;
+import strata1.integrator.annotation.Callback;
+import strata1.integrator.annotation.Gateway;
 
 /**
  * <a href="http://martinfowler.com/eaaCatalog/gateway.html">Gateway</a> 

@@ -24,6 +24,11 @@
 
 package strata1.common.commandline;
 
+import strata1.common.datetime.DateTime;
+import strata1.common.money.Money;
+import java.math.BigDecimal;
+import java.nio.file.Path;
+
 /****************************************************************************
  * 
  * @author 		
@@ -35,7 +40,38 @@ public
 interface ICommandParameter
     extends ICommandArgument
 {
-
+    public boolean
+    toBoolean();
+    
+    public int
+    toInteger();
+    
+    public long
+    toLong();
+    
+    public float
+    toFloat();
+    
+    public double
+    toDouble();
+    
+    public BigDecimal
+    toBigDecimal();
+    
+    public String
+    toString();
+    
+    public Path
+    toPath();
+    
+    public Money
+    toMoney();
+    
+    public DateTime
+    toDateTime();
+    
+    public <T> boolean
+    isType(Class<T> type);
 }
 
 // ##########################################################################

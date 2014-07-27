@@ -24,7 +24,6 @@
 
 package strata1.injector.guicecontainer;
 
-import strata1.injector.container.IBinding;
 import com.google.inject.AbstractModule;
 import java.util.Queue;
 
