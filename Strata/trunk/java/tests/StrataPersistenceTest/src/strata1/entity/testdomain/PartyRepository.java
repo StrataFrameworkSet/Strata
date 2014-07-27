@@ -24,7 +24,9 @@
 
 package strata1.entity.testdomain;
 
-import strata1.entity.repository.*;
+import strata1.entity.repository.IRepositoryContext;
+import strata1.entity.repository.IRepositoryProvider;
+import strata1.entity.repository.IUnitOfWork;
 import java.util.ArrayList;
 import java.util.List;
 

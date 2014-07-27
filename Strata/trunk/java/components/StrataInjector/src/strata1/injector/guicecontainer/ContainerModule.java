@@ -24,7 +24,6 @@
 
 package strata1.injector.guicecontainer;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 

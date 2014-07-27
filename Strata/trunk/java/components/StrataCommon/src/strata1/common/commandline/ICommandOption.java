@@ -74,7 +74,10 @@ interface ICommandOption
     getDateTime();
     
     public boolean
-    hasValue();
+    isNamed(String name);
+    
+    public <T> boolean
+    hasValue(Class<T> type);
 }
 
 // ##########################################################################

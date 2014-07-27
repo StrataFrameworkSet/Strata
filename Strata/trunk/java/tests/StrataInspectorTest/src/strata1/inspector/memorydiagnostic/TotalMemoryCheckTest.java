@@ -24,11 +24,9 @@
 
 package strata1.inspector.memorydiagnostic;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 import strata1.inspector.diagnostic.MockDiagnosticResult;
 import strata1.inspector.outputstreamdiagnosticreporter.PrintStreamDiagnosticReporter;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

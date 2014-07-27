@@ -24,7 +24,8 @@
 
 package strata1.integrator.useraccountcontract;
 
-import strata1.integrator.sessioncontract.*;
+import strata1.integrator.sessioncontract.PayloadPacket;
+import strata1.integrator.sessioncontract.SessionRep;
 
 /**
  * 

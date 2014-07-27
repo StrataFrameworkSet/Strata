@@ -24,7 +24,8 @@
 
 package strata1.common.money;
 
-import strata1.common.annotation.*;
+import strata1.common.annotation.Postcondition;
+import strata1.common.annotation.Precondition;
 
 /**
  * Provides functionality for doing arithmetic operations on

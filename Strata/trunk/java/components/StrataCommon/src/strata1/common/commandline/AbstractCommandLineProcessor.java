@@ -25,13 +25,9 @@
 package strata1.common.commandline;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 /****************************************************************************
  * 
@@ -48,7 +44,6 @@ class AbstractCommandLineProcessor
     private List<ICommandArgument>         itsArguments;
     private Map<String,ICommandOption>     itsOptions;
     private Map<Integer,ICommandParameter> itsParameters;
-    private int                            itsCurrentPosition;
     
     /************************************************************************
      * Creates a new {@code AbstractCommandLineProcessor}. 
@@ -61,7 +56,6 @@ class AbstractCommandLineProcessor
         itsArguments       = new ArrayList<ICommandArgument>();
         itsOptions         = new TreeMap<String,ICommandOption>();
         itsParameters      = new TreeMap<Integer,ICommandParameter>();
-        itsCurrentPosition = 0;
     }
 
     /************************************************************************
@@ -75,6 +69,38 @@ class AbstractCommandLineProcessor
         return null;
     }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public String 
+    getHelpText()
+    {
+        return itsHelpText;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    startProcessing()
+    {
+        itsArguments.clear();
+        itsOptions.clear();
+        itsParameters.clear();
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    protected List<ICommandArgument>
+    getArguments()
+    {
+        return itsArguments;
+    }
 }
 
 // ##########################################################################

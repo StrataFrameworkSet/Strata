@@ -26,7 +26,6 @@ package strata1.entity.repository;
 
 
 import strata1.common.utility.ICopyable;
-
 import java.util.Collection;
 
 

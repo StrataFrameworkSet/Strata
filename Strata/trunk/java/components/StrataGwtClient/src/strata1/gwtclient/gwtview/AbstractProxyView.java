@@ -24,10 +24,10 @@
 
 package strata1.gwtclient.gwtview;
 
-import strata1.gwtclient.updateclient.UpdateResponse;
-import strata1.gwtclient.updateserver.IUpdatableManager;
 import strata1.client.command.ICommandInvokerManager;
 import strata1.client.view.AbstractView;
+import strata1.gwtclient.updateclient.UpdateResponse;
+import strata1.gwtclient.updateserver.IUpdatableManager;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 

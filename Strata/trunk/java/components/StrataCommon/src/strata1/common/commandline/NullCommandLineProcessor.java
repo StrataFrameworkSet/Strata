@@ -50,14 +50,28 @@ class NullCommandLineProcessor
      */
     @Override
     public void 
-    onCommandOption(ICommandOption option) {}
+    startProcessing() {}
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
     public void 
-    onCommandParameter(ICommandParameter parameter) {}
+    finishProcessing() throws CommandLineException {}
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    processOption(ICommandOption option) {}
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    processParameter(ICommandParameter parameter) throws CommandLineException {}
 
     /************************************************************************
      * {@inheritDoc} 

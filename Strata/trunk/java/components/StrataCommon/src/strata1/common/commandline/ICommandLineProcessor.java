@@ -38,11 +38,23 @@ interface ICommandLineProcessor
     public ICommandLineProcessor
     setHelpText(String helpText);
     
-    public void
-    onCommandOption(ICommandOption option);
+    public String
+    getHelpText();
     
     public void
-    onCommandParameter(ICommandParameter parameter);
+    startProcessing();
+    
+    public void
+    finishProcessing() 
+        throws CommandLineException;
+    
+    public void
+    processOption(ICommandOption option) 
+        throws CommandLineException;
+    
+    public void
+    processParameter(ICommandParameter parameter) 
+        throws CommandLineException;
     
     public void
     onCommandLineException(CommandLineException exception);

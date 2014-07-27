@@ -26,7 +26,6 @@ package strata1.inspector.smsdiagnosticreporter;
 
 import strata1.inspector.diagnostic.AbstractMessageBasedDiagnosticReporter;
 import strata1.inspector.diagnostic.IDiagnosticReporter;
-
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 

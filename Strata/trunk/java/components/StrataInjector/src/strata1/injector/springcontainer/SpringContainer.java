@@ -24,17 +24,13 @@
 
 package strata1.injector.springcontainer;
 
-import strata1.injector.container.Binder;
 import strata1.injector.container.IBinding;
 import strata1.injector.container.IBindingBuilder;
 import strata1.injector.container.IBindingIdentifier;
 import strata1.injector.container.IContainer;
-import strata1.injector.old.ITargetBindingBuilder;
 import strata1.injector.old.ITypeDefinition;
 import org.springframework.context.support.GenericApplicationContext;
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.List;
 
 /****************************************************************************
  * 

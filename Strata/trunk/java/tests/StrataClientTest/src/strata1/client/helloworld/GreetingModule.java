@@ -27,7 +27,6 @@ package strata1.client.helloworld;
 import strata1.client.region.IRegionManager;
 import strata1.client.shell.IDispatcher;
 import strata1.injector.container.AbstractModule;
-import strata1.injector.container.Binder;
 import strata1.injector.container.IContainer;
 import strata1.injector.container.IModule;
 //import strata1.client.swthelloworld.SwtGreetingView;

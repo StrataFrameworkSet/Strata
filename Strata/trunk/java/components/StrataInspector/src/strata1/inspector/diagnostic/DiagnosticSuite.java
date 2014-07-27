@@ -24,7 +24,8 @@
 
 package strata1.inspector.diagnostic;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Represents a suite of {@code IDiagnostic}s that are meant to be 

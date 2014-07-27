@@ -24,7 +24,8 @@
 
 package strata1.common.commandline;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Assert;
+import java.nio.file.Path;
 
 /****************************************************************************
  * 
@@ -37,24 +38,68 @@ public
 class MockCommandLineProcessor
     extends AbstractCommandLineProcessor
 {
-
+    private String itsExpected;
+    private ICommandOption    itsHelpOption;
+    private ICommandOption    itsFooOption;
+    private ICommandOption    itsBarOption;
+    private ICommandParameter itsPathParameter;
+    
     /************************************************************************
      * Creates a new {@code MockCommandLineProcessor}. 
      *
      */
     public 
-    MockCommandLineProcessor()
+    MockCommandLineProcessor(String expected)
     {
-        // TODO Auto-generated constructor stub
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void onCommandOption(ICommandOption option)
+    public void 
+    finishProcessing() throws CommandLineException
     {
-        // TODO Auto-generated method stub
+        Assert.assertEquals( itsExpected,toString() );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     * @throws InvalidOptionException 
+     */
+    @Override
+    public void 
+    processOption(ICommandOption option) 
+        throws CommandLineException
+    {
+        if ( option.isNamed( "help" ) )
+            itsHelpOption = option;
+        else if ( option.isNamed( "foo" ) )
+            itsFooOption = option;
+        else if ( option.isNamed( "bar" ) )
+            itsBarOption = option;
+        else
+            throw new InvalidOptionException(option,getHelpText());
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    processParameter(ICommandParameter parameter) throws CommandLineException
+    {
+        if ( !parameter.isType(Path.class) )
+            throw new InvalidParameterException(parameter);
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    onCommandLineException(CommandLineException exception)
+    {
         
     }
 
@@ -62,9 +107,9 @@ class MockCommandLineProcessor
      * {@inheritDoc} 
      */
     @Override
-    public void onCommandParameter(ICommandParameter parameter)
+    public void 
+    onException(Exception exception)
     {
-        // TODO Auto-generated method stub
         
     }
 
@@ -72,22 +117,23 @@ class MockCommandLineProcessor
      * {@inheritDoc} 
      */
     @Override
-    public void onCommandLineException(CommandLineException exception)
+    public String 
+    toString()
     {
-        // TODO Auto-generated method stub
+        StringBuilder builder = new StringBuilder();
         
+        for (ICommandArgument argument:getArguments())
+        {
+            if ( !builder.toString().isEmpty() )
+                builder.append( " " );
+            
+            builder.append( argument.toString() );            
+        }
+        
+        return builder.toString();
     }
 
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void onException(Exception exception)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
+    
 }
 
 // ##########################################################################

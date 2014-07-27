@@ -24,7 +24,7 @@
 
 package strata1.integrator.sessioncontract;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * Base class of all packet objects: objects that are parameters to
