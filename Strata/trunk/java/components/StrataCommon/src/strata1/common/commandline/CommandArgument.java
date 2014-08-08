@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	NullCommandLineProcessor.java
+// # File Name:	CommandArgument.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,7 +24,6 @@
 
 package strata1.common.commandline;
 
-
 /****************************************************************************
  * 
  * @author 		
@@ -32,61 +31,53 @@ package strata1.common.commandline;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class NullCommandLineProcessor
-    extends    AbstractCommandLineProcessor
-    implements ICommandLineProcessor
+public abstract 
+class CommandArgument
+    implements ICommandArgument
 {
-    
+    protected final int itsPosition;
+    protected final String itsInput;
+
     /************************************************************************
-     * Creates a new {@code NullCommandLineProcessor}. 
+     * Creates a new {@code CommandArgument}. 
      *
      */
-    public 
-    NullCommandLineProcessor() {}
+    protected 
+    CommandArgument(int position,String input)
+    {
+        itsPosition = position;
+        itsInput    = input;
+    }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    startProcessing() {}
+    public int 
+    getPosition()
+    {
+        return itsPosition;
+    }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    finishProcessing() throws CommandLineException {}
+    public String 
+    getInput()
+    {
+        return itsInput;
+    }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    processOption(ICommandOption option) {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    processParameter(ICommandParameter parameter) throws CommandLineException {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    processException(CommandLineException exception) throws CommandLineException {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    processThrowable(Throwable exception) throws Throwable {}
-
+    public String 
+    toString()
+    {
+        return getInput();
+    }
 
 }
 

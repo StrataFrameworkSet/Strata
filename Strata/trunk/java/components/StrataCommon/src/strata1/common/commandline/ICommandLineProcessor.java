@@ -57,10 +57,12 @@ interface ICommandLineProcessor
         throws CommandLineException;
     
     public void
-    onCommandLineException(CommandLineException exception);
+    processException(CommandLineException exception) 
+        throws CommandLineException;
     
     public void
-    onException(Exception exception);
+    processThrowable(Throwable exception) 
+        throws Throwable;
 }
 
 // ##########################################################################

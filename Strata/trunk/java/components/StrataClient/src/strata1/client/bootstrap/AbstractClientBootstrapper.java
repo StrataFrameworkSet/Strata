@@ -345,7 +345,7 @@ class AbstractClientBootstrapper
             getLogger().log( LoggingLevel.INFO,"Starting dispatcher." );
             startDispatcher(); 
         }
-        catch (Exception e)
+        catch (Throwable e)
         {
             getLogger().log( LoggingLevel.ERROR,e.getMessage() );
         }
@@ -355,9 +355,11 @@ class AbstractClientBootstrapper
      *  
      *
      * @param arguments
+     * @throws Throwable 
      */
     protected void 
-    processCommandLineArguments(String[] arguments)
+    processCommandLineArguments(String[] arguments) 
+        throws Throwable
     {        
         getCommandLineParser().parse( arguments );
     }

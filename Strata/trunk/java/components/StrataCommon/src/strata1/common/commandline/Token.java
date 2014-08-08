@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	NullCommandLineProcessor.java
+// # File Name:	Token.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,7 +24,6 @@
 
 package strata1.common.commandline;
 
-
 /****************************************************************************
  * 
  * @author 		
@@ -32,61 +31,60 @@ package strata1.common.commandline;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class NullCommandLineProcessor
-    extends    AbstractCommandLineProcessor
-    implements ICommandLineProcessor
+class Token
+    implements IToken
 {
+    private final String    itsInput;
+    private final String    itsBuffer;
+    private final TokenKind itsKind;
     
     /************************************************************************
-     * Creates a new {@code NullCommandLineProcessor}. 
+     * Creates a new {@code Token}. 
      *
+     * @param input
+     * @param buffer
+     * @param kind
      */
     public 
-    NullCommandLineProcessor() {}
+    Token(
+        String    input,
+        String    buffer,
+        TokenKind kind)
+    {
+        itsInput   = input;
+        itsBuffer = buffer;
+        itsKind   = kind;
+    }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    startProcessing() {}
+    public String 
+    getInput()
+    {
+        return itsInput;
+    }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    finishProcessing() throws CommandLineException {}
+    public String 
+    getBuffer()
+    {
+        return itsBuffer;
+    }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public void 
-    processOption(ICommandOption option) {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    processParameter(ICommandParameter parameter) throws CommandLineException {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    processException(CommandLineException exception) throws CommandLineException {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    processThrowable(Throwable exception) throws Throwable {}
-
+    public TokenKind 
+    getKind()
+    {
+        return itsKind;
+    }
 
 }
 

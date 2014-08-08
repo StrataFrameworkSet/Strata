@@ -24,6 +24,9 @@
 
 package strata1.common.commandline;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 /****************************************************************************
  * 
  * @author 		
@@ -35,8 +38,24 @@ public
 class CommandLineParser
     implements ICommandLineParser
 {
-    private ICommandLineProcessor itsProcessor;
+    private final ICommandLineScanner itsScanner;
+    private ICommandLineProcessor     itsProcessor;
+    private Queue<IToken>             itsTokens; 
+    private int                       itsCurrentPosition;
     
+    /************************************************************************
+     * Creates a new {@code CommandLineParser}. 
+     *
+     */
+    public 
+    CommandLineParser(ICommandLineScanner scanner)
+    {
+        itsScanner         = scanner;
+        itsProcessor       = new NullCommandLineProcessor();
+        itsTokens          = new ArrayDeque<IToken>();
+        itsCurrentPosition = 0;
+    }
+
     /************************************************************************
      * Creates a new {@code CommandLineParser}. 
      *
@@ -44,7 +63,7 @@ class CommandLineParser
     public 
     CommandLineParser()
     {
-        itsProcessor = new NullCommandLineProcessor();
+        this( new CommandLineScanner() );
     }
 
     /************************************************************************
@@ -63,10 +82,169 @@ class CommandLineParser
      */
     @Override
     public void 
-    parse(String[] arguments)
+    parse(String[] arguments) 
+        throws Throwable
     {
+        try
+        {       
+            itsScanner.setInput( arguments );
+            getToken();
+            itsProcessor.startProcessing();
+            
+            while (isArgument())
+                parseArgument();
+            
+            match( TokenKind.DONE );
+            itsProcessor.finishProcessing();       
+        }
+        catch (CommandLineException e)
+        {
+            itsProcessor.processException( e );
+        }
+        catch (Throwable e)
+        {
+            itsProcessor.processThrowable( e );
+        }
     }
 
-}
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    private boolean 
+    isArgument()
+    {
+        IToken    token = itsTokens.peek();
+        TokenKind kind  = token.getKind();
+        
+        return 
+            kind == TokenKind.OPTION_ID ||
+            kind == TokenKind.PARAMETER_VALUE;
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @throws CommandLineException
+     */
+    private void
+    parseArgument() 
+        throws CommandLineException
+    {
+        if ( isOption() )
+            parseOption();
+        else
+            parseParameter();
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param token
+     * @return
+     */
+    private boolean
+    isOption()
+    {
+        return itsTokens.peek().getKind() == TokenKind.OPTION_ID;
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @throws CommandLineException
+     */
+    private void 
+    parseOption() 
+        throws CommandLineException
+    {
+        ICommandOption option = null;
+        IToken         id     = match( TokenKind.OPTION_ID );     
+        
+        if ( hasValue() )
+        {
+            IToken value = match( TokenKind.OPTION_VALUE );
+            
+            option = 
+                new CommandOption(
+                    itsCurrentPosition++,
+                    id.getInput()+value.getInput(),
+                    id.getBuffer(),
+                    value.getBuffer() );
+        }
+        else
+            option = 
+                new CommandOption(
+                    itsCurrentPosition++,
+                    id.getInput(),
+                    id.getBuffer());
+        
+        itsProcessor.processOption( option );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @throws CommandLineException
+     */
+    private void 
+    parseParameter() 
+        throws CommandLineException
+    {
+        IToken value = match( TokenKind.PARAMETER_VALUE ); 
+        
+        itsProcessor.processParameter( 
+            new CommandParameter(
+                itsCurrentPosition++,
+                value.getInput(),
+                value.getBuffer()) );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    private boolean 
+    hasValue()
+    {
+        return itsTokens.peek().getKind() == TokenKind.OPTION_VALUE;
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    private void 
+    getToken()
+    {
+        itsTokens.add( itsScanner.getNext() );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param kind
+     * @return
+     */
+    private IToken
+    match(TokenKind kind)
+    {
+        IToken first  = itsTokens.peek();
+        
+        if ( first.getKind() == kind )
+        {
+            itsTokens.remove();
+            
+            if ( itsTokens.isEmpty() )
+                getToken();
+        }
+        
+        return first;
+    }
+    
+ }
 
 // ##########################################################################

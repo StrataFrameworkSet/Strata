@@ -38,7 +38,8 @@ interface ICommandLineParser
     setProcessor(ICommandLineProcessor processor);
     
     public void
-    parse(String[] arguments);
+    parse(String[] arguments) 
+        throws Throwable;
 }
 
 // ##########################################################################

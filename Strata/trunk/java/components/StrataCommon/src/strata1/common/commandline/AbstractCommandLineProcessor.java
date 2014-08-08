@@ -24,10 +24,6 @@
 
 package strata1.common.commandline;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /****************************************************************************
  * 
@@ -40,10 +36,7 @@ public abstract
 class AbstractCommandLineProcessor
     implements ICommandLineProcessor
 {
-    private String                         itsHelpText;
-    private List<ICommandArgument>         itsArguments;
-    private Map<String,ICommandOption>     itsOptions;
-    private Map<Integer,ICommandParameter> itsParameters;
+    private String         itsHelpText;
     
     /************************************************************************
      * Creates a new {@code AbstractCommandLineProcessor}. 
@@ -52,10 +45,7 @@ class AbstractCommandLineProcessor
     public 
     AbstractCommandLineProcessor()
     {
-        itsHelpText        = "";
-        itsArguments       = new ArrayList<ICommandArgument>();
-        itsOptions         = new TreeMap<String,ICommandOption>();
-        itsParameters      = new TreeMap<Integer,ICommandParameter>();
+        itsHelpText   = "";
     }
 
     /************************************************************************
@@ -66,7 +56,7 @@ class AbstractCommandLineProcessor
     setHelpText(String helpText)
     {
         itsHelpText = helpText;
-        return null;
+        return this;
     }
 
     /************************************************************************
@@ -79,28 +69,6 @@ class AbstractCommandLineProcessor
         return itsHelpText;
     }
 
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    startProcessing()
-    {
-        itsArguments.clear();
-        itsOptions.clear();
-        itsParameters.clear();
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    protected List<ICommandArgument>
-    getArguments()
-    {
-        return itsArguments;
-    }
 }
 
 // ##########################################################################
