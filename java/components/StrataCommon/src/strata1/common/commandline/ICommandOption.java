@@ -40,44 +40,147 @@ public
 interface ICommandOption
     extends ICommandArgument
 {
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public String
     getName();
     
-    public boolean
-    getBoolean();
-    
-    public int
-    getInteger();
-    
-    public long
-    getLong();
-    
-    public float
-    getFloat();
-    
-    public Double
-    getDouble();
-    
-    public BigDecimal
-    getBigDecimal();
-    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     public String
-    getString();
+    getValue();
     
+    /************************************************************************
+     *  
+     *
+     * @return
+     * @throws NoValueProvidedException
+     * @throws ConversionException
+     */
+    public boolean
+    getBoolean() 
+        throws NoValueProvidedException,ConversionException;
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     * @throws NoValueProvidedException
+     * @throws ConversionException
+     */
+    public int
+    getInteger() 
+        throws NoValueProvidedException,ConversionException;
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     * @throws NoValueProvidedException
+     * @throws ConversionException
+     */
+    public long
+    getLong() 
+        throws NoValueProvidedException,ConversionException;
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     * @throws NoValueProvidedException
+     * @throws ConversionException
+     */
+    public float
+    getFloat() 
+        throws NoValueProvidedException,ConversionException;
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     * @throws NoValueProvidedException
+     * @throws ConversionException
+     */
+    public Double
+    getDouble() 
+        throws NoValueProvidedException,ConversionException;
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     * @throws NoValueProvidedException
+     * @throws ConversionException
+     */
+    public BigDecimal
+    getBigDecimal() 
+        throws NoValueProvidedException,ConversionException;
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     * @throws NoValueProvidedException
+     */
+    public String
+    getString() 
+        throws NoValueProvidedException;
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     * @throws NoValueProvidedException
+     * @throws ConversionException
+     */
     public Path
-    getPath();
+    getPath() 
+        throws NoValueProvidedException,ConversionException;
     
+    /************************************************************************
+     *  
+     *
+     * @return
+     * @throws NoValueProvidedException
+     * @throws ConversionException
+     */
     public Money
-    getMoney();
+    getMoney() 
+        throws NoValueProvidedException,ConversionException;
     
+    /************************************************************************
+     *  
+     *
+     * @return
+     * @throws NoValueProvidedException
+     * @throws ConversionException
+     */
     public DateTime
-    getDateTime();
-    
+    getDateTime() 
+        throws NoValueProvidedException,ConversionException;
+
+    /************************************************************************
+     *  
+     *
+     * @param name
+     * @return
+     */
     public boolean
     isNamed(String name);
-    
-    public <T> boolean
-    hasValue(Class<T> type);
+   
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public boolean
+    hasValue();
 }
 
 // ##########################################################################

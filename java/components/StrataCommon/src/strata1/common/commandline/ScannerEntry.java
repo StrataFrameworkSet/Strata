@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ICommandParameter.java
+// # File Name:	ScannerEntry.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,11 +24,6 @@
 
 package strata1.common.commandline;
 
-import strata1.common.datetime.DateTime;
-import strata1.common.money.Money;
-import java.math.BigDecimal;
-import java.nio.file.Path;
-
 /****************************************************************************
  * 
  * @author 		
@@ -36,40 +31,36 @@ import java.nio.file.Path;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface ICommandParameter
-    extends ICommandArgument
+class ScannerEntry
 {
-    public boolean
-    toBoolean() throws ConversionException;
+    private final int itsNextState;
+    private final ScannerAction itsAction;
+    private final TokenKind itsKind;
     
-    public int
-    toInteger() throws ConversionException;
+    ScannerEntry(int next,ScannerAction action,TokenKind kind)
+    {
+        itsNextState = next;
+        itsAction = action;
+        itsKind = kind;
+    }
     
-    public long
-    toLong() throws ConversionException;
+    int
+    getNextState()
+    {
+        return itsNextState;
+    }
     
-    public float
-    toFloat() throws ConversionException;
+    ScannerAction
+    getAction()
+    {
+        return itsAction;
+    }
     
-    public double
-    toDouble() throws ConversionException;
-    
-    public BigDecimal
-    toBigDecimal() throws ConversionException;
-    
-    public String
-    toString();
-    
-    public Path
-    toPath() throws ConversionException;
-    
-    public Money
-    toMoney() throws ConversionException;
-    
-    public DateTime
-    toDateTime() throws ConversionException;
-
+    TokenKind
+    getKind()
+    {
+        return itsKind;
+    }
 }
 
 // ##########################################################################

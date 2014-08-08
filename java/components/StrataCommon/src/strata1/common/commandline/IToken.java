@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ICommandParameter.java
+// # File Name:	IToken.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,11 +24,6 @@
 
 package strata1.common.commandline;
 
-import strata1.common.datetime.DateTime;
-import strata1.common.money.Money;
-import java.math.BigDecimal;
-import java.nio.file.Path;
-
 /****************************************************************************
  * 
  * @author 		
@@ -37,39 +32,16 @@ import java.nio.file.Path;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface ICommandParameter
-    extends ICommandArgument
+interface IToken
 {
-    public boolean
-    toBoolean() throws ConversionException;
-    
-    public int
-    toInteger() throws ConversionException;
-    
-    public long
-    toLong() throws ConversionException;
-    
-    public float
-    toFloat() throws ConversionException;
-    
-    public double
-    toDouble() throws ConversionException;
-    
-    public BigDecimal
-    toBigDecimal() throws ConversionException;
+    public String
+    getInput();
     
     public String
-    toString();
+    getBuffer();
     
-    public Path
-    toPath() throws ConversionException;
-    
-    public Money
-    toMoney() throws ConversionException;
-    
-    public DateTime
-    toDateTime() throws ConversionException;
-
+    public TokenKind
+    getKind();
 }
 
 // ##########################################################################

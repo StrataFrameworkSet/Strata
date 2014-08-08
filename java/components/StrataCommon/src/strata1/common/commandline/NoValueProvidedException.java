@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	NullCommandLineProcessor.java
+// # File Name:	NoValueProvidedException.java
 // #
-// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataCommon Framework.
 // #
@@ -24,7 +24,6 @@
 
 package strata1.common.commandline;
 
-
 /****************************************************************************
  * 
  * @author 		
@@ -33,61 +32,36 @@ package strata1.common.commandline;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class NullCommandLineProcessor
-    extends    AbstractCommandLineProcessor
-    implements ICommandLineProcessor
+class NoValueProvidedException
+    extends CommandLineException
 {
+
+    private static final long serialVersionUID = -8228691307217841184L;
+
+    private final ICommandOption itsOption;
     
     /************************************************************************
-     * Creates a new {@code NullCommandLineProcessor}. 
+     * Creates a new {@code NoValueProvidedException}. 
      *
+     * @param option
      */
     public 
-    NullCommandLineProcessor() {}
-
+    NoValueProvidedException(ICommandOption option)
+    {
+        super( "No value provided for option: " + option.getInput() );
+        itsOption = option;
+    }
+    
     /************************************************************************
-     * {@inheritDoc} 
+     *  
+     *
+     * @return
      */
-    @Override
-    public void 
-    startProcessing() {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    finishProcessing() throws CommandLineException {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    processOption(ICommandOption option) {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    processParameter(ICommandParameter parameter) throws CommandLineException {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    processException(CommandLineException exception) throws CommandLineException {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    processThrowable(Throwable exception) throws Throwable {}
-
-
+    public ICommandOption
+    getOption()
+    {
+        return itsOption;
+    }
 }
 
 // ##########################################################################

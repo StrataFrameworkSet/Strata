@@ -26,6 +26,8 @@ package strata1.common.commandline;
 
 import org.junit.Assert;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 /****************************************************************************
  * 
@@ -38,11 +40,8 @@ public
 class MockCommandLineProcessor
     extends AbstractCommandLineProcessor
 {
-    private String itsExpected;
-    private ICommandOption    itsHelpOption;
-    private ICommandOption    itsFooOption;
-    private ICommandOption    itsBarOption;
-    private ICommandParameter itsPathParameter;
+    private String                 itsExpected;
+    private List<ICommandArgument> itsArguments;
     
     /************************************************************************
      * Creates a new {@code MockCommandLineProcessor}. 
@@ -51,6 +50,8 @@ class MockCommandLineProcessor
     public 
     MockCommandLineProcessor(String expected)
     {
+        itsExpected = expected;
+        itsArguments = new ArrayList<ICommandArgument>();
     }
 
     /************************************************************************
@@ -58,7 +59,18 @@ class MockCommandLineProcessor
      */
     @Override
     public void 
-    finishProcessing() throws CommandLineException
+    startProcessing()
+    {
+        itsArguments.clear();        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    finishProcessing() 
+        throws CommandLineException
     {
         Assert.assertEquals( itsExpected,toString() );
     }
@@ -72,14 +84,7 @@ class MockCommandLineProcessor
     processOption(ICommandOption option) 
         throws CommandLineException
     {
-        if ( option.isNamed( "help" ) )
-            itsHelpOption = option;
-        else if ( option.isNamed( "foo" ) )
-            itsFooOption = option;
-        else if ( option.isNamed( "bar" ) )
-            itsBarOption = option;
-        else
-            throw new InvalidOptionException(option,getHelpText());
+        itsArguments.add( option );
     }
 
     /************************************************************************
@@ -87,10 +92,10 @@ class MockCommandLineProcessor
      */
     @Override
     public void 
-    processParameter(ICommandParameter parameter) throws CommandLineException
+    processParameter(ICommandParameter parameter) 
+        throws CommandLineException
     {
-        if ( !parameter.isType(Path.class) )
-            throw new InvalidParameterException(parameter);
+        itsArguments.add( parameter );
     }
 
     /************************************************************************
@@ -98,9 +103,10 @@ class MockCommandLineProcessor
      */
     @Override
     public void 
-    onCommandLineException(CommandLineException exception)
+    processException(CommandLineException exception) 
+        throws CommandLineException
     {
-        
+        throw exception;
     }
 
     /************************************************************************
@@ -108,9 +114,10 @@ class MockCommandLineProcessor
      */
     @Override
     public void 
-    onException(Exception exception)
+    processThrowable(Throwable exception) 
+        throws Throwable
     {
-        
+        throw exception;
     }
 
     /************************************************************************
@@ -122,12 +129,12 @@ class MockCommandLineProcessor
     {
         StringBuilder builder = new StringBuilder();
         
-        for (ICommandArgument argument:getArguments())
+        for (ICommandArgument argument:itsArguments)
         {
             if ( !builder.toString().isEmpty() )
                 builder.append( " " );
             
-            builder.append( argument.toString() );            
+            builder.append( argument.getInput() );
         }
         
         return builder.toString();

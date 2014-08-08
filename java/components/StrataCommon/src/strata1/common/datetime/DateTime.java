@@ -27,6 +27,9 @@ package strata1.common.datetime;
 import strata1.common.utility.ICopyable;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Formatter;
 import java.util.GregorianCalendar;
@@ -91,6 +94,22 @@ class DateTime
 		itsImp = new GregorianCalendar( zone );
 	}
 
+	/************************************************************************
+	 * Creates a new {@code DateTime}. 
+	 *
+	 * @param value
+	 * @throws ParseException
+	 */
+	public 
+	DateTime(String value) 
+	    throws ParseException
+	{
+	    DateFormat formatter = new SimpleDateFormat( "M/d/y");
+	    
+        itsImp = new GregorianCalendar();
+        itsImp.setTime(formatter.parse( value ));
+	}
+	
 	/************************************************************************
 	 * Creates a new DateTime. 
 	 *
