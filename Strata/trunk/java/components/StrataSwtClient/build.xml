@@ -10,7 +10,6 @@
 	    <property name="source.dir" value="src"/>
 	    <property name="output.dir" value="bin"/>
 	    <property name="distribution.dir" value="lib"/>
-	    <property name="version" value="DEV"/>
 	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
 	    <property name="component.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
 	    <property name="common.artifact" value="../StrataCommon/lib/StrataCommon-${version}.jar"/>
@@ -18,15 +17,24 @@
 	    <property name="integrator.artifact" value="../StrataIntegrator/lib/StrataIntegrator-${version}.jar"/>
 	    <property name="client.artifact" value="../StrataClient/lib/StrataClient-${version}.jar"/>
 	    		
-	    <artifact:dependencies pathId="partial.classpath">
-	        <artifact:dependency groupId="com.amazonaws" artifactId="aws-java-sdk" version="1.8.3"/>
-	        <artifact:dependency groupId="com.google.inject" artifactId="guice" version="4.0-beta"/>
-	        <artifact:dependency groupId="javax.inject" artifactId="javax.inject" version="1"/>
-	        <artifact:dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
-	        <artifact:dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
-        	<artifact:dependency groupId="org.eclipse" artifactId="swt.win32.win32.x86_64" version="3.7.2"/>
-	    </artifact:dependencies>
+		<artifact:pom 
+			name="Strata Application Framework"
+			id="${ant.project.name}" 
+			groupId="strata1" 
+			artifactId="${ant.project.name}" 
+			version="${version}">
+	        <dependency groupId="com.amazonaws" artifactId="aws-java-sdk" version="1.8.3"/>
+	        <dependency groupId="com.google.inject" artifactId="guice" version="4.0-beta"/>
+	        <dependency groupId="javax.inject" artifactId="javax.inject" version="1"/>
+	        <dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
+	        <dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
+        	<dependency groupId="org.eclipse" artifactId="swt.win32.win32.x86_64" version="3.7.2"/>
+	    </artifact:pom>
 		
+		<artifact:dependencies 
+	    	pathId="partial.classpath"
+	    	pomRefId="${ant.project.name}"/>
+
 		<path 
 		    id="dependency.classpath">
 			<pathelement location="${common.artifact}" /> 
