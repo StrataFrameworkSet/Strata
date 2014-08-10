@@ -21,7 +21,6 @@
 			groupId="strata1" 
 			artifactId="${ant.project.name}" 
 			version="${version}">
-	        <dependency groupId="strata1" artifactId="StrataCommon" version="1.0.test"/>
 	        <dependency groupId="com.google.inject" artifactId="guice" version="4.0-beta"/>
 	        <dependency groupId="com.lmax" artifactId="disruptor" version="3.2.1"/>
 	        <dependency groupId="javax.inject" artifactId="javax.inject" version="1"/>
@@ -35,7 +34,7 @@
 		
 		<path 
 		    id="dependency.classpath">
-			<!--<pathelement location="${common.artifact}" />--> 
+			<pathelement location="${common.artifact}" /> 
 			<path refid="partial.classpath"/> 
 	    </path>
 		

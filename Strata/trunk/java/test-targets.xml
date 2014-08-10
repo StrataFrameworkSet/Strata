@@ -49,7 +49,12 @@
 	<target 
 		name="compile" 
 		depends="init">
-		<javac 
+        <copy todir="${output.dir}">
+            <fileset 
+                dir="${source.dir}"
+                includes="**/*.xml,**/*.properties,**/*.txt,**/*.ico"/>
+        </copy>        
+	    <javac 
 			srcdir="${source.dir}" 
 			destdir="${output.dir}" 
 			classpathref="${test.classpath}" 

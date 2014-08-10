@@ -94,7 +94,7 @@
     </target>
     
     <target
-        name="deploy-to-public-repository"
+        name="deploy-to-remote-repository"
         depends="init">
 		<artifact:writepom 
 		    pomRefId="${ant.project.name}" 
@@ -105,7 +105,7 @@
 		<artifact:deploy 
 			file="${component.artifact}">
 			<pom refid="${ant.project.name}-pomfile"/>
-			<remoteRepository></remoteRepository>
+			<remoteRepository url="file:///Users/John/Repositories/StrataFrameworkSet/Releases"/>
 		</artifact:deploy>  
     </target>
     
