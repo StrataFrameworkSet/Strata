@@ -32,6 +32,70 @@
     <property name="persistencetest.root" value="${tests.root}/StrataPersistenceTest"/>
     <property name="servertest.root" value="${tests.root}/StrataServerTest"/>
  
+    <filelist id="build.files">
+        <file name="${common.root}/build.xml"/>
+        <file name="${commontest.root}/build.xml"/>
+        
+        <file name="${injector.root}/build.xml"/>
+        <file name="${injectortest.root}/build.xml"/>
+                
+        <file name="${inspector.root}/build.xml"/>
+        <file name="${inspectortest.root}/build.xml"/>
+        
+        <file name="${integrator.root}/build.xml"/>
+        <file name="${integratortest.root}/build.xml"/>
+                
+        <file name="${client.root}/build.xml"/>
+        <file name="${clienttest.root}/build.xml"/>
+                
+        <file name="${swtclient.root}/build.xml"/>
+        <file name="${swtclienttest.root}/build.xml"/>
+                
+        <file name="${androidclient.root}/build.xml"/>
+        <file name="${androidclienttest.root}/build.xml"/>
+                
+        <file name="${gwtclient.root}/build.xml"/>
+        <file name="${gwtclienttest.root}/build.xml"/>
+                
+        <file name="${persistence.root}/build.xml"/>
+        <file name="${persistencetest.root}/build.xml"/>
+                
+        <file name="${server.root}/build.xml"/>
+        <file name="${servertest.root}/build.xml"/>
+                       
+    </filelist>
+        
+ 	<macrodef 
+ 	    name="iterate">
+        <attribute name="target"/>
+        <sequential>
+        	<subant target="@{target}">
+            	<filelist refid="build.files"/>
+            </subant>
+        </sequential>
+    </macrodef>
+
+    <target name="clean">
+    	<iterate target="clean"/>
+    </target>
+ 	
+    <target name="run-commit-stage">
+    	<iterate target="run-commit-stage"/>
+    </target>
+    
+    <target name="run-integration-stage">
+    	<iterate target="run-integration-stage"/>
+    </target>
+    
+    <target name="deploy-to-local-repository">
+    	<iterate target="deploy-to-local-repository"/>
+    </target>
+ 	
+ 	<target name="deploy-to-remote-repository">
+    	<iterate target="deploy-to-remote-repository"/>
+    </target>
+    
+    <!--  
     <target name="clean">
         <ant 
             dir="${common.root}" 
@@ -280,5 +344,5 @@
             antfile="${servertest.root}/build.xml" 
             target="run-integration-stage"/>
     </target>
-	
+	-->
 </project>
