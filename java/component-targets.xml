@@ -3,7 +3,7 @@
 	name="ComponentTargets"
 	default="run-commit-stage">
 
-    <import file="compiler-property.xml"/>
+    <import file="build-properties.xml"/>
     
     <!--  
     <property name="source.dir" value="src"/>
@@ -76,6 +76,37 @@
     <target 
         name="run-integration-stage"
     	depends="init">
+    </target>
+    
+    <target
+        name="deploy-to-local-repository"
+        depends="init">
+		<artifact:writepom 
+		    pomRefId="${ant.project.name}" 
+		    file="${output.dir}/${ant.project.name}-pom.xml" />
+		<artifact:pom 
+		    id="${ant.project.name}-pomfile" 
+		    file="${output.dir}/${ant.project.name}-pom.xml" />       	
+		<artifact:install 
+			file="${component.artifact}">
+			<pom refid="${ant.project.name}-pomfile"/>
+		</artifact:install>  
+    </target>
+    
+    <target
+        name="deploy-to-public-repository"
+        depends="init">
+		<artifact:writepom 
+		    pomRefId="${ant.project.name}" 
+		    file="${output.dir}/${ant.project.name}-pom.xml" />
+		<artifact:pom 
+		    id="${ant.project.name}-pomfile" 
+		    file="${output.dir}/${ant.project.name}-pom.xml" />       	
+		<artifact:deploy 
+			file="${component.artifact}">
+			<pom refid="${ant.project.name}-pomfile"/>
+			<remoteRepository></remoteRepository>
+		</artifact:deploy>  
     </target>
     
 </project>	

@@ -16,7 +16,7 @@
     <property name="project.testreports" value="${testOutputDirectory}/reports"/>
 
     <artifact:dependencies pathId="dependency.classpath">
-        <artifact:dependency groupId="junit" artifactId="junit" version="4.9"/>
+        <dependency groupId="junit" artifactId="junit" version="4.9"/>
     </artifact:dependencies>
 
     <path 

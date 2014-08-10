@@ -3,7 +3,7 @@
 	name="TestTargets"
 	default="run-commit-stage">
 
-    <import file="compiler-property.xml"/>
+    <import file="build-properties.xml"/>
     
     <!--  
     <property name="source.dir" value="src"/>
@@ -116,5 +116,9 @@
 		        <report format="frames" todir="${test.reports}"/>
 		    </junitreport>
     </target>
+
+    <target name="deploy-to-local-repository"/>
+    
+    <target name="deploy-to-remote-repository"/>
     
 </project>	

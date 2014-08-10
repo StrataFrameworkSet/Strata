@@ -1,0 +1,6 @@
+<project name="BuildProperties">
+
+	<property name="compiler" value="javac1.7"/>
+	<property name="version" value="DEV"/>
+	
+</project>	
