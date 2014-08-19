@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IMessageListener.java
+// # File Name:	DefaultSelector.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataIntegrator Framework.
 // #
@@ -22,7 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.integrator.messaging;
+package strata1.integrator.inmemorymessaging;
+
+import strata1.integrator.messaging.IMessage;
+import strata1.integrator.messaging.ISelector;
 
 /****************************************************************************
  * 
@@ -31,17 +34,35 @@ package strata1.integrator.messaging;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IMessageListener
+class DefaultSelector
+    implements ISelector
 {
-    public void
-    onMessage(IStringMessage message);
-    
-    public void
-    onMessage(IMapMessage message);
-    
-    public void
-    onMessage(IObjectMessage message);
+    /************************************************************************
+     * Creates a new {@code DefaultSelector}. 
+     *
+     */
+    DefaultSelector() 
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    evaluate(IMessage message)
+    {
+        return true;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    public String
+    toString()
+    {
+        return "";
+    }
 }
 
 // ##########################################################################

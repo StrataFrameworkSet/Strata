@@ -34,8 +34,14 @@ package strata1.integrator.messaging;
 public 
 interface IMessageSender
 {
+    public void
+    setTimeToLive(long milliseconds);
+    
     public IMessagingSession
     getSession();
+    
+    public long
+    getTimeToLive();
     
     public void
     send(IMessage message);

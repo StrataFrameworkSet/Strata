@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IMessageListener.java
+// # File Name:	ISelector.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataIntegrator Framework.
 // #
@@ -24,6 +24,7 @@
 
 package strata1.integrator.messaging;
 
+
 /****************************************************************************
  * 
  * @author 		
@@ -32,16 +33,13 @@ package strata1.integrator.messaging;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IMessageListener
+interface ISelector
 {
-    public void
-    onMessage(IStringMessage message);
+    public boolean
+    evaluate(IMessage message);
     
-    public void
-    onMessage(IMapMessage message);
-    
-    public void
-    onMessage(IObjectMessage message);
+    public String
+    toString();
 }
 
 // ##########################################################################

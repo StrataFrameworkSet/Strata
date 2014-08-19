@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IMessageListener.java
+// # File Name:	NoMessageReceivedException.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataIntegrator Framework.
 // #
@@ -32,16 +32,53 @@ package strata1.integrator.messaging;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IMessageListener
+class NoMessageReceivedException
+    extends MessagingException
 {
-    public void
-    onMessage(IStringMessage message);
-    
-    public void
-    onMessage(IMapMessage message);
-    
-    public void
-    onMessage(IObjectMessage message);
+
+    private static final long serialVersionUID = -7932973696922873897L;
+
+    /************************************************************************
+     * Creates a new {@code NoMessageReceivedException}. 
+     *
+     */
+    public 
+    NoMessageReceivedException() {}
+
+    /************************************************************************
+     * Creates a new {@code NoMessageReceivedException}. 
+     *
+     * @param message
+     */
+    public 
+    NoMessageReceivedException(String message)
+    {
+        super( message );
+    }
+
+    /************************************************************************
+     * Creates a new {@code NoMessageReceivedException}. 
+     *
+     * @param cause
+     */
+    public 
+    NoMessageReceivedException(Throwable cause)
+    {
+        super( cause );
+    }
+
+    /************************************************************************
+     * Creates a new {@code NoMessageReceivedException}. 
+     *
+     * @param message
+     * @param cause
+     */
+    public 
+    NoMessageReceivedException(String message,Throwable cause)
+    {
+        super( message,cause );
+    }
+
 }
 
 // ##########################################################################

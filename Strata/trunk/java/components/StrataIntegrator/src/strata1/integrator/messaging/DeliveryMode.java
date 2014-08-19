@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	AbstractMessageSender.java
+// # File Name:	DeliveryMode.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataIntegrator Framework.
 // #
@@ -31,49 +31,11 @@ package strata1.integrator.messaging;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract class AbstractMessageSender
-    implements IMessageSender
+public 
+enum DeliveryMode
 {
-    private int itsRetryAttempts;
-    
-    /************************************************************************
-     * Creates a new {@code AbstractMessageSender}. 
-     *
-     */
-    public 
-    AbstractMessageSender()
-    {
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    send(IMessage message)
-    {
-        for (int i=0;i<itsRetryAttempts;i++)
-        {
-            try
-            {
-                //doSetup();
-                doSend( message );
-                return;
-            }
-            catch (Exception e)
-            {
-                //doRetry();
-            }
-        }
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @param message
-     */
-    protected abstract void
-    doSend(IMessage message);
+    PERSISTENT,
+    NON_PERSISTENT
 }
 
 // ##########################################################################

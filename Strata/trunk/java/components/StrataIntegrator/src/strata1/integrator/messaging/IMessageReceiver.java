@@ -34,7 +34,44 @@ package strata1.integrator.messaging;
 public 
 interface IMessageReceiver
 {
+    public IMessageReceiver
+    setListener(IMessageListener listener)
+        throws MixedModeException;
+    
+    public IMessageReceiver
+    setSelector(ISelector selector);
+    
+    public IMessagingSession
+    getSession();
 
+    public IMessageListener
+    getListener();
+    
+    public ISelector
+    getSelector();
+    
+    public void
+    startListening()
+        throws MixedModeException;
+    
+    public void
+    stopListening()
+        throws MixedModeException;
+    
+    public boolean
+    isListening();
+    
+    public IMessage
+    receive()
+        throws MixedModeException;
+    
+    public IMessage
+    receive(long timeOutInMs)
+        throws MixedModeException,NoMessageReceivedException;
+    
+    public IMessage
+    receiveNoWait()
+        throws MixedModeException,NoMessageReceivedException;
 }
 
 // ##########################################################################
