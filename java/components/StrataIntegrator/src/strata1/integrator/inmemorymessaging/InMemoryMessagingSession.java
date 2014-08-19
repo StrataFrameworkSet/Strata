@@ -1,0 +1,168 @@
+// ##########################################################################
+// # File Name:	InMemoryMessagingSession.java
+// #
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
+// #
+// # License:	This file is part of the StrataIntegrator Framework.
+// #
+// #   			The StrataIntegrator Framework is free software: you 
+// #			can redistribute it and/or modify it under the terms of 
+// #			the GNU Lesser General Public License as published by
+// #    		the Free Software Foundation, either version 3 of the 
+// #			License, or (at your option) any later version.
+// #
+// #    		The StrataIntegrator Framework is distributed in the 
+// #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
+// #			without even the implied warranty of MERCHANTABILITY or 
+// #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
+// #			General Public License for more details.
+// #
+// #    		You should have received a copy of the GNU Lesser 
+// #			General Public License along with the StrataIntegrator
+// #			Framework. If not, see http://www.gnu.org/licenses/.
+// ##########################################################################
+
+package strata1.integrator.inmemorymessaging;
+
+import strata1.integrator.messaging.IMapMessage;
+import strata1.integrator.messaging.IMessageReceiver;
+import strata1.integrator.messaging.IMessageSender;
+import strata1.integrator.messaging.IMessagingSession;
+import strata1.integrator.messaging.IObjectMessage;
+import strata1.integrator.messaging.ISelector;
+import strata1.integrator.messaging.IStringMessage;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+/****************************************************************************
+ * 
+ * @author 		
+ *     Sapientia Systems
+ * @conventions	
+ *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
+ */
+public 
+class InMemoryMessagingSession
+    implements IMessagingSession
+{
+    private final Map<String,InMemoryMessageQueue> itsQueues;
+    private final AtomicBoolean                    itsReceivingFlag;
+    
+    /************************************************************************
+     * Creates a new {@code InMemoryMessagingSession}. 
+     *
+     */
+    public 
+    InMemoryMessagingSession()
+    {
+        itsQueues = new HashMap<String,InMemoryMessageQueue>();
+        itsReceivingFlag = new AtomicBoolean( false );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMessageSender 
+    createMessageSender(String id)
+    {
+        if ( !itsQueues.containsKey( id ) )
+            itsQueues.put( id,new InMemoryMessageQueue() );
+        
+        return new InMemoryMessageSender( this,itsQueues.get( id ) );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMessageReceiver 
+    createMessageReceiver(String id)
+    {
+        if ( !itsQueues.containsKey( id ) )
+            itsQueues.put( id,new InMemoryMessageQueue() );
+        
+        return new InMemoryMessageReceiver( this,itsQueues.get( id ) );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMessageReceiver 
+    createMessageReceiver(String id,ISelector selector)
+    {
+        if ( !itsQueues.containsKey( id ) )
+            itsQueues.put( id,new InMemoryMessageQueue() );
+        
+        return 
+            new InMemoryMessageReceiver( 
+                this,
+                itsQueues.get( id ),
+                selector );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IStringMessage 
+    createStringMessage()
+    {
+        return new InMemoryStringMessage();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMapMessage 
+    createMapMessage()
+    {
+        return new InMemoryMapMessage();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    createObjectMessage()
+    {
+        return new InMemoryObjectMessage();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    startReceiving()
+    {
+        itsReceivingFlag.compareAndSet( false,true );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    stopReceiving()
+    {
+        itsReceivingFlag.compareAndSet( true,false );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    isReceiving()
+    {
+        return itsReceivingFlag.get();
+    }
+
+}
+
+// ##########################################################################

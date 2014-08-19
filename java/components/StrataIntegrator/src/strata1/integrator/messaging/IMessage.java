@@ -34,7 +34,86 @@ package strata1.integrator.messaging;
 public 
 interface IMessage
 {
+    public IMessage 
+    setMessageId(String messageId);
+    
+    public IMessage
+    setCorrelationId(String correlationId);
+    
+    public IMessage
+    setReturnAddress(String returnAddress);
+    
+    public IMessage
+    setDeliveryMode(DeliveryMode mode);
+    
+    public IMessage 
+    setTimeToLive(long timeToLive);
 
+    public IMessage
+    setByteProperty(String name,byte value);
+    
+    public IMessage
+    setBooleanProperty(String name,boolean value);
+    
+    public IMessage
+    setShortProperty(String name,short value);
+    
+    public IMessage
+    setIntegerProperty(String name,int value);
+    
+    public IMessage
+    setLongProperty(String name,int value);
+    
+    public IMessage
+    setFloatProperty(String name,float value);
+    
+    public IMessage
+    setDoubleProperty(String name,double value);
+    
+    public IMessage
+    setStringProperty(String name,String value);
+    
+    public String
+    getMessageId();
+    
+    public String 
+    getCorrelationId();
+    
+    public String 
+    getReturnAddress();
+    
+    public DeliveryMode
+    getDeliveryMode();
+
+    public long
+    getTimeToLive();
+    
+    public byte
+    getByteProperty(String name);
+    
+    public boolean
+    getBooleanProperty(String name);
+    
+    public short
+    getShortProperty(String name);
+    
+    public int
+    getIntegerProperty(String name);
+    
+    public long
+    getLongProperty(String name);
+    
+    public float
+    getFloatProperty(String name);
+    
+    public double
+    getDoubleProperty(String name);
+    
+    public String
+    getStringProperty(String name);
+    
+    public boolean
+    hasProperty(String name);
 }
 
 // ##########################################################################

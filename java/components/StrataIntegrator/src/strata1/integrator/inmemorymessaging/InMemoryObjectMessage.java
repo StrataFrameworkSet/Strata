@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IMessageListener.java
+// # File Name:	InMemoryObjectMessage.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataIntegrator Framework.
 // #
@@ -22,7 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.integrator.messaging;
+package strata1.integrator.inmemorymessaging;
+
+import strata1.integrator.messaging.IObjectMessage;
+import java.io.Serializable;
 
 /****************************************************************************
  * 
@@ -32,16 +35,42 @@ package strata1.integrator.messaging;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IMessageListener
+class InMemoryObjectMessage
+    extends    InMemoryMessage
+    implements IObjectMessage
 {
-    public void
-    onMessage(IStringMessage message);
+    private Serializable itsPayload;
     
-    public void
-    onMessage(IMapMessage message);
-    
-    public void
-    onMessage(IObjectMessage message);
+    /************************************************************************
+     * Creates a new {@code InMemoryObjectMessage}. 
+     *
+     */
+    public 
+    InMemoryObjectMessage()
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setPayload(Serializable payload)
+    {
+        itsPayload = payload;
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public Object 
+    getPayload()
+    {
+        return itsPayload;
+    }
+
 }
 
 // ##########################################################################

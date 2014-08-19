@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IMessagingSession.java
+// # File Name:	IMapMessage.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataIntegrator Framework.
 // #
@@ -24,6 +24,8 @@
 
 package strata1.integrator.messaging;
 
+import java.util.Collection;
+
 /****************************************************************************
  * 
  * @author 		
@@ -32,34 +34,81 @@ package strata1.integrator.messaging;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IMessagingSession
+interface IMapMessage
+    extends IMessage
 {
-    public IMessageSender
-    createMessageSender(String id);
-    
-    public IMessageReceiver
-    createMessageReceiver(String id);
-    
-    public IMessageReceiver
-    createMessageReceiver(String id,ISelector selector);
-    
-    public IStringMessage
-    createStringMessage();
+    public IMapMessage
+    setByte(String key,byte item);
     
     public IMapMessage
-    createMapMessage();
+    setBytes(String key,byte[] item);
     
-    public IObjectMessage
-    createObjectMessage();
+    public IMapMessage
+    setBoolean(String key,boolean item);
     
-    public void
-    startReceiving();
+    public IMapMessage
+    setChar(String key,char item);
     
-    public void
-    stopReceiving();
+    public IMapMessage
+    setShort(String key,short item);
+    
+    public IMapMessage
+    setInt(String key,int item);
+    
+    public IMapMessage
+    setLong(String key,long item);
+    
+    public IMapMessage
+    setFloat(String key,float item);
+    
+    public IMapMessage
+    setDouble(String key,double item);
+    
+    public IMapMessage
+    setString(String key,String item);
+    
+    public IMapMessage
+    setObject(String key,Object item);
+    
+    public byte
+    getByte(String key);
+    
+    public byte[]
+    getBytes(String key);
     
     public boolean
-    isReceiving();
+    getBoolean(String key);
+    
+    public char
+    getChar(String key);
+    
+    public short
+    getShort(String key);
+    
+    public int
+    getInt(String key);
+        
+    public long
+    getLong(String key);
+    
+    public float
+    getFloat(String key);
+    
+    public double
+    getDouble(String key);
+    
+    public String
+    getString(String key);
+    
+    public Object
+    getObject(String key);
+    
+    public Collection<String>
+    getItemKeys();
+    
+    public boolean
+    hasItem(String key);
+
 }
 
 // ##########################################################################

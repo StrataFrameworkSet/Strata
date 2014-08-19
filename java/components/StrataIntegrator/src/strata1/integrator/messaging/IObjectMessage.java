@@ -24,6 +24,8 @@
 
 package strata1.integrator.messaging;
 
+import java.io.Serializable;
+
 /****************************************************************************
  * 
  * @author 		
@@ -33,8 +35,13 @@ package strata1.integrator.messaging;
  */
 public 
 interface IObjectMessage
+    extends IMessage
 {
-
+    public IObjectMessage
+    setPayload(Serializable payload);
+    
+    public Object
+    getPayload();
 }
 
 // ##########################################################################

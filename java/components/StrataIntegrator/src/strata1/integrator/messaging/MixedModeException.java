@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IMessageListener.java
+// # File Name:	MixedModeException.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataIntegrator Framework.
 // #
@@ -32,16 +32,52 @@ package strata1.integrator.messaging;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IMessageListener
+class MixedModeException
+    extends MessagingException
 {
-    public void
-    onMessage(IStringMessage message);
-    
-    public void
-    onMessage(IMapMessage message);
-    
-    public void
-    onMessage(IObjectMessage message);
+    private static final long serialVersionUID = -2658438631862945894L;
+
+    /************************************************************************
+     * Creates a new {@code NoMessageReceivedException}. 
+     *
+     */
+    public 
+    MixedModeException() {}
+
+    /************************************************************************
+     * Creates a new {@code NoMessageReceivedException}. 
+     *
+     * @param message
+     */
+    public 
+    MixedModeException(String message)
+    {
+        super( message );
+    }
+
+    /************************************************************************
+     * Creates a new {@code NoMessageReceivedException}. 
+     *
+     * @param cause
+     */
+    public 
+    MixedModeException(Throwable cause)
+    {
+        super( cause );
+    }
+
+    /************************************************************************
+     * Creates a new {@code NoMessageReceivedException}. 
+     *
+     * @param message
+     * @param cause
+     */
+    public 
+    MixedModeException(String message,Throwable cause)
+    {
+        super( message,cause );
+    }
+
 }
 
 // ##########################################################################

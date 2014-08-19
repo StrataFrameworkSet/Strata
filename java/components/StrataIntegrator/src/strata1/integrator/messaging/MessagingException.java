@@ -1,7 +1,7 @@
 // ##########################################################################
-// # File Name:	IMessageListener.java
+// # File Name:	MessagingException.java
 // #
-// # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
 // # License:	This file is part of the StrataIntegrator Framework.
 // #
@@ -31,17 +31,53 @@ package strata1.integrator.messaging;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-interface IMessageListener
+public abstract 
+class MessagingException
+    extends Exception
 {
-    public void
-    onMessage(IStringMessage message);
-    
-    public void
-    onMessage(IMapMessage message);
-    
-    public void
-    onMessage(IObjectMessage message);
+
+    private static final long serialVersionUID = -2078723834243463158L;
+
+    /************************************************************************
+     * Creates a new {@code MessagingException}. 
+     *
+     */
+    protected 
+    MessagingException() {}
+
+    /************************************************************************
+     * Creates a new {@code MessagingException}. 
+     *
+     * @param message
+     */
+    protected 
+    MessagingException(String message)
+    {
+        super( message );
+    }
+
+    /************************************************************************
+     * Creates a new {@code MessagingException}. 
+     *
+     * @param cause
+     */
+    protected 
+    MessagingException(Throwable cause)
+    {
+        super( cause );
+    }
+
+    /************************************************************************
+     * Creates a new {@code MessagingException}. 
+     *
+     * @param message
+     * @param cause
+     */
+    protected 
+    MessagingException(String message,Throwable cause)
+    {
+        super( message,cause );
+    }
 }
 
 // ##########################################################################

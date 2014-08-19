@@ -3,5 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.9/junit-4.9.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegrator"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
