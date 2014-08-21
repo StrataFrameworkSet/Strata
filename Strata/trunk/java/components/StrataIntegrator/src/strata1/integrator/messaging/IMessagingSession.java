@@ -41,7 +41,7 @@ interface IMessagingSession
     createMessageReceiver(String id);
     
     public IMessageReceiver
-    createMessageReceiver(String id,ISelector selector);
+    createMessageReceiver(String id,String selector);
     
     public IStringMessage
     createStringMessage();

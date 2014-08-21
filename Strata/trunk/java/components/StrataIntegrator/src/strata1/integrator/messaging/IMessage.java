@@ -59,7 +59,7 @@ interface IMessage
     setShortProperty(String name,short value);
     
     public IMessage
-    setIntegerProperty(String name,int value);
+    setIntProperty(String name,int value);
     
     public IMessage
     setLongProperty(String name,int value);

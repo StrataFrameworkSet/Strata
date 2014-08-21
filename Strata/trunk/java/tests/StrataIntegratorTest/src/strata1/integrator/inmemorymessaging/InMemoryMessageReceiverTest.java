@@ -24,6 +24,7 @@
 
 package strata1.integrator.inmemorymessaging;
 
+import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.MessageReceiverTest;
@@ -59,6 +60,22 @@ class InMemoryMessageReceiverTest
         itsSelectors.put( 
             "ReturnAddress=foo",
             new SimpleSelector( properties ) );
+        itsSelectors.put( 
+            "FooProperty >= 5",
+            new ISelector()
+            {
+                @Override
+                public boolean 
+                evaluate(IMessage message)
+                {
+                    if ( !message.hasProperty( "FooProperty" ) )
+                        return false;
+                    
+                    return
+                        message.getIntegerProperty( "FooProperty" ) >= 5;
+                }
+                
+            });
     }
 
     /************************************************************************
@@ -68,17 +85,7 @@ class InMemoryMessageReceiverTest
     protected IMessagingSession 
     createMessagingSession()
     {
-        return new InMemoryMessagingSession();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    protected ISelector 
-    createSelector(String expression)
-    {
-        return itsSelectors.get( expression );
+        return new InMemoryMessagingSession(itsSelectors);
     }
 
 }

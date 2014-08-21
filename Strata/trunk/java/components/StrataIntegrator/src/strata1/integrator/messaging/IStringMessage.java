@@ -53,7 +53,7 @@ interface IStringMessage
     setShortProperty(String name,short value);
     
     public IStringMessage
-    setIntegerProperty(String name,int value);
+    setIntProperty(String name,int value);
     
     public IStringMessage
     setLongProperty(String name,int value);

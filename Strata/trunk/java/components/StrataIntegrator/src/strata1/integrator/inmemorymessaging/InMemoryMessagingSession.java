@@ -47,6 +47,7 @@ class InMemoryMessagingSession
     implements IMessagingSession
 {
     private final Map<String,InMemoryMessageQueue> itsQueues;
+    private final Map<String,ISelector>            itsSelectors;
     private final AtomicBoolean                    itsReceivingFlag;
     
     /************************************************************************
@@ -56,7 +57,20 @@ class InMemoryMessagingSession
     public 
     InMemoryMessagingSession()
     {
-        itsQueues = new HashMap<String,InMemoryMessageQueue>();
+        itsQueues        = new HashMap<String,InMemoryMessageQueue>();
+        itsSelectors     = new HashMap<String,ISelector>();
+        itsReceivingFlag = new AtomicBoolean( false );
+    }
+
+    /************************************************************************
+     * Creates a new {@code InMemoryMessagingSession}. 
+     *
+     */
+    public 
+    InMemoryMessagingSession(final Map<String,ISelector> selectors)
+    {
+        itsQueues        = new HashMap<String,InMemoryMessageQueue>();
+        itsSelectors     = new HashMap<String,ISelector>(selectors);
         itsReceivingFlag = new AtomicBoolean( false );
     }
 
@@ -91,10 +105,15 @@ class InMemoryMessagingSession
      */
     @Override
     public IMessageReceiver 
-    createMessageReceiver(String id,ISelector selector)
+    createMessageReceiver(String id,String selector)
     {
         if ( !itsQueues.containsKey( id ) )
             itsQueues.put( id,new InMemoryMessageQueue() );
+        
+        if ( !itsSelectors.containsKey( selector ) )
+            throw 
+                new IllegalArgumentException(
+                    "No such selector configured for: " + selector);
         
         return 
             new InMemoryMessageReceiver( 
@@ -163,6 +182,31 @@ class InMemoryMessagingSession
         return itsReceivingFlag.get();
     }
 
+    /************************************************************************
+     *  
+     *
+     * @param expression
+     * @param selector
+     * @return
+     */
+    public InMemoryMessagingSession
+    insertSelector(String expression,ISelector selector)
+    {
+        itsSelectors.put( expression,selector );
+        return this;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param selector
+     * @return
+     */
+    ISelector
+    getSelector(String selector)
+    {
+        return itsSelectors.get( selector );
+    }
 }
 
 // ##########################################################################

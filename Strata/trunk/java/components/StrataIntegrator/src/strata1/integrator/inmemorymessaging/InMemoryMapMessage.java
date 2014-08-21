@@ -27,6 +27,7 @@ package strata1.integrator.inmemorymessaging;
 import strata1.integrator.messaging.DeliveryMode;
 import strata1.integrator.messaging.IMapMessage;
 import strata1.integrator.messaging.IMessage;
+import strata1.integrator.messaging.IMapMessage;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,14 +56,16 @@ class InMemoryMapMessage
         itsPayload = new HashMap<String,Object>();
     }
 
+
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
     public IMapMessage 
-    setMessageId(String mId)
+    setMessageId(String messageId)
     {
-        return (IMapMessage)super.setMessageId( mId );
+        super.setMessageId( messageId );
+        return this;
     }
 
     /************************************************************************
@@ -70,9 +73,10 @@ class InMemoryMapMessage
      */
     @Override
     public IMapMessage 
-    setCorrelationId(String cId)
+    setCorrelationId(String correlationId)
     {
-        return (IMapMessage)super.setCorrelationId( cId );
+        super.setCorrelationId( correlationId );
+        return this;
     }
 
     /************************************************************************
@@ -80,19 +84,120 @@ class InMemoryMapMessage
      */
     @Override
     public IMapMessage 
-    setReturnAddress(String retAddr)
+    setReturnAddress(String returnAddress)
     {
-        return (IMapMessage)super.setReturnAddress( retAddr );
+        super.setReturnAddress( returnAddress );
+        return this;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IMessage 
+    public IMapMessage 
     setDeliveryMode(DeliveryMode mode)
     {
-        return (IMapMessage)super.setDeliveryMode( mode );
+        super.setDeliveryMode( mode );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMapMessage 
+    setTimeToLive(long timeToLive)
+    {
+        super.setTimeToLive( timeToLive );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMapMessage 
+    setByteProperty(String name,byte value)
+    {
+        super.setByteProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMapMessage 
+    setBooleanProperty(String name,boolean value)
+    {
+        super.setBooleanProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMapMessage 
+    setShortProperty(String name,short value)
+    {
+        super.setShortProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMapMessage 
+    setIntProperty(String name,int value)
+    {
+        super.setIntProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMapMessage 
+    setLongProperty(String name,int value)
+    {
+        super.setLongProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMapMessage 
+    setFloatProperty(String name,float value)
+    {
+        super.setFloatProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMapMessage 
+    setDoubleProperty(String name,double value)
+    {
+        super.setDoubleProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMapMessage 
+    setStringProperty(String name,String value)
+    {
+        super.setStringProperty( name,value );
+        return this;
     }
 
     /************************************************************************

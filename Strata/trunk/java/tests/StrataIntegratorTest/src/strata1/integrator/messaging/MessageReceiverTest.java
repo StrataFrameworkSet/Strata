@@ -91,13 +91,13 @@ class MessageReceiverTest
     }
 
     /**
-     * Test method for {@link IMessageReceiver#setSelector(ISelector)}.
+     * Test method for {@link IMessageReceiver#setSelector(String)}.
      */
     @Test
     public void 
     testSetSelector()
     {
-        ISelector selector = createSelector( "ReturnAddress=foo" );
+        String selector = "ReturnAddress=foo";
         
         assertEquals( "",itsTarget.getSelector().toString() );
         itsTarget.setSelector( selector );
@@ -139,7 +139,7 @@ class MessageReceiverTest
     public void 
     testGetSelector()
     {
-        ISelector selector = createSelector( "ReturnAddress=foo" );
+        String selector = "ReturnAddress=foo";
         
         assertEquals( "",itsTarget.getSelector().toString() );
         itsTarget.setSelector( selector );
@@ -252,7 +252,7 @@ class MessageReceiverTest
      */
     @Test
     public void 
-    testReceiveLong() 
+    testReceiveLong1() 
         throws MixedModeException,NoMessageReceivedException
     {
         IStringMessage expected1 = itsSession.createStringMessage();
@@ -281,6 +281,59 @@ class MessageReceiverTest
         assertEquals( expected1.getPayload(),((IStringMessage)actual1).getPayload() );
         assertEquals( expected2.getPayload(),((IStringMessage)actual2).getPayload() );
         assertEquals( expected3.getPayload(),((IStringMessage)actual3).getPayload() );
+    }
+
+
+    /**
+     * Test method for {@link IMessageReceiver#receive(long)}.
+     * @throws MixedModeException 
+     * @throws NoMessageReceivedException 
+     */
+    @Test
+    public void 
+    testReceiveLong2() 
+        throws MixedModeException,NoMessageReceivedException
+    {
+        IStringMessage expected1 = itsSession.createStringMessage();
+        IMapMessage    expected2 = itsSession.createMapMessage();
+        IObjectMessage expected3 = itsSession.createObjectMessage();
+        IMessage       actual1   = null;
+        IMessage       actual2   = null;
+        IMessage       actual3   = null;
+        
+        itsTarget.setSelector( "FooProperty >= 5" );
+        
+        expected1
+            .setIntProperty( "FooProperty",3 )
+            .setPayload( "TestMessage1" );
+        expected2
+            .setIntProperty( "FooProperty",5 )
+            .setString( "TestMessage","TestMessage2" );
+        expected3
+            .setIntProperty( "FooProperty",7 )
+            .setPayload( "TestMessage3" );
+        
+        itsSender.send( expected1 );
+        itsSender.send( expected2 );
+        itsSender.send( expected3 );
+        
+        actual2 = itsTarget.receive( 10);
+        actual3 = itsTarget.receive( 10 );
+        
+        assertTrue( actual2 instanceof IMapMessage );
+        assertTrue( actual3 instanceof IObjectMessage );
+               
+        assertEquals( expected2.getString("TestMessage"),((IMapMessage)actual2).getString("TestMessage") );
+        assertEquals( expected3.getPayload(),((IObjectMessage)actual3).getPayload() );
+        
+        
+        try
+        {
+            actual1 = itsTarget.receive( 10 );
+            fail( "Should have thrown exception." );
+        }
+        catch (NoMessageReceivedException e) {}
+
     }
 
     /**
@@ -338,7 +391,7 @@ class MessageReceiverTest
         IMessage       actual2   = null;
         IMessage       actual3   = null;
         
-        itsTarget.setSelector( createSelector("ReturnAddress=foo" ) );
+        itsTarget.setSelector( "ReturnAddress=foo" );
         
         expected1
             .setReturnAddress( "foo" )
@@ -372,9 +425,6 @@ class MessageReceiverTest
 
     protected abstract IMessagingSession 
     createMessagingSession();
-
-    protected abstract ISelector
-    createSelector(String expression);
 }
 
 // ##########################################################################

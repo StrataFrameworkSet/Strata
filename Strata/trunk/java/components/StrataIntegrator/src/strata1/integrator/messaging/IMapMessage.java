@@ -37,6 +37,45 @@ public
 interface IMapMessage
     extends IMessage
 {
+    public IMapMessage 
+    setMessageId(String messageId);
+    
+    public IMapMessage
+    setCorrelationId(String correlationId);
+    
+    public IMapMessage
+    setReturnAddress(String returnAddress);
+    
+    public IMapMessage
+    setDeliveryMode(DeliveryMode mode);
+    
+    public IMapMessage 
+    setTimeToLive(long timeToLive);
+
+    public IMapMessage
+    setByteProperty(String name,byte value);
+    
+    public IMapMessage
+    setBooleanProperty(String name,boolean value);
+    
+    public IMapMessage
+    setShortProperty(String name,short value);
+    
+    public IMapMessage
+    setIntProperty(String name,int value);
+    
+    public IMapMessage
+    setLongProperty(String name,int value);
+    
+    public IMapMessage
+    setFloatProperty(String name,float value);
+    
+    public IMapMessage
+    setDoubleProperty(String name,double value);
+    
+    public IMapMessage
+    setStringProperty(String name,String value);
+
     public IMapMessage
     setByte(String key,byte item);
     

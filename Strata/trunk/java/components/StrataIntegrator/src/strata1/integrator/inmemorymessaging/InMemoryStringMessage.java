@@ -144,9 +144,9 @@ class InMemoryStringMessage
      */
     @Override
     public IStringMessage 
-    setIntegerProperty(String name,int value)
+    setIntProperty(String name,int value)
     {
-        super.setIntegerProperty( name,value );
+        super.setIntProperty( name,value );
         return this;
     }
 
