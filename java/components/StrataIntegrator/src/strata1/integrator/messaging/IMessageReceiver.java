@@ -39,7 +39,7 @@ interface IMessageReceiver
         throws MixedModeException;
     
     public IMessageReceiver
-    setSelector(ISelector selector);
+    setSelector(String selector);
     
     public IMessagingSession
     getSession();
@@ -47,7 +47,7 @@ interface IMessageReceiver
     public IMessageListener
     getListener();
     
-    public ISelector
+    public String
     getSelector();
     
     public void

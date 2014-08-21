@@ -44,12 +44,13 @@ public
 class InMemoryMessageReceiver
     implements IMessageReceiver
 {
-    private final IMessagingSession    itsSession;
-    private final InMemoryMessageQueue itsQueue;
-    private IMessageListener           itsListener;
-    private ISelector                  itsSelector;
-    private final AtomicBoolean        itsListeningFlag;
-    private IReceiverState             itsState;
+    private final InMemoryMessagingSession itsSession;
+    private final InMemoryMessageQueue     itsQueue;
+    private IMessageListener               itsListener;
+    private String                         itsSelector;
+    private ISelector                      itsSelectorImp;
+    private final AtomicBoolean            itsListeningFlag;
+    private IReceiverState                 itsState;
     
     /************************************************************************
      * Creates a new {@code InMemoryMessageReceiver}. 
@@ -59,33 +60,36 @@ class InMemoryMessageReceiver
      */
     public 
     InMemoryMessageReceiver(
-        IMessagingSession    session,
-        InMemoryMessageQueue queue)
+        InMemoryMessagingSession session,
+        InMemoryMessageQueue     queue)
     {
         itsSession       = session;
         itsQueue         = queue;
         itsListener      = null;
-        itsSelector      = new DefaultSelector();
+        itsSelector      = "";
+        itsSelectorImp   = new DefaultSelector();
         itsListeningFlag = new AtomicBoolean(false);
         itsState         = null;
     }
     
     /************************************************************************
-     * Creates a new {@code InMemoryMessageReceiver}. 
+     * Creates a new InMemoryMessageReceiver. 
      *
      * @param session
      * @param queue
+     * @param selector
      */
     public 
     InMemoryMessageReceiver(
-        IMessagingSession    session,
-        InMemoryMessageQueue queue,
-        ISelector            selector)
+        InMemoryMessagingSession session,
+        InMemoryMessageQueue     queue,
+        String                   selector)
     {
         itsSession       = session;
         itsQueue         = queue;
         itsListener      = null;
         itsSelector      = selector;
+        itsSelectorImp   = session.getSelector( selector );
         itsListeningFlag = new AtomicBoolean(false);
         itsState         = null;
     }
@@ -106,9 +110,10 @@ class InMemoryMessageReceiver
      */
     @Override
     public IMessageReceiver 
-    setSelector(ISelector selector)
+    setSelector(String selector)
     {
         itsSelector = selector;
+        itsSelectorImp = itsSession.getSelector( selector );
         return this;
     }
 
@@ -136,7 +141,7 @@ class InMemoryMessageReceiver
      * {@inheritDoc} 
      */
     @Override
-    public ISelector 
+    public String 
     getSelector()
     {
          return itsSelector;
@@ -155,7 +160,7 @@ class InMemoryMessageReceiver
         
         itsState.startListening( 
             itsQueue,
-            itsSelector,
+            itsSelectorImp,
             itsListener,
             itsListeningFlag );
     }
@@ -198,7 +203,7 @@ class InMemoryMessageReceiver
         if ( itsState == null )
             itsState = new SynchronousReceiverState();
         
-        return itsState.receive( itsQueue,itsSelector );
+        return itsState.receive( itsQueue,itsSelectorImp );
     }
 
     /************************************************************************
@@ -212,7 +217,7 @@ class InMemoryMessageReceiver
         if ( itsState == null )
             itsState = new SynchronousReceiverState();
         
-        return itsState.receive( itsQueue,itsSelector,timeOutInMs );
+        return itsState.receive( itsQueue,itsSelectorImp,timeOutInMs );
     }
 
     /************************************************************************
@@ -226,7 +231,7 @@ class InMemoryMessageReceiver
         if ( itsState == null )
             itsState = new SynchronousReceiverState();
         
-        return itsState.receiveNoWait( itsQueue,itsSelector );
+        return itsState.receiveNoWait( itsQueue,itsSelectorImp );
     }
 
 }

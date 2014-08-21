@@ -55,17 +55,11 @@ class InMemoryMessagingSessionTest
     protected IMessagingSession 
     createMessagingSesssion()
     {
-        return new InMemoryMessagingSession();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    protected ISelector 
-    createSelector(String string)
-    {
-        return new DefaultSelector();
+        return 
+            new InMemoryMessagingSession()
+                .insertSelector( 
+                    "ReturnAddress=foo",
+                    new DefaultSelector() );
     }
 
 }

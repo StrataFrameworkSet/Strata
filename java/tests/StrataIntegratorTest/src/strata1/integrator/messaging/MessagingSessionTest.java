@@ -90,17 +90,17 @@ class MessagingSessionTest
         assertNotNull( receiver );
         assertEquals( itsTarget,receiver.getSession() );
         assertNull( receiver.getListener() );
-        assertEquals( "",receiver.getSelector().toString() );
+        assertEquals( "",receiver.getSelector() );
     }
 
     /**
-     * Test method for {@link IMessagingSession#createMessageReceiver(String,ISelector)}.
+     * Test method for {@link IMessagingSession#createMessageReceiver(String,String)}.
      */
     @Test
     public void 
     testCreateMessageReceiverStringString()
     {
-        ISelector        selector = createSelector( "ReturnAddress=foo" );
+        String           selector = "ReturnAddress=foo";
         IMessageReceiver receiver = 
             itsTarget.createMessageReceiver( "foo",selector );
         
@@ -199,9 +199,6 @@ class MessagingSessionTest
 
     protected abstract IMessagingSession 
     createMessagingSesssion();
-
-    protected abstract ISelector 
-    createSelector(String string);
 
 }
 

@@ -155,7 +155,7 @@ class InMemoryMessage
      */
     @Override
     public IMessage 
-    setIntegerProperty(String name,int value)
+    setIntProperty(String name,int value)
     {
         itsProperties.put( name,value );
         return this;

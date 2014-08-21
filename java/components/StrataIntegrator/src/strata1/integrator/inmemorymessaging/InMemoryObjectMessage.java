@@ -24,6 +24,7 @@
 
 package strata1.integrator.inmemorymessaging;
 
+import strata1.integrator.messaging.DeliveryMode;
 import strata1.integrator.messaging.IObjectMessage;
 import java.io.Serializable;
 
@@ -48,7 +49,152 @@ class InMemoryObjectMessage
     public 
     InMemoryObjectMessage()
     {
+        itsPayload = null;
     }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setMessageId(String messageId)
+    {
+        super.setMessageId( messageId );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setCorrelationId(String correlationId)
+    {
+        super.setCorrelationId( correlationId );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setReturnAddress(String returnAddress)
+    {
+        super.setReturnAddress( returnAddress );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setDeliveryMode(DeliveryMode mode)
+    {
+        super.setDeliveryMode( mode );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setTimeToLive(long timeToLive)
+    {
+        super.setTimeToLive( timeToLive );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setByteProperty(String name,byte value)
+    {
+        super.setByteProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setBooleanProperty(String name,boolean value)
+    {
+        super.setBooleanProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setShortProperty(String name,short value)
+    {
+        super.setShortProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setIntProperty(String name,int value)
+    {
+        super.setIntProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setLongProperty(String name,int value)
+    {
+        super.setLongProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setFloatProperty(String name,float value)
+    {
+        super.setFloatProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setDoubleProperty(String name,double value)
+    {
+        super.setDoubleProperty( name,value );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setStringProperty(String name,String value)
+    {
+        super.setStringProperty( name,value );
+        return this;
+    }
+
 
     /************************************************************************
      * {@inheritDoc} 

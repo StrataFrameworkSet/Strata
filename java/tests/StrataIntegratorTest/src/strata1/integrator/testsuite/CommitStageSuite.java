@@ -24,6 +24,9 @@
 
 package strata1.integrator.testsuite;
 
+import strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest;
+import strata1.integrator.inmemorymessaging.InMemoryMessageSenderTest;
+import strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -35,7 +38,10 @@ import org.junit.runners.Suite;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({NullTest.class})
+@Suite.SuiteClasses({
+    InMemoryMessagingSessionTest.class,
+    InMemoryMessageSenderTest.class,
+    InMemoryMessageReceiverTest.class})
 public 
 class CommitStageSuite {}
 

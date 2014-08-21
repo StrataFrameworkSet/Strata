@@ -37,6 +37,45 @@ public
 interface IObjectMessage
     extends IMessage
 {
+    public IObjectMessage 
+    setMessageId(String messageId);
+    
+    public IObjectMessage
+    setCorrelationId(String correlationId);
+    
+    public IObjectMessage
+    setReturnAddress(String returnAddress);
+    
+    public IObjectMessage
+    setDeliveryMode(DeliveryMode mode);
+    
+    public IObjectMessage 
+    setTimeToLive(long timeToLive);
+
+    public IObjectMessage
+    setByteProperty(String name,byte value);
+    
+    public IObjectMessage
+    setBooleanProperty(String name,boolean value);
+    
+    public IObjectMessage
+    setShortProperty(String name,short value);
+    
+    public IObjectMessage
+    setIntProperty(String name,int value);
+    
+    public IObjectMessage
+    setLongProperty(String name,int value);
+    
+    public IObjectMessage
+    setFloatProperty(String name,float value);
+    
+    public IObjectMessage
+    setDoubleProperty(String name,double value);
+    
+    public IObjectMessage
+    setStringProperty(String name,String value);
+
     public IObjectMessage
     setPayload(Serializable payload);
     
