@@ -241,7 +241,7 @@ class JmsObjectMessage
     protected ObjectMessage 
     getMessageImp()
     {
-        return null;
+        return itsImp;
     }
 
 }

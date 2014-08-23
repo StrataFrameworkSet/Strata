@@ -58,7 +58,7 @@ class InMemoryMessageReceiverTest
         properties.put( "ReturnAddress","foo" );
         
         itsSelectors.put( 
-            "ReturnAddress=foo",
+            "ReturnAddress='foo'",
             new SimpleSelector( properties ) );
         itsSelectors.put( 
             "FooProperty >= 5",

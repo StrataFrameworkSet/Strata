@@ -55,7 +55,7 @@ class JmsMessagingSessionTest
     createMessagingSesssion()
     {
         ActiveMQConnectionFactory factory = 
-            new ActiveMQConnectionFactory("vm://localhost");
+            new ActiveMQConnectionFactory("tcp://localhost:61616");
         
         return new JmsQueueMessagingSession(factory);
     }

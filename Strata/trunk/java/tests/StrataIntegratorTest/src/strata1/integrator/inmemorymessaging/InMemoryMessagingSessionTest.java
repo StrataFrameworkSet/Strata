@@ -58,7 +58,7 @@ class InMemoryMessagingSessionTest
         return 
             new InMemoryMessagingSession()
                 .insertSelector( 
-                    "ReturnAddress=foo",
+                    "ReturnAddress='foo'",
                     new DefaultSelector() );
     }
 

@@ -253,6 +253,23 @@ class JmsMessageReceiver
         }
     }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    close()
+    {
+        try
+        {
+            itsImp.close();
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
+    }
+
 }
 
 // ##########################################################################

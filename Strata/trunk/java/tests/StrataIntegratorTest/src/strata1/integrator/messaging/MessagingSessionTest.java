@@ -51,6 +51,7 @@ class MessagingSessionTest
     setUp() throws Exception
     {
         itsTarget = createMessagingSesssion();
+        itsTarget.startReceiving();
     }
 
     /************************************************************************
@@ -62,6 +63,7 @@ class MessagingSessionTest
     public void 
     tearDown() throws Exception
     {
+        itsTarget.stopReceiving();
         itsTarget.close();
         itsTarget = null;
     }
@@ -73,7 +75,7 @@ class MessagingSessionTest
     public void 
     testCreateMessageSender()
     {
-        IMessageSender sender = itsTarget.createMessageSender( "foo" );
+        IMessageSender sender = itsTarget.createMessageSender( "foo.test" );
         
         assertNotNull( sender );
         assertEquals( itsTarget,sender.getSession() );
@@ -86,12 +88,19 @@ class MessagingSessionTest
     public void 
     testCreateMessageReceiverString()
     {
-        IMessageReceiver receiver = itsTarget.createMessageReceiver( "foo" );
+        IMessageReceiver receiver = itsTarget.createMessageReceiver( "foo.test" );
         
-        assertNotNull( receiver );
-        assertEquals( itsTarget,receiver.getSession() );
-        assertNull( receiver.getListener() );
-        assertNull( null,receiver.getSelector() );
+        try
+        {
+            assertNotNull( receiver );
+            assertEquals( itsTarget,receiver.getSession() );
+            assertNull( receiver.getListener() );
+            assertNull( null,receiver.getSelector() );
+        }
+        finally
+        {
+            receiver.close();
+        }
     }
 
     /**
@@ -101,14 +110,21 @@ class MessagingSessionTest
     public void 
     testCreateMessageReceiverStringString()
     {
-        String           selector = "ReturnAddress=foo";
+        String           selector = "ReturnAddress='foo'";
         IMessageReceiver receiver = 
-            itsTarget.createMessageReceiver( "foo",selector );
+            itsTarget.createMessageReceiver( "foo.test",selector );
         
-        assertNotNull( receiver );
-        assertEquals( itsTarget,receiver.getSession() );
-        assertNull( receiver.getListener() );
-        assertEquals( selector,receiver.getSelector() );
+        try
+        {
+            assertNotNull( receiver );
+            assertEquals( itsTarget,receiver.getSession() );
+            assertNull( receiver.getListener() );
+            assertEquals( selector,receiver.getSelector() );
+        }
+        finally
+        {
+            receiver.close();
+        }
     }
 
     /**
@@ -157,6 +173,7 @@ class MessagingSessionTest
     public void 
     testStartReceiving()
     {
+        itsTarget.stopReceiving();
         assertFalse( itsTarget.isReceiving() );
         itsTarget.startReceiving();
         assertTrue( itsTarget.isReceiving() );
@@ -171,8 +188,6 @@ class MessagingSessionTest
     public void 
     testStopReceiving()
     {
-        assertFalse( itsTarget.isReceiving() );
-        itsTarget.startReceiving();
         assertTrue( itsTarget.isReceiving() );
         itsTarget.stopReceiving();
         assertFalse( itsTarget.isReceiving() );
@@ -187,10 +202,6 @@ class MessagingSessionTest
     public void 
     testIsReceiving()
     {
-        assertFalse( itsTarget.isReceiving() );
-        itsTarget.startReceiving();
-        assertTrue( itsTarget.isReceiving() );
-        itsTarget.startReceiving();
         assertTrue( itsTarget.isReceiving() );
         itsTarget.stopReceiving();
         assertFalse( itsTarget.isReceiving() );
