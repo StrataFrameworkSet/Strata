@@ -38,9 +38,6 @@ interface IMessageReceiver
     setListener(IMessageListener listener)
         throws MixedModeException;
     
-    public IMessageReceiver
-    setSelector(String selector);
-    
     public IMessagingSession
     getSession();
 

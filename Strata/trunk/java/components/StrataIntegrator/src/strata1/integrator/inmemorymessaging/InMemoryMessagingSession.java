@@ -31,9 +31,13 @@ import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.IObjectMessage;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.IStringMessage;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /****************************************************************************
  * 
@@ -49,6 +53,7 @@ class InMemoryMessagingSession
     private final Map<String,InMemoryMessageQueue> itsQueues;
     private final Map<String,ISelector>            itsSelectors;
     private final AtomicBoolean                    itsReceivingFlag;
+    private final AtomicBoolean                    itsClosedFlag;
     
     /************************************************************************
      * Creates a new {@code InMemoryMessagingSession}. 
@@ -60,6 +65,7 @@ class InMemoryMessagingSession
         itsQueues        = new HashMap<String,InMemoryMessageQueue>();
         itsSelectors     = new HashMap<String,ISelector>();
         itsReceivingFlag = new AtomicBoolean( false );
+        itsClosedFlag    = new AtomicBoolean( false );
     }
 
     /************************************************************************
@@ -70,8 +76,12 @@ class InMemoryMessagingSession
     InMemoryMessagingSession(final Map<String,ISelector> selectors)
     {
         itsQueues        = new HashMap<String,InMemoryMessageQueue>();
-        itsSelectors     = new HashMap<String,ISelector>(selectors);
+        itsSelectors     = new HashMap<String,ISelector>();
         itsReceivingFlag = new AtomicBoolean( false );
+        itsClosedFlag    = new AtomicBoolean( false );
+       
+        for (String expression : selectors.keySet())
+            insertSelector( expression,selectors.get( expression ) );
     }
 
     /************************************************************************
@@ -110,7 +120,7 @@ class InMemoryMessagingSession
         if ( !itsQueues.containsKey( id ) )
             itsQueues.put( id,new InMemoryMessageQueue() );
         
-        if ( !itsSelectors.containsKey( selector ) )
+        if ( !itsSelectors.containsKey( normalize(selector) ) )
             throw 
                 new IllegalArgumentException(
                     "No such selector configured for: " + selector);
@@ -176,10 +186,30 @@ class InMemoryMessagingSession
      * {@inheritDoc} 
      */
     @Override
+    public void 
+    close()
+    {
+        itsClosedFlag.compareAndSet( true,false );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
     public boolean 
     isReceiving()
     {
         return itsReceivingFlag.get();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    isClosed()
+    {
+        return itsClosedFlag.get();
     }
 
     /************************************************************************
@@ -192,7 +222,7 @@ class InMemoryMessagingSession
     public InMemoryMessagingSession
     insertSelector(String expression,ISelector selector)
     {
-        itsSelectors.put( expression,selector );
+        itsSelectors.put( normalize(expression),selector );
         return this;
     }
     
@@ -205,8 +235,30 @@ class InMemoryMessagingSession
     ISelector
     getSelector(String selector)
     {
-        return itsSelectors.get( selector );
+        return itsSelectors.get( normalize(selector) );
     }
+
+    /************************************************************************
+     *  
+     *
+     * @param expression
+     * @return
+     */
+    private String 
+    normalize(String expression)
+    {
+        StringBuilder builder = new StringBuilder();
+        Matcher       matcher = 
+            Pattern
+                .compile("([^\"]\\S*|\".+?\")\\s*")
+                .matcher(expression);
+        
+        while ( matcher.find() )
+            builder.append(matcher.group(1)); 
+        
+        return builder.toString();        
+    }
+    
 }
 
 // ##########################################################################

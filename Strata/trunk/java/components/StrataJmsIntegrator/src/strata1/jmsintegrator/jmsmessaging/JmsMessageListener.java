@@ -1,31 +1,35 @@
 // ##########################################################################
-// # File Name:	DefaultSelector.java
+// # File Name:	JmsMessageListener.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataIntegrator Framework.
+// # License:	This file is part of the StrataJmsIntegrator Framework.
 // #
-// #   			The StrataIntegrator Framework is free software: you 
+// #   			The StrataJmsIntegrator Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataIntegrator Framework is distributed in the 
+// #    		The StrataJmsIntegrator Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataIntegrator
+// #			General Public License along with the StrataJmsIntegrator
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.integrator.inmemorymessaging;
+package strata1.jmsintegrator.jmsmessaging;
 
-import strata1.integrator.messaging.IMessage;
-import strata1.integrator.messaging.ISelector;
+import strata1.integrator.messaging.IMessageListener;
+import javax.jms.MapMessage;
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
+import javax.jms.TextMessage;
 
 /****************************************************************************
  * 
@@ -34,26 +38,40 @@ import strata1.integrator.messaging.ISelector;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-class DefaultSelector
-    implements ISelector
+public 
+class JmsMessageListener
+    implements MessageListener
 {
+    private final IMessageListener itsListener;
+    
     /************************************************************************
-     * Creates a new {@code DefaultSelector}. 
+     * Creates a new JmsMessageListener. 
      *
      */
-    DefaultSelector() 
+    public 
+    JmsMessageListener(IMessageListener listener)
     {
+        itsListener = listener;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public boolean 
-    evaluate(IMessage message)
+    public void 
+    onMessage(Message message)
     {
-        return true;
+        if ( message instanceof TextMessage )
+            itsListener.onMessage( 
+                new JmsStringMessage((TextMessage)message) );
+        else if ( message instanceof MapMessage )
+            itsListener.onMessage( 
+                new JmsMapMessage((MapMessage)message) );
+        else if ( message instanceof ObjectMessage )
+            itsListener.onMessage( 
+                new JmsObjectMessage((ObjectMessage)message) );
     }
+
 }
 
 // ##########################################################################

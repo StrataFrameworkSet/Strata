@@ -18,6 +18,7 @@
     <property name="androidclient.root" value="${components.root}/StrataAndroidClient"/>
     <property name="gwtclient.root" value="${components.root}/StrataGwtClient"/>
     <property name="integrator.root" value="${components.root}/StrataIntegrator"/>
+    <property name="jmsintegrator.root" value="${components.root}/StrataJmsIntegrator"/>
     <property name="persistence.root" value="${components.root}/StrataPersistence"/>
     <property name="server.root" value="${components.root}/StrataServer"/>
     
@@ -29,6 +30,7 @@
     <property name="androidclienttest.root" value="${tests.root}/StrataAndroidClientTest"/>
     <property name="gwtclienttest.root" value="${tests.root}/StrataGwtClientTest"/>
     <property name="integratortest.root" value="${tests.root}/StrataIntegratorTest"/>
+    <property name="jmsintegratortest.root" value="${tests.root}/StrataJmsIntegratorTest"/>
     <property name="persistencetest.root" value="${tests.root}/StrataPersistenceTest"/>
     <property name="servertest.root" value="${tests.root}/StrataServerTest"/>
  
@@ -44,6 +46,9 @@
         
         <file name="${integrator.root}/build.xml"/>
         <file name="${integratortest.root}/build.xml"/>
+        
+        <file name="${jmsintegrator.root}/build.xml"/>
+        <file name="${jmsintegratortest.root}/build.xml"/>
                 
         <file name="${client.root}/build.xml"/>
         <file name="${clienttest.root}/build.xml"/>
