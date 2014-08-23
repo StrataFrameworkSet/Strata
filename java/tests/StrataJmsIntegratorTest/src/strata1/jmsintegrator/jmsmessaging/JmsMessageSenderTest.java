@@ -1,31 +1,32 @@
 // ##########################################################################
-// # File Name:	DefaultSelector.java
+// # File Name:	JmsMessageSenderTest.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataIntegrator Framework.
+// # License:	This file is part of the StrataIntegratorTest Framework.
 // #
-// #   			The StrataIntegrator Framework is free software: you 
+// #   			The StrataIntegratorTest Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataIntegrator Framework is distributed in the 
+// #    		The StrataIntegratorTest Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataIntegrator
+// #			General Public License along with the StrataIntegratorTest
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.integrator.inmemorymessaging;
+package strata1.jmsintegrator.jmsmessaging;
 
-import strata1.integrator.messaging.IMessage;
-import strata1.integrator.messaging.ISelector;
+import strata1.integrator.messaging.IMessagingSession;
+import strata1.integrator.messaging.MessageSenderTest;
+import org.apache.activemq.ActiveMQConnectionFactory;
 
 /****************************************************************************
  * 
@@ -34,26 +35,31 @@ import strata1.integrator.messaging.ISelector;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-class DefaultSelector
-    implements ISelector
+public 
+class JmsMessageSenderTest
+    extends MessageSenderTest
 {
+
     /************************************************************************
-     * Creates a new {@code DefaultSelector}. 
+     * Creates a new {@code JmsMessageSenderTest}. 
      *
      */
-    DefaultSelector() 
-    {
-    }
+    public 
+    JmsMessageSenderTest() {}
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public boolean 
-    evaluate(IMessage message)
+    protected IMessagingSession 
+    createMessagingSession()
     {
-        return true;
+        ActiveMQConnectionFactory factory = 
+            new ActiveMQConnectionFactory("vm://localhost");
+        
+        return new JmsQueueMessagingSession(factory);
     }
+
 }
 
 // ##########################################################################

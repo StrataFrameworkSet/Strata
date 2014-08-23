@@ -62,6 +62,7 @@ class MessagingSessionTest
     public void 
     tearDown() throws Exception
     {
+        itsTarget.close();
         itsTarget = null;
     }
 
@@ -90,7 +91,7 @@ class MessagingSessionTest
         assertNotNull( receiver );
         assertEquals( itsTarget,receiver.getSession() );
         assertNull( receiver.getListener() );
-        assertEquals( "",receiver.getSelector() );
+        assertNull( null,receiver.getSelector() );
     }
 
     /**

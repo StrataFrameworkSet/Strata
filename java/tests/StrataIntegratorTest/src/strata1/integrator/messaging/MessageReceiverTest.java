@@ -70,6 +70,7 @@ class MessageReceiverTest
     {
         itsTarget = null;
         itsSender = null;
+        itsSession.close();
         itsSession = null;
     }
 
@@ -90,20 +91,6 @@ class MessageReceiverTest
         assertEquals( listener,itsTarget.getListener() );
     }
 
-    /**
-     * Test method for {@link IMessageReceiver#setSelector(String)}.
-     */
-    @Test
-    public void 
-    testSetSelector()
-    {
-        String selector = "ReturnAddress=foo";
-        
-        assertEquals( "",itsTarget.getSelector().toString() );
-        itsTarget.setSelector( selector );
-        assertNotNull( itsTarget.getSelector() );
-        assertEquals( selector,itsTarget.getSelector() );
-    }
 
     /**
      * Test method for {@link IMessageReceiver#getSession()}.
@@ -141,8 +128,13 @@ class MessageReceiverTest
     {
         String selector = "ReturnAddress=foo";
         
-        assertEquals( "",itsTarget.getSelector().toString() );
-        itsTarget.setSelector( selector );
+        assertEquals( null,itsTarget.getSelector() );
+        
+        itsTarget = 
+            itsSession.createMessageReceiver( 
+                "foo.test",
+                selector );
+            
         assertNotNull( itsTarget.getSelector() );
         assertEquals( selector,itsTarget.getSelector() );
     }
@@ -301,7 +293,10 @@ class MessageReceiverTest
         IMessage       actual2   = null;
         IMessage       actual3   = null;
         
-        itsTarget.setSelector( "FooProperty >= 5" );
+        itsTarget = 
+            itsSession.createMessageReceiver( 
+                "foo.test",
+                "FooProperty  >=  5 " );
         
         expected1
             .setIntProperty( "FooProperty",3 )
@@ -391,7 +386,10 @@ class MessageReceiverTest
         IMessage       actual2   = null;
         IMessage       actual3   = null;
         
-        itsTarget.setSelector( "ReturnAddress=foo" );
+        itsTarget = 
+            itsSession.createMessageReceiver( 
+                "foo.test",
+                "ReturnAddress=foo" );
         
         expected1
             .setReturnAddress( "foo" )

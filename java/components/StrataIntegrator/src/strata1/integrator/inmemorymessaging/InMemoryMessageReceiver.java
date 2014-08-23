@@ -66,7 +66,7 @@ class InMemoryMessageReceiver
         itsSession       = session;
         itsQueue         = queue;
         itsListener      = null;
-        itsSelector      = "";
+        itsSelector      = null;
         itsSelectorImp   = new DefaultSelector();
         itsListeningFlag = new AtomicBoolean(false);
         itsState         = null;
@@ -102,18 +102,6 @@ class InMemoryMessageReceiver
     setListener(IMessageListener listener)
     {
         itsListener = listener;
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IMessageReceiver 
-    setSelector(String selector)
-    {
-        itsSelector = selector;
-        itsSelectorImp = itsSession.getSelector( selector );
         return this;
     }
 

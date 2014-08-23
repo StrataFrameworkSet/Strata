@@ -24,9 +24,10 @@ class MessageSenderTest
     @After
     public void 
     tearDown() throws Exception
-    {
+    {      
         itsReceiver = null;
         itsTarget = null;
+        itsSession.close();
         itsSession = null;
     }
 
