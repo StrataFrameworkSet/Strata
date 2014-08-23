@@ -8,6 +8,7 @@
 	<target name="define-properties">
 		
 	    <property name="source.dir" value="src"/>
+	    <property name="resource.dir" value="resources"/>
 	    <property name="output.dir" value="bin"/>
 	    <property name="distribution.dir" value="lib"/>
 		<property name="component" value="StrataJmsIntegrator"/>
@@ -17,6 +18,7 @@
 	    <property name="test.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
     	<property name="common.artifact" value="../../components/StrataCommon/lib/StrataCommon-${version}.jar"/>
     	<property name="integrator.artifact" value="../../components/StrataIntegrator/lib/StrataIntegrator-${version}.jar"/>
+    	<property name="integratortest.artifact" value="../../tests/StrataIntegratorTest/lib/StrataIntegratorTest-${version}.jar"/>
 	    <property name="commit.test.suite" value="strata1.jmsintegrator.testsuite.CommitStageSuite"/>
 		<property name="integration.test.suite" value="strata1.jmsintegrator.testsuite.IntegrationStageSuite"/>
 	    <property name="test.reports" value="${output.dir}/reports"/>
@@ -33,6 +35,8 @@
 			<pathelement location="${component.artifact}" /> 
 		    <pathelement location="${common.artifact}" /> 
 		    <pathelement location="${integrator.artifact}" /> 
+		    <pathelement location="${integratortest.artifact}" /> 
+		    <dirset dir="${resource.dir}" /> 
 			<path refid="partial.classpath"/> 
 	    </path>
 		
