@@ -222,6 +222,15 @@ class InMemoryMessageReceiver
         return itsState.receiveNoWait( itsQueue,itsSelectorImp );
     }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    close()
+    {
+    }
+
 }
 
 // ##########################################################################

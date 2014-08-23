@@ -69,6 +69,9 @@ interface IMessageReceiver
     public IMessage
     receiveNoWait()
         throws MixedModeException,NoMessageReceivedException;
+    
+    public void
+    close();
 }
 
 // ##########################################################################

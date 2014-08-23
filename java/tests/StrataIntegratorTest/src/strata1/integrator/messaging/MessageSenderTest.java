@@ -19,12 +19,15 @@ class MessageSenderTest
         itsSession = createMessagingSession();
         itsTarget  = itsSession.createMessageSender( "foo.test" );
         itsReceiver = itsSession.createMessageReceiver( "foo.test" );
+        itsSession.startReceiving();
     }
 
     @After
     public void 
     tearDown() throws Exception
     {      
+        itsReceiver.close();
+        itsSession.stopReceiving();
         itsReceiver = null;
         itsTarget = null;
         itsSession.close();

@@ -56,6 +56,8 @@ class MessageReceiverTest
         itsSession = createMessagingSession();
         itsSender  = itsSession.createMessageSender( "foo.test" );
         itsTarget  = itsSession.createMessageReceiver( "foo.test" );
+        
+        itsSession.startReceiving();     
     }
 
     /************************************************************************
@@ -68,6 +70,9 @@ class MessageReceiverTest
     tearDown() 
         throws Exception
     {
+        itsTarget.close();
+        cleanUpQueue( "foo.test" );
+        itsSession.stopReceiving();
         itsTarget = null;
         itsSender = null;
         itsSession.close();
@@ -126,10 +131,11 @@ class MessageReceiverTest
     public void 
     testGetSelector()
     {
-        String selector = "ReturnAddress=foo";
+        String selector = "ReturnAddress='foo'";
         
         assertEquals( null,itsTarget.getSelector() );
         
+        itsTarget.close();
         itsTarget = 
             itsSession.createMessageReceiver( 
                 "foo.test",
@@ -216,9 +222,15 @@ class MessageReceiverTest
         IMessage       actual2   = null;
         IMessage       actual3   = null;
         
-        expected1.setPayload( "TestMessage1" );
-        expected2.setPayload( "TestMessage2" );
-        expected3.setPayload( "TestMessage3" );
+        expected1
+            .setCorrelationId( "testReceive" )
+            .setPayload( "TestMessage1" );
+        expected2
+            .setCorrelationId( "testReceive" )
+            .setPayload( "TestMessage2" );
+        expected3
+            .setCorrelationId( "testReceive" )
+            .setPayload( "TestMessage3" );
         
         itsSender.send( expected1 );
         itsSender.send( expected2 );
@@ -254,17 +266,23 @@ class MessageReceiverTest
         IMessage       actual2   = null;
         IMessage       actual3   = null;
         
-        expected1.setPayload( "TestMessage1" );
-        expected2.setPayload( "TestMessage2" );
-        expected3.setPayload( "TestMessage3" );
+        expected1
+            .setCorrelationId( "testReceiveLong1" )
+            .setPayload( "TestMessage1" );
+        expected2
+            .setCorrelationId( "testReceiveLong1" )
+            .setPayload( "TestMessage2" );
+        expected3
+            .setCorrelationId( "testReceiveLong1" )
+            .setPayload( "TestMessage3" );
         
         itsSender.send( expected1 );
         itsSender.send( expected2 );
         itsSender.send( expected3 );
         
-        actual1 = itsTarget.receive( 10 );
-        actual2 = itsTarget.receive( 10);
-        actual3 = itsTarget.receive( 10 );
+        actual1 = itsTarget.receive( 1000 );
+        actual2 = itsTarget.receive( 1000);
+        actual3 = itsTarget.receive( 1000 );
         
         assertTrue( actual1 instanceof IStringMessage );
         assertTrue( actual2 instanceof IStringMessage );
@@ -288,23 +306,27 @@ class MessageReceiverTest
     {
         IStringMessage expected1 = itsSession.createStringMessage();
         IMapMessage    expected2 = itsSession.createMapMessage();
-        IObjectMessage expected3 = itsSession.createObjectMessage();
+        IStringMessage expected3 = itsSession.createStringMessage();
         IMessage       actual1   = null;
         IMessage       actual2   = null;
         IMessage       actual3   = null;
         
+        itsTarget.close();
         itsTarget = 
             itsSession.createMessageReceiver( 
                 "foo.test",
-                "FooProperty  >=  5 " );
+                "FooProperty  >=  5" );
         
         expected1
+            .setCorrelationId( "testReceiveLong2" )
             .setIntProperty( "FooProperty",3 )
             .setPayload( "TestMessage1" );
         expected2
+            .setCorrelationId( "testReceiveLong2" )
             .setIntProperty( "FooProperty",5 )
             .setString( "TestMessage","TestMessage2" );
         expected3
+            .setCorrelationId( "testReceiveLong2" )
             .setIntProperty( "FooProperty",7 )
             .setPayload( "TestMessage3" );
         
@@ -312,14 +334,14 @@ class MessageReceiverTest
         itsSender.send( expected2 );
         itsSender.send( expected3 );
         
-        actual2 = itsTarget.receive( 10);
-        actual3 = itsTarget.receive( 10 );
-        
+        actual2 = itsTarget.receive( 1000 );    
+        actual3 = itsTarget.receive( 1000 );
+              
         assertTrue( actual2 instanceof IMapMessage );
-        assertTrue( actual3 instanceof IObjectMessage );
+        assertTrue( actual3 instanceof IStringMessage );
                
         assertEquals( expected2.getString("TestMessage"),((IMapMessage)actual2).getString("TestMessage") );
-        assertEquals( expected3.getPayload(),((IObjectMessage)actual3).getPayload() );
+        assertEquals( expected3.getPayload(),((IStringMessage)actual3).getPayload() );
         
         
         try
@@ -348,9 +370,15 @@ class MessageReceiverTest
         IMessage       actual2   = null;
         IMessage       actual3   = null;
         
-        expected1.setPayload( "TestMessage1" );
-        expected2.setPayload( "TestMessage2" );
-        expected3.setPayload( "TestMessage3" );
+        expected1
+            .setCorrelationId( "testReceiveNoWait1" )
+            .setPayload( "TestMessage1" );
+        expected2
+            .setCorrelationId( "testReceiveNoWait1" )
+            .setPayload( "TestMessage2" );
+        expected3
+            .setCorrelationId( "testReceiveNoWait1" )
+            .setPayload( "TestMessage3" );
         
         itsSender.send( expected1 );
         itsSender.send( expected2 );
@@ -386,17 +414,22 @@ class MessageReceiverTest
         IMessage       actual2   = null;
         IMessage       actual3   = null;
         
+        itsTarget.close();
         itsTarget = 
             itsSession.createMessageReceiver( 
                 "foo.test",
-                "ReturnAddress=foo" );
+                "ReturnAddress='foo'" );
         
         expected1
+            .setCorrelationId( "testReceiveNoWait2" )
             .setReturnAddress( "foo" )
             .setPayload( "TestMessage1" );
         
-        expected2.setPayload( "TestMessage2" );
+        expected2
+            .setCorrelationId( "testReceiveNoWait2" )
+            .setPayload( "TestMessage2" );
         expected3
+            .setCorrelationId( "testReceiveNoWait2" )
             .setReturnAddress( "foo" )
             .setPayload( "TestMessage3" );
         
@@ -421,8 +454,47 @@ class MessageReceiverTest
         catch (NoMessageReceivedException e) {}
     }
 
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
     protected abstract IMessagingSession 
     createMessagingSession();
+
+    /************************************************************************
+     *  
+     *
+     * @param string
+     * @throws MixedModeException 
+     */
+    private void 
+    cleanUpQueue(String queue) 
+        throws MixedModeException
+    {
+        IMessageReceiver cleaner = 
+            itsSession.createMessageReceiver( queue );
+        
+        try
+        {
+            IMessage message = cleaner.receive( 5000 );
+            
+            while ( message != null )
+            {
+                System.out.println( "Removing message: " + message.getCorrelationId() );
+            
+                message = cleaner.receive( 5000 );
+            }
+        }
+        catch (NoMessageReceivedException e) 
+        {
+            System.out.println( "Queue:" + queue + " cleaned up." );
+        }
+        finally
+        {
+            cleaner.close();
+        }
+    }
 }
 
 // ##########################################################################
