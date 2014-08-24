@@ -156,7 +156,7 @@ class InMemoryObjectMessage
      */
     @Override
     public IObjectMessage 
-    setLongProperty(String name,int value)
+    setLongProperty(String name,long value)
     {
         super.setLongProperty( name,value );
         return this;

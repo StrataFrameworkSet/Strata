@@ -62,7 +62,7 @@ interface IMessage
     setIntProperty(String name,int value);
     
     public IMessage
-    setLongProperty(String name,int value);
+    setLongProperty(String name,long value);
     
     public IMessage
     setFloatProperty(String name,float value);

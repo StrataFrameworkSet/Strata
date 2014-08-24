@@ -222,7 +222,7 @@ class JmsMessage
      */
     @Override
     public IMessage 
-    setLongProperty(String name,int value)
+    setLongProperty(String name,long value)
     {
         try
         {

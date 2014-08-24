@@ -157,7 +157,7 @@ class JmsStringMessage
      */
     @Override
     public IStringMessage 
-    setLongProperty(String name,int value)
+    setLongProperty(String name,long value)
     {
         super.setLongProperty( name,value );
         return this;

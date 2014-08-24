@@ -65,7 +65,7 @@ interface IMapMessage
     setIntProperty(String name,int value);
     
     public IMapMessage
-    setLongProperty(String name,int value);
+    setLongProperty(String name,long value);
     
     public IMapMessage
     setFloatProperty(String name,float value);
