@@ -56,7 +56,7 @@ interface IStringMessage
     setIntProperty(String name,int value);
     
     public IStringMessage
-    setLongProperty(String name,int value);
+    setLongProperty(String name,long value);
     
     public IStringMessage
     setFloatProperty(String name,float value);

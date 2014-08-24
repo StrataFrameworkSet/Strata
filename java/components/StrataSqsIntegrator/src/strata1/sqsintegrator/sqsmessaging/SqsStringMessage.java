@@ -1,34 +1,31 @@
 // ##########################################################################
-// # File Name:	JmsObjectMessage.java
+// # File Name:	SqsStringMessage.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataIntegrator Framework.
+// # License:	This file is part of the StrataSqsIntegrator Framework.
 // #
-// #   			The StrataIntegrator Framework is free software: you 
+// #   			The StrataSqsIntegrator Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataIntegrator Framework is distributed in the 
+// #    		The StrataSqsIntegrator Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataIntegrator
+// #			General Public License along with the StrataSqsIntegrator
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.jmsintegrator.jmsmessaging;
+package strata1.sqsintegrator.sqsmessaging;
 
-import java.io.Serializable;
-import javax.jms.JMSException;
-import javax.jms.ObjectMessage;
 import strata1.integrator.messaging.DeliveryMode;
-import strata1.integrator.messaging.IObjectMessage;
+import strata1.integrator.messaging.IStringMessage;
 
 /****************************************************************************
  * 
@@ -38,27 +35,25 @@ import strata1.integrator.messaging.IObjectMessage;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class JmsObjectMessage
-    extends    JmsMessage
-    implements IObjectMessage
+class SqsStringMessage
+    extends    SqsMessage
+    implements IStringMessage
 {
-    private final ObjectMessage itsImp;
-    
     /************************************************************************
-     * Creates a new {@code JmsObjectMessage}. 
+     * Creates a new SqsStringMessage. 
      *
      */
     public 
-    JmsObjectMessage(ObjectMessage imp)
+    SqsStringMessage()
     {
-        itsImp = imp;
+        setPayloadType( PayloadType.STRING );
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setMessageId(String messageId)
     {
         super.setMessageId( messageId );
@@ -69,7 +64,7 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setCorrelationId(String correlationId)
     {
         super.setCorrelationId( correlationId );
@@ -80,7 +75,7 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setReturnAddress(String returnAddress)
     {
         super.setReturnAddress( returnAddress );
@@ -91,7 +86,7 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setDeliveryMode(DeliveryMode mode)
     {
         super.setDeliveryMode( mode );
@@ -102,7 +97,7 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setTimeToLive(long timeToLive)
     {
         super.setTimeToLive( timeToLive );
@@ -113,7 +108,7 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setByteProperty(String name,byte value)
     {
         super.setByteProperty( name,value );
@@ -124,7 +119,7 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setBooleanProperty(String name,boolean value)
     {
         super.setBooleanProperty( name,value );
@@ -135,7 +130,7 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setShortProperty(String name,short value)
     {
         super.setShortProperty( name,value );
@@ -146,7 +141,7 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setIntProperty(String name,int value)
     {
         super.setIntProperty( name,value );
@@ -157,7 +152,7 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setLongProperty(String name,long value)
     {
         super.setLongProperty( name,value );
@@ -168,7 +163,7 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setFloatProperty(String name,float value)
     {
         super.setFloatProperty( name,value );
@@ -179,7 +174,7 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setDoubleProperty(String name,double value)
     {
         super.setDoubleProperty( name,value );
@@ -190,30 +185,21 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
+    public IStringMessage 
     setStringProperty(String name,String value)
     {
         super.setStringProperty( name,value );
         return this;
     }
 
-
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IObjectMessage 
-    setPayload(Serializable payload)
+    public IStringMessage 
+    setPayload(String payload)
     {
-        try
-        {
-            itsImp.setObject( payload );
-        }
-        catch (JMSException e)
-        {
-            throw new IllegalArgumentException( e );
-        }
-        
+        getMessageImp().setBody( payload );
         return this;
     }
 
@@ -221,27 +207,10 @@ class JmsObjectMessage
      * {@inheritDoc} 
      */
     @Override
-    public Object 
+    public String 
     getPayload()
     {
-        try
-        {
-            return itsImp.getObject();
-        }
-        catch (JMSException e)
-        {
-            throw new IllegalArgumentException( e );
-        }
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    protected ObjectMessage 
-    getMessageImp()
-    {
-        return itsImp;
+        return getMessageImp().getBody();
     }
 
 }

@@ -65,7 +65,7 @@ interface IObjectMessage
     setIntProperty(String name,int value);
     
     public IObjectMessage
-    setLongProperty(String name,int value);
+    setLongProperty(String name,long value);
     
     public IObjectMessage
     setFloatProperty(String name,float value);

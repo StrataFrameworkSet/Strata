@@ -166,7 +166,7 @@ class InMemoryMessage
      */
     @Override
     public IMessage 
-    setLongProperty(String name,int value)
+    setLongProperty(String name,long value)
     {
         itsProperties.put( name,value );
         return this;
