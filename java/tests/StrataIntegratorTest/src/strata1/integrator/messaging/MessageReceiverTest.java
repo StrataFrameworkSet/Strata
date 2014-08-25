@@ -354,6 +354,67 @@ class MessageReceiverTest
     }
 
     /**
+     * Test method for {@link IMessageReceiver#receive(long)}.
+     * @throws MixedModeException 
+     * @throws NoMessageReceivedException 
+     */
+    @Test
+    public void 
+    testReceiveLong3() 
+        throws MixedModeException,NoMessageReceivedException
+    {
+        IMessageReceiver receiver1 = null;
+        IMessageReceiver receiver2 = null;
+        IStringMessage   expected1 = itsSession.createStringMessage();
+        IMapMessage      expected2 = itsSession.createMapMessage();
+        IObjectMessage   expected3 = itsSession.createObjectMessage();
+        IMessage         actual1   = null;
+        IMessage         actual2   = null;
+        IMessage         actual3   = null;
+        
+        itsTarget.close();
+        receiver1 = 
+            itsSession.createMessageReceiver( 
+                "foo.test",
+                "FooProperty  >=  5" );
+        receiver2 = 
+            itsSession.createMessageReceiver( 
+                "foo.test",
+                "FooProperty  <  5" );
+        
+        expected1
+            .setCorrelationId( "testReceiveLong3" )
+            .setIntProperty( "FooProperty",3 )
+            .setPayload( "TestMessage1" );
+        expected2
+            .setCorrelationId( "testReceiveLong3" )
+            .setIntProperty( "FooProperty",5 )
+            .setString( "TestMessage","TestMessage2" );
+        expected3
+            .setCorrelationId( "testReceiveLong3" )
+            .setIntProperty( "FooProperty",7 )
+            .setPayload( "TestMessage3" );
+        
+        itsSender.send( expected1 );
+        itsSender.send( expected2 );
+        itsSender.send( expected3 );
+        
+        actual2 = receiver1.receive( 1000 );    
+        actual3 = receiver1.receive( 1000 );
+              
+        assertTrue( actual2 instanceof IMapMessage );
+        assertTrue( actual3 instanceof IObjectMessage );
+               
+        assertEquals( expected2.getString("TestMessage"),((IMapMessage)actual2).getString("TestMessage") );
+        assertEquals( expected3.getPayload(),((IObjectMessage)actual3).getPayload() );
+         
+        actual1 = receiver2.receive( 10 );
+        
+        assertTrue( actual1 instanceof IStringMessage );
+        assertEquals( expected1.getPayload(),((IStringMessage)actual1).getPayload() );
+    }
+
+    /**
      * Test method for {@link IMessageReceiver#receiveNoWait()}.
      * @throws NoMessageReceivedException 
      * @throws MixedModeException 
@@ -477,13 +538,13 @@ class MessageReceiverTest
         
         try
         {
-            IMessage message = cleaner.receive( 5000 );
+            IMessage message = cleaner.receive( 2000 );
             
             while ( message != null )
             {
                 System.out.println( "Removing message: " + message.getCorrelationId() );
             
-                message = cleaner.receive( 5000 );
+                message = cleaner.receive( 2000 );
             }
         }
         catch (NoMessageReceivedException e) 

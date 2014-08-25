@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	SqsStringMessage.java
+// # File Name:	SqsObjectMessage.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -25,8 +25,17 @@
 package strata1.sqsintegrator.sqsmessaging;
 
 import strata1.integrator.messaging.DeliveryMode;
-import strata1.integrator.messaging.IStringMessage;
+import strata1.integrator.messaging.IObjectMessage;
 import com.amazonaws.services.sqs.model.Message;
+import com.amazonaws.util.Base64;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /****************************************************************************
  * 
@@ -36,37 +45,38 @@ import com.amazonaws.services.sqs.model.Message;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class SqsStringMessage
-    extends    SqsMessage
-    implements IStringMessage
+class SqsObjectMessage
+    extends SqsMessage
+    implements IObjectMessage
 {
+
     /************************************************************************
-     * Creates a new SqsStringMessage. 
+     * Creates a new SqsObjectMessage. 
      *
      */
-    public
-    SqsStringMessage()
+    public 
+    SqsObjectMessage()
     {
-        setPayloadType( PayloadType.STRING );
+        setPayloadType( PayloadType.OBJECT );
     }
-    
+
     /************************************************************************
-     * Creates a new SqsStringMessage. 
+     * Creates a new SqsObjectMessage. 
      *
      * @param imp
      */
     public 
-    SqsStringMessage(Message imp)
+    SqsObjectMessage(Message imp)
     {
         super( imp );
-        setPayloadType( PayloadType.STRING );
+        setPayloadType( PayloadType.OBJECT );
     }
-    
+
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setMessageId(String messageId)
     {
         super.setMessageId( messageId );
@@ -77,7 +87,7 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setCorrelationId(String correlationId)
     {
         super.setCorrelationId( correlationId );
@@ -88,7 +98,7 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setReturnAddress(String returnAddress)
     {
         super.setReturnAddress( returnAddress );
@@ -99,7 +109,7 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setDeliveryMode(DeliveryMode mode)
     {
         super.setDeliveryMode( mode );
@@ -110,7 +120,7 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setTimeToLive(long timeToLive)
     {
         super.setTimeToLive( timeToLive );
@@ -121,7 +131,7 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setByteProperty(String name,byte value)
     {
         super.setByteProperty( name,value );
@@ -132,7 +142,7 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setBooleanProperty(String name,boolean value)
     {
         super.setBooleanProperty( name,value );
@@ -143,7 +153,7 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setShortProperty(String name,short value)
     {
         super.setShortProperty( name,value );
@@ -154,7 +164,7 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setIntProperty(String name,int value)
     {
         super.setIntProperty( name,value );
@@ -165,7 +175,7 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setLongProperty(String name,long value)
     {
         super.setLongProperty( name,value );
@@ -176,7 +186,7 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setFloatProperty(String name,float value)
     {
         super.setFloatProperty( name,value );
@@ -187,7 +197,7 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setDoubleProperty(String name,double value)
     {
         super.setDoubleProperty( name,value );
@@ -198,7 +208,7 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
+    public IObjectMessage 
     setStringProperty(String name,String value)
     {
         super.setStringProperty( name,value );
@@ -209,10 +219,23 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
-    setPayload(String payload)
+    public IObjectMessage 
+    setPayload(Serializable payload)
     {
-        getMessageImp().setBody( payload );
+        ByteArrayOutputStream bytes  = new ByteArrayOutputStream();
+        ObjectOutput          output = null;;
+        try
+        {
+            output = new ObjectOutputStream( bytes );
+            output.writeObject( payload );
+            getMessageImp()
+                .setBody( new String(Base64.encode(bytes.toByteArray())) );
+        }
+        catch(IOException e)
+        {
+            throw new IllegalStateException( e );
+        }
+        
         return this;
     }
 
@@ -220,12 +243,26 @@ class SqsStringMessage
      * {@inheritDoc} 
      */
     @Override
-    public String 
+    public Object 
     getPayload()
     {
-        return getMessageImp().getBody();
+        ByteArrayInputStream bytes  = null;
+        ObjectInput          input = null;
+        
+        bytes = 
+            new ByteArrayInputStream(
+                Base64.decode( getMessageImp().getBody() ) );
+        
+        try
+        {
+            input = new ObjectInputStream( bytes );
+            return input.readObject();
+        }
+        catch(Exception e)
+        {
+            throw new IllegalStateException( e );
+        }
     }
-
 }
 
 // ##########################################################################

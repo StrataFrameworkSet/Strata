@@ -52,7 +52,6 @@ class JmsQueueMessagingSession
     private final QueueConnectionFactory factory;
     private QueueConnection              connection;
     private Session                      session;
-    private Map<String,Queue>            queues;
     private boolean                      receiving;
     private boolean                      closed;
     private int                          acknowledgmentMode;
@@ -69,7 +68,6 @@ class JmsQueueMessagingSession
     {
         factory            = f;
         acknowledgmentMode = ackMode;
-        queues             = new HashMap<String,Queue>();
         connect();
     }
 
@@ -382,9 +380,7 @@ class JmsQueueMessagingSession
      */
     private void
     reconnect()
-    {
-        queues.clear();
-    
+    {    
         try
         {
             session.close();
@@ -442,13 +438,10 @@ class JmsQueueMessagingSession
     private IMessageSender 
     createProducer(String id) throws JMSException
     {
-        if ( !queues.containsKey(id) )
-            queues.put(id,session.createQueue(id));
-    
         return
             new JmsMessageSender(
                 this,
-                session.createProducer(queues.get(id)));
+                session.createProducer(createQueue(id)));
     }
 
     /************************************************************************
@@ -461,13 +454,10 @@ class JmsQueueMessagingSession
     private IMessageReceiver 
     createConsumer(String id) throws JMSException
     {
-        if ( !queues.containsKey(id) )
-            queues.put(id,session.createQueue(id));
-    
         return
             new JmsMessageReceiver(
                 this,
-                session.createConsumer(queues.get(id)));
+                session.createConsumer(createQueue(id)));
     }
 
     /************************************************************************
@@ -480,15 +470,25 @@ class JmsQueueMessagingSession
     private IMessageReceiver 
     createConsumer(String id,String selector) throws JMSException
     {
-        if ( !queues.containsKey(id) )
-            queues.put(id,session.createQueue(id));
-    
         return
             new JmsMessageReceiver(
                 this,
-                session.createConsumer(queues.get(id),selector));
+                session.createConsumer(createQueue(id),selector));
     }
 
+    /************************************************************************
+     *  
+     *
+     * @param queueName
+     * @return
+     * @throws JMSException
+     */
+    private Queue
+    createQueue(String queueName) 
+        throws JMSException
+    {
+        return session.createQueue( queueName );
+    }
 }
 
 // ##########################################################################

@@ -50,6 +50,8 @@ class SqsMessage
     
     private final Message itsImp;
     
+
+    
     /************************************************************************
      * Creates a new SqsMessage. 
      *
@@ -57,7 +59,18 @@ class SqsMessage
     protected 
     SqsMessage()
     {
-        itsImp = new Message();
+        this( new Message() );
+    }
+    
+    /************************************************************************
+     * Creates a new SqsMessage. 
+     *
+     * @param imp
+     */
+    protected 
+    SqsMessage(Message imp)
+    {
+        itsImp = imp;
     }
 
     /************************************************************************
