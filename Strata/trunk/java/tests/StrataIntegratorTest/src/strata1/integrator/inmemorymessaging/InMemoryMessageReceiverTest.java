@@ -76,6 +76,22 @@ class InMemoryMessageReceiverTest
                 }
                 
             });
+        itsSelectors.put( 
+            "FooProperty < 5",
+            new ISelector()
+            {
+                @Override
+                public boolean 
+                evaluate(IMessage message)
+                {
+                    if ( !message.hasProperty( "FooProperty" ) )
+                        return false;
+                    
+                    return
+                        message.getIntegerProperty( "FooProperty" ) < 5;
+                }
+                
+            });
     }
 
     /************************************************************************

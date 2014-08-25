@@ -52,7 +52,6 @@ class JmsTopicMessagingSession
     private final TopicConnectionFactory factory;
     private TopicConnection              connection;
     private Session                      session;
-    private Map<String,Topic>            topics;
     private boolean                      receiving;
     private boolean                      closed;
     private int                          acknowledgmentMode;
@@ -69,7 +68,6 @@ class JmsTopicMessagingSession
     {
         factory            = f;
         acknowledgmentMode = ackMode;
-        topics             = new HashMap<String,Topic>();
         connect();
     }
 
@@ -383,8 +381,6 @@ class JmsTopicMessagingSession
     private void
     reconnect()
     {
-        topics.clear();
-    
         try
         {
             session.close();
@@ -442,13 +438,10 @@ class JmsTopicMessagingSession
     private IMessageSender 
     createProducer(String id) throws JMSException
     {
-        if ( !topics.containsKey(id) )
-            topics.put(id,session.createTopic(id));
-    
         return
             new JmsMessageSender(
                 this,
-                session.createProducer(topics.get(id)));
+                session.createProducer(createTopic(id)));
     }
 
     /************************************************************************
@@ -461,13 +454,10 @@ class JmsTopicMessagingSession
     private IMessageReceiver 
     createConsumer(String id) throws JMSException
     {
-        if ( !topics.containsKey(id) )
-            topics.put(id,session.createTopic(id));
-    
         return
             new JmsMessageReceiver(
                 this,
-                session.createConsumer(topics.get(id)));
+                session.createConsumer(createTopic(id)));
     }
 
     /************************************************************************
@@ -480,15 +470,25 @@ class JmsTopicMessagingSession
     private IMessageReceiver 
     createConsumer(String id,String selector) throws JMSException
     {
-        if ( !topics.containsKey(id) )
-            topics.put(id,session.createTopic(id));
-    
         return
             new JmsMessageReceiver(
                 this,
-                session.createConsumer(topics.get(id),selector));
+                session.createConsumer(createTopic(id),selector));
     }
 
+    /************************************************************************
+     *  
+     *
+     * @param topicName
+     * @return
+     * @throws JMSException
+     */
+    private Topic
+    createTopic(String topicName) 
+        throws JMSException
+    {
+        return session.createTopic( topicName );
+    }
 }
 
 // ##########################################################################

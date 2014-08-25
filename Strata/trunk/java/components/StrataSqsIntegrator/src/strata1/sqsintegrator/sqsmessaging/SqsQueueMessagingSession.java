@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	SqsStringMessage.java
+// # File Name:	SqsQueueMessagingSession.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -24,9 +24,13 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
-import strata1.integrator.messaging.DeliveryMode;
+import strata1.integrator.messaging.IMapMessage;
+import strata1.integrator.messaging.IMessageReceiver;
+import strata1.integrator.messaging.IMessageSender;
+import strata1.integrator.messaging.IMessagingSession;
+import strata1.integrator.messaging.IObjectMessage;
 import strata1.integrator.messaging.IStringMessage;
-import com.amazonaws.services.sqs.model.Message;
+import com.amazonaws.services.sqs.AmazonSQS;
 
 /****************************************************************************
  * 
@@ -36,41 +40,49 @@ import com.amazonaws.services.sqs.model.Message;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class SqsStringMessage
-    extends    SqsMessage
-    implements IStringMessage
+class SqsQueueMessagingSession
+    implements IMessagingSession
 {
-    /************************************************************************
-     * Creates a new SqsStringMessage. 
-     *
-     */
-    public
-    SqsStringMessage()
-    {
-        setPayloadType( PayloadType.STRING );
-    }
+    private final AmazonSQS itsImp;
     
     /************************************************************************
-     * Creates a new SqsStringMessage. 
+     * Creates a new SqsQueueMessagingSession. 
      *
-     * @param imp
      */
     public 
-    SqsStringMessage(Message imp)
+    SqsQueueMessagingSession(AmazonSQS imp)
     {
-        super( imp );
-        setPayloadType( PayloadType.STRING );
+        itsImp = imp;
     }
-    
+
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
-    setMessageId(String messageId)
+    public IMessageSender 
+    createMessageSender(String id)
     {
-        super.setMessageId( messageId );
-        return this;
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMessageReceiver 
+    createMessageReceiver(String id)
+    {
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMessageReceiver 
+    createMessageReceiver(String id,String selector)
+    {
+        return null;
     }
 
     /************************************************************************
@@ -78,152 +90,77 @@ class SqsStringMessage
      */
     @Override
     public IStringMessage 
-    setCorrelationId(String correlationId)
+    createStringMessage()
     {
-        super.setCorrelationId( correlationId );
-        return this;
+        return new SqsStringMessage();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
-    setReturnAddress(String returnAddress)
+    public IMapMessage 
+    createMapMessage()
     {
-        super.setReturnAddress( returnAddress );
-        return this;
+        return new SqsMapMessage();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
-    setDeliveryMode(DeliveryMode mode)
+    public IObjectMessage 
+    createObjectMessage()
     {
-        super.setDeliveryMode( mode );
-        return this;
+        return new SqsObjectMessage();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
-    setTimeToLive(long timeToLive)
+    public void 
+    startReceiving()
     {
-        super.setTimeToLive( timeToLive );
-        return this;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
-    setByteProperty(String name,byte value)
+    public void 
+    stopReceiving()
     {
-        super.setByteProperty( name,value );
-        return this;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
-    setBooleanProperty(String name,boolean value)
+    public void 
+    close()
     {
-        super.setBooleanProperty( name,value );
-        return this;
+        itsImp.shutdown();
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
-    setShortProperty(String name,short value)
+    public boolean 
+    isReceiving()
     {
-        super.setShortProperty( name,value );
-        return this;
+        return false;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public IStringMessage 
-    setIntProperty(String name,int value)
+    public boolean 
+    isClosed()
     {
-        super.setIntProperty( name,value );
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IStringMessage 
-    setLongProperty(String name,long value)
-    {
-        super.setLongProperty( name,value );
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IStringMessage 
-    setFloatProperty(String name,float value)
-    {
-        super.setFloatProperty( name,value );
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IStringMessage 
-    setDoubleProperty(String name,double value)
-    {
-        super.setDoubleProperty( name,value );
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IStringMessage 
-    setStringProperty(String name,String value)
-    {
-        super.setStringProperty( name,value );
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IStringMessage 
-    setPayload(String payload)
-    {
-        getMessageImp().setBody( payload );
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public String 
-    getPayload()
-    {
-        return getMessageImp().getBody();
+        return false;
     }
 
 }
