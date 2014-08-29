@@ -48,9 +48,6 @@ interface IMapMessage
     
     public IMapMessage
     setDeliveryMode(DeliveryMode mode);
-    
-    public IMapMessage 
-    setTimeToLive(long timeToLive);
 
     public IMapMessage
     setByteProperty(String name,byte value);

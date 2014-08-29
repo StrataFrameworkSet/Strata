@@ -48,9 +48,6 @@ interface IObjectMessage
     
     public IObjectMessage
     setDeliveryMode(DeliveryMode mode);
-    
-    public IObjectMessage 
-    setTimeToLive(long timeToLive);
 
     public IObjectMessage
     setByteProperty(String name,byte value);

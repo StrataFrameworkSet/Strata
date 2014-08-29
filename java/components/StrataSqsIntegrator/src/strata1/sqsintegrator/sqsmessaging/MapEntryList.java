@@ -1,30 +1,33 @@
 // ##########################################################################
-// # File Name:	AbstractPool.java
+// # File Name:	MapEntryList.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommon Framework.
+// # License:	This file is part of the StrataSqsIntegrator Framework.
 // #
-// #   			The StrataCommon Framework is free software: you 
+// #   			The StrataSqsIntegrator Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommon Framework is distributed in the 
+// #    		The StrataSqsIntegrator Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommon
+// #			General Public License along with the StrataSqsIntegrator
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.pool;
+package strata1.sqsintegrator.sqsmessaging;
 
-import javax.inject.Provider;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.Map;
 
 /****************************************************************************
  * 
@@ -33,60 +36,57 @@ import javax.inject.Provider;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public abstract
-class AbstractPool<T extends AbstractPoolable>
-    implements IPool<T>
+@XmlRootElement(name="payload")
+public 
+class MapEntryList
 {
-    private Provider<T> itsProvider;
+    @XmlElement(name="entries")
+    protected ArrayList<MapEntry> entries;
     
     /************************************************************************
-     * Creates a new {@code AbstractPool}. 
+     * Creates a new MapEntryList. 
      *
      */
-    protected 
-    AbstractPool(Provider<T> provider) 
+    public 
+    MapEntryList()
     {
-        itsProvider = provider;
+        entries = new ArrayList<MapEntry>();
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * Creates a new MapEntryList. 
+     *
+     * @param payload
      */
-    @Override
-    public T 
-    obtainInstance()
+    public 
+    MapEntryList(Map<String,String> payload)
     {
-        T instance = getAvailableInstance();
-        
-        instance.markAvailable();
-        return instance;
+        this();
+        for (String key:payload.keySet())
+            entries.add( new MapEntry( key,payload.get(key) ) );
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     *  
+     *
+     * @param e
      */
-    @Override
-    public void 
-    recyleInstance(T instance)
+    public void
+    setEntries(ArrayList<MapEntry> e)
     {
-        instance.markUnavailable();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    containsInstance(T instance)
-    {
-        return hasInstance( instance );
+        entries = e;
     }
     
-    protected abstract T
-    getAvailableInstance();
-    
-    protected abstract boolean
-    hasInstance(T instance);
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public ArrayList<MapEntry>
+    getEntries()
+    {
+        return entries;
+    }
 }
 
 // ##########################################################################

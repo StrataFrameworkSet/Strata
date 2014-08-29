@@ -36,6 +36,13 @@ import java.util.Map;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
+/****************************************************************************
+ * 
+ * @author 		
+ *     Sapientia Systems
+ * @conventions	
+ *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
+ */
 public abstract 
 class InMemoryMessage
     implements IMessage
@@ -103,17 +110,6 @@ class InMemoryMessage
     setDeliveryMode(DeliveryMode mode)
     {
         itsDeliveryMode = mode;
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IMessage 
-    setTimeToLive(long timeToLive)
-    {
-        itsTimeToLive = timeToLive;
         return this;
     }
 
@@ -249,16 +245,6 @@ class InMemoryMessage
      * {@inheritDoc} 
      */
     @Override
-    public long 
-    getTimeToLive()
-    {
-        return itsTimeToLive;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
     public byte 
     getByteProperty(String name)
     {
@@ -343,6 +329,30 @@ class InMemoryMessage
     hasProperty(String name)
     {
         return itsProperties.containsKey( name );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param timeToLive
+     * @return
+     */
+    public IMessage 
+    setTimeToLive(long timeToLive)
+    {
+        itsTimeToLive = timeToLive;
+        return this;
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public long 
+    getTimeToLive()
+    {
+        return itsTimeToLive;
     }
 
 }

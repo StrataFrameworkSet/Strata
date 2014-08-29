@@ -55,6 +55,7 @@ class HibernatePartyRepositoryTest
     {
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected IRepositoryContext 
     createContext()

@@ -204,6 +204,7 @@ class SpringContainerProvider
      * @param definition
      * @param bean
      */
+    @SuppressWarnings("unused")
     private void 
     registerConstructorInjector(
         IComponentDefinition definition,
@@ -229,6 +230,7 @@ class SpringContainerProvider
      * @param definition
      * @param bean
      */
+    @SuppressWarnings("unused")
     private void 
     registerPropertyInjectors(
         IComponentDefinition definition,

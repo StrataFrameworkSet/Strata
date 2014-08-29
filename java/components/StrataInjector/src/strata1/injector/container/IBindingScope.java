@@ -36,10 +36,10 @@ import javax.inject.Provider;
 public 
 interface IBindingScope<T>
 {
-    public <T> void
+    public void
     accept(IBindingVisitor<T> visitor);
     
-    public <T> Provider<T>
+    public Provider<T>
     getScopedProvider(Provider<T> source);
 }
 

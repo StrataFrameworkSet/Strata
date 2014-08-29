@@ -136,16 +136,6 @@ class JmsMessage
      */
     @Override
     public IMessage 
-    setTimeToLive(long timeToLive)
-    {
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IMessage 
     setByteProperty(String name,byte value)
     {
         try
@@ -365,16 +355,6 @@ class JmsMessage
         {
             throw new IllegalStateException( e );
         }
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public long 
-    getTimeToLive()
-    {
-        return 0;
     }
 
     /************************************************************************

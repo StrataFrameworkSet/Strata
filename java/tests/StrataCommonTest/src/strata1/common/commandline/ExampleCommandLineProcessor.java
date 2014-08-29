@@ -35,6 +35,7 @@ public
 class ExampleCommandLineProcessor
     extends AbstractCommandLineProcessor
 {
+    @SuppressWarnings("unused")
     private ICommandOption itsHelpOption;
     private ICommandOption itsBooleanOption;
     private ICommandOption itsIntegerOption;

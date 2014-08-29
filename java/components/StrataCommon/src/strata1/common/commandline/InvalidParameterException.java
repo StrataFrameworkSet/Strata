@@ -52,7 +52,16 @@ class InvalidParameterException
         itsParameter = parameter;
     }
     
-
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public ICommandParameter
+    getParameter()
+    {
+        return itsParameter;
+    }
 
 }
 

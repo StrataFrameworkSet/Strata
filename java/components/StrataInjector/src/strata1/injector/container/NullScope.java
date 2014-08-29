@@ -48,9 +48,8 @@ class NullScope<T>
     /************************************************************************
      * {@inheritDoc} 
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public <T> void 
+    public void 
     accept(IBindingVisitor<T> visitor)
     {
         visitor.visitScope( (IBindingScope<T>)this );
@@ -60,7 +59,7 @@ class NullScope<T>
      * {@inheritDoc} 
      */
     @Override
-    public <T> Provider<T> 
+    public Provider<T> 
     getScopedProvider(
         Provider<T>           source)
     {

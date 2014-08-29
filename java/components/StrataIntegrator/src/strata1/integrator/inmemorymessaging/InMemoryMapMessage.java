@@ -26,8 +26,6 @@ package strata1.integrator.inmemorymessaging;
 
 import strata1.integrator.messaging.DeliveryMode;
 import strata1.integrator.messaging.IMapMessage;
-import strata1.integrator.messaging.IMessage;
-import strata1.integrator.messaging.IMapMessage;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;

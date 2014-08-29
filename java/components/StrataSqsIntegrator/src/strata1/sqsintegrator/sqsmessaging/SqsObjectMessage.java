@@ -121,17 +121,6 @@ class SqsObjectMessage
      */
     @Override
     public IObjectMessage 
-    setTimeToLive(long timeToLive)
-    {
-        super.setTimeToLive( timeToLive );
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IObjectMessage 
     setByteProperty(String name,byte value)
     {
         super.setByteProperty( name,value );

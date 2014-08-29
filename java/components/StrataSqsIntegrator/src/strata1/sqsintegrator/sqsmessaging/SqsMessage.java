@@ -28,7 +28,6 @@ import strata1.integrator.messaging.DeliveryMode;
 import strata1.integrator.messaging.IMessage;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.MessageAttributeValue;
-import java.nio.ByteBuffer;
 import java.util.Map;
 
 /****************************************************************************
@@ -45,7 +44,6 @@ class SqsMessage
     public static final String CORRELATION_ID = "CorrelationId";
     public static final String RETURN_ADDRESS = "ReturnAddress";
     public static final String DELIVERY_MODE  = "DeliveryMode";
-    public static final String TIME_TO_LIVE   = "TimeToLive";
     public static final String PAYLOAD_TYPE   = "PayloadType";
     
     private final Message itsImp;
@@ -127,16 +125,6 @@ class SqsMessage
                 .withDataType( "String.DeliveryMode" )
                 .withStringValue( mode.name() ) );
         return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IMessage 
-    setTimeToLive(long timeToLive)
-    {
-        return setLongProperty(TIME_TO_LIVE,timeToLive);
     }
 
     /************************************************************************
@@ -333,16 +321,6 @@ class SqsMessage
                 properties
                     .get( DELIVERY_MODE )
                     .getStringValue() );
-    }
-
-    /************************************************************************
-     * {@inheritDoc}
-     */
-    @Override
-    public long 
-    getTimeToLive()
-    {
-        return getLongProperty( TIME_TO_LIVE );
     }
 
     /************************************************************************
