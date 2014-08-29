@@ -96,7 +96,6 @@ class InMemoryMessageSender
     public void 
     send(IMessage message)
     {
-        message.setTimeToLive( itsTimeToLive );
         itsQueue.put( message );
     }
 

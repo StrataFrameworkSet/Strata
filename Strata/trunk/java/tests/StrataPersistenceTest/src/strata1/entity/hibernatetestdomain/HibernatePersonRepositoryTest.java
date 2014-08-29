@@ -53,6 +53,7 @@ class HibernatePersonRepositoryTest
     {
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected IRepositoryContext 
     createContext()

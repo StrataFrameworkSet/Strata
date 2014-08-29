@@ -35,8 +35,6 @@ import javax.jms.Topic;
 import javax.jms.TopicConnection;
 import javax.jms.TopicConnectionFactory;
 import javax.jms.Session;
-import java.util.HashMap;
-import java.util.Map;
 
 /****************************************************************************
  * 

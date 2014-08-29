@@ -61,13 +61,14 @@ class GuiceScopeAdapter
     /************************************************************************
      * {@inheritDoc} 
      */
+    @SuppressWarnings("unchecked")
     @Override
     public <T> Provider<T> 
     scope(Key<T> key,Provider<T> source)
     {
         return 
             new GuiceProvider<T>( 
-                itsAdaptee.getScopedProvider( 
+                ((IBindingScope<T>)itsAdaptee).getScopedProvider( 
                     new JavaxProvider<T>(source) ));
     }
 
@@ -77,7 +78,7 @@ class GuiceScopeAdapter
      * @param key
      * @return
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked","unused" })
     private <T> IBindingIdentifier<T>
     toIdentifier(Key<T> key)
     {

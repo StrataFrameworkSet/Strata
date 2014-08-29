@@ -105,17 +105,6 @@ class JmsMapMessage
      */
     @Override
     public IMapMessage 
-    setTimeToLive(long timeToLive)
-    {
-        super.setTimeToLive( timeToLive );
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IMapMessage 
     setByteProperty(String name,byte value)
     {
         super.setByteProperty( name,value );

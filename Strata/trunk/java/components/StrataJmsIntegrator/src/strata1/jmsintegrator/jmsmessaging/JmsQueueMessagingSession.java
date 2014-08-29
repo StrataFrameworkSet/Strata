@@ -35,8 +35,6 @@ import javax.jms.Queue;
 import javax.jms.QueueConnection;
 import javax.jms.QueueConnectionFactory;
 import javax.jms.Session;
-import java.util.HashMap;
-import java.util.Map;
 
 /****************************************************************************
  * 

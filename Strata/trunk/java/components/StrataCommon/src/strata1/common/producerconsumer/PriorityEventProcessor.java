@@ -314,6 +314,7 @@ class PriorityEventProcessor<T>
      * @param counter
      * @return
      */
+    @SuppressWarnings("unused")
     private int 
     waitWhenAllEmpty(int counter) 
     {

@@ -39,9 +39,6 @@ interface IStringMessage
     
     public IStringMessage
     setDeliveryMode(DeliveryMode mode);
-    
-    public IStringMessage 
-    setTimeToLive(long timeToLive);
 
     public IStringMessage
     setByteProperty(String name,byte value);

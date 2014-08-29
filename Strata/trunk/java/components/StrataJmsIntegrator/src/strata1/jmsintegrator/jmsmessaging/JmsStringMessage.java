@@ -102,17 +102,6 @@ class JmsStringMessage
      */
     @Override
     public IStringMessage 
-    setTimeToLive(long timeToLive)
-    {
-        super.setTimeToLive( timeToLive );
-        return this;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IStringMessage 
     setByteProperty(String name,byte value)
     {
         super.setByteProperty( name,value );

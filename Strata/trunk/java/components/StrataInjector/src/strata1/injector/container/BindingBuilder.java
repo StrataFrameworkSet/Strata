@@ -48,15 +48,12 @@ class BindingBuilder<T>
     private Class<? extends Provider<? extends T>> itsProviderType;
     private T                            itsInstance;
     
-    // Binding Scope
-    private Class<? extends IBindingScope<T>> itsScopeType;
     private IBindingScope<T>           itsScope;
     
     /************************************************************************
      * Creates a new {@code BindingBuilder}. 
      *
      */
-    @SuppressWarnings("unchecked")
     public 
     BindingBuilder(Class<T> type)
     {
@@ -68,8 +65,6 @@ class BindingBuilder<T>
         itsProviderType       = null;
         itsInstance           = null;
         
-        itsScopeType = 
-            (Class<? extends IBindingScope<T>>)new NullScope<T>().getClass();
         itsScope = new NullScope<T>();
     }
     
@@ -149,7 +144,6 @@ class BindingBuilder<T>
     /************************************************************************
      * {@inheritDoc} 
      */
-    @SuppressWarnings("unchecked")
     @Override
     public IBindingBuilder<T> 
     toInstance(T instance)
@@ -158,19 +152,16 @@ class BindingBuilder<T>
         itsProviderType = null;
         itsInstance = instance;
         itsScope = new SingletonScope<T>();
-        itsScopeType = (Class<? extends IBindingScope<T>>)itsScope.getClass();
         return this;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
-    @SuppressWarnings("unchecked")
     @Override
     public IBindingBuilder<T> 
     withScope(IBindingScope<T> scope)
     {
-        itsScopeType = (Class<? extends IBindingScope<T>>)scope.getClass();
         itsScope = scope;
         return this;
     }

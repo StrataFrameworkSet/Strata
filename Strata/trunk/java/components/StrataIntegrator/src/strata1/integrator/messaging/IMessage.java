@@ -45,9 +45,6 @@ interface IMessage
     
     public IMessage
     setDeliveryMode(DeliveryMode mode);
-    
-    public IMessage 
-    setTimeToLive(long timeToLive);
 
     public IMessage
     setByteProperty(String name,byte value);
@@ -84,9 +81,6 @@ interface IMessage
     
     public DeliveryMode
     getDeliveryMode();
-
-    public long
-    getTimeToLive();
     
     public byte
     getByteProperty(String name);

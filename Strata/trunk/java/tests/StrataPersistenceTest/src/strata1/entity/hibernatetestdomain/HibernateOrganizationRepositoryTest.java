@@ -53,6 +53,7 @@ class HibernateOrganizationRepositoryTest
     {
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected IRepositoryContext 
     createContext()
