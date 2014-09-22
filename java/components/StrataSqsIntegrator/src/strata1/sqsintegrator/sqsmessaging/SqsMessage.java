@@ -89,11 +89,18 @@ class SqsMessage
     public IMessage 
     setCorrelationId(String correlationId)
     {
-        itsImp.addMessageAttributesEntry( 
-            CORRELATION_ID,
+        MessageAttributeValue value = 
             new MessageAttributeValue()
                 .withDataType( "String" )
-                .withStringValue( correlationId ) );
+                .withStringValue( correlationId );
+        
+        if ( hasProperty( CORRELATION_ID ) )
+            itsImp
+                .getMessageAttributes()
+                .put( CORRELATION_ID,value );
+        else
+            itsImp.addMessageAttributesEntry( CORRELATION_ID,value );
+        
         return this;
     }
 
@@ -104,11 +111,18 @@ class SqsMessage
     public IMessage 
     setReturnAddress(String returnAddress)
     {
-        itsImp.addMessageAttributesEntry( 
-            RETURN_ADDRESS,
+        MessageAttributeValue value = 
             new MessageAttributeValue()
                 .withDataType( "String" )
-                .withStringValue( returnAddress ) );
+                .withStringValue( returnAddress );
+        
+        if ( hasProperty( RETURN_ADDRESS ) )
+            itsImp
+                .getMessageAttributes()
+                .put( RETURN_ADDRESS,value );
+        else
+            itsImp.addMessageAttributesEntry( RETURN_ADDRESS,value );
+        
         return this;
     }
 
@@ -119,11 +133,18 @@ class SqsMessage
     public IMessage 
     setDeliveryMode(DeliveryMode mode)
     {
-        itsImp.addMessageAttributesEntry( 
-            RETURN_ADDRESS,
+        MessageAttributeValue value = 
             new MessageAttributeValue()
                 .withDataType( "String.DeliveryMode" )
-                .withStringValue( mode.name() ) );
+                .withStringValue( mode.name() );
+        
+        if ( hasProperty( DELIVERY_MODE ) )
+            itsImp
+                .getMessageAttributes()
+                .put( DELIVERY_MODE,value );
+        else
+            itsImp.addMessageAttributesEntry( DELIVERY_MODE,value );
+        
         return this;
     }
 
@@ -133,12 +154,18 @@ class SqsMessage
     @Override
     public IMessage 
     setByteProperty(String name,byte value)
-    {        
-        itsImp.addMessageAttributesEntry( 
-            name,
+    {     
+        MessageAttributeValue attribute = 
             new MessageAttributeValue()
                 .withDataType( "Number.byte" )
-                .withStringValue( new Byte( value ).toString() ) );
+                .withStringValue( new Byte( value ).toString() );
+        
+        if ( hasProperty( name ) )
+            itsImp
+                .getMessageAttributes()
+                .put( name,attribute );
+        else
+            itsImp.addMessageAttributesEntry( name,attribute );
 
         return this;
     }
@@ -150,12 +177,18 @@ class SqsMessage
     public IMessage 
     setBooleanProperty(String name,boolean value)
     {
-        itsImp.addMessageAttributesEntry( 
-            name,
+        MessageAttributeValue attribute = 
             new MessageAttributeValue()
                 .withDataType( "String.Boolean" )
-                .withStringValue( value ? "true" : "false" ) );
+                .withStringValue( value ? "true" : "false" );
         
+        if ( hasProperty( name ) )
+            itsImp
+                .getMessageAttributes()
+                .put( name,attribute );
+        else
+            itsImp.addMessageAttributesEntry( name,attribute );
+
         return this;
     }
 
@@ -166,12 +199,18 @@ class SqsMessage
     public IMessage 
     setShortProperty(String name,short value)
     {
-        itsImp.addMessageAttributesEntry( 
-            name,
-            new MessageAttributeValue()
+        MessageAttributeValue attribute =            
+             new MessageAttributeValue()
                 .withDataType( "Number.short" )
-                .withStringValue( new Short(value).toString() ) );
+                .withStringValue( new Short(value).toString() );
         
+        if ( hasProperty( name ) )
+            itsImp
+                .getMessageAttributes()
+                .put( name,attribute );
+        else
+            itsImp.addMessageAttributesEntry( name,attribute );
+
         return this;
     }
 
@@ -182,12 +221,18 @@ class SqsMessage
     public IMessage 
     setIntProperty(String name,int value)
     {
-        itsImp.addMessageAttributesEntry( 
-            name,
+        MessageAttributeValue attribute = 
             new MessageAttributeValue()
                 .withDataType( "Number.int" )
-                .withStringValue( new Integer(value).toString() ) );
+                .withStringValue( new Integer(value).toString() );
         
+        if ( hasProperty( name ) )
+            itsImp
+                .getMessageAttributes()
+                .put( name,attribute );
+        else
+            itsImp.addMessageAttributesEntry( name,attribute );
+
         return this;
     }
 
@@ -198,12 +243,18 @@ class SqsMessage
     public IMessage 
     setLongProperty(String name,long value)
     {
-        itsImp.addMessageAttributesEntry( 
-            name,
+        MessageAttributeValue attribute = 
             new MessageAttributeValue()
                 .withDataType( "Number.long" )
-                .withStringValue( new Long(value).toString() ) );
+                .withStringValue( new Long(value).toString() );
         
+        if ( hasProperty( name ) )
+            itsImp
+                .getMessageAttributes()
+                .put( name,attribute );
+        else
+            itsImp.addMessageAttributesEntry( name,attribute );
+
         return this;
     }
 
@@ -214,12 +265,18 @@ class SqsMessage
     public IMessage 
     setFloatProperty(String name,float value)
     {
-        itsImp.addMessageAttributesEntry( 
-            name,
+        MessageAttributeValue attribute = 
             new MessageAttributeValue()
                 .withDataType( "Number.float" )
-                .withStringValue( new Float(value).toString() ) );
+                .withStringValue( new Float(value).toString() );
         
+        if ( hasProperty( name ) )
+            itsImp
+                .getMessageAttributes()
+                .put( name,attribute );
+        else
+            itsImp.addMessageAttributesEntry( name,attribute );
+
         return this;
     }
 
@@ -230,12 +287,18 @@ class SqsMessage
     public IMessage 
     setDoubleProperty(String name,double value)
     {
-        itsImp.addMessageAttributesEntry( 
-            name,
+        MessageAttributeValue attribute = 
             new MessageAttributeValue()
                 .withDataType( "Number.double" )
-                .withStringValue( new Double(value).toString() ) );
+                .withStringValue( new Double(value).toString() );
         
+        if ( hasProperty( name ) )
+            itsImp
+                .getMessageAttributes()
+                .put( name,attribute );
+        else
+            itsImp.addMessageAttributesEntry( name,attribute );
+
         return this;
     }
 
@@ -246,12 +309,18 @@ class SqsMessage
     public IMessage 
     setStringProperty(String name,String value)
     {
-        itsImp.addMessageAttributesEntry( 
-            name,
+        MessageAttributeValue attribute = 
             new MessageAttributeValue()
                 .withDataType( "String" )
-                .withStringValue( value ) );
+                .withStringValue( value );
         
+        if ( hasProperty( name ) )
+            itsImp
+                .getMessageAttributes()
+                .put( name,attribute );
+        else
+            itsImp.addMessageAttributesEntry( name,attribute );
+
         return this;
     }
 
@@ -388,7 +457,7 @@ class SqsMessage
      */
     @Override
     public int 
-    getIntegerProperty(String name)
+    getIntProperty(String name)
     {
         Map<String,MessageAttributeValue> properties = 
             itsImp.getMessageAttributes();
@@ -504,11 +573,18 @@ class SqsMessage
     protected IMessage
     setPayloadType(PayloadType payloadType)
     {
-        itsImp.addMessageAttributesEntry( 
-            PAYLOAD_TYPE,
+        MessageAttributeValue value = 
             new MessageAttributeValue()
                 .withDataType( "String.PayloadType" )
-                .withStringValue( payloadType.name() ) );
+                .withStringValue( payloadType.name() );
+        
+        if ( hasProperty( PAYLOAD_TYPE ) )
+            itsImp
+                .getMessageAttributes()
+                .put( PAYLOAD_TYPE,value );
+        else
+            itsImp.addMessageAttributesEntry( PAYLOAD_TYPE,value );
+        
         return this;
     }
     

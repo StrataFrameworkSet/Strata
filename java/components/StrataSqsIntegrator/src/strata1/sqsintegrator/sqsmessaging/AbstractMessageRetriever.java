@@ -25,7 +25,12 @@
 package strata1.sqsintegrator.sqsmessaging;
 
 import strata1.integrator.messaging.IMessage;
+import strata1.integrator.messaging.ISelector;
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClient;
+import com.amazonaws.services.sqs.model.ChangeMessageVisibilityRequest;
+import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.ReceiveMessageResult;
@@ -42,37 +47,135 @@ import java.util.List;
 public abstract 
 class AbstractMessageRetriever
 {
-    private final AmazonSQS itsService;
+    private final AWSCredentials itsCredentials;
     
     /************************************************************************
      * Creates a new AbstractMessageRetriever. 
      *
      */
     public 
-    AbstractMessageRetriever(AmazonSQS service)
+    AbstractMessageRetriever(AWSCredentials credentials)
     {
-        itsService = service;
+        itsCredentials = credentials;
     }
 
     /************************************************************************
      *  
      *
+     * @return
+     */
+    protected AWSCredentials
+    getCredentials()
+    {
+        return itsCredentials;
+    }
+    
+    /************************************************************************
+     *  
+     *
      * @param queueUrl
+     * @param selector 
+     * @param waitTimeSecs
      * @return
      */
     protected IMessage
-    getMessageFromQueue(String queueUrl)
+    getMessageFromQueue(
+        String    queueUrl,
+        ISelector selector,
+        int       waitTimeSecs)
+    {
+        AmazonSQSClient       service = null;
+        ReceiveMessageRequest request = null;
+        ReceiveMessageResult  result  = null;
+        Message               message = null;
+        IMessage              output  = null;
+        
+        service = new AmazonSQSClient(itsCredentials);
+        
+        try
+        {
+            request = 
+                new ReceiveMessageRequest()
+                    .withQueueUrl( queueUrl )
+                    .withAttributeNames( "All" )
+                    .withMessageAttributeNames( "All" )
+                    .withWaitTimeSeconds( waitTimeSecs )
+                    .withMaxNumberOfMessages( 1 );
+                
+            result = service.receiveMessage( request );
+            
+            if ( result.getMessages().isEmpty() )
+                return null;
+            
+            message = result.getMessages().get( 0 );
+                       
+            switch ( getPayloadType(message) )
+            {
+            case STRING:
+                output = new SqsStringMessage(message);
+                break;
+                
+            case MAP:
+                output = new SqsMapMessage(message);
+                break;
+              
+            case OBJECT:
+                output = new SqsObjectMessage(message);
+                break;
+            }
+            
+            if ( selector == null )
+                throw new NullPointerException( "selector is null" );
+            
+            if ( output == null )
+                return null;
+            
+            if ( selector.evaluate( output ) )
+            {
+                removeMessageFromQueue( service,queueUrl,message );
+                return output;
+            }
+            else
+            {
+                makeVisibleToOtherReceivers( service,queueUrl,message );
+                return null;
+            }
+        }
+        finally
+        {
+            service.shutdown();
+        }
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param queueUrl
+     * @param selector 
+     * @param waitTimeSecs
+     * @return
+     */
+    protected IMessage
+    getMessageFromQueue(
+        AmazonSQS service,
+        String    queueUrl,
+        ISelector selector,
+        int       waitTimeSecs)
     {
         ReceiveMessageRequest request = null;
         ReceiveMessageResult  result  = null;
-        Message               message  = null;
+        Message               message = null;
+        IMessage              output  = null;
         
         request = 
             new ReceiveMessageRequest()
                 .withQueueUrl( queueUrl )
+                .withAttributeNames( "All" )
+                .withMessageAttributeNames( "All" )
+                .withWaitTimeSeconds( waitTimeSecs )
                 .withMaxNumberOfMessages( 1 );
             
-        result = itsService.receiveMessage( request );
+        result = service.receiveMessage( request );
         
         if ( result.getMessages().isEmpty() )
             return null;
@@ -82,58 +185,101 @@ class AbstractMessageRetriever
         switch ( getPayloadType(message) )
         {
         case STRING:
-            return new SqsStringMessage(message);
+            output = new SqsStringMessage(message);
+            break;
             
         case MAP:
-            return new SqsMapMessage(message);
+            output = new SqsMapMessage(message);
+            break;
           
         case OBJECT:
-            return new SqsObjectMessage(message);
+            output = new SqsObjectMessage(message);
+            break;
         }
         
+        if ( selector == null )
+            throw new NullPointerException( "selector is null" );
         
-        return null;
+        if ( output == null )
+            return null;
+        
+        if ( selector.evaluate( output ) )
+        {
+            removeMessageFromQueue( service,queueUrl,message );
+            return output;
+        }
+        else
+        {
+            makeVisibleToOtherReceivers( service,queueUrl,message );
+            return null;
+        }
     }
+    
     
     /************************************************************************
      *  
      *
      * @param queueUrl
+     * @param selector TODO
      * @return
      */
     protected List<IMessage>
-    getMessagesFromQueue(String queueUrl)
+    getMessagesFromQueue(String queueUrl,ISelector selector)
     {
+        AmazonSQSClient       service = null;
         ReceiveMessageRequest request = null;
         ReceiveMessageResult  result  = null;
-        List<IMessage>        output = new ArrayList<IMessage>();
+        List<IMessage>        messages = new ArrayList<IMessage>();
         
-        request = 
-            new ReceiveMessageRequest()
-                .withQueueUrl( queueUrl )
-                .withMaxNumberOfMessages( 10 );
-            
-        result = itsService.receiveMessage( request );
-                
-        for (Message message : result.getMessages() )
+        service = new AmazonSQSClient(itsCredentials);
+        
+        try
         {
-            switch ( getPayloadType(message) )
-            {
-            case STRING:
-                output.add(new SqsStringMessage(message));
-                break;
+            request = 
+                new ReceiveMessageRequest()
+                    .withQueueUrl( queueUrl )
+                    .withAttributeNames( "All" )
+                    .withMessageAttributeNames( "All" )
+                    .withWaitTimeSeconds( 20 )
+                    .withMaxNumberOfMessages( 10 );
                 
-            case MAP:
-                output.add(new SqsMapMessage(message));
-                break;
-              
-            case OBJECT:
-                output.add(new SqsObjectMessage(message));
-                break;
+            result = service.receiveMessage( request );
+                    
+            for (Message message : result.getMessages() )
+            {
+                IMessage output = null;
+                
+                switch ( getPayloadType(message) )
+                {
+                case STRING:
+                    output = new SqsStringMessage(message);
+                    break;
+                    
+                case MAP:
+                    output = new SqsMapMessage(message);
+                    break;
+                  
+                case OBJECT:
+                    output = new SqsObjectMessage(message);
+                    break;
+                }
+                
+                if ( selector.evaluate( output ) )
+                {
+                    removeMessageFromQueue( service,queueUrl,message );
+                    messages.add( output );
+                }
+                else
+                    makeVisibleToOtherReceivers( service,queueUrl,message );
+                
             }
+            
+            return messages;
         }
-        
-        return output;
+        finally
+        {
+            service.shutdown();
+        }
     }
 
     /************************************************************************
@@ -145,6 +291,12 @@ class AbstractMessageRetriever
     protected PayloadType
     getPayloadType(Message message)
     {
+        if ( message.getMessageAttributes() == null )
+            return PayloadType.STRING;
+        
+        if ( !message.getMessageAttributes().containsKey( SqsMessage.PAYLOAD_TYPE ) )
+            return PayloadType.STRING;
+            
         return
             PayloadType
                 .valueOf( 
@@ -152,6 +304,49 @@ class AbstractMessageRetriever
                         .getMessageAttributes()
                         .get( SqsMessage.PAYLOAD_TYPE )
                         .getStringValue() );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param service 
+     * @param queueUrl 
+     * @param message
+     */
+    private void 
+    removeMessageFromQueue(
+        AmazonSQS service,
+        String    queueUrl,
+        Message   message)
+    {
+        DeleteMessageRequest request = 
+            new DeleteMessageRequest()
+                .withQueueUrl( queueUrl )
+                .withReceiptHandle( message.getReceiptHandle() );
+        
+        service.deleteMessage( request );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param service 
+     * @param queueUrl 
+     * @param message
+     */
+    private void 
+    makeVisibleToOtherReceivers(
+        AmazonSQS service,
+        String    queueUrl,
+        Message   message)
+    {
+        ChangeMessageVisibilityRequest request =
+            new ChangeMessageVisibilityRequest()
+                .withQueueUrl( queueUrl )
+                .withReceiptHandle( message.getReceiptHandle() )
+                .withVisibilityTimeout( 0 );
+        
+        service.changeMessageVisibility( request );
     }
 
 }

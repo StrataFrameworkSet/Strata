@@ -25,6 +25,7 @@
 package strata1.jmsintegrator.jmsmessaging;
 
 import strata1.integrator.messaging.IMessageListener;
+import javax.jms.BytesMessage;
 import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -70,6 +71,9 @@ class JmsMessageListener
         else if ( message instanceof ObjectMessage )
             itsListener.onMessage( 
                 new JmsObjectMessage((ObjectMessage)message) );
+        else if ( message instanceof BytesMessage )
+            itsListener.onMessage( 
+                new JmsBytesMessage((BytesMessage)message) );
     }
 
 }

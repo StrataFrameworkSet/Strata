@@ -52,6 +52,9 @@ interface IMessagingSession
     public IObjectMessage
     createObjectMessage();
     
+    public IBytesMessage
+    createBytesMessage();
+    
     public void
     startReceiving();
     

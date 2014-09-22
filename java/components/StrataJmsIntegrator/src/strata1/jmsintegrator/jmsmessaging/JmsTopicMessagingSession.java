@@ -24,6 +24,7 @@
 
 package strata1.jmsintegrator.jmsmessaging;
 
+import strata1.integrator.messaging.IBytesMessage;
 import strata1.integrator.messaging.IMapMessage;
 import strata1.integrator.messaging.IMessageReceiver;
 import strata1.integrator.messaging.IMessageSender;
@@ -201,6 +202,23 @@ class JmsTopicMessagingSession
         try
         {
             return new JmsObjectMessage(session.createObjectMessage());
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IBytesMessage 
+    createBytesMessage()
+    {
+        try
+        {
+            return new JmsBytesMessage(session.createBytesMessage());
         }
         catch (JMSException e)
         {

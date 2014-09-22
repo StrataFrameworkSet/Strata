@@ -40,7 +40,6 @@ import java.util.Map;
 public 
 class MapEntryList
 {
-    @XmlElement(name="entries")
     protected ArrayList<MapEntry> entries;
     
     /************************************************************************

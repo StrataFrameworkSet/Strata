@@ -494,10 +494,13 @@ class SqsMapMessage
             context = JAXBContext.newInstance(MapEntryList.class);
             unmarshaller = context.createUnmarshaller();
             entries = 
+                (MapEntryList)unmarshaller.unmarshal( reader );
+            /*
+            entries = 
                 ((JAXBElement<MapEntryList>)unmarshaller
                     .unmarshal(reader))
                     .getValue();
-            
+            */
             for (MapEntry entry:entries.getEntries())
                 output.put( entry.key,entry.value );
             

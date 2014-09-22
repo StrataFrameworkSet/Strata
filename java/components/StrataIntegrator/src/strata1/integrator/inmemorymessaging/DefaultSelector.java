@@ -41,9 +41,7 @@ class DefaultSelector
      * Creates a new {@code DefaultSelector}. 
      *
      */
-    DefaultSelector() 
-    {
-    }
+    DefaultSelector() {}
 
     /************************************************************************
      * {@inheritDoc} 

@@ -30,6 +30,7 @@ import strata1.integrator.messaging.IMessageListener;
 import strata1.integrator.messaging.IObjectMessage;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.IStringMessage;
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQS;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -58,13 +59,13 @@ class SqsMessageProcessor
      *
      */
     SqsMessageProcessor(
-        final AmazonSQS        service,
+        final AWSCredentials   credentials,
         final String           queueUrl,
         final ISelector        selector,
         final IMessageListener listener,
         final AtomicBoolean    listeningFlag)
     {
-        super( service );
+        super( credentials );
         itsQueueUrl      = queueUrl;
         itsSelector      = selector;
         itsListener      = listener;
@@ -80,17 +81,24 @@ class SqsMessageProcessor
     {
         while ( itsListeningFlag.get() )
         {
-            for (IMessage message:getNextMessages())
+            try
             {
-                if ( message != null )
+                for (IMessage message:getNextMessages())
                 {
-                    if ( message instanceof IStringMessage )
-                        itsListener.onMessage( (IStringMessage)message );
-                    else if ( message instanceof IMapMessage )
-                        itsListener.onMessage( (IMapMessage)message );
-                    else if ( message instanceof IObjectMessage )
-                        itsListener.onMessage( (IObjectMessage)message );
+                    if ( message != null )
+                    {
+                        if ( message instanceof IStringMessage )
+                            itsListener.onMessage( (IStringMessage)message );
+                        else if ( message instanceof IMapMessage )
+                            itsListener.onMessage( (IMapMessage)message );
+                        else if ( message instanceof IObjectMessage )
+                            itsListener.onMessage( (IObjectMessage)message );
+                    }
                 }
+            }
+            catch (Throwable e)
+            {
+                e.printStackTrace();
             }
         }
     }
@@ -104,14 +112,16 @@ class SqsMessageProcessor
     private List<IMessage> 
     getNextMessages()
     {
-        List<IMessage> messages = super.getMessagesFromQueue( itsQueueUrl ); 
+        List<IMessage> messages = 
+            super.getMessagesFromQueue( itsQueueUrl,itsSelector ); 
         
         while ( messages.isEmpty() && itsListeningFlag.get() )
         {
-            messages = super.getMessagesFromQueue( itsQueueUrl ); 
+            messages = 
+                super.getMessagesFromQueue( itsQueueUrl,itsSelector ); 
             
             if ( messages.isEmpty() )
-                LockSupport.parkNanos( 10*SECOND );
+                LockSupport.parkNanos( SECOND );
         }
         
         return messages;

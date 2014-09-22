@@ -42,6 +42,9 @@ interface IMessageListener
     
     public void
     onMessage(IObjectMessage message);
+    
+    public void
+    onMessage(IBytesMessage message);
 }
 
 // ##########################################################################

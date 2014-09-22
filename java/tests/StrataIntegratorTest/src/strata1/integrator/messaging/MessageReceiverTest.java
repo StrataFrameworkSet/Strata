@@ -253,11 +253,12 @@ class MessageReceiverTest
      * Test method for {@link IMessageReceiver#receive(long)}.
      * @throws MixedModeException 
      * @throws NoMessageReceivedException 
+     * @throws InterruptedException 
      */
     @Test
     public void 
     testReceiveLong1() 
-        throws MixedModeException,NoMessageReceivedException
+        throws MixedModeException,NoMessageReceivedException,InterruptedException
     {
         IStringMessage expected1 = itsSession.createStringMessage();
         IStringMessage expected2 = itsSession.createStringMessage();
@@ -280,9 +281,11 @@ class MessageReceiverTest
         itsSender.send( expected2 );
         itsSender.send( expected3 );
         
-        actual1 = itsTarget.receive( 1000 );
-        actual2 = itsTarget.receive( 1000);
-        actual3 = itsTarget.receive( 1000 );
+        sleepIfNeeded( 20000 );
+        
+        actual1 = itsTarget.receive( 10000 );
+        actual2 = itsTarget.receive( 10000);
+        actual3 = itsTarget.receive( 10000 );
         
         assertTrue( actual1 instanceof IStringMessage );
         assertTrue( actual2 instanceof IStringMessage );
@@ -298,11 +301,12 @@ class MessageReceiverTest
      * Test method for {@link IMessageReceiver#receive(long)}.
      * @throws MixedModeException 
      * @throws NoMessageReceivedException 
+     * @throws InterruptedException 
      */
     @Test
     public void 
     testReceiveLong2() 
-        throws MixedModeException,NoMessageReceivedException
+        throws MixedModeException,NoMessageReceivedException,InterruptedException
     {
         IStringMessage expected1 = itsSession.createStringMessage();
         IMapMessage    expected2 = itsSession.createMapMessage();
@@ -333,9 +337,11 @@ class MessageReceiverTest
         itsSender.send( expected1 );
         itsSender.send( expected2 );
         itsSender.send( expected3 );
-        
-        actual2 = itsTarget.receive( 1000 );    
-        actual3 = itsTarget.receive( 1000 );
+
+        sleepIfNeeded( 20000 );
+
+        actual2 = itsTarget.receive( 10000 );    
+        actual3 = itsTarget.receive( 10000 );
               
         assertTrue( actual2 instanceof IMapMessage );
         assertTrue( actual3 instanceof IStringMessage );
@@ -357,11 +363,12 @@ class MessageReceiverTest
      * Test method for {@link IMessageReceiver#receive(long)}.
      * @throws MixedModeException 
      * @throws NoMessageReceivedException 
+     * @throws InterruptedException 
      */
     @Test
     public void 
     testReceiveLong3() 
-        throws MixedModeException,NoMessageReceivedException
+        throws MixedModeException,NoMessageReceivedException,InterruptedException
     {
         IMessageReceiver receiver1 = null;
         IMessageReceiver receiver2 = null;
@@ -398,9 +405,11 @@ class MessageReceiverTest
         itsSender.send( expected1 );
         itsSender.send( expected2 );
         itsSender.send( expected3 );
-        
-        actual2 = receiver1.receive( 1000 );    
-        actual3 = receiver1.receive( 1000 );
+
+        sleepIfNeeded( 20000 );
+
+        actual2 = receiver1.receive( 10000 );    
+        actual3 = receiver1.receive( 10000 );
               
         assertTrue( actual2 instanceof IMapMessage );
         assertTrue( actual3 instanceof IObjectMessage );
@@ -444,7 +453,9 @@ class MessageReceiverTest
         itsSender.send( expected1 );
         itsSender.send( expected2 );
         itsSender.send( expected3 );
-        
+
+        sleepIfNeeded( 20000 );
+
         actual1 = itsTarget.receiveNoWait();
         actual2 = itsTarget.receiveNoWait();
         actual3 = itsTarget.receiveNoWait();
@@ -493,7 +504,9 @@ class MessageReceiverTest
             .setCorrelationId( "testReceiveNoWait2" )
             .setReturnAddress( "foo" )
             .setPayload( "TestMessage3" );
-        
+
+        sleepIfNeeded( 20000 );
+
         itsSender.send( expected1 );
         itsSender.send( expected2 );
         itsSender.send( expected3 );
@@ -526,6 +539,25 @@ class MessageReceiverTest
     /************************************************************************
      *  
      *
+     * @return
+     */
+    protected long
+    getCleanupTimeout()
+    {
+        return 2000;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param millis
+     */
+    protected void
+    sleepIfNeeded(long millis) {}
+
+    /************************************************************************
+     *  
+     *
      * @param string
      * @throws MixedModeException 
      */
@@ -538,13 +570,13 @@ class MessageReceiverTest
         
         try
         {
-            IMessage message = cleaner.receive( 2000 );
+            IMessage message = cleaner.receive( getCleanupTimeout() );
             
             while ( message != null )
             {
                 System.out.println( "Removing message: " + message.getCorrelationId() );
             
-                message = cleaner.receive( 2000 );
+                message = cleaner.receive( getCleanupTimeout() );
             }
         }
         catch (NoMessageReceivedException e) 

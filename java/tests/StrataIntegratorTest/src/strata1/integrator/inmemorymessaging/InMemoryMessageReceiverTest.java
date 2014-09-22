@@ -72,7 +72,7 @@ class InMemoryMessageReceiverTest
                         return false;
                     
                     return
-                        message.getIntegerProperty( "FooProperty" ) >= 5;
+                        message.getIntProperty( "FooProperty" ) >= 5;
                 }
                 
             });
@@ -88,7 +88,7 @@ class InMemoryMessageReceiverTest
                         return false;
                     
                     return
-                        message.getIntegerProperty( "FooProperty" ) < 5;
+                        message.getIntProperty( "FooProperty" ) < 5;
                 }
                 
             });

@@ -25,7 +25,9 @@
 		
 	    <artifact:dependencies pathId="partial.classpath">
 	        <dependency groupId="javax.jms" artifactId="javax.jms-api" version="2.0"/>
+            <dependency groupId="org.fusesource.stompjms" artifactId="stompjms-client" version="1.19"/>
 	        <dependency groupId="org.apache.activemq" artifactId="activemq-all" version="5.9.1"/>
+            <dependency groupId="org.apache.xbean" artifactId="xbean-spring" version="4.0"/>
 	    	<dependency groupId="junit" artifactId="junit" version="4.9"/>
 	        <dependency groupId="org.mockito" artifactId="mockito-all" version="1.9.0"/>
 	    </artifact:dependencies>

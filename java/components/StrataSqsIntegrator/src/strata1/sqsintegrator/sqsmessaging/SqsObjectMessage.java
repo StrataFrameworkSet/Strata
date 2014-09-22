@@ -238,6 +238,9 @@ class SqsObjectMessage
         ByteArrayInputStream bytes  = null;
         ObjectInput          input = null;
         
+        if ( getMessageImp().getBody() == null )
+            return null;
+        
         bytes = 
             new ByteArrayInputStream(
                 Base64.decode( getMessageImp().getBody() ) );

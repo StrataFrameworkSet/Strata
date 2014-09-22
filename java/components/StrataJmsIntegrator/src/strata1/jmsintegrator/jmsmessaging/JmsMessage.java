@@ -392,7 +392,7 @@ class JmsMessage
      */
     @Override
     public int 
-    getIntegerProperty(String name)
+    getIntProperty(String name)
     {
         return 0;
     }

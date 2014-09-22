@@ -41,6 +41,7 @@ class MockMessageListener
     private final List<IStringMessage> itsStringMessages;
     private final List<IMapMessage>    itsMapMessages;
     private final List<IObjectMessage> itsObjectMessages;
+    private final List<IBytesMessage>  itsBytesMessages;
     
     /************************************************************************
      * Creates a new {@code MockMessageListener}. 
@@ -52,6 +53,7 @@ class MockMessageListener
         itsStringMessages = new ArrayList<IStringMessage>();
         itsMapMessages    = new ArrayList<IMapMessage>();
         itsObjectMessages = new ArrayList<IObjectMessage>();
+        itsBytesMessages  = new ArrayList<IBytesMessage>();
     }
 
     /************************************************************************
@@ -85,6 +87,16 @@ class MockMessageListener
     }
 
     /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    onMessage(IBytesMessage message)
+    {
+        itsBytesMessages.add( message );
+    }
+
+    /************************************************************************
      *  
      *
      * @return
@@ -115,6 +127,17 @@ class MockMessageListener
     getObjectMessages()
     {
         return itsObjectMessages;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public List<IBytesMessage>
+    getBytesMessages()
+    {
+        return itsBytesMessages;
     }
 }
 

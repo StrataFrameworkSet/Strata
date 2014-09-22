@@ -11,6 +11,9 @@ class MessageSenderTest
     private IMessagingSession itsSession;
     private IMessageSender    itsTarget;
     private IMessageReceiver  itsReceiver;
+    private static final long SECOND = 1000;
+    private static final long MINUTE = 60*SECOND;
+    private static final long HOUR   = 60*MINUTE;
     
     @Before
     public void 
@@ -38,10 +41,10 @@ class MessageSenderTest
     public void 
     testSetTimeToLive()
     {
-        itsTarget.setTimeToLive( 5000 );
-        assertEquals( 5000,itsTarget.getTimeToLive() );
-        itsTarget.setTimeToLive( 15000 );
-        assertEquals( 15000,itsTarget.getTimeToLive() );
+        itsTarget.setTimeToLive( MINUTE );
+        assertEquals( MINUTE,itsTarget.getTimeToLive() );
+        itsTarget.setTimeToLive( 24*HOUR );
+        assertEquals( 24*HOUR,itsTarget.getTimeToLive() );
     }
 
     @Test
@@ -55,16 +58,16 @@ class MessageSenderTest
     public void 
     testGetTimeToLive()
     {
-        itsTarget.setTimeToLive( 5000 );
-        assertEquals( 5000,itsTarget.getTimeToLive() );
-        itsTarget.setTimeToLive( 15000 );
-        assertEquals( 15000,itsTarget.getTimeToLive() );
+        itsTarget.setTimeToLive( MINUTE );
+        assertEquals( MINUTE,itsTarget.getTimeToLive() );
+        itsTarget.setTimeToLive( 24*HOUR );
+        assertEquals( 24*HOUR,itsTarget.getTimeToLive() );
     }
 
     @Test
     public void 
     testSend() 
-        throws MixedModeException
+        throws MixedModeException,NoMessageReceivedException
     {
         IStringMessage expected1 = itsSession.createStringMessage();
         IStringMessage expected2 = itsSession.createStringMessage();
@@ -81,9 +84,9 @@ class MessageSenderTest
         itsTarget.send( expected2 );
         itsTarget.send( expected3 );
         
-        actual1 = itsReceiver.receive();
-        actual2 = itsReceiver.receive();
-        actual3 = itsReceiver.receive();
+        actual1 = itsReceiver.receive(10000);
+        actual2 = itsReceiver.receive(10000);
+        actual3 = itsReceiver.receive(10000);
         
         assertTrue( actual1 instanceof IStringMessage );
         assertTrue( actual2 instanceof IStringMessage );
