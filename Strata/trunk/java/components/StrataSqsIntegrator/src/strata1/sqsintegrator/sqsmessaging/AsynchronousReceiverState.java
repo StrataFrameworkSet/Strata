@@ -29,6 +29,7 @@ import strata1.integrator.messaging.IMessageListener;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.MixedModeException;
 import strata1.integrator.messaging.NoMessageReceivedException;
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQS;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -44,17 +45,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 class AsynchronousReceiverState
     implements IReceiverState
 {
-    private final AmazonSQS       itsService;
+    private final AWSCredentials  itsCredentials;
     private final ExecutorService itsExecutor;
     
     /************************************************************************
      * Creates a new {@code AsynchronousReceiverState}. 
      *
      */ 
-    AsynchronousReceiverState(AmazonSQS service) 
+    AsynchronousReceiverState(AWSCredentials credentials) 
     {
-        itsService = service;
-        itsExecutor = Executors.newFixedThreadPool( 1 );
+        itsCredentials = credentials;
+        itsExecutor    = Executors.newFixedThreadPool( 1 );
     }
 
     /************************************************************************
@@ -77,7 +78,7 @@ class AsynchronousReceiverState
             listeningFlag.compareAndSet( false,true );
             itsExecutor.execute( 
                 new SqsMessageProcessor(
-                    itsService,
+                    itsCredentials,
                     queueUrl,
                     selector,
                     listener,

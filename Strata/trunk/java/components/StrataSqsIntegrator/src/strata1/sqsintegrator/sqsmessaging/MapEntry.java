@@ -48,6 +48,19 @@ class MapEntry
      * Creates a new MapEntry. 
      *
      */
+    public
+    MapEntry()
+    {
+        key = "";
+        value = "";
+    }
+    
+    /************************************************************************
+     * Creates a new MapEntry. 
+     *
+     * @param k
+     * @param v
+     */
     public 
     MapEntry(String k,String v)
     {

@@ -27,6 +27,20 @@ package strata1.jmsintegrator.jmsmessaging;
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.MessageReceiverTest;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQSslConnectionFactory;
+import org.fusesource.stomp.jms.StompJmsConnectionFactory;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509KeyManager;
+import javax.net.ssl.X509TrustManager;
+import java.net.Socket;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
+import java.security.PrivateKey;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 
 /****************************************************************************
  * 
@@ -54,8 +68,46 @@ class JmsMessageReceiverTest
     protected IMessagingSession 
     createMessagingSession()
     {
-        ActiveMQConnectionFactory factory = 
-            new ActiveMQConnectionFactory("tcp://localhost:61616");
+        String host =
+            //"ssl://localhost:61617";
+            "ssl://ec2-54-68-199-128.us-west-2.compute.amazonaws.com:61617";
+        
+        ActiveMQSslConnectionFactory factory = null;
+        TrustManager[]               manager = null;
+        
+        factory = new ActiveMQSslConnectionFactory( host );
+
+        manager = 
+            new TrustManager[] 
+            { 
+                new X509TrustManager()
+                {
+                    public X509Certificate[] 
+                    getAcceptedIssuers()
+                    {
+                        return null;
+                    }
+        
+                    public void 
+                    checkClientTrusted(
+                        X509Certificate[] certificates,
+                        String authType) {}
+        
+                    public void 
+                    checkServerTrusted(
+                        X509Certificate[] certificates,
+                        String authType) {}
+                } 
+            };
+        
+        
+        factory.setKeyAndTrustManagers(
+            null, 
+            manager, 
+            new SecureRandom()); 
+        
+        factory.setUserName( "strata-activemq-user" );
+        factory.setPassword( "Dbr6pzyX" );
         
         return new JmsQueueMessagingSession(factory);
     }

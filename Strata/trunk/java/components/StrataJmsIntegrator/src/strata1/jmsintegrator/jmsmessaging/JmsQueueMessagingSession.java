@@ -24,6 +24,7 @@
 
 package strata1.jmsintegrator.jmsmessaging;
 
+import strata1.integrator.messaging.IBytesMessage;
 import strata1.integrator.messaging.IMapMessage;
 import strata1.integrator.messaging.IMessageReceiver;
 import strata1.integrator.messaging.IMessageSender;
@@ -66,6 +67,7 @@ class JmsQueueMessagingSession
     {
         factory            = f;
         acknowledgmentMode = ackMode;
+        retryAttempts = 3;
         connect();
     }
 
@@ -201,6 +203,23 @@ class JmsQueueMessagingSession
         try
         {
             return new JmsObjectMessage(session.createObjectMessage());
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IBytesMessage 
+    createBytesMessage()
+    {
+        try
+        {
+            return new JmsBytesMessage(session.createBytesMessage());
         }
         catch (JMSException e)
         {
@@ -378,7 +397,9 @@ class JmsQueueMessagingSession
      */
     private void
     reconnect()
-    {    
+    {   
+        String reason = "unknown";
+        
         try
         {
             session.close();
@@ -398,8 +419,10 @@ class JmsQueueMessagingSession
                 createConnectionAndSession();
                 return;
             }
-            catch (JMSException e)
+            catch (Throwable e)
             {
+                reason = e.getMessage();
+                
                 try
                 {
                     Thread.sleep( getRetryDelay() );
@@ -408,7 +431,8 @@ class JmsQueueMessagingSession
             }
         }
     
-        throw new IllegalStateException( "Reconnect failed." );
+        throw 
+            new IllegalStateException( "Reconnect failed: " + reason );
         
     }
 

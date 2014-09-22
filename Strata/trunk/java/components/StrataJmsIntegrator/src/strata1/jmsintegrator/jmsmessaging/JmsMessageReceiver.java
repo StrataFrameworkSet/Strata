@@ -30,6 +30,7 @@ import strata1.integrator.messaging.IMessageReceiver;
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.MixedModeException;
 import strata1.integrator.messaging.NoMessageReceivedException;
+import javax.jms.BytesMessage;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Message;
@@ -173,19 +174,7 @@ class JmsMessageReceiver
     {
         try
         {
-            Message message = itsImp.receive();
-            
-            if ( message == null )
-                return null;
-            
-            if ( message instanceof TextMessage )
-                return new JmsStringMessage((TextMessage)message);
-            else if ( message instanceof MapMessage )
-                return new JmsMapMessage((MapMessage)message);
-            else if ( message instanceof ObjectMessage )
-                return new JmsObjectMessage((ObjectMessage)message);
-            
-            return null; // should never reach this point
+            return wrapMessage( itsImp.receive() );
         }
         catch (JMSException e)
         {
@@ -208,14 +197,7 @@ class JmsMessageReceiver
             if ( message == null )
                 throw new NoMessageReceivedException();
             
-            if ( message instanceof TextMessage )
-                return new JmsStringMessage((TextMessage)message);
-            else if ( message instanceof MapMessage )
-                return new JmsMapMessage((MapMessage)message);
-            else if ( message instanceof ObjectMessage )
-                return new JmsObjectMessage((ObjectMessage)message);
-            
-            return null; // should never reach this point
+            return wrapMessage( message );
         }
         catch (JMSException e)
         {
@@ -238,14 +220,7 @@ class JmsMessageReceiver
             if ( message == null )
                 throw new NoMessageReceivedException();
             
-            if ( message instanceof TextMessage )
-                return new JmsStringMessage((TextMessage)message);
-            else if ( message instanceof MapMessage )
-                return new JmsMapMessage((MapMessage)message);
-            else if ( message instanceof ObjectMessage )
-                return new JmsObjectMessage((ObjectMessage)message);
-            
-            return null; // should never reach this point
+            return wrapMessage( message );
         }
         catch (JMSException e)
         {
@@ -268,6 +243,28 @@ class JmsMessageReceiver
         {
             throw new IllegalStateException( e );
         }
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param message
+     * @return
+     * @throws NoMessageReceivedException
+     */
+    private IMessage 
+    wrapMessage(Message message)
+    {
+        if ( message instanceof TextMessage )
+            return new JmsStringMessage((TextMessage)message);
+        else if ( message instanceof MapMessage )
+            return new JmsMapMessage((MapMessage)message);
+        else if ( message instanceof ObjectMessage )
+            return new JmsObjectMessage((ObjectMessage)message);
+        else if ( message instanceof BytesMessage )
+            return new JmsBytesMessage((BytesMessage)message);
+        
+        return null; // should never reach this point
     }
 
 }

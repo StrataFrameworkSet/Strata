@@ -31,6 +31,7 @@ import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.MixedModeException;
 import strata1.integrator.messaging.NoMessageReceivedException;
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQS;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -45,14 +46,14 @@ public
 class SqsMessageReceiver
     implements IMessageReceiver
 {
-    private final IMessagingSession itsSession;
-    private final String            itsQueueUrl;
-    private final AmazonSQS         itsImp;
-    private IMessageListener        itsListener;
-    private String                  itsSelector;
-    private ISelector               itsSelectorImp;
-    private final AtomicBoolean     itsListeningFlag;
-    private IReceiverState          itsState;
+    private final ISqsMessagingSession itsSession;
+    private final String               itsQueueUrl;
+    private final AWSCredentials       itsCredentials;
+    private IMessageListener           itsListener;
+    private String                     itsSelector;
+    private ISelector                  itsSelectorImp;
+    private final AtomicBoolean        itsListeningFlag;
+    private IReceiverState             itsState;
 
     /************************************************************************
      * Creates a new SqsMessageReceiver. 
@@ -60,15 +61,32 @@ class SqsMessageReceiver
      */
     public 
     SqsMessageReceiver(
-        IMessagingSession session,
-        String            queueUrl,
-        AmazonSQS         imp)
+        ISqsMessagingSession session,
+        String               queueUrl,
+        AWSCredentials       credentials)
     {
-        itsSession  = session;
-        itsQueueUrl = queueUrl;
-        itsImp      = imp;
-        itsListener = null;
-        itsSelector = null;
+        itsSession       = session;
+        itsQueueUrl      = queueUrl;
+        itsCredentials   = credentials;
+        itsListener      = null;
+        itsSelector      = null;
+        itsSelectorImp   = new DefaultSelector();
+        itsListeningFlag = new AtomicBoolean(false);
+    }
+
+    public 
+    SqsMessageReceiver(
+        ISqsMessagingSession session,
+        String               queueUrl,
+        AWSCredentials       credentials,
+        String               selector)
+    {
+        itsSession       = session;
+        itsQueueUrl      = queueUrl;
+        itsCredentials   = credentials;
+        itsListener      = null;
+        itsSelector      = selector;
+        itsSelectorImp   = session.getSelector( selector );
         itsListeningFlag = new AtomicBoolean(false);
     }
 
@@ -123,7 +141,7 @@ class SqsMessageReceiver
         throws MixedModeException
     {
         if ( itsState == null )
-            itsState = new AsynchronousReceiverState(itsImp);
+            itsState = new AsynchronousReceiverState(itsCredentials);
         
         itsState.startListening( 
             itsQueueUrl,
@@ -141,7 +159,7 @@ class SqsMessageReceiver
         throws MixedModeException
     {
         if ( itsState == null )
-            itsState = new AsynchronousReceiverState(itsImp);
+            itsState = new AsynchronousReceiverState(itsCredentials);
         
         itsState.stopListening( itsListeningFlag );
     }
@@ -154,7 +172,7 @@ class SqsMessageReceiver
     isListening()
     {
         if ( itsState == null )
-            itsState = new AsynchronousReceiverState(itsImp);
+            itsState = new AsynchronousReceiverState(itsCredentials);
         
         return itsState.isListening( itsListeningFlag );
     }
@@ -168,7 +186,7 @@ class SqsMessageReceiver
         throws MixedModeException
     {
         if ( itsState == null )
-            itsState = new SynchronousReceiverState(itsImp);
+            itsState = new SynchronousReceiverState(itsCredentials);
         
         return itsState.receive( itsQueueUrl,itsSelectorImp );
     }
@@ -182,7 +200,7 @@ class SqsMessageReceiver
         throws MixedModeException,NoMessageReceivedException
     {
         if ( itsState == null )
-            itsState = new SynchronousReceiverState(itsImp);
+            itsState = new SynchronousReceiverState(itsCredentials);
         
         return itsState.receive( itsQueueUrl,itsSelectorImp,timeOutInMs );
     }
@@ -196,7 +214,7 @@ class SqsMessageReceiver
         throws MixedModeException,NoMessageReceivedException
     {
         if ( itsState == null )
-            itsState = new SynchronousReceiverState(itsImp);
+            itsState = new SynchronousReceiverState(itsCredentials);
         
         return itsState.receiveNoWait( itsQueueUrl,itsSelectorImp );
     }

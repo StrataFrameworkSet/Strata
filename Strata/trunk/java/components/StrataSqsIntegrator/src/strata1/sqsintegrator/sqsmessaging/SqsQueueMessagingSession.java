@@ -24,13 +24,20 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
+import strata1.integrator.messaging.IBytesMessage;
 import strata1.integrator.messaging.IMapMessage;
 import strata1.integrator.messaging.IMessageReceiver;
 import strata1.integrator.messaging.IMessageSender;
-import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.IObjectMessage;
+import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.IStringMessage;
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQS;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /****************************************************************************
  * 
@@ -41,18 +48,24 @@ import com.amazonaws.services.sqs.AmazonSQS;
  */
 public 
 class SqsQueueMessagingSession
-    implements IMessagingSession
+    implements ISqsMessagingSession
 {
-    private final AmazonSQS itsImp;
+    private final AWSCredentials        itsCredentials;
+    private final Map<String,String>    itsQueueUrls;
+    private final Map<String,ISelector> itsSelectors;
+    private final AtomicBoolean         itsReceivingFlag;
     
     /************************************************************************
      * Creates a new SqsQueueMessagingSession. 
      *
      */
     public 
-    SqsQueueMessagingSession(AmazonSQS imp)
+    SqsQueueMessagingSession(AWSCredentials credentials)
     {
-        itsImp = imp;
+        itsCredentials = credentials;
+        itsQueueUrls = new HashMap<String,String>();
+        itsSelectors = new HashMap<String,ISelector>();
+        itsReceivingFlag = new AtomicBoolean(false);
     }
 
     /************************************************************************
@@ -62,7 +75,7 @@ class SqsQueueMessagingSession
     public IMessageSender 
     createMessageSender(String id)
     {
-        return null;
+        return new SqsMessageSender( this,getQueueUrl(id),itsCredentials );
     }
 
     /************************************************************************
@@ -72,7 +85,7 @@ class SqsQueueMessagingSession
     public IMessageReceiver 
     createMessageReceiver(String id)
     {
-        return null;
+        return new SqsMessageReceiver( this,getQueueUrl(id),itsCredentials );
     }
 
     /************************************************************************
@@ -82,7 +95,8 @@ class SqsQueueMessagingSession
     public IMessageReceiver 
     createMessageReceiver(String id,String selector)
     {
-        return null;
+        return 
+            new SqsMessageReceiver(this,getQueueUrl(id),itsCredentials,selector);
     }
 
     /************************************************************************
@@ -119,9 +133,20 @@ class SqsQueueMessagingSession
      * {@inheritDoc} 
      */
     @Override
+    public IBytesMessage 
+    createBytesMessage()
+    {
+        return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
     public void 
     startReceiving()
     {
+        itsReceivingFlag.compareAndSet( false,true );
     }
 
     /************************************************************************
@@ -131,7 +156,8 @@ class SqsQueueMessagingSession
     public void 
     stopReceiving()
     {
-    }
+        itsReceivingFlag.compareAndSet( true,false );
+   }
 
     /************************************************************************
      * {@inheritDoc} 
@@ -140,7 +166,6 @@ class SqsQueueMessagingSession
     public void 
     close()
     {
-        itsImp.shutdown();
     }
 
     /************************************************************************
@@ -150,7 +175,7 @@ class SqsQueueMessagingSession
     public boolean 
     isReceiving()
     {
-        return false;
+        return itsReceivingFlag.get();
     }
 
     /************************************************************************
@@ -163,6 +188,105 @@ class SqsQueueMessagingSession
         return false;
     }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public SqsQueueMessagingSession
+    insertQueue(String queueId,String queueUrl)
+    {
+        itsQueueUrls.put( queueId,queueUrl );
+        return this;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param expression
+     * @param selector
+     * @return
+     */
+    public SqsQueueMessagingSession
+    insertSelector(String expression,ISelector selector)
+    {
+        itsSelectors.put( normalize(expression),selector );
+        return this;
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public String 
+    getQueueUrl(String id)
+    {
+        if ( !hasQueue( id ) )
+            throw 
+                new IllegalArgumentException( 
+                    "queue id:" + id + " does not exist." );
+        
+        return itsQueueUrls.get( id );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param selector
+     * @return
+     */
+    public ISelector
+    getSelector(String selector)
+    {
+        return itsSelectors.get( normalize(selector) );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param queueId
+     * @return
+     */
+    @Override
+    public boolean
+    hasQueue(String queueId)
+    {
+        return itsQueueUrls.containsKey( queueId );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    hasSelector(String expression)
+    {
+        return itsSelectors.containsKey( normalize(expression) );
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param expression
+     * @return
+     */
+    private String 
+    normalize(String expression)
+    {
+        StringBuilder builder = new StringBuilder();
+        Matcher       matcher = 
+            Pattern
+                .compile("([^\"]\\S*|\".+?\")\\s*")
+                .matcher(expression);
+        
+        while ( matcher.find() )
+            builder.append(matcher.group(1)); 
+        
+        return builder.toString();        
+    }
+    
 }
 
 // ##########################################################################

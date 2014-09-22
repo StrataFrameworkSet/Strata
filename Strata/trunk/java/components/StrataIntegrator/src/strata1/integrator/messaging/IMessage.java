@@ -92,7 +92,7 @@ interface IMessage
     getShortProperty(String name);
     
     public int
-    getIntegerProperty(String name);
+    getIntProperty(String name);
     
     public long
     getLongProperty(String name);

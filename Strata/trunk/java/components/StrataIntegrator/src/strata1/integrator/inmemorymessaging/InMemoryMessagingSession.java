@@ -24,6 +24,7 @@
 
 package strata1.integrator.inmemorymessaging;
 
+import strata1.integrator.messaging.IBytesMessage;
 import strata1.integrator.messaging.IMapMessage;
 import strata1.integrator.messaging.IMessageReceiver;
 import strata1.integrator.messaging.IMessageSender;
@@ -158,6 +159,16 @@ class InMemoryMessagingSession
     createObjectMessage()
     {
         return new InMemoryObjectMessage();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IBytesMessage 
+    createBytesMessage()
+    {
+        return new InMemoryBytesMessage();
     }
 
     /************************************************************************

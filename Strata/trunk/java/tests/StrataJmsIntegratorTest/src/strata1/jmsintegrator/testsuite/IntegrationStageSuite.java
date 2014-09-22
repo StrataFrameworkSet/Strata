@@ -27,6 +27,7 @@ package strata1.jmsintegrator.testsuite;
 import strata1.jmsintegrator.jmsmessaging.JmsMessageReceiverTest;
 import strata1.jmsintegrator.jmsmessaging.JmsMessageSenderTest;
 import strata1.jmsintegrator.jmsmessaging.JmsMessagingSessionTest;
+import strata1.jmsintegrator.jmsmessaging.StompJmsMessageReceiverTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -41,7 +42,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     JmsMessagingSessionTest.class,
     JmsMessageSenderTest.class,
-    JmsMessageReceiverTest.class})
+    JmsMessageReceiverTest.class,
+    StompJmsMessageReceiverTest.class})
 public 
 class IntegrationStageSuite {}
 

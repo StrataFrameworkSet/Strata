@@ -276,7 +276,7 @@ class InMemoryMessage
      */
     @Override
     public int 
-    getIntegerProperty(String name)
+    getIntProperty(String name)
     {
         return (int)itsProperties.get( name );
     }
