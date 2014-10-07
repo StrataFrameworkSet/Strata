@@ -1,0 +1,81 @@
+// ##########################################################################
+// # File Name:	SqsMapMessageTest.java
+// #
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
+// #
+// # License:	This file is part of the StrataSqsIntegratorTest Framework.
+// #
+// #   			The StrataSqsIntegratorTest Framework is free software: you 
+// #			can redistribute it and/or modify it under the terms of 
+// #			the GNU Lesser General Public License as published by
+// #    		the Free Software Foundation, either version 3 of the 
+// #			License, or (at your option) any later version.
+// #
+// #    		The StrataSqsIntegratorTest Framework is distributed in the 
+// #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
+// #			without even the implied warranty of MERCHANTABILITY or 
+// #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
+// #			General Public License for more details.
+// #
+// #    		You should have received a copy of the GNU Lesser 
+// #			General Public License along with the StrataSqsIntegratorTest
+// #			Framework. If not, see http://www.gnu.org/licenses/.
+// ##########################################################################
+
+package strata1.sqsintegrator.sqsmessaging;
+
+import static org.junit.Assert.*;
+import strata1.integrator.messaging.IMapMessage;
+import strata1.integrator.messaging.MapMessageTest;
+import org.junit.Test;
+
+/****************************************************************************
+ * 
+ * @author 		
+ *     Sapientia Systems
+ * @conventions	
+ *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
+ */
+public 
+class SqsMapMessageTest
+    extends MapMessageTest
+{
+
+    /************************************************************************
+     * Creates a new SqsMapMessageTest. 
+     *
+     */
+    public 
+    SqsMapMessageTest() {}
+
+    @Test
+    public void
+    testConstructor()
+    {
+        SqsMapMessage expected = new SqsMapMessage();
+        SqsMapMessage actual = null;
+        
+        expected
+            .setBoolean( "Foo",true )
+            .setInt( "Bar",5 )
+            .setString( "FooBar","xxxxxxx" );
+        
+        actual = new SqsMapMessage( expected.getMessageImp() ); 
+        assertEquals(expected.getBoolean("Foo"),actual.getBoolean("Foo"));
+        assertEquals(expected.getInt("Bar"),actual.getInt("Bar"));
+        assertEquals(expected.getString("FooBar"),actual.getString("FooBar"));  
+    }
+    
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    protected IMapMessage 
+    getTarget()
+    {
+        return new SqsMapMessage();
+    }
+
+}
+
+// ##########################################################################

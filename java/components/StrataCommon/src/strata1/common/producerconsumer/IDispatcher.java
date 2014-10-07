@@ -41,10 +41,10 @@ interface IDispatcher<T>
     detachConsumer(IConsumer<T> consumer);
     
     public void
-    route(int priority,T payload);
+    route(T payload);
     
     public void
-    broadcast(int priority,T payload);
+    broadcast(T payload);
     
     public boolean
     hasConsumer(IConsumer<T> consumer);

@@ -184,7 +184,7 @@ class PersonRepositoryTest
         throws Exception
     {
         IUnitOfWork unitOfWork = itsTarget.getUnitOfWork();
-        IPerson       expected = 
+        IPerson     expected = 
                           new Person(
                               new PersonName("John","Liebenau"),
                               new PersonAge(new DateTime(1967,4,25)));
@@ -193,6 +193,10 @@ class PersonRepositoryTest
         unitOfWork.commit();
         
         Assert.assertTrue( itsTarget.hasPersonWithName( expected.getName() ) );
+        unitOfWork = itsTarget.getUnitOfWork();
+        itsTarget.removePerson( expected );
+        unitOfWork.commit();
+        Assert.assertFalse( itsTarget.hasPersonWithName( expected.getName() ) );
     }
 
     @Test

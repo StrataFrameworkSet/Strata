@@ -42,7 +42,7 @@ import java.util.concurrent.locks.LockSupport;
 public 
 class DisruptorRouterTest
 {
-    private static final int        MAX = 10;
+    private static final int        MAX = 1000000;
     
     private ICountRequestDispatcher itsTarget;
     private ICountRequestProducer   itsProducer1;    
@@ -61,7 +61,7 @@ class DisruptorRouterTest
     public void 
     setUp() throws Exception
     {
-        itsTarget = new CountRequestDisruptorDispatcher(1,8);
+        itsTarget = new CountRequestDisruptorDispatcher(8192);
         itsProducer1 = new CountRequestProducer(1,MAX,DispatchKind.ROUTE);
         itsProducer2 = new CountRequestProducer(2,MAX,DispatchKind.ROUTE);
         itsProducer3 = new CountRequestProducer(3,MAX,DispatchKind.ROUTE);
@@ -150,8 +150,6 @@ class DisruptorRouterTest
         itsProducer1.stopProducing();
         itsProducer2.stopProducing();
         itsProducer3.stopProducing();
-        
-        LockSupport.parkNanos( 100000 );
         
         assertEquals( MAX,itsProducer1.getCount() );
         assertEquals( MAX,itsProducer2.getCount() );

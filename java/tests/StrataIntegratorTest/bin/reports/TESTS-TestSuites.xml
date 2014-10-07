@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="0" failures="0" hostname="Sapientia-1" id="0" name="CommitStageSuite" package="strata1.integrator.testsuite" tests="25" time="0.124" timestamp="2014-08-23T23:03:26">
+  <testsuite errors="0" failures="0" hostname="Sapientia-1" id="0" name="CommitStageSuite" package="strata1.integrator.testsuite" tests="26" time="0.515" timestamp="2014-10-07T04:09:41">
       <properties>
           <property name="java.vendor" value="Oracle Corporation" />
 
@@ -214,23 +214,25 @@
 
       </properties>
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testStopReceiving" time="0.009" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testCreateMessageReceiverStringString" time="0.046" />
+
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testCreateMessageReceiverString" time="0.0" />
+
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testCreateMessageSender" time="0.0" />
+
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testCreateStringMessage" time="0.0" />
+
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testStopReceiving" time="0.0" />
 
       <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testIsReceiving" time="0.0" />
 
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testCreateMapMessage" time="0.0" />
+
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testCreateObjectMessage" time="0.0" />
+
       <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testStartReceiving" time="0.0" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testCreateMapMessage" time="0.003" />
-
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testCreateObjectMessage" time="0.001" />
-
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testCreateMessageSender" time="0.004" />
-
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testCreateStringMessage" time="0.001" />
-
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testCreateMessageReceiverStringString" time="0.002" />
-
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessagingSessionTest" name="testCreateMessageReceiverString" time="0.0" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageSenderTest" name="testSend" time="0.0" />
 
       <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageSenderTest" name="testGetTimeToLive" time="0.0" />
 
@@ -238,33 +240,34 @@
 
       <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageSenderTest" name="testSetTimeToLive" time="0.0" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageSenderTest" name="testSend" time="0.001" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testReceive" time="0.031" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testGetListener" time="0.006" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testGetSession" time="0.031" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testSetListener" time="0.005" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testSetListener" time="0.032" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testGetSession" time="0.005" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testGetListener" time="0.031" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testGetSelector" time="0.005" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testGetSelector" time="0.031" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testStartListening" time="0.008" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testStartListening" time="0.031" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testStopListening" time="0.006" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testStopListening" time="0.031" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testIsListening" time="0.006" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testIsListening" time="0.032" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testReceiveLong1" time="0.005" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testReceiveLong1" time="0.031" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testReceiveLong2" time="0.007" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testReceiveLong2" time="0.047" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testReceiveNoWait1" time="0.006" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testReceiveLong3" time="0.031" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testReceiveNoWait2" time="0.006" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testReceiveNoWait1" time="0.031" />
 
-      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testReceive" time="0.006" />
+      <testcase classname="strata1.integrator.inmemorymessaging.InMemoryMessageReceiverTest" name="testReceiveNoWait2" time="0.031" />
 
       <system-out><![CDATA[Queue:foo.test cleaned up.
+Queue:foo.test cleaned up.
 Queue:foo.test cleaned up.
 Queue:foo.test cleaned up.
 Queue:foo.test cleaned up.
@@ -275,8 +278,8 @@ Queue:foo.test cleaned up.
 Removing message: testReceiveLong2
 Queue:foo.test cleaned up.
 Queue:foo.test cleaned up.
-Removing message: testReceiveNoWait2
 Queue:foo.test cleaned up.
+Removing message: testReceiveNoWait2
 Queue:foo.test cleaned up.
 ]]></system-out>
 

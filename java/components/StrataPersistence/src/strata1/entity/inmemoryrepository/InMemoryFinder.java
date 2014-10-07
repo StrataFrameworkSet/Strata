@@ -130,6 +130,9 @@ class InMemoryFinder<T>
 		if ( itsResults.size() > 1 )
 		    throw new NotUniqueException("result is not unique");
 		
+		if ( itsResults.isEmpty() )
+		    return null;
+		
 		return itsResults.get( 0 );
 	}
 

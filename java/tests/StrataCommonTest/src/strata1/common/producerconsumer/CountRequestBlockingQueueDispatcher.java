@@ -34,6 +34,6 @@ package strata1.common.producerconsumer;
 public 
 class CountRequestBlockingQueueDispatcher
     extends    BlockingQueueDispatcher<CountRequest>
-    implements ICountRequestDispatcher {}
+    implements ICountRequestPriorityDispatcher {}
 
 // ##########################################################################

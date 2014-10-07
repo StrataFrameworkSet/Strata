@@ -43,13 +43,13 @@ class BlockingQueueRouterTest
 {
     private static final int        MAX = 10000000;
     
-    private ICountRequestDispatcher itsTarget;
-    private ICountRequestProducer   itsProducer1;    
-    private ICountRequestProducer   itsProducer2;
-    private ICountRequestProducer   itsProducer3;
-    private ICountRequestConsumer   itsConsumer1;
-    private ICountRequestConsumer   itsConsumer2;
-    private ICountRequestConsumer   itsConsumer3;
+    private ICountRequestPriorityDispatcher itsTarget;
+    private ICountRequestPriorityProducer   itsProducer1;    
+    private ICountRequestPriorityProducer   itsProducer2;
+    private ICountRequestPriorityProducer   itsProducer3;
+    private ICountRequestConsumer           itsConsumer1;
+    private ICountRequestConsumer           itsConsumer2;
+    private ICountRequestConsumer           itsConsumer3;
     
     /************************************************************************
      *  
@@ -61,16 +61,16 @@ class BlockingQueueRouterTest
     setUp() throws Exception
     {
         itsTarget = new CountRequestBlockingQueueDispatcher();
-        itsProducer1 = new CountRequestProducer(1,MAX,DispatchKind.ROUTE);
-        itsProducer2 = new CountRequestProducer(2,MAX,DispatchKind.ROUTE);
-        itsProducer3 = new CountRequestProducer(3,MAX,DispatchKind.ROUTE);
+        itsProducer1 = new CountRequestPriorityProducer(1,MAX,DispatchKind.ROUTE);
+        itsProducer2 = new CountRequestPriorityProducer(2,MAX,DispatchKind.ROUTE);
+        itsProducer3 = new CountRequestPriorityProducer(3,MAX,DispatchKind.ROUTE);
         itsConsumer1 = new CountRequestConsumer(1);
         itsConsumer2 = new CountRequestConsumer(2);
         itsConsumer3 = new CountRequestConsumer(3);
         
-        itsProducer1.setDispatcher( itsTarget );
-        itsProducer2.setDispatcher( itsTarget );
-        itsProducer3.setDispatcher( itsTarget );
+        itsProducer1.setPriorityDispatcher( itsTarget );
+        itsProducer2.setPriorityDispatcher( itsTarget );
+        itsProducer3.setPriorityDispatcher( itsTarget );
         
         itsTarget.attachConsumer( itsConsumer1 );
         itsTarget.attachConsumer( itsConsumer2 );
