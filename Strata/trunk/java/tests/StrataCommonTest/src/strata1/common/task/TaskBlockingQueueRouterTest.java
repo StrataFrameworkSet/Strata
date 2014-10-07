@@ -50,14 +50,14 @@ import java.io.StringWriter;
 public 
 class TaskBlockingQueueRouterTest
 {
-    private ITaskDispatcher  itsTarget;
-    private TestTaskProducer itsProducer1;
-    private TestTaskProducer itsProducer2;
-    private ILogger          itsLogger;
-    private ITaskConsumer    itsConsumer1;
-    private ITaskConsumer    itsConsumer2;
-    private ITaskConsumer    itsConsumer3;
-    private StringWriter     itsWriter;
+    private ITaskPriorityDispatcher  itsTarget;
+    private TestTaskPriorityProducer itsProducer1;
+    private TestTaskPriorityProducer itsProducer2;
+    private ILogger                  itsLogger;
+    private ITaskConsumer            itsConsumer1;
+    private ITaskConsumer            itsConsumer2;
+    private ITaskConsumer            itsConsumer3;
+    private StringWriter             itsWriter;
     
     /************************************************************************
      *  
@@ -73,8 +73,8 @@ class TaskBlockingQueueRouterTest
         itsWriter = new StringWriter();       
         itsLogger = createLogger();
         
-        itsProducer1 = new TestTaskProducer(DispatchKind.ROUTE);
-        itsProducer2 = new TestTaskProducer(DispatchKind.ROUTE);
+        itsProducer1 = new TestTaskPriorityProducer(DispatchKind.ROUTE);
+        itsProducer2 = new TestTaskPriorityProducer(DispatchKind.ROUTE);
         
         itsProducer1
             .insertTask( new TestTask("TestA",1,itsLogger) )
@@ -86,8 +86,8 @@ class TaskBlockingQueueRouterTest
             .insertTask( new TestTask("TestE",2,itsLogger) )
             .insertTask( new TestTask("TestF",3,itsLogger) );
        
-        itsProducer1.setDispatcher( itsTarget );
-        itsProducer2.setDispatcher( itsTarget );
+        itsProducer1.setPriorityDispatcher( itsTarget );
+        itsProducer2.setPriorityDispatcher( itsTarget );
         
         itsConsumer1 = new TaskConsumer(new TestTaskSelector(1),itsLogger);
         itsConsumer2 = new TaskConsumer(new TestTaskSelector(2),itsLogger);

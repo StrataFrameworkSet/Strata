@@ -122,6 +122,11 @@ class DateTimeType
         DateTime datetimeX = (DateTime)x;
         DateTime datetimeY = (DateTime)y;
         
+        if ( (datetimeX == null) && (datetimeY == null) )
+            return true;
+        else if ( (datetimeX == null) || (datetimeY==null) )
+            return false;
+        
         return datetimeX.equals( datetimeY );
     }
 
@@ -188,6 +193,9 @@ class DateTimeType
     deepCopy(Object value) 
         throws HibernateException
     {
+        if ( value == null )
+            return null;
+        
         return ((DateTime)value).copy();
     }
 

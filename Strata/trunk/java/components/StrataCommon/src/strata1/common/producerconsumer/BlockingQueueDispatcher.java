@@ -42,8 +42,8 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public
 class BlockingQueueDispatcher<T>
-    extends    AbstractDispatcher<T>
-    implements IDispatcher<T>
+    extends    AbstractPriorityDispatcher<T>
+    implements IPriorityDispatcher<T>
 {
     private ExecutorService                                 itsPool;
     private IMultiMap<ISelector<T>,BlockingQueue<Entry<T>>> itsQueues;
@@ -68,7 +68,7 @@ class BlockingQueueDispatcher<T>
      */
     @Override
     public void
-    route(int priority, T payload)
+    route(int priority,T payload)
     {
         long sequence = 0L;
         

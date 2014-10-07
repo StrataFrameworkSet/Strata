@@ -48,7 +48,7 @@ class LogEntryDisruptorBroadcaster
     public 
     LogEntryDisruptorBroadcaster(int bufferSize)
     {
-        super( new LogEntryFactory(),1,bufferSize );
+        super( new LogEntryFactory(),bufferSize );
     }
 
 }

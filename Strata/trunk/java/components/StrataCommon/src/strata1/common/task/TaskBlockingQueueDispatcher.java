@@ -36,6 +36,6 @@ import strata1.common.producerconsumer.BlockingQueueDispatcher;
 public 
 class TaskBlockingQueueDispatcher
     extends    BlockingQueueDispatcher<ITask>
-    implements ITaskDispatcher {}
+    implements ITaskPriorityDispatcher {}
 
 // ##########################################################################

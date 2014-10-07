@@ -28,6 +28,12 @@ import strata1.common.datetime.DateTimeTest;
 import strata1.common.money.CurrencyExchangerTest;
 import strata1.common.money.MoneyCalculatorTest;
 import strata1.common.money.MoneyTest;
+import strata1.common.producerconsumer.BlockingQueueBroadcasterTest;
+import strata1.common.producerconsumer.BlockingQueueRouterTest;
+import strata1.common.producerconsumer.DisruptorBroadcasterTest;
+import strata1.common.producerconsumer.DisruptorRouterTest;
+import strata1.common.task.TaskBlockingQueueRouterTest;
+import strata1.common.task.TaskDisruptorRouterTest;
 import strata1.common.utility.CopyableTest;
 import strata1.common.utility.SingletonProxyTest;
 import strata1.common.utility.SynchronizerTest;
@@ -49,7 +55,13 @@ import org.junit.runners.Suite;
 	MoneyCalculatorTest.class,
 	CopyableTest.class,
 	SingletonProxyTest.class,
-	SynchronizerTest.class})
+	SynchronizerTest.class,
+	DisruptorRouterTest.class,
+	DisruptorBroadcasterTest.class,
+	BlockingQueueRouterTest.class,
+	BlockingQueueBroadcasterTest.class,
+	TaskDisruptorRouterTest.class,
+	TaskBlockingQueueRouterTest.class})
 public 
 class CommitStageSuite {}
 

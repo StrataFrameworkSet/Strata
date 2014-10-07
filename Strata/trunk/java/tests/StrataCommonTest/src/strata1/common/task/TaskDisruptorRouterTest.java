@@ -68,7 +68,7 @@ class TaskDisruptorRouterTest
     public void 
     setUp() throws Exception
     {
-        itsTarget = new TaskDisruptorDispatcher(2,1024);
+        itsTarget = new TaskDisruptorDispatcher(1024);
         
         itsWriter = new StringWriter();       
         itsLogger = createLogger();

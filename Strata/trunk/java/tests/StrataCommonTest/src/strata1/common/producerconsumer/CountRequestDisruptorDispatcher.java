@@ -44,9 +44,9 @@ class CountRequestDisruptorDispatcher
      * @param bufferSize
      */
     public 
-    CountRequestDisruptorDispatcher(int numPriorities,int bufferSize)
+    CountRequestDisruptorDispatcher(int bufferSize)
     {
-        super( new CountRequestEventFactory(),numPriorities,bufferSize );
+        super( new CountRequestEventFactory(),bufferSize );
     }
 
 }

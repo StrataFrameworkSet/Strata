@@ -25,9 +25,12 @@
 package strata1.common.producerconsumer;
 
 import com.lmax.disruptor.RingBuffer;
+import com.lmax.disruptor.SleepingWaitStrategy;
+import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /****************************************************************************
@@ -43,8 +46,8 @@ class DisruptorDispatcher<T>
     extends    AbstractDispatcher<T>
     implements IDispatcher<T>
 {
-    private final PriorityDisruptor<Event<T>> itsDisruptor;
-    private final AtomicBoolean               itsRoutingIndicator;
+    private Disruptor<Event<T>> itsDisruptor;
+    private AtomicBoolean       itsRoutingIndicator;
 
     /************************************************************************
      * Creates a new {@code DisruptorDispatcher}. 
@@ -53,15 +56,15 @@ class DisruptorDispatcher<T>
     protected 
     DisruptorDispatcher(
         IEventFactory<T> factory,
-        int              numPriorities,
         int              bufferSize)
     {
         itsDisruptor = 
-            new PriorityDisruptor<Event<T>>(
+            new Disruptor<Event<T>>(
                 factory,
-                numPriorities,
                 bufferSize,
-                ProducerType.MULTI);
+                Executors.newCachedThreadPool(),
+                ProducerType.MULTI,
+                new SleepingWaitStrategy());
         itsDisruptor.handleExceptionsWith( 
             new DisruptorExceptionHandler(
                 new PrintStackTraceExceptionHandler()) );
@@ -74,9 +77,9 @@ class DisruptorDispatcher<T>
      */
     @Override
     public void
-    route(int priority,T payload)
+    route(T payload)
     {
-        RingBuffer<Event<T>> buffer = itsDisruptor.getRingBuffer(priority);
+        RingBuffer<Event<T>> buffer   = itsDisruptor.getRingBuffer();
         long                 sequence = buffer.next();
         Event<T>             event    = buffer.get( sequence );
         
@@ -90,9 +93,9 @@ class DisruptorDispatcher<T>
      */
     @Override
     public void
-    broadcast(int priority,T payload)
+    broadcast(T payload)
     {
-        RingBuffer<Event<T>> buffer = itsDisruptor.getRingBuffer(priority);
+        RingBuffer<Event<T>> buffer   = itsDisruptor.getRingBuffer();
         long                 sequence = buffer.next();
         Event<T>             event    = buffer.get( sequence );
         

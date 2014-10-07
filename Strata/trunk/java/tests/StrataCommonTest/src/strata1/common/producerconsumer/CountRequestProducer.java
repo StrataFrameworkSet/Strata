@@ -85,9 +85,9 @@ class CountRequestProducer
                         itsCurrentCount.incrementAndGet();
                         
                         if ( itsKind == DispatchKind.ROUTE )
-                            getDispatcher().route( 0,new CountRequest(itsTypeId));
+                            getDispatcher().route( new CountRequest(itsTypeId));
                         else
-                            getDispatcher().broadcast( 0,new CountRequest(itsTypeId));
+                            getDispatcher().broadcast( new CountRequest(itsTypeId));
                     }
                     
                     System

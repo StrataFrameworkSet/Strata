@@ -70,9 +70,9 @@ class TestTaskProducer
             try
             {
                 if ( itsKind == DispatchKind.ROUTE )
-                    getDispatcher().route( 0,task );
+                    getDispatcher().route( task );
                 else
-                    getDispatcher().broadcast( 0,task );
+                    getDispatcher().broadcast( task );
             }
             catch(Exception e)
             {
