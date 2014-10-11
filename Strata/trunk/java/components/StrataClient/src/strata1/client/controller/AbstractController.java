@@ -40,15 +40,24 @@ public abstract
 class AbstractController
 	implements IController
 {
-	private Map<String,ICommand>                     itsCommands;
-	private Map<IChangeEvent,IHandler<IChangeEvent>> itsHandlers;
+	private Map<String,ICommand>             itsCommands;
+	private Map<
+	            Class<
+	                ? extends IChangeEvent>,
+	                IHandler<IChangeEvent>>  itsHandlers;
 	
-	public
+	/************************************************************************
+	 * Creates a new {@code AbstractController}. 
+	 *
+	 */
+	protected
 	AbstractController()
 	{
 		super();
 		itsCommands = new HashMap<String,ICommand>();
-		itsHandlers = new HashMap<IChangeEvent,IHandler<IChangeEvent>>();
+		itsHandlers = 
+		    new HashMap<
+		        Class<? extends IChangeEvent>,IHandler<IChangeEvent>>();
 	}
 	
 	/************************************************************************
@@ -100,7 +109,9 @@ class AbstractController
      * @param handler
      */
     protected void
-    setHandler(IChangeEvent event,IHandler<IChangeEvent> handler)
+    setHandler(
+        Class<? extends IChangeEvent> event,
+        IHandler<IChangeEvent> handler)
     {
     	itsHandlers.put( event,handler );
     }
