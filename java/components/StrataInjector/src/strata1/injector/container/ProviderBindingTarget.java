@@ -38,6 +38,7 @@ class ProviderBindingTarget<T>
     implements IBindingTarget<T>
 {
     private Class<? extends Provider<? extends T>> itsType;
+    private Provider<? extends T>                  itsInstance;
     
     /************************************************************************
      * Creates a new {@code ProviderBindingTarget}. 
@@ -47,9 +48,16 @@ class ProviderBindingTarget<T>
     public 
     ProviderBindingTarget(Class<? extends Provider<? extends T>> type)
     {
-        itsType = type;
+        itsType     = type;
+        itsInstance = null;
     }
 
+    public 
+    ProviderBindingTarget(Provider<? extends T> instance)
+    {
+        itsType     = null;
+        itsInstance = instance;
+    }
     /************************************************************************
      * {@inheritDoc} 
      */
@@ -71,6 +79,38 @@ class ProviderBindingTarget<T>
         return itsType;
     }
 
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public Provider<? extends T>
+    getProviderInstance()
+    {
+        return itsInstance;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public boolean
+    hasProviderType()
+    {
+        return itsType != null;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public boolean
+    hasProviderInstance()
+    {
+        return itsInstance != null;
+    }
 }
 
 // ##########################################################################

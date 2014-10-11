@@ -41,7 +41,7 @@ import org.junit.Test;
 public 
 class DisruptorBroadcasterTest
 {
-    private static final int        MAX = 10000000;
+    private static final int        MAX = 1000000;
     
     private ICountRequestDispatcher itsTarget;
     private ICountRequestProducer   itsProducer1;    

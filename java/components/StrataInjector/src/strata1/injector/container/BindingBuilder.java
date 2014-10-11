@@ -46,9 +46,10 @@ class BindingBuilder<T>
     // Binding Target
     private Class<? extends T>          itsImplementationType;
     private Class<? extends Provider<? extends T>> itsProviderType;
+    private Provider<? extends T>        itsProviderInstance;
     private T                            itsInstance;
     
-    private IBindingScope<T>           itsScope;
+    private IBindingScope<T>             itsScope;
     
     /************************************************************************
      * Creates a new {@code BindingBuilder}. 
@@ -63,6 +64,7 @@ class BindingBuilder<T>
         
         itsImplementationType = itsInterfaceType;
         itsProviderType       = null;
+        itsProviderInstance   = null;
         itsInstance           = null;
         
         itsScope = new NullScope<T>();
@@ -123,7 +125,8 @@ class BindingBuilder<T>
     toProvider(Provider<? extends T> provider)
     {
         itsImplementationType = null;
-        itsProviderType = (Class<? extends Provider<? extends T>>)provider.getClass();
+        itsProviderType = null;
+        itsProviderInstance = provider;
         itsInstance = null;
         return this;
     }
@@ -136,8 +139,9 @@ class BindingBuilder<T>
     toProvider(Class<P> provider)
     {
         itsImplementationType = null;
-        itsProviderType = provider;
-        itsInstance = null;
+        itsProviderType       = provider;
+        itsProviderInstance   = null;
+        itsInstance           = null;
         return this;
     }
 
@@ -149,9 +153,10 @@ class BindingBuilder<T>
     toInstance(T instance)
     {
         itsImplementationType = null;
-        itsProviderType = null;
-        itsInstance = instance;
-        itsScope = new SingletonScope<T>();
+        itsProviderType       = null;
+        itsProviderInstance   = null;
+        itsInstance           = instance;
+        itsScope              = new SingletonScope<T>();
         return this;
     }
 
@@ -227,6 +232,9 @@ class BindingBuilder<T>
         
         if ( itsProviderType != null )
             return new ProviderBindingTarget<T>(itsProviderType);
+        
+        if ( itsProviderInstance != null )
+            return new ProviderBindingTarget<T>(itsProviderInstance);
         
         if ( itsInstance != null )
             return new InstanceBindingTarget<T>(itsInstance);

@@ -127,10 +127,17 @@ class BindingVisitor<T>
         
         try
         {
-            constructor = 
-                providerType.getConstructor( new Class<?>[]{} );
-            itsProvider = 
-                (Provider<T>)constructor.newInstance(new Object[]{});
+            if ( target.hasProviderType() )
+            {
+                constructor = 
+                    providerType.getConstructor( new Class<?>[]{} );
+                itsProvider = 
+                    (Provider<T>)constructor.newInstance(new Object[]{});
+            }         
+            else if ( target.hasProviderInstance() )
+                itsProvider = (Provider<T>)target.getProviderInstance();
+            else
+                throw new IllegalStateException("No provider."); 
         }
         catch(Exception e)
         {
