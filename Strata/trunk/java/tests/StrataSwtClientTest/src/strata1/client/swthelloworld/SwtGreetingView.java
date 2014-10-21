@@ -48,6 +48,7 @@ public class SwtGreetingView
     
     /************************************************************************
      * Creates a new {@code SwtGreetingView}. 
+     * @wbp.parser.entryPoint
      *
      */
     public SwtGreetingView(Composite parent)
@@ -119,6 +120,7 @@ public class SwtGreetingView
 
     /************************************************************************
      * {@inheritDoc} 
+     * @wbp.parser.entryPoint
      */
     @Override
     public Composite getComposite()

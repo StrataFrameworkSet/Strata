@@ -87,7 +87,7 @@ class AbstractController
     public void 
     processChange(IChangeEvent event)
     {
-    	itsHandlers.get( event ).handle( event );
+    	itsHandlers.get( event.getClass() ).handle( event );
     }
 
     /************************************************************************

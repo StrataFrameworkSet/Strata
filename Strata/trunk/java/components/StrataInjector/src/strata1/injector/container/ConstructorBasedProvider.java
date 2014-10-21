@@ -101,7 +101,10 @@ class ConstructorBasedProvider<T>
         for (IBindingIdentifier<?> identifier : getBindingIdentifiers())
         {
             if ( !itsContainer.hasBinding( identifier ) )
-                throw new IllegalStateException();
+                throw 
+                    new IllegalStateException(
+                        "Container does not have binding:" + 
+                        identifier.toString() );
             
             arguments.add( itsContainer.getInstance( identifier ) );
         }
