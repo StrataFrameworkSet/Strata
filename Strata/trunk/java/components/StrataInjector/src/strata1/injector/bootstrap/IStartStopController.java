@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IApplicationStarter.java
+// # File Name:	IStartStopController.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -34,10 +34,16 @@ import strata1.injector.container.IContainer;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IApplicationStarter
+interface IStartStopController
 {
+    public IStartStopController
+    setContainer(IContainer container);
+    
     public void
-    startApplication(IContainer container);
+    startApplication();
+    
+    public void
+    stopApplication();
 }
 
 // ##########################################################################

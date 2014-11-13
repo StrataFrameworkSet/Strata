@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ApplicationBootstrapper.java
+// # File Name:	Bootstrapper.java
 // #
 // # Copyright:	2013, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -41,28 +41,28 @@ import strata1.injector.container.IModule;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class ApplicationBootstrapper
-    implements IApplicationBootstrapper
+class Bootstrapper
+    implements IBootstrapper
 {
     private ICommandLineParser  itsCommandLineParser;
     private IContainer          itsContainer;
     private ILogger             itsLogger;
     private List<IModule>       itsModules;
-    private IApplicationStarter itsApplicationStarter;
+    private IStartStopController itsStartStopController;
     
     /************************************************************************
-     * Creates a new {@code ApplicationBootstrapper}. 
+     * Creates a new {@code Bootstrapper}. 
      *
      * @param start
      */
     public 
-    ApplicationBootstrapper()
+    Bootstrapper()
     {
         itsCommandLineParser  = null;
         itsContainer          = null;
         itsLogger             = null;
         itsModules            = null;
-        itsApplicationStarter = null;
+        itsStartStopController = null;
     }
 
     /************************************************************************
@@ -109,10 +109,36 @@ class ApplicationBootstrapper
      * {@inheritDoc} 
      */
     @Override
-    public IApplicationStarter 
-    getApplicationStarter()
+    public IStartStopController 
+    getStartStopController()
     {
-        return itsApplicationStarter;
+        return itsStartStopController;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    run(IApplicationFactory factory)
+    {
+        try
+        {
+            createCommandLineParser(factory);
+            createContainer(factory);
+            createLogger(factory);
+            createModules(factory);
+            createApplicationStarter(factory);
+            initializeModules();
+            configureStartStopController();
+        }
+        catch (Throwable t)
+        {
+            if ( getLogger() != null )
+                getLogger().logError( t.getMessage() );
+            
+            throw new IllegalStateException( t );
+        }
     }
 
     /************************************************************************
@@ -134,7 +160,7 @@ class ApplicationBootstrapper
             createModules(factory);
             createApplicationStarter(factory);
             initializeModules();
-            startApplication();
+            configureStartStopController();
         }
         catch (Throwable t)
         {
@@ -218,9 +244,9 @@ class ApplicationBootstrapper
     createApplicationStarter(IApplicationFactory factory)
     {
         getLogger().logInfo( "Creating application starter." );
-        itsApplicationStarter = factory.createApplicationStarter();
+        itsStartStopController = factory.createStartStopController();
         
-        if ( getApplicationStarter() == null )
+        if ( getStartStopController() == null )
             throw new IllegalStateException( "application starter is null." );
         
     }
@@ -235,6 +261,7 @@ class ApplicationBootstrapper
     mustParseCommandLine(String[] arguments)
     {
         return
+            (arguments != null) &&
             (arguments.length > 0) &&
             (getCommandLineParser() != null);
     }
@@ -264,7 +291,7 @@ class ApplicationBootstrapper
         for (IModule module : getModules())
         {
             getLogger()
-                .logInfo("Initalizaing module: " + module.getName() + ".");
+                .logInfo("Initializing module: " + module.getName() + ".");
             module.initialize( getContainer() );
         }
     }
@@ -274,9 +301,11 @@ class ApplicationBootstrapper
      *
      */
     protected void 
-    startApplication()
+    configureStartStopController()
     {
-        getApplicationStarter().startApplication( getContainer() );
+        getLogger().logInfo( "Configuring start/stop controller." );
+        getStartStopController()
+            .setContainer( getContainer() );
     }
 
 

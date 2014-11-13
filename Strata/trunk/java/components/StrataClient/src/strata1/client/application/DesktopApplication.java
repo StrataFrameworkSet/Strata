@@ -24,7 +24,7 @@
 
 package strata1.client.application;
 
-import strata1.injector.bootstrap.IApplicationBootstrapper;
+import strata1.injector.bootstrap.IBootstrapper;
 import strata1.injector.bootstrap.IApplicationFactory;
 import strata1.client.bootstrap.IClientBootstrapper;
 import strata1.client.bootstrap.IClientFactory;
@@ -40,7 +40,7 @@ public
 class DesktopApplication
     implements IClientApplication
 {
-    private IApplicationBootstrapper itsBootstrapper;
+    private IBootstrapper itsBootstrapper;
     private IApplicationFactory      itsFactory;
     
     /************************************************************************
@@ -49,7 +49,7 @@ class DesktopApplication
      */
     public 
     DesktopApplication(
-        IApplicationBootstrapper bootstrapper,
+        IBootstrapper bootstrapper,
         IApplicationFactory      factory)
     {
         itsBootstrapper = bootstrapper;
@@ -64,6 +64,9 @@ class DesktopApplication
     run(String[] args)
     {
         itsBootstrapper.run( itsFactory,args );
+        itsBootstrapper
+            .getStartStopController()
+            .startApplication();
     }
 
 }
