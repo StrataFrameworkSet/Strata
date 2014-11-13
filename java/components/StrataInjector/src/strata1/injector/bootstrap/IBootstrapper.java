@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IApplicationBootstrapper.java
+// # File Name:	IBootstrapper.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -39,7 +39,7 @@ import strata1.injector.container.IModule;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IApplicationBootstrapper
+interface IBootstrapper
 {
     public ICommandLineParser
     getCommandLineParser();
@@ -50,11 +50,14 @@ interface IApplicationBootstrapper
     public ILogger
     getLogger();
     
-    public IApplicationStarter
-    getApplicationStarter();
+    public IStartStopController
+    getStartStopController();
     
     public List<IModule>
     getModules();
+    
+    public void
+    run(IApplicationFactory factory);
     
     public void
     run(IApplicationFactory factory,String[] arguments);

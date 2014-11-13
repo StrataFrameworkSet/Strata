@@ -138,15 +138,25 @@ class DisruptorEventHandler<T>
     {
         ISelector<T> selector = getConsumer().getSelector();
 
-        return
-            event.getKind() == DispatchKind.ROUTE
-                ? 
-                    selector.match( event.getPayload() ) &&
-                    itsIndex == (sequence % itsCardinality)
-                :
-                    selector.match(event.getPayload());
+        if ( event.getKind() == DispatchKind.ROUTE )
+            return
+                selector.match( event.getPayload() ) &&
+                itsIndex == (sequence % itsCardinality);
+        else
+            return selector.match(event.getPayload());
     }
-        
+     
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    @SuppressWarnings("unused")
+    private String
+    getThreadName()
+    {
+        return Thread.currentThread().getName() + ": ";
+    }
 }
 
 // ##########################################################################

@@ -56,7 +56,8 @@ class TaskDisruptorRouterTest
     private ILogger          itsLogger;
     private ITaskConsumer    itsConsumer1;
     private ITaskConsumer    itsConsumer2;
-    private ITaskConsumer    itsConsumer3;
+    private ITaskConsumer    itsConsumer3a;
+    private ITaskConsumer    itsConsumer3b;
     private StringWriter     itsWriter;
     
     /************************************************************************
@@ -91,12 +92,14 @@ class TaskDisruptorRouterTest
         
         itsConsumer1 = new TaskConsumer(new TestTaskSelector(1),itsLogger);
         itsConsumer2 = new TaskConsumer(new TestTaskSelector(2),itsLogger);
-        itsConsumer3 = new TaskConsumer(new TestTaskSelector(3),itsLogger);
+        itsConsumer3a = new TaskConsumer(new TestTaskSelector(3),itsLogger);
+        itsConsumer3b = new TaskConsumer(new TestTaskSelector(3),itsLogger);
         
         itsTarget
             .attachConsumer( itsConsumer1 )
             .attachConsumer( itsConsumer2 )
-            .attachConsumer( itsConsumer3 );
+            .attachConsumer( itsConsumer3a )
+            .attachConsumer( itsConsumer3b );
     }
 
     /************************************************************************

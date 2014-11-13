@@ -1,28 +1,36 @@
 // ##########################################################################
-// # File Name:	TestTaskSelector.java
+// # File Name:	PropertiesModule.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataCommonTest Framework.
+// # License:	This file is part of the StrataInjector Framework.
 // #
-// #   			The StrataCommonTest Framework is free software: you 
+// #   			The StrataInjector Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataCommonTest Framework is distributed in the 
+// #    		The StrataInjector Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataCommonTest
+// #			General Public License along with the StrataInjector
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.task;
+package strata1.injector.property;
+
+import strata1.injector.container.AbstractModule;
+import strata1.injector.container.IContainer;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 /****************************************************************************
  * 
@@ -32,60 +40,41 @@ package strata1.common.task;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class TestTaskSelector
-    implements ITaskSelector
+class PropertiesModule
+    extends AbstractModule
 {
-    private int itsTaskId;
+    private Properties itsProperties;
     
     /************************************************************************
-     * Creates a new {@code TestTaskSelector}. 
+     * Creates a new {@code PropertiesModule}. 
      *
+     * @param properties
+     * 
      */
     public 
-    TestTaskSelector(int taskId)
+    PropertiesModule(Properties properties) 
     {
-        itsTaskId = taskId;
+        super( "PropertiesModule" );
+        itsProperties = properties;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public boolean 
-    match(ITask task)
+    public void 
+    initialize(IContainer container)
     {
-        if ( task.hasProperty( Integer.class,"taskId" ) )
-            return 
-                task
-                    .getProperty( Integer.class,"taskId" )
-                    .equals(itsTaskId);
+        for (Object i : itsProperties.keySet())
+        {
+            String key = (String)i;
             
-        return false;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    equals(Object other)
-    {
-        if ( other instanceof TestTaskSelector)
-            return itsTaskId == ((TestTaskSelector)other).itsTaskId;
-        
-        return false;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public int 
-    hashCode()
-    {
-        int hash = 31 * itsTaskId;
-        
-        return hash;
+            container
+                .insertBinding( 
+                    bindType(String.class)
+                        .withKey( key )
+                        .toInstance( itsProperties.getProperty( key ) ) );
+        }
     }
 
 }

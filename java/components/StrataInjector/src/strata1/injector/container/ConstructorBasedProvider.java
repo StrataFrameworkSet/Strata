@@ -81,6 +81,10 @@ class ConstructorBasedProvider<T>
             performMethodInjection(instance);
             return instance;
         }
+        catch (NullPointerException e)
+        {
+            throw e;
+        }
         catch (Exception e)
         {
             throw new IllegalStateException(e);

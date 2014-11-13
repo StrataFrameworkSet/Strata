@@ -79,8 +79,8 @@ interface IApplicationFactory
      *
      * @return
      */
-    public IApplicationStarter
-    createApplicationStarter();
+    public IStartStopController
+    createStartStopController();
 }
 
 

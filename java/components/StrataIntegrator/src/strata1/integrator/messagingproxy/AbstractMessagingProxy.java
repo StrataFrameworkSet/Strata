@@ -114,12 +114,23 @@ class AbstractMessagingProxy<K,R>
         itsEventSession     = eventSession;
         itsPendingReceivers = new ConcurrentHashMap<K,R>();
         
-        itsCommandReceiver = 
-            itsCommandSession.createMessageReceiver( 
-                itsReplyChannelId,
-                "ReturnAddress='" + itsReturnAddress + "'" );
-        itsEventReceiver = 
-            itsEventSession.createMessageReceiver( itsEventChannelId );
+        try
+        {
+            itsCommandReceiver = 
+                itsCommandSession
+                    .createMessageReceiver( 
+                        itsReplyChannelId,
+                        "ReturnAddress='" + itsReturnAddress + "'" )
+                    .setListener(  this );
+            itsEventReceiver = 
+                itsEventSession
+                    .createMessageReceiver( itsEventChannelId )
+                    .setListener(  this );
+        }
+        catch(MixedModeException e)
+        {
+            throw new IllegalStateException( e );
+        }
     }
 
     /************************************************************************
