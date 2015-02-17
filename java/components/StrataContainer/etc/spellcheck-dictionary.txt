@@ -1,5 +1,0 @@
-href
-htm
-designpatterns
-registries
-sapientia
