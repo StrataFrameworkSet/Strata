@@ -1,0 +1,140 @@
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+    
+    <broker 
+        xmlns="http://activemq.apache.org/schema/core" 
+        brokerName="LocalActiveMqBroker" 
+        dataDirectory="./activemq-data">
+        
+        <sslContext>
+            <sslContext
+                keyStore="file:./conf/broker.ks"
+                keyStorePassword="wefb2czd"
+                trustStore="file:./conf/broker.ts"
+                trustStorePassword="wefb2czd"/>
+        </sslContext>
+ 
+        <plugins>
+            <simpleAuthenticationPlugin>
+                <users>
+                    <authenticationUser
+                        username="strata-activemq-admin" 
+                        password="Y0JrJ3mo"
+			            groups="users,admins"/>
+                    <authenticationUser
+                        username="strata-activemq-user" 
+                        password="Dbr6pzyX"
+                        groups="users"/>
+			        <authenticationUser
+			            username="zymurgistics-client" 
+			            password="Dbr6pzyX"
+			            groups="zymugistics-senders,zymurgistics-receivers"/>
+			    </users>
+            </simpleAuthenticationPlugin>       
+			<authorizationPlugin>
+				<map>
+					<authorizationMap>
+						<authorizationEntries>
+                            <authorizationEntry 
+                                topic="ActiveMQ.Advisory.>" 
+                                read="admins,users,zymurgistics-receivers"
+                                write="admins,users,zymurgistics-senders" 
+                                admin="admins,users,zymurgistics-admins" />
+                            <authorizationEntry 
+                                queue="foo.test" 
+                                read="users,admins"
+                                write="users,admins" 
+                                admin="users,admins" />
+                            <authorizationEntry 
+                                queue="tictactoe.requests.>" 
+                                read="users,admins"
+                                write="users,admins" 
+                                admin="users,admins" />
+                            <authorizationEntry 
+                                queue="tictactoe.replies.>" 
+                                read="users,admins"
+                                write="users,admins" 
+                                admin="users,admins" />
+							<authorizationEntry 
+							    topic="tictactoe.events.>" 
+							    read="users,admins"
+								write="users,admins" 
+								admin="users,admins" />
+						</authorizationEntries>
+					</authorizationMap>
+				</map>
+			</authorizationPlugin>
+        </plugins>
+        
+        <transportConnectors>
+            <transportConnector 
+                name="tcp" 
+                uri="tcp://localhost:61616"/>
+            <transportConnector 
+                name="ssl" 
+                uri="ssl://localhost:61617?needClientAuth=false"/>
+            <transportConnector 
+                name="stomp" 
+                uri="stomp+ssl://localhost:61618?needClientAuth=false"/>
+            <!--  
+            <transportConnector 
+                name="tcp" 
+                uri="tcp://ec2-54-68-199-128.us-west-2.compute.amazonaws.com:61616"/>
+            <transportConnector 
+                name="ssl" 
+                uri="ssl://ec2-54-68-199-128.us-west-2.compute.amazonaws.com:61617?needClientAuth=false"/>
+            <transportConnector 
+                name="stomp" 
+                uri="stomp+ssl://ec2-54-68-199-128.us-west-2.compute.amazonaws.com:61618?needClientAuth=false"/>
+             -->
+        </transportConnectors>
+
+        <destinationPolicy>
+            <policyMap>
+                <policyEntries>
+                    <policyEntry topic=">" >
+                        <pendingMessageLimitStrategy>
+                            <constantPendingMessageLimitStrategy limit="1000"/>
+                        </pendingMessageLimitStrategy>
+                    </policyEntry>
+                </policyEntries>
+            </policyMap>
+        </destinationPolicy>
+
+        <managementContext>
+            <managementContext createConnector="true"/>
+        </managementContext>
+
+        <persistenceAdapter>
+            <kahaDB directory="./activemq-data/kahadb"/>
+        </persistenceAdapter>
+        
+        <!--
+        <systemUsage>
+            <systemUsage>
+                <memoryUsage>
+                    <memoryUsage percentOfJvmHeap="70" />
+                </memoryUsage>
+                <storeUsage>
+                    <storeUsage limit="100 gb"/>
+                </storeUsage>
+                <tempUsage>
+                    <tempUsage limit="50 gb"/>
+                </tempUsage>
+            </systemUsage>
+        </systemUsage>
+        -->
+
+        <shutdownHooks>
+            <bean xmlns="http://www.springframework.org/schema/beans" class="org.apache.activemq.hooks.SpringContextHook" />
+        </shutdownHooks>
+
+    </broker>
+
+    <!-- Enable web consoles, REST and Ajax APIs and demos 
+    <import resource="jetty.xml"/> -->
+
+</beans>
