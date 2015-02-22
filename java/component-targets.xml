@@ -67,20 +67,10 @@
 	    	destfile="${component.artifact}"
 		    basedir="${output.dir}"/>
 	</target>
-	
-	<target 
-		name="run-commit-stage"
-		depends="package">
-	</target>
-	
-    <target 
-        name="run-integration-stage"
-    	depends="init">
-    </target>
-    
+		    
     <target
-        name="deploy-to-local-repository"
-        depends="init">
+        name="install-to-local-repository"
+        depends="package">
 		<artifact:writepom 
 		    pomRefId="${ant.project.name}" 
 		    file="${output.dir}/${ant.project.name}-pom.xml" />
@@ -90,6 +80,7 @@
 		<artifact:install 
 			file="${component.artifact}">
 			<pom refid="${ant.project.name}-pomfile"/>
+            <localRepository path="${repository.dir}"/> 
 		</artifact:install>  
     </target>
     
@@ -108,5 +99,15 @@
 			<remoteRepository url="file:///Users/John/Repositories/StrataFrameworkSet/Releases"/>
 		</artifact:deploy>  
     </target>
-    
+ 
+	<target 
+		name="run-commit-stage"
+		depends="install-to-local-repository">
+	</target>
+ 
+     <target 
+        name="run-integration-stage"
+    	depends="run-commit-stage">
+    </target>
+
 </project>	

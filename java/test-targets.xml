@@ -69,10 +69,26 @@
 	    	destfile="${test.artifact}"
 		    basedir="${output.dir}"/>
 	</target>
+
+    <target
+        name="install-to-local-repository"
+        depends="package">
+		<artifact:writepom 
+		    pomRefId="${ant.project.name}" 
+		    file="${output.dir}/${ant.project.name}-pom.xml" />
+		<artifact:pom 
+		    id="${ant.project.name}-pomfile" 
+		    file="${output.dir}/${ant.project.name}-pom.xml" />       	
+		<artifact:install 
+			file="${test.artifact}">
+			<pom refid="${ant.project.name}-pomfile"/>
+            <localRepository path="${repository.dir}"/> 
+		</artifact:install>  
+    </target>
 	
 	<target 
 		name="run-commit-stage"
-		depends="package">
+		depends="install-to-local-repository">
 		<junit 
 			printsummary="true" 
 			showoutput="true" 
@@ -98,7 +114,7 @@
 	
     <target 
         name="run-integration-stage"
-    	depends="init">
+    	depends="run-commit-stage">
 		<junit 
 			printsummary="true" 
 			showoutput="true" 

@@ -10,41 +10,30 @@
 	    <property name="source.dir" value="src"/>
 	    <property name="output.dir" value="bin"/>
 	    <property name="distribution.dir" value="lib"/>
-		<property name="component" value="StrataSwtClient"/>
 	    
-		<property name="component.artifact" value="../../components/${component}/lib/${component}-${version}.jar"/>
 	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
 	    <property name="test.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
-    	<property name="common.artifact" value="../../components/StrataCommon/lib/StrataCommon-${version}.jar"/>
-	    <property name="injector.artifact" value="../../components/StrataInjector/lib/StrataInjector-${version}.jar"/>
-	    <property name="client.artifact" value="../../components/StrataClient/lib/StrataClient-${version}.jar"/>
-	    <property name="clienttest.artifact" value="../StrataClientTest/lib/StrataClientTest-${version}.jar"/>
 	    <property name="commit.test.suite" value="strata1.gwtclient.testsuite.CommitStageSuite"/>
 		<property name="integration.test.suite" value="strata1.gwtclient.testsuite.IntegrationStageSuite"/>
 	    <property name="test.reports" value="${output.dir}/reports"/>
 		
-	    <artifact:dependencies pathId="partial.classpath">
-	    	<dependency groupId="junit" artifactId="junit" version="4.9"/>
-	        <dependency groupId="org.fitnesse" artifactId="fitnesse" version="20050731"/>
-	        <dependency groupId="com.c2.fit" artifactId="fit" version="1.1"/>
-	        <dependency groupId="com.google.inject" artifactId="guice" version="4.0-beta"/>
-	        <dependency groupId="com.lmax" artifactId="disruptor" version="3.2.1"/>
-	        <dependency groupId="javax.inject" artifactId="javax.inject" version="1"/>
-	        <dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
-	        <dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
-	        <dependency groupId="org.eclipse" artifactId="swt.win32.win32.x86_64" version="3.6.1"/>
+		<artifact:pom 
+			name="Strata Application Framework"
+			id="${ant.project.name}" 
+			groupId="strata1" 
+			artifactId="${ant.project.name}" 
+			version="${version}">
+	        <dependency groupId="strata1" artifactId="StrataClientTest" version="${version}"/>
+		    <dependency groupId="strata1" artifactId="StrataGwtClient" version="${version}"/>
+	        <dependency groupId="junit" artifactId="junit" version="4.9"/>
 	        <dependency groupId="org.mockito" artifactId="mockito-all" version="1.9.0"/>
+	    </artifact:pom>
+
+	    <artifact:dependencies 
+	    	pathId="dependency.classpath"
+	    	pomRefId="${ant.project.name}">
+	        <localRepository path="${repository.dir}"/>
 	    </artifact:dependencies>
-		
-		<path 
-		    id="dependency.classpath">
-			<pathelement location="${component.artifact}" /> 
-		    <pathelement location="${common.artifact}" /> 
-		    <pathelement location="${injector.artifact}" /> 
-		    <pathelement location="${client.artifact}" /> 
-		    <pathelement location="${clienttest.artifact}" /> 
-			<path refid="partial.classpath"/> 
-	    </path>
 		
 		<property name="test.classpath" value="dependency.classpath"/>
 		

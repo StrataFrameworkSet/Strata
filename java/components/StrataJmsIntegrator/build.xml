@@ -13,8 +13,6 @@
 	    
 	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
 	    <property name="component.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
-	    <property name="common.artifact" value="../StrataCommon/lib/StrataCommon-${version}.jar"/>
-	    <property name="integrator.artifact" value="../StrataIntegrator/lib/StrataIntegrator-${version}.jar"/>
 		
 		<artifact:pom 
 			name="Strata Application Framework"
@@ -22,21 +20,18 @@
 			groupId="strata1" 
 			artifactId="${ant.project.name}" 
 			version="${version}">
-	        <dependency groupId="com.google.inject" artifactId="guice" version="4.0-beta"/>
+	        <dependency groupId="strata1" artifactId="StrataIntegrator" version="${version}"/>
+		    <dependency groupId="strata1" artifactId="StrataInjector" version="${version}"/>
 	        <dependency groupId="javax.jms" artifactId="javax.jms-api" version="2.0"/>
+		    <dependency groupId="commons-logging" artifactId="commons-logging" version="1.1.1"/>
 	    </artifact:pom>
 		
-		<artifact:dependencies 
-	    	pathId="partial.classpath"
-	    	pomRefId="${ant.project.name}"/>
+	    <artifact:dependencies 
+	    	pathId="dependency.classpath"
+	    	pomRefId="${ant.project.name}">
+	        <localRepository path="${repository.dir}"/>
+	    </artifact:dependencies>
 
-		<path 
-		    id="dependency.classpath">
-			<pathelement location="${common.artifact}" /> 
-			<pathelement location="${integrator.artifact}" /> 
-			<path refid="partial.classpath"/> 
-	    </path>
-		
 		<property name="component.classpath" value="dependency.classpath"/>
 		
 	</target>

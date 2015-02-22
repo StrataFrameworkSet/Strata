@@ -20,9 +20,9 @@
 			groupId="strata1" 
 			artifactId="${ant.project.name}" 
 			version="${version}">
-	        <dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
+		    <dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
 	        <dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
-	    </artifact:pom>
+		</artifact:pom>
 				
 		<artifact:dependencies 
 	    	pathId="dependency.classpath"

@@ -13,7 +13,6 @@
 	    
 	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
 	    <property name="component.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
-	    <property name="common.artifact" value="../StrataCommon/lib/StrataCommon-${version}.jar"/>
 		
 		<artifact:pom 
 			name="Strata Application Framework"
@@ -21,7 +20,8 @@
 			groupId="strata1" 
 			artifactId="${ant.project.name}" 
 			version="${version}">
-	        <dependency groupId="org.springframework" artifactId="spring-orm" version="3.0.6.RELEASE"/>
+	        <dependency groupId="strata1" artifactId="StrataCommon" version="${version}"/>
+		    <dependency groupId="org.springframework" artifactId="spring-orm" version="3.0.6.RELEASE"/>
 	        <dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
 	        <dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
 	        <dependency groupId="org.hibernate" artifactId="hibernate-core" version="4.1.7.Final"/>
@@ -33,16 +33,12 @@
 	        <dependency groupId="org.slf4j" artifactId="slf4j-simple" version="1.6.1"/>
 	    </artifact:pom>
 		
-		<artifact:dependencies 
-	    	pathId="partial.classpath"
-	    	pomRefId="${ant.project.name}"/>
+	    <artifact:dependencies 
+	    	pathId="dependency.classpath"
+	    	pomRefId="${ant.project.name}">
+	        <localRepository path="${repository.dir}"/>
+	    </artifact:dependencies>
 
-		<path 
-		    id="dependency.classpath">
-			<pathelement location="${common.artifact}" /> 
-			<path refid="partial.classpath"/> 
-	    </path>
-		
 		<property name="component.classpath" value="dependency.classpath"/>
 		
 	</target>

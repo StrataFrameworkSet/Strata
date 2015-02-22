@@ -11,36 +11,34 @@
 	    <property name="resource.dir" value="resources"/>
 	    <property name="output.dir" value="bin"/>
 	    <property name="distribution.dir" value="lib"/>
-		<property name="component" value="StrataJmsIntegrator"/>
 	    
-		<property name="component.artifact" value="../../components/${component}/lib/${component}-${version}.jar"/>
 	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
 	    <property name="test.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
-    	<property name="common.artifact" value="../../components/StrataCommon/lib/StrataCommon-${version}.jar"/>
-    	<property name="integrator.artifact" value="../../components/StrataIntegrator/lib/StrataIntegrator-${version}.jar"/>
-    	<property name="integratortest.artifact" value="../../tests/StrataIntegratorTest/lib/StrataIntegratorTest-${version}.jar"/>
 	    <property name="commit.test.suite" value="strata1.jmsintegrator.testsuite.CommitStageSuite"/>
 		<property name="integration.test.suite" value="strata1.jmsintegrator.testsuite.IntegrationStageSuite"/>
 	    <property name="test.reports" value="${output.dir}/reports"/>
 		
-	    <artifact:dependencies pathId="partial.classpath">
-	        <dependency groupId="javax.jms" artifactId="javax.jms-api" version="2.0"/>
-            <dependency groupId="org.fusesource.stompjms" artifactId="stompjms-client" version="1.19"/>
-	        <dependency groupId="org.apache.activemq" artifactId="activemq-all" version="5.9.1"/>
-            <dependency groupId="org.apache.xbean" artifactId="xbean-spring" version="4.0"/>
-	    	<dependency groupId="junit" artifactId="junit" version="4.9"/>
+		<artifact:pom 
+			name="Strata Application Framework"
+			id="${ant.project.name}" 
+			groupId="strata1" 
+			artifactId="${ant.project.name}" 
+			version="${version}">
+	        <dependency groupId="strata1" artifactId="StrataIntegratorTest" version="${version}"/>
+	        <dependency groupId="strata1" artifactId="StrataJmsIntegrator" version="${version}"/>
+	        <dependency groupId="junit" artifactId="junit" version="4.9"/>
 	        <dependency groupId="org.mockito" artifactId="mockito-all" version="1.9.0"/>
+	        <dependency groupId="org.apache.activemq" artifactId="activemq-all" version="5.9.1"/>
+	        <dependency groupId="org.fusesource.stompjms" artifactId="stompjms-client" version="1.19"/>
+	        <dependency groupId="org.fusesource.hawtdispatch" artifactId="hawtdispatch" version="1.20"/>
+	        <dependency groupId="org.fusesource.hawtdispatch" artifactId="hawtdispatch-transport" version="1.20"/>
+	    </artifact:pom>
+
+	    <artifact:dependencies 
+	    	pathId="dependency.classpath"
+	    	pomRefId="${ant.project.name}">
+	        <localRepository path="${repository.dir}"/>
 	    </artifact:dependencies>
-		
-		<path 
-		    id="dependency.classpath">
-			<pathelement location="${component.artifact}" /> 
-		    <pathelement location="${common.artifact}" /> 
-		    <pathelement location="${integrator.artifact}" /> 
-		    <pathelement location="${integratortest.artifact}" /> 
-		    <dirset dir="${resource.dir}" /> 
-			<path refid="partial.classpath"/> 
-	    </path>
 		
 		<property name="test.classpath" value="dependency.classpath"/>
 		

@@ -12,10 +12,6 @@
 	    <property name="distribution.dir" value="lib"/>
 	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
 	    <property name="component.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
-	    <property name="common.artifact" value="../StrataCommon/lib/StrataCommon-${version}.jar"/>
-	    <property name="injector.artifact" value="../StrataInjector/lib/StrataInjector-${version}.jar"/>
-	    <property name="integrator.artifact" value="../StrataIntegrator/lib/StrataIntegrator-${version}.jar"/>
-	    <property name="client.artifact" value="../StrataClient/lib/StrataClient-${version}.jar"/>
 	    		
 		<artifact:pom 
 			name="Strata Application Framework"
@@ -23,27 +19,16 @@
 			groupId="strata1" 
 			artifactId="${ant.project.name}" 
 			version="${version}">
-	        <dependency groupId="com.amazonaws" artifactId="aws-java-sdk" version="1.8.3"/>
-	        <dependency groupId="com.google.inject" artifactId="guice" version="4.0-beta"/>
-	        <dependency groupId="javax.inject" artifactId="javax.inject" version="1"/>
-	        <dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
-	        <dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
-        	<dependency groupId="org.eclipse" artifactId="swt.win32.win32.x86_64" version="3.7.2"/>
+	        <dependency groupId="strata1" artifactId="StrataClient" version="${version}"/>
+        	<dependency groupId="org.eclipse.swt" artifactId="org.eclipse.swt.win32.win32.x86_64" version="4.4"/>
 	    </artifact:pom>
 		
-		<artifact:dependencies 
-	    	pathId="partial.classpath"
-	    	pomRefId="${ant.project.name}"/>
+	    <artifact:dependencies 
+	    	pathId="dependency.classpath"
+	    	pomRefId="${ant.project.name}">
+	        <localRepository path="${repository.dir}"/>
+	    </artifact:dependencies>
 
-		<path 
-		    id="dependency.classpath">
-			<pathelement location="${common.artifact}" /> 
-	        <pathelement location="${injector.artifact}" /> 
-	        <pathelement location="${integrator.artifact}" /> 
-	        <pathelement location="${client.artifact}" /> 
-	        <path refid="partial.classpath"/> 
-	    </path>
-		
 		<property name="component.classpath" value="dependency.classpath"/>
 		
 	</target>
