@@ -9,6 +9,7 @@ import strata1.common.money.Money;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import java.util.Currency;
 import java.util.List;
@@ -178,6 +179,7 @@ class PersonRepositoryTest
         Assert.assertTrue( itsTarget.hasPersonWithPartyKey( expected.getPartyKey() ) );
     }
 
+    @Ignore
     @Test
     public void 
     testHasPersonWithName() 

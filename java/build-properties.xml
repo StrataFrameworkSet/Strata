@@ -4,4 +4,5 @@
 	<property name="version" value="1.0.0"/>
     <property name="workspace.dir" value="${basedir}/../.."/>
 	<property name="repository.dir" value="${workspace.dir}/.repository"/>
+	<property name="remote.repository.url" value="file:///C:/Repositories/SapientiaSystems/MavenRepository"/>
 </project>	

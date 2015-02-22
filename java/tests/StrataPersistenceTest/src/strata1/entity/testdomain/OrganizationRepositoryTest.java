@@ -7,6 +7,7 @@ import strata1.entity.repository.IUnitOfWork;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public abstract 
@@ -111,6 +112,7 @@ class OrganizationRepositoryTest
         Assert.assertEquals( expected,actual );
     }
 
+    @Ignore
     @Test
     public void 
     testGetOrganizationByName() 

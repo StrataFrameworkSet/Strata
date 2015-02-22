@@ -114,7 +114,7 @@
 	
     <target 
         name="run-integration-stage"
-    	depends="run-commit-stage">
+    	depends="init">
 		<junit 
 			printsummary="true" 
 			showoutput="true" 
@@ -137,8 +137,6 @@
 		        <report format="frames" todir="${test.reports}"/>
 		    </junitreport>
     </target>
-
-    <target name="deploy-to-local-repository"/>
     
     <target name="deploy-to-remote-repository"/>
     

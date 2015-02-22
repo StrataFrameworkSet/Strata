@@ -96,7 +96,7 @@
 		<artifact:deploy 
 			file="${component.artifact}">
 			<pom refid="${ant.project.name}-pomfile"/>
-			<remoteRepository url="file:///Users/John/Repositories/StrataFrameworkSet/Releases"/>
+			<remoteRepository url="${remote.repository.url}"/>
 		</artifact:deploy>  
     </target>
  
@@ -107,7 +107,7 @@
  
      <target 
         name="run-integration-stage"
-    	depends="run-commit-stage">
+    	depends="init">
     </target>
 
 </project>	
