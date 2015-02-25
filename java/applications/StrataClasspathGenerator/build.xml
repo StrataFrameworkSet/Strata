@@ -1,6 +1,6 @@
 <project 
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
-	name="StrataCommon" 
+	name="StrataClasspathGenerator" 
 	default="run-commit-stage">
 	
 	<import file="../../component-targets.xml"/>
@@ -19,7 +19,7 @@
 			groupId="strata1" 
 			artifactId="${ant.project.name}" 
 			version="${version}">
-	        <dependency groupId="com.lmax" artifactId="disruptor" version="3.2.1"/>
+	        <dependency groupId="org.apache.ant" artifactId="ant" version="1.8.3"/>
 	        <dependency groupId="javax.inject" artifactId="javax.inject" version="1"/>
 		</artifact:pom>
 			
