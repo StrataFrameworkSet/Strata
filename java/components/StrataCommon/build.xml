@@ -4,7 +4,10 @@
 	default="run-commit-stage">
 	
 	<import file="../../component-targets.xml"/>
-	
+	<taskdef 
+	    name="genclasspath" 
+	    classname="strata1.classpathgenerator.task.GenerateClasspathTask"/>
+		
 	<target name="define-properties">
 		
 	    <property name="source.dir" value="src"/>
@@ -39,9 +42,12 @@
 		
 		<pathconvert property="expanded.classpath" refid="dependency.classpath"/>
 
-    	<echo 
-    	    message="${expanded.classpath}"
-          	file="classpath.generated"/>
+    	<genclasspath 
+    	    classpath="${expanded.classpath}"
+          	outputFile="classpath.generated"
+          	source="src"
+          	output="bin"
+          	container="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	</target>
 		
 </project>	
