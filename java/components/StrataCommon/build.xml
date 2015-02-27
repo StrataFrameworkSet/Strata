@@ -47,7 +47,9 @@
           	outputFile="classpath.generated"
           	source="src"
           	output="bin"
-          	container="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+          	container="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
+    		<variable name="REPO_ROOT" value="C:/Users/John/Development/Workspaces/Strata/java/.repository"/>
+    	</genclasspath>
 	</target>
 		
 </project>	

@@ -24,6 +24,8 @@
 
 package strata1.classpathgenerator.task;
 
+import org.apache.tools.ant.types.Path;
+
 /****************************************************************************
  * 
  * @author 		
@@ -35,7 +37,7 @@ public
 class Variable
 {
     private String itsName;
-    private String itsValue;
+    private Path   itsValue;
     
     /************************************************************************
      * Creates a new Variable. 
@@ -55,7 +57,7 @@ class Variable
     }
     
     public void
-    setValue(String value)
+    setValue(Path value)
     {
         itsValue = value;
     }
@@ -69,7 +71,7 @@ class Variable
     public String
     getValue()
     {
-        return itsValue;
+        return itsValue.toString();
     }
 }
 

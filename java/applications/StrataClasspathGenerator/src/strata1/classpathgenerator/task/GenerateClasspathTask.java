@@ -29,7 +29,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
@@ -56,13 +58,13 @@ public
 class GenerateClasspathTask
     extends Task
 {
-    private Path           itsClasspath;
-    private File           itsOutputFile;
-    private String         itsSource;
-    private String         itsOutput;
-    private String         itsContainer;
-    private List<Variable> itsVariables;
-    private IOutputWriter  itsWriter;
+    private Path               itsClasspath;
+    private File               itsOutputFile;
+    private String             itsSource;
+    private String             itsOutput;
+    private String             itsContainer;
+    private List<Variable>     itsVariables;
+    private IOutputWriter      itsWriter;
     
     /************************************************************************
      * Creates a new GenerateClasspathTask. 
@@ -81,13 +83,13 @@ class GenerateClasspathTask
     public 
     GenerateClasspathTask(IOutputWriter writer)
     {
-        itsClasspath  = null;
-        itsOutputFile = null;
-        itsSource     = null;
-        itsOutput     = null;
-        itsContainer  = null;
-        itsVariables  = new ArrayList<Variable>();
-        itsWriter     = writer;
+        itsClasspath   = null;
+        itsOutputFile  = null;
+        itsSource      = null;
+        itsOutput      = null;
+        itsContainer   = null;
+        itsVariables   = new ArrayList<Variable>();
+        itsWriter      = writer;
     }
 
     /************************************************************************
@@ -300,6 +302,10 @@ class GenerateClasspathTask
     private String 
     mapKind(String element)
     {
+        for (Variable variable:itsVariables)
+            if ( element.startsWith( variable.getValue() ))
+                return "var";
+        
         return "lib";
     }
 
@@ -309,10 +315,17 @@ class GenerateClasspathTask
      * @param element
      * @return
      */
-    private Object 
+    private String 
     mapPath(String element)
     {
-        return element;
+        for (Variable variable:itsVariables)
+            if ( element.startsWith( variable.getValue() ))
+                return 
+                    element.replace(
+                        variable.getValue(),
+                        variable.getName());
+        
+         return element;
     }
 
     /************************************************************************

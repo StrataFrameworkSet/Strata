@@ -56,17 +56,25 @@ class GenerateClasspathTaskTest
     public void 
     setUp() throws Exception
     {
+        Variable variable = null;
+        Path     value    = null;
+        
         itsWriter = new StringOutputWriter();
         itsTarget = new GenerateClasspathTask( itsWriter );
         
         itsProject = new Project();
         itsClasspath = new Path( itsProject );
+        value        = new Path( itsProject );
         itsClasspath.setPath( "C:/repository/component/x.jar;C:/library/y.jar" );
         itsTarget.setClasspath( itsClasspath );
         itsTarget.setOutputFile(  new File("C:/temp/classpath.gen" ) );
         itsTarget.setSource( "src" );
         itsTarget.setOutput( "bin" );
         itsTarget.setContainer( "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7" );
+        variable = itsTarget.createVariable();
+        variable.setName( "REPO_ROOT" );
+        value.setPath( "C:/repository" );
+        variable.setValue( value );
     }
 
     /************************************************************************
