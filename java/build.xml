@@ -92,12 +92,16 @@
     	<iterate target="run-integration-stage"/>
     </target>
     
-    <target name="deploy-to-local-repository">
-    	<iterate target="deploy-to-local-repository"/>
+    <target name="install-to-local-repository">
+    	<iterate target="install-to-local-repository"/>
     </target>
  	
  	<target name="deploy-to-remote-repository">
     	<iterate target="deploy-to-remote-repository"/>
+    </target>
+ 	
+ 	<target name="update-classpath">
+    	<iterate target="update-classpath"/>
     </target>
     
     <!--  

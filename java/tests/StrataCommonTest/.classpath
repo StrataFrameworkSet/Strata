@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="var" path="M2_REPO/junit/junit/4.9/junit-4.9.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-beans/3.0.6.RELEASE/spring-beans-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context/3.0.6.RELEASE/spring-context-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context-support/3.0.6.RELEASE/spring-context-support-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/3.0.6.RELEASE/spring-core-3.0.6.RELEASE.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/google/inject/guice/4.0-beta/guice-4.0-beta.jar"/>
-	<classpathentry kind="var" path="M2_REPO/javax/inject/javax.inject/1/javax.inject-1.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
-	<classpathentry kind="var" path="M2_REPO/com/lmax/disruptor/3.2.1/disruptor-3.2.1-javadoc.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/lmax/disruptor/3.2.1/disruptor-3.2.1-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/lmax/disruptor/3.2.1/disruptor-3.2.1.jar" sourcepath="/M2_REPO/com/lmax/disruptor/3.2.1/disruptor-3.2.1-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/John/.m2/repository/com/lmax/disruptor/3.2.1/disruptor-3.2.1-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="output" path="bin"/>
+    <classpathentry kind="src" path="src"/>
+    <classpathentry kind="output" path="bin"/>
+    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataCommon\1.0.0\StrataCommon-1.0.0.jar"/>
+    <classpathentry kind="var" path="REPO_ROOT\com\lmax\disruptor\3.2.1\disruptor-3.2.1.jar"/>
+    <classpathentry kind="var" path="REPO_ROOT\javax\inject\javax.inject\1\javax.inject-1.jar"/>
+    <classpathentry kind="var" path="REPO_ROOT\junit\junit\4.9\junit-4.9.jar"/>
+    <classpathentry kind="var" path="REPO_ROOT\org\hamcrest\hamcrest-core\1.1\hamcrest-core-1.1.jar"/>
+    <classpathentry kind="var" path="REPO_ROOT\org\mockito\mockito-all\1.9.0\mockito-all-1.9.0.jar"/>
 </classpath>

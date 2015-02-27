@@ -4,9 +4,6 @@
 	default="run-commit-stage">
 	
 	<import file="../../component-targets.xml"/>
-	<taskdef 
-	    name="genclasspath" 
-	    classname="strata1.classpathgenerator.task.GenerateClasspathTask"/>
 		
 	<target name="define-properties">
 		
@@ -34,22 +31,6 @@
 		
 		<property name="component.classpath" value="dependency.classpath"/>
 				
-	</target>
-
-	<target 
-		name="genclasspath"
-		depends="define-properties">
-		
-		<pathconvert property="expanded.classpath" refid="dependency.classpath"/>
-
-    	<genclasspath 
-    	    classpath="${expanded.classpath}"
-          	outputFile="classpath.generated"
-          	source="src"
-          	output="bin"
-          	container="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
-    		<variable name="REPO_ROOT" value="C:/Users/John/Development/Workspaces/Strata/java/.repository"/>
-    	</genclasspath>
 	</target>
 		
 </project>	

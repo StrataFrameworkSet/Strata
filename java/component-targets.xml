@@ -5,6 +5,10 @@
 
     <import file="build-properties.xml"/>
     
+	<taskdef 
+	    name="genclasspath" 
+	    classname="strata1.classpathgenerator.task.GenerateClasspathTask"/>
+    
     <!--  
     <property name="source.dir" value="src"/>
     <property name="output.dir" value="bin"/>
@@ -109,5 +113,21 @@
         name="run-integration-stage"
     	depends="init">
     </target>
+
+	<target 
+		name="update-classpath"
+		depends="define-properties">
+		
+		<pathconvert property="expanded.classpath" refid="dependency.classpath"/>
+
+    	<genclasspath 
+    	    classpath="${expanded.classpath}"
+          	outputFile=".classpath"
+          	source="src"
+          	output="bin"
+          	container="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
+    		<variable name="REPO_ROOT" value="C:/Users/John/Development/Workspaces/Strata/java/.repository"/>
+    	</genclasspath>
+	</target>
 
 </project>	

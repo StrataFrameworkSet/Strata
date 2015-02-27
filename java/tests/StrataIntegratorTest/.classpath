@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="var" path="M2_REPO/junit/junit/4.9/junit-4.9.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegrator"/>
-	<classpathentry kind="output" path="build"/>
+    <classpathentry kind="src" path="src"/>
+    <classpathentry kind="output" path="bin"/>
+    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataIntegrator\1.0.0\StrataIntegrator-1.0.0.jar"/>
+    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataCommon\1.0.0\StrataCommon-1.0.0.jar"/>
+    <classpathentry kind="var" path="REPO_ROOT\com\lmax\disruptor\3.2.1\disruptor-3.2.1.jar"/>
+    <classpathentry kind="var" path="REPO_ROOT\javax\inject\javax.inject\1\javax.inject-1.jar"/>
+    <classpathentry kind="var" path="REPO_ROOT\junit\junit\4.9\junit-4.9.jar"/>
+    <classpathentry kind="var" path="REPO_ROOT\org\hamcrest\hamcrest-core\1.1\hamcrest-core-1.1.jar"/>
+    <classpathentry kind="var" path="REPO_ROOT\org\mockito\mockito-all\1.9.0\mockito-all-1.9.0.jar"/>
 </classpath>
