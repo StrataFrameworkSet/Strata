@@ -1,0 +1,39 @@
+<project 
+	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+	name="StrataSqsIntegrator" 
+	default="run-commit-stage">
+	
+	<import file="../../component-targets.xml"/>
+	
+	<target name="define-properties">
+		
+	    <property name="source.dir" value="src"/>
+	    <property name="output.dir" value="bin"/>
+	    <property name="distribution.dir" value="lib"/>
+	    
+	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
+	    <property name="component.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
+		
+		<artifact:pom 
+			name="Strata Application Framework"
+			id="${ant.project.name}" 
+			groupId="strata1" 
+			artifactId="${ant.project.name}" 
+			version="${version}">
+	        <dependency groupId="strata1" artifactId="StrataIntegrator" version="${version}"/>
+		    <dependency groupId="strata1" artifactId="StrataInjector" version="${version}"/>
+	        <dependency groupId="com.amazonaws" artifactId="aws-java-sdk" version="1.8.3"/>
+		    <dependency groupId="commons-logging" artifactId="commons-logging" version="1.1.1"/>
+	    </artifact:pom>
+		
+	    <artifact:dependencies 
+	    	pathId="dependency.classpath"
+	    	pomRefId="${ant.project.name}">
+	        <localRepository path="${repository.dir}"/>
+	    </artifact:dependencies>
+
+		<property name="component.classpath" value="dependency.classpath"/>
+		
+	</target>
+    
+</project>	
