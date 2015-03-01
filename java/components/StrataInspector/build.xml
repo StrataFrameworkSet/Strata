@@ -24,9 +24,11 @@
 	        <dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
 		</artifact:pom>
 				
-		<artifact:dependencies 
+	    <artifact:dependencies 
 	    	pathId="dependency.classpath"
-	    	pomRefId="${ant.project.name}"/>
+	    	pomRefId="${ant.project.name}">
+	        <localRepository path="${repository.dir}"/>
+	    </artifact:dependencies>
 
 		<property name="component.classpath" value="dependency.classpath"/>
 		
