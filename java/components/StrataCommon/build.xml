@@ -5,6 +5,7 @@
 	
 	<import file="../../component-targets.xml"/>
 		
+	
 	<target name="define-properties">
 		
 	    <property name="source.dir" value="src"/>
