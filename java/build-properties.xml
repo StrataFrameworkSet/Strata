@@ -3,6 +3,21 @@
 	<property name="compiler" value="javac1.7"/>
 	<property name="version" value="1.0.0"/>
     <property name="workspace.dir" value="${basedir}/../.."/>
-	<property name="repository.dir" value="${workspace.dir}/.repository"/>
-	<property name="remote.repository.url" value="file:///C:/Repositories/SapientiaSystems/MavenRepository"/>
+    
+    <property environment="env" />
+
+    <condition 
+        property="repository.dir" 
+        value="${env.BUILD_REPOSITORY}"
+        else="${workspace.dir}/.repository">
+        <isset property="env.BUILD_REPOSITORY}"/>
+    </condition>	
+    
+    <condition 
+        property="remote.repository.url" 
+        value="${env.PUBLISH_REPOSITORY}"
+        else="file:///C:/Repositories/SapientiaSystems/MavenRepository">
+        <isset property="env.PUBLISH_REPOSITORY}}"/>
+    </condition>	
+
 </project>	
