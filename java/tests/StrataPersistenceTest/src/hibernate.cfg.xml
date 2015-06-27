@@ -5,14 +5,14 @@
  <session-factory>
   <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
   <property name="hibernate.connection.password">development</property>
-  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/strataentitytest</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/stratapersistencetest</property>
   <property name="hibernate.connection.username">development</property>
-  <property name="hibernate.default_schema">StrataEntityTest</property>
+  <property name="hibernate.default_schema">StrataPersistenceTest</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
   <property name="hibernate.bytecode.provider">javassist</property>
-  <mapping resource="strata1/entity/testdomain/configuration2/IParty.hbm.xml"/>
-  <mapping resource="strata1/entity/testdomain/configuration2/IContactInformation.hbm.xml"/>
-  <mapping resource="strata1/entity/testdomain/configuration2/EmailAddress.hbm.xml"/>
-  <mapping resource="strata1/entity/testdomain/configuration2/PhoneNumber.hbm.xml"/>
+  <mapping resource="strata1/persistence/testdomain/configuration2/IParty.hbm.xml"/>
+  <mapping resource="strata1/persistence/testdomain/configuration2/IContactInformation.hbm.xml"/>
+  <mapping resource="strata1/persistence/testdomain/configuration2/EmailAddress.hbm.xml"/>
+  <mapping resource="strata1/persistence/testdomain/configuration2/PhoneNumber.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

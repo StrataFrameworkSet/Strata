@@ -1,28 +1,30 @@
 // ##########################################################################
-// # File Name:	IMessagingProxy.java
+// # File Name:	IParty.java
 // #
-// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataIntegrator Framework.
+// # License:	This file is part of the StrataEntity Framework.
 // #
-// #   			The StrataIntegrator Framework is free software: you 
+// #   			The StrataEntity Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataIntegrator Framework is distributed in the 
+// #    		The StrataEntity Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataIntegrator
+// #			General Public License along with the StrataEntity
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.integrator.messagingproxy;
+package strata1.persistence.testdomain;
+
+import java.util.Set;
 
 /****************************************************************************
  * 
@@ -32,25 +34,25 @@ package strata1.integrator.messagingproxy;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IMessagingProxy
-{
-    public String
-    getReturnAddress();
+interface IParty
+{   
+    public void
+    setPartyKey(Long key);
+
+    public void
+    setVersion(Integer version);
     
     public void
-    activate();
+    setContactInformation(Set<IContactInformation> info);
     
-    public void
-    deactivate();
+    public Long
+    getPartyKey();
     
-    public boolean
-    isActivated();
+    public Integer
+    getVersion();
     
-    public boolean
-    hasReplyReceivers();
-    
-    public boolean
-    hasEventListeners();
+    public Set<IContactInformation>
+    getContactInformation();
 }
 
 // ##########################################################################

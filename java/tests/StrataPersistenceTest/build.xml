@@ -13,8 +13,8 @@
 	    
 	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
 	    <property name="test.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
-	    <property name="commit.test.suite" value="strata1.entity.testsuite.CommitStageSuite"/>
-		<property name="integration.test.suite" value="strata1.entity.testsuite.IntegrationStageSuite"/>
+	    <property name="commit.test.suite" value="strata1.persistence.testsuite.CommitStageSuite"/>
+		<property name="integration.test.suite" value="strata1.persistence.testsuite.IntegrationStageSuite"/>
 	    <property name="test.reports" value="${output.dir}/reports"/>
 		
 		<artifact:pom 

@@ -37,6 +37,8 @@ import java.security.SecureRandom;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /****************************************************************************
  * 
@@ -46,20 +48,21 @@ import java.util.concurrent.ConcurrentHashMap;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public abstract 
-class AbstractMessagingProxy<K,R>
+class AbstractMessagingProxy<K,R,L>
     implements IMessagingProxy,IMessageListener
 {
-    private final static Random     theirGenerator = new SecureRandom();
+    private final static Random theirGenerator = new SecureRandom();
     
-    private final String            itsReturnAddress;
-    private final String            itsRequestChannelId;
-    private final String            itsReplyChannelId;
-    private final String            itsEventChannelId;
-    private final IMessagingSession itsCommandSession;
-    private final IMessagingSession itsEventSession;
-    private final Map<K,R>          itsPendingReceivers;          
-    private IMessageReceiver        itsCommandReceiver;
-    private IMessageReceiver        itsEventReceiver;
+    private final String                       itsReturnAddress;
+    private final String                       itsRequestChannelId;
+    private final String                       itsReplyChannelId;
+    private final String                       itsEventChannelId;
+    private final IMessagingSession            itsCommandSession;
+    private final IMessagingSession            itsEventSession;
+    private final Map<K,R>                     itsReplyReceivers;  
+    private final Map<K,L>                     itsEventListeners;
+    private IMessageReceiver                   itsCommandReceiver;
+    private final Map<String,IMessageReceiver> itsEventReceivers;
     
     /************************************************************************
      * Creates a new AbstractMessagingProxy. 
@@ -76,7 +79,8 @@ class AbstractMessagingProxy<K,R>
         String            replyChannelId,
         String            eventChannelId,
         IMessagingSession commandSession,
-        IMessagingSession eventSession)
+        IMessagingSession eventSession,
+        String            eventSelector)
     {
         this(
             "",
@@ -84,7 +88,8 @@ class AbstractMessagingProxy<K,R>
             replyChannelId,
             eventChannelId,
             commandSession,
-            eventSession);
+            eventSession,
+            eventSelector);
     }
 
     /************************************************************************
@@ -104,7 +109,8 @@ class AbstractMessagingProxy<K,R>
         String            replyChannelId,
         String            eventChannelId,
         IMessagingSession commandSession,
-        IMessagingSession eventSession)
+        IMessagingSession eventSession,
+        String            eventSelector)
     {
         itsReturnAddress    = createReturnAddress(returnAddressPrefix);
         itsRequestChannelId = requestChannelId;
@@ -112,7 +118,10 @@ class AbstractMessagingProxy<K,R>
         itsEventChannelId   = eventChannelId;
         itsCommandSession   = commandSession;
         itsEventSession     = eventSession;
-        itsPendingReceivers = new ConcurrentHashMap<K,R>();
+        itsReplyReceivers   = new ConcurrentHashMap<K,R>();
+        itsEventListeners   = new ConcurrentHashMap<K,L>();
+        itsEventReceivers = 
+            new ConcurrentHashMap<String,IMessageReceiver>();
         
         try
         {
@@ -121,10 +130,6 @@ class AbstractMessagingProxy<K,R>
                     .createMessageReceiver( 
                         itsReplyChannelId,
                         "ReturnAddress='" + itsReturnAddress + "'" )
-                    .setListener(  this );
-            itsEventReceiver = 
-                itsEventSession
-                    .createMessageReceiver( itsEventChannelId )
                     .setListener(  this );
         }
         catch(MixedModeException e)
@@ -153,7 +158,9 @@ class AbstractMessagingProxy<K,R>
         try
         {
             itsCommandReceiver.startListening();
-            itsEventReceiver.startListening();
+            
+            for (IMessageReceiver receiver : itsEventReceivers.values() )
+                receiver.startListening();
         }
         catch(MixedModeException e)
         {
@@ -171,7 +178,9 @@ class AbstractMessagingProxy<K,R>
         try
         {
             itsCommandReceiver.stopListening();
-            itsEventReceiver.stopListening();
+            
+            for (IMessageReceiver receiver : itsEventReceivers.values() )
+                receiver.stopListening();
         }
         catch(MixedModeException e)
         {
@@ -186,9 +195,12 @@ class AbstractMessagingProxy<K,R>
     public boolean
     isActivated()
     {
-        return 
-            itsCommandReceiver.isListening() && 
-            itsEventReceiver.isListening();
+        boolean result = itsCommandReceiver.isListening();
+        
+        for (IMessageReceiver receiver : itsEventReceivers.values() )
+            result = result &&  receiver.isListening();
+        
+        return result;
     }
     
     /************************************************************************
@@ -196,9 +208,9 @@ class AbstractMessagingProxy<K,R>
      */
     @Override
     public boolean 
-    hasPendingReceivers()
+    hasReplyReceivers()
     {
-        return !itsPendingReceivers.isEmpty();
+        return !itsReplyReceivers.isEmpty();
     }
 
     /************************************************************************
@@ -248,12 +260,57 @@ class AbstractMessagingProxy<K,R>
      * @param receiver
      */
     protected void
-    insertPendingReceiver(K key,R receiver)
+    insertReplyReceiver(K key,R receiver)
     {
-        if ( hasPendingReceiver( key ) )
+        if ( hasReplyReceiver( key ) )
             throw new IllegalStateException( "duplicate key" );
         
-        itsPendingReceivers.put( key,receiver );
+        itsReplyReceivers.put( key,receiver );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param key
+     * @param receiver
+     */
+    protected void
+    insertEventListener(K key,L listener)
+    {
+        if ( hasEventListener( key ) )
+            throw new IllegalStateException( "duplicate key" );
+        
+        itsEventListeners.put( key,listener );
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @param key
+     * @param selector
+     */
+    protected void
+    insertMessageReceiverForEventListeners(String selector)
+    {
+        String key = normalize( selector );
+        
+        if ( itsEventReceivers.containsKey( key ))
+            throw 
+                new IllegalStateException( 
+                    "Receiver: " + key + " already exists." );
+        
+        try
+        {
+            itsEventReceivers.put( 
+                key,
+                itsEventSession
+                    .createMessageReceiver( itsEventChannelId,selector )
+                    .setListener( this ) );
+        }
+        catch(MixedModeException e)
+        {
+            throw new IllegalStateException( e );
+        }
     }
     
     /************************************************************************
@@ -263,15 +320,27 @@ class AbstractMessagingProxy<K,R>
      * @return
      */
     protected R
-    removePendingReceiver(K key)
+    removeReplyReceiver(K key)
     {
-        R receiver = null;
-        
-        if ( !hasPendingReceiver( key ) )
+        if ( !hasReplyReceiver( key ) )
             throw new IllegalStateException( "Unknown reply: " + key );
         
-        receiver = itsPendingReceivers.get( key );
-        return receiver;
+        return itsReplyReceivers.remove( key );        
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param key
+     * @return
+     */
+    protected L
+    removeEventListener(K key)
+    {        
+        if ( !hasEventListener( key ) )
+            throw new IllegalStateException( "Unknown reply: " + key );
+        
+        return itsEventListeners.remove( key );
         
     }
     
@@ -282,9 +351,21 @@ class AbstractMessagingProxy<K,R>
      * @return
      */
     protected boolean
-    hasPendingReceiver(K key)
+    hasReplyReceiver(K key)
     {
-        return itsPendingReceivers.containsKey( key );
+        return itsReplyReceivers.containsKey( key );
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param key
+     * @return
+     */
+    protected boolean
+    hasEventListener(K key)
+    {
+        return itsEventListeners.containsKey( key );
     }
     
     /************************************************************************
@@ -367,6 +448,28 @@ class AbstractMessagingProxy<K,R>
             prefix +
             new Long(theirGenerator.nextLong()).toString();
     }
+    
+    /************************************************************************
+     *  
+     *
+     * @param expression
+     * @return
+     */
+    private String 
+    normalize(String expression)
+    {
+        StringBuilder builder = new StringBuilder();
+        Matcher       matcher = 
+            Pattern
+                .compile("([^\"]\\S*|\".+?\")\\s*")
+                .matcher(expression);
+        
+        while ( matcher.find() )
+            builder.append(matcher.group(1)); 
+        
+        return builder.toString();        
+    }
+
 }
 
 // ##########################################################################
