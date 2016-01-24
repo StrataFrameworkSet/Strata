@@ -35,7 +35,7 @@ import strata1.client.view.IView;
  */
 public 
 interface IHelloWorldView
-    extends IView
+    extends IView<IHelloWorldProvider>
 {
     public void
     setGreeting(String greeting);

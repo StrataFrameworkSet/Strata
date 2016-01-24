@@ -24,6 +24,8 @@
 
 package strata1.client.view;
 
+import strata1.client.command.INullProvider;
+
 
 /****************************************************************************
  * 
@@ -34,7 +36,7 @@ package strata1.client.view;
  */
 public 
 interface ISplashView
-    extends IView
+    extends IView<INullProvider>
 {
     public void
     setMessage(String message);

@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	StartUpController.java
+// # File Name:	LoginController.java
 // #
 // # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -28,7 +28,9 @@ import strata1.injector.container.Binder;
 import strata1.injector.container.IContainer;
 import strata1.client.command.ExecutionException;
 import strata1.client.command.ICommand;
+import strata1.client.command.ILoginProvider;
 import strata1.client.controller.AbstractController;
+import strata1.client.model.INullModel;
 import strata1.client.view.ILoginView;
 import strata1.client.view.ISplashView;
 import strata1.common.authentication.AuthenticationFailureException;
@@ -46,33 +48,48 @@ import strata1.common.logger.LoggingLevel;
  */
 public 
 class StartUpController
-    extends    AbstractController
+    extends    AbstractController<ILoginProvider,ILoginView,INullModel>
     implements IStartUpController
 {
     private ILogger              itsLogger;
     private IContainer           itsContainer;
-    private ILoginView           itsLoginView;
     private ISplashView          itsSplashView;
     private IAuthenticator itsAuthenticator;
     private Runnable             itsInitializer;
     private Runnable             itsActivator;
     
     /************************************************************************
-     * Creates a new {@code StartUpController}. 
+     * Creates a new {@code LoginController}. 
      *
      */
     public 
     StartUpController()
     {
         itsContainer     = null;
-        itsLoginView     = null;
         itsSplashView    = null;
         itsAuthenticator = null;
         itsInitializer   = null;
         itsActivator     = null;
-                
-        setCommand( 
-            "Login",
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    stop()
+    {
+        
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ICommand 
+    getLoginCommand()
+    {
+        return 
             new ICommand()
             {
                 @Override
@@ -82,9 +99,17 @@ class StartUpController
                 {
                     doLogin();
                 } 
-            });
-        setCommand( 
-            "Cancel",
+            };
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ICommand 
+    getCancelCommand()
+    {
+        return 
             new ICommand()
             {
                 @Override
@@ -94,7 +119,7 @@ class StartUpController
                 {
                     doCancel();
                 } 
-            });
+            };
     }
 
     /************************************************************************
@@ -104,7 +129,7 @@ class StartUpController
     public void 
     start()
     {
-        itsLoginView.show();
+        getView().show();
     }
 
     /************************************************************************
@@ -134,8 +159,7 @@ class StartUpController
     public void 
     setLoginView(ILoginView loginView)
     {
-        itsLoginView = loginView;
-        itsLoginView.setProvider( this );
+        setView(loginView,this);
     }
 
     /************************************************************************
@@ -146,7 +170,7 @@ class StartUpController
     setSplashView(ISplashView splashView)
     {
         itsSplashView = splashView;
-        itsSplashView.setProvider( this );
+        //itsSplashView.setProvider( this );
     }
 
     /************************************************************************
@@ -237,9 +261,9 @@ class StartUpController
                         .bindType( IPrincipal.class )
                         .toInstance( 
                             itsAuthenticator.authenticate( 
-                                itsLoginView.getCredential() ) ) );
+                                getView().getCredential() ) ) );
             
-            itsLoginView.stop();
+            getView().stop();
             itsSplashView.start();
             
             itsSplashView.setMessage( "Initializing modules..." );
@@ -252,11 +276,11 @@ class StartUpController
         catch (AuthenticationFailureException e)
         {
             if ( e.hasInvalidField( "UserName" ) )
-                itsLoginView.setInvalidUserName();
+                getView().setInvalidUserName();
             else if ( e.hasInvalidField( "Password" ) )
-                itsLoginView.setInvalidPassword();
+                getView().setInvalidPassword();
             else
-                itsLoginView.setLoginError( e.getMessage() );
+                getView().setLoginError( e.getMessage() );
         }
     }
 

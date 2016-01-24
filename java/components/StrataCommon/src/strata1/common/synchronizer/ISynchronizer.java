@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	ReadWriteLockSynchronizer.java
+// # File Name:	ISynchronizer.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,92 +22,63 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.common.utility;
+package strata1.common.synchronizer;
 
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
-/****************************************************************************
- * Implements the {@code ISynchronizer} interface by wrapping
- * the standard {@code ReadWriteLock}. 
- * 
- * @see ReadWriteLock
+/**
+ * Provides a simplified interface for doing read and write lock
+ * synchronization using a multiple reader/single writer access
+ * pattern.
  * 
  * @author 		
- *     Sapientia Systems 
+ *     Sapientia Systems
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class ReadWriteLockSynchronizer 
-	implements ISynchronizer
+interface ISynchronizer
 {
-	private final ReadWriteLock itsLock;
+	/************************************************************************
+	 * Acquires a <b>read lock</b> used in synchronizing concurrent access
+	 * to objects. A <b>read lock</b> assumes that objects are only read
+	 * and <b>not</b> modified. This enables multiple readers to access
+	 * the same object(s) simultaneously without interfering with each
+	 * other. 
+	 * 
+	 * @see ISynchronizer.unlockFromReading()
+	 *
+	 */
+	public void
+	lockForReading();
 	
 	/************************************************************************
-	 * Creates a new ReadWriteLockSynchronizer. 
+	 * Acquires a <b>write lock</b> used in synchronizing concurrent access
+	 * to objects. A <b>write lock</b> assumes that objects are modified 
+	 * and only allows a single writer to be active--no other writers or
+	 * readers can be active at the same time.
+	 * 
+	 * @see ISynchronizer.unlockFromWriting()
 	 *
-	 * @param lock
 	 */
-	public 
-	ReadWriteLockSynchronizer()
-	{
-		super();
-		itsLock = new ReentrantReadWriteLock();
-	}
+	public void
+	lockForWriting();
 	
 	/************************************************************************
-	 * Creates a new {@code ReadWriteLockSynchronizer}. 
+	 * Releases a <b>read lock</b>.
+	 * 
+	 * @see ISynchronizer.lockForReading()
 	 *
-	 * @param lock
 	 */
-	public 
-	ReadWriteLockSynchronizer(ReadWriteLock lock)
-	{
-		super();
-		itsLock = lock;
-	}
-
+	public void
+	unlockFromReading();
+	
 	/************************************************************************
-	 * {@inheritDoc} 
+	 * Releases a <b>write lock</b>.
+	 * 
+	 * @see ISynchronizer.lockForWriting()
+	 *
 	 */
-	@Override
-	public void 
-	lockForReading()
-	{
-		itsLock.readLock().lock();
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public void 
-	lockForWriting()
-	{
-		itsLock.writeLock().lock();
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public void 
-	unlockFromReading()
-	{
-		itsLock.readLock().unlock();
-	}
-
-	/************************************************************************
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public void 
-	unlockFromWriting()
-	{
-		itsLock.writeLock().unlock();
-	}
-
+	public void
+	unlockFromWriting();
 }
 
 

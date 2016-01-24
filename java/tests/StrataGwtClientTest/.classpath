@@ -1,32 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-    <classpathentry kind="src" path="src"/>
-    <classpathentry kind="output" path="bin"/>
-    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataClientTest\1.0.0\StrataClientTest-1.0.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataClient\1.0.0\StrataClient-1.0.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataCommon\1.0.0\StrataCommon-1.0.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\com\lmax\disruptor\3.2.1\disruptor-3.2.1.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\javax\inject\javax.inject\1\javax.inject-1.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataInjector\1.0.0\StrataInjector-1.0.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\com\google\inject\guice\4.0-beta\guice-4.0-beta.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\aopalliance\aopalliance\1.0\aopalliance-1.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\com\google\guava\guava\11.0.1\guava-11.0.1.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\com\google\code\findbugs\jsr305\1.3.9\jsr305-1.3.9.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-core\3.0.6.RELEASE\spring-core-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-asm\3.0.6.RELEASE\spring-asm-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\commons-logging\commons-logging\1.1.1\commons-logging-1.1.1.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-context-support\3.0.6.RELEASE\spring-context-support-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-beans\3.0.6.RELEASE\spring-beans-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-context\3.0.6.RELEASE\spring-context-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-aop\3.0.6.RELEASE\spring-aop-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-expression\3.0.6.RELEASE\spring-expression-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataIntegrator\1.0.0\StrataIntegrator-1.0.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\junit\junit\4.9\junit-4.9.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\hamcrest\hamcrest-core\1.1\hamcrest-core-1.1.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\mockito\mockito-all\1.9.0\mockito-all-1.9.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataGwtClient\1.0.0\StrataGwtClient-1.0.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\com\google\gwt\gwt-user\2.4.0\gwt-user-2.4.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\javax\validation\validation-api\1.0.0.GA\validation-api-1.0.0.GA.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\javax\validation\validation-api\1.0.0.GA\validation-api-1.0.0.GA-sources.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/gwt-method-inject/2.5.1/gwt-method-inject-2.5.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/gwt-reflect/2.5.1/gwt-reflect-2.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/Tools/GWT/gwt-2.6.1/gwt-user.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Tools/GWT/gwt-2.6.1/doc/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Tools/GWT/gwt-2.6.1/gwt-codeserver.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Tools/GWT/gwt-2.6.1/doc/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Tools/GWT/gwt-2.6.1/gwt-dev.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Tools/GWT/gwt-2.6.1/doc/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Tools/GWT/gwt-2.6.1/validation-api-1.0.0.GA-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Tools/GWT/gwt-2.6.1/validation-api-1.0.0.GA.jar" sourcepath="C:/Tools/GWT/gwt-2.6.1/validation-api-1.0.0.GA-sources.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-gwt-reflect/0.4/xapi-gwt-reflect-0.4.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-dev-source/0.4/xapi-dev-source-0.4.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-gwt-inject/0.4/xapi-gwt-inject-0.4.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-core-inject/0.4/xapi-core-inject-0.4.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-core-log/0.4/xapi-core-log-0.4.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-core-api/0.4/xapi-core-api-0.4.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-core-inject/0.4/xapi-core-inject-0.4-sources.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-core-log/0.4/xapi-core-log-0.4-sources.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-gwt-api/0.4/xapi-gwt-api-0.4.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-core-api/0.4/xapi-core-api-0.4-sources.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-core-util/0.4/xapi-core-util-0.4-sources.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-core-reflect/0.4/xapi-core-reflect-0.4.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/net/wetheinter/xapi-core-util/0.4/xapi-core-util-0.4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/lmax/disruptor/3.2.1/disruptor-3.2.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/javax/inject/javax.inject/1/javax.inject-1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/google/inject/guice/4.0-beta/guice-4.0-beta.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/google/guava/guava/11.0.1/guava-11.0.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/junit/junit/4.9/junit-4.9.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/mockito/mockito-all/1.9.0/mockito-all-1.9.0.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/google/gwt/gwt-user/2.4.0/gwt-user-2.4.0.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/javax/inject/javax.inject/1/javax.inject-1-sources.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataClient"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataClientTest"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataGwtClient"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataInjector"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

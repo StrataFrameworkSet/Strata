@@ -24,6 +24,8 @@
 
 package strata1.swtclient.swtview;
 
+import strata1.client.command.ILoginProvider;
+import strata1.client.command.INullProvider;
 import strata1.client.shell.IDispatcher;
 import strata1.client.view.AbstractView;
 import strata1.client.view.ISplashView;
@@ -54,7 +56,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
  */
 public 
 class SwtSplashView
-    extends    AbstractView
+    extends    AbstractView<INullProvider>
     implements ISplashView,
                ISwtView
 {

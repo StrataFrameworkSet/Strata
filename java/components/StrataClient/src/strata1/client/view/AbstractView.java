@@ -24,8 +24,6 @@
 
 package strata1.client.view;
 
-import strata1.client.command.ExecutionException;
-import strata1.client.command.ICommandProvider;
 import strata1.client.controller.IHandler;
 import strata1.client.event.IChangeEvent;
 import java.util.HashMap;
@@ -39,11 +37,11 @@ import java.util.Map;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public abstract 
-class AbstractView
-	implements IView
+class AbstractView<P>
+	implements IView<P>
 {	
     private String                                   itsViewName;
-    private ICommandProvider                         itsProvider;
+    private P                                        itsProvider;
     private Map<IChangeEvent,IHandler<IChangeEvent>> itsHandlers;
     
     /************************************************************************
@@ -74,7 +72,7 @@ class AbstractView
      */
     @Override
     public void 
-    setProvider(ICommandProvider provider)
+    setProvider(P provider)
     {
         itsProvider = provider;
     }
@@ -83,34 +81,10 @@ class AbstractView
      * {@inheritDoc} 
      */
     @Override
-    public ICommandProvider 
+    public P 
     getProvider()
     {
         return itsProvider;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public String 
-    getInvokerName()
-    {
-        return getViewName();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    invoke(String commandName) 
-        throws ExecutionException
-    {
-        if ( !getProvider().hasCommand( commandName ) )
-            throw new ExecutionException( "No such command: "+commandName );
-        
-        getProvider().getCommand( commandName ).execute();
     }
 
     /************************************************************************

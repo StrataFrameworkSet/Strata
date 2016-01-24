@@ -24,12 +24,18 @@
 
 package strata1.client.helloworld;
 
-import strata1.client.region.IRegionManager;
+import strata1.common.authentication.FakeAuthenticator;
+import strata1.common.logger.ILogger;
+import strata1.client.controller.ILoginController;
+import strata1.client.controller.LoginController;
 import strata1.client.shell.IDispatcher;
+import strata1.client.view.ILoginView;
+import strata1.client.view.ISplashView;
 import strata1.injector.container.AbstractModule;
 import strata1.injector.container.IContainer;
 import strata1.injector.container.IModule;
 //import strata1.client.swthelloworld.SwtGreetingView;
+import java.util.HashMap;
 
 /****************************************************************************
  * 
@@ -61,22 +67,48 @@ class GreetingModule
     public void 
     initialize(IContainer container)
     {
-        IRegionManager  manager    = null;
+        ILogger         logger = null;
         IDispatcher     dispatcher = null;
         
-        IHelloWorldModel      model      = null;
-        IHelloWorldView       view       = null;
-        IHelloWorldController controller = null;
+        ILoginController      loginController  = null;
+        ILoginView            loginView        = null;
+        IHelloWorldModel      model            = null;
+        IHelloWorldView       view             = null;
+        IHelloWorldController controller       = null;
         
-        manager    = container.getInstance(IRegionManager.class);
-        dispatcher = container.getInstance(IDispatcher.class);
+        dispatcher       = createDispatcher();
+        
+        loginController  = new LoginController();
+        loginView        = createLoginView(dispatcher);
+        
         model      = new HelloWorldModel();
         view       = createHelloWorldView( dispatcher );
         controller = new HelloWorldController( model,view );
         
-        //manager.registerWithRegion( "Greeting",SwtGreetingView.class );
-  
+        loginController.setContainer( container );
+        loginController.setLoginView( loginView );
+        loginController.setMainController( controller );
+        
+        logger = container.getInstance( ILogger.class );
+        
+        loginController.setLogger( logger );
+        loginController.setAuthenticator(
+            new FakeAuthenticator(
+                new HashMap<String,String>()
+                {
+    
+                    private static final long serialVersionUID = 1L;
+                    
+                    {
+                        put("john","foobar");
+                        put("nay","FOOBAR");
+                    }
+                }) );
+        
         container
+            .insertBinding( 
+                bindType( IDispatcher.class )
+                    .toInstance(dispatcher) )
             .insertBinding( 
                 bindType( IHelloWorldModel.class )
                     .toInstance(model) )
@@ -84,13 +116,24 @@ class GreetingModule
                 bindType( IHelloWorldView.class )
                     .toInstance(view) )
             .insertBinding( 
+                bindType( ILoginController.class )
+                    .toInstance(loginController) )
+            .insertBinding( 
                 bindType( IHelloWorldController.class )
-                    .withKey( "MainController" )
                     .toInstance(controller) );
     }
     
+    protected abstract ILoginView
+    createLoginView(IDispatcher dispatcher);
+    
+    protected abstract ISplashView
+    createSplashView(IDispatcher dispatcher);
+    
     protected abstract IHelloWorldView
     createHelloWorldView(IDispatcher dispatcher);
+
+    protected abstract IDispatcher 
+    createDispatcher();
 
 }
 

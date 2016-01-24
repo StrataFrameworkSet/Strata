@@ -4,9 +4,6 @@
 	<comment></comment>
 	<projects>
 		<project>StrataCommon</project>
-		<project>StrataEntity</project>
-		<project>StrataIntegrator</project>
-		<project>StrataInteractor</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -14,9 +11,20 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.google.gdt.eclipse.core.webAppProjectValidator</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.google.gwt.eclipse.core.gwtProjectValidator</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.iam.jdt.core.mavenNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>com.google.gwt.eclipse.core.gwtNature</nature>
 	</natures>
 </projectDescription>

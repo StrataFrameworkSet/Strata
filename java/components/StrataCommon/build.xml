@@ -8,6 +8,7 @@
 	
 	<target name="define-properties">
 		
+		<property name="copy.sources" value="true"/>
 	    <property name="source.dir" value="src"/>
 	    <property name="output.dir" value="bin"/>
 	    <property name="distribution.dir" value="lib"/>
@@ -21,7 +22,6 @@
 			artifactId="${ant.project.name}" 
 			version="${version}">
 	        <dependency groupId="com.lmax" artifactId="disruptor" version="3.2.1"/>
-	        <dependency groupId="javax.inject" artifactId="javax.inject" version="1"/>
 		</artifact:pom>
 			
 	    <artifact:dependencies 

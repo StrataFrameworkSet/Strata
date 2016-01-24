@@ -34,6 +34,7 @@ import strata1.common.producerconsumer.DisruptorBroadcasterTest;
 import strata1.common.producerconsumer.DisruptorRouterTest;
 import strata1.common.task.TaskBlockingQueueRouterTest;
 import strata1.common.task.TaskDisruptorRouterTest;
+import strata1.common.timepoint.TimePointTest;
 import strata1.common.utility.CopyableTest;
 import strata1.common.utility.SingletonProxyTest;
 import strata1.common.utility.SynchronizerTest;
@@ -49,6 +50,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    TimePointTest.class,
 	DateTimeTest.class,
 	MoneyTest.class,
 	CurrencyExchangerTest.class,

@@ -25,6 +25,7 @@
 package strata1.client.view;
 
 import strata1.client.command.ExecutionException;
+import strata1.client.command.ILoginProvider;
 import strata1.common.authentication.ICredential;
 import strata1.common.authentication.UserNameAndPasswordCredential;
 
@@ -37,7 +38,7 @@ import strata1.common.authentication.UserNameAndPasswordCredential;
  */
 public 
 class NullLoginView
-    extends    AbstractView
+    extends    AbstractView<ILoginProvider>
     implements ILoginView
 {
 
@@ -74,14 +75,6 @@ class NullLoginView
     public void 
     show()
     {
-        try
-        {
-            invoke( "Login" );
-        }
-        catch(ExecutionException e)
-        {
-           e.printStackTrace();
-        }
     }
 
     /************************************************************************
@@ -149,7 +142,6 @@ class NullLoginView
     {
         return new UserNameAndPasswordCredential("","");
     }
-
 }
 
 // ##########################################################################

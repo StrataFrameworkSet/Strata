@@ -179,63 +179,6 @@ class CommandParameter
     {
         return itsValue;
     }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public Path 
-    toPath() 
-        throws ConversionException
-    {
-        try
-        {
-            return 
-                FileSystems
-                    .getDefault()
-                    .getPath( itsValue );
-        }
-        catch (Throwable cause)
-        {
-            throw new ConversionException(this,cause);
-        }
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public Money 
-    toMoney() 
-        throws ConversionException
-    {
-        try
-        {
-            return new Money(Currency.getInstance( "USD" ),toDouble());
-        }
-        catch (Throwable cause)
-        {
-            throw new ConversionException(this,cause);
-        }
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public DateTime 
-    toDateTime() 
-        throws ConversionException
-    {
-        try
-        {
-            return new DateTime(itsValue);
-        }
-        catch (Throwable cause)
-        {
-            throw new ConversionException(this,cause);
-        }
-    }
 }
 
 // ##########################################################################

@@ -25,7 +25,7 @@
 package strata1.client.swthelloworld;
 
 import strata1.client.command.ExecutionException;
-import strata1.client.command.ICommand;
+import strata1.client.helloworld.IHelloWorldProvider;
 import strata1.client.helloworld.IHelloWorldView;
 import strata1.client.region.RegionInitializationException;
 import strata1.client.shell.IDispatcher;
@@ -56,7 +56,7 @@ import org.eclipse.swt.widgets.Widget;
  */
 public 
 class SwtHelloWorldView
-    extends    AbstractView
+    extends    AbstractView<IHelloWorldProvider>
     implements IHelloWorldView, ISwtView
 {
     private ISwtDispatcher                      itsDispatcher;
@@ -112,7 +112,7 @@ class SwtHelloWorldView
                 {
                     try
                     {
-                        invoke( "Exit" );
+                        getProvider().getExitCommand().execute();
                     }
                     catch (ExecutionException ex)
                     {
@@ -173,19 +173,6 @@ class SwtHelloWorldView
     hide()
     {
         itsPanel.setVisible( false );
-    }
-
-     /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    invoke(String commandName) 
-        throws ExecutionException
-    {
-        ICommand command = getProvider().getCommand( commandName );
-        
-        command.execute();
     }
 
     /************************************************************************

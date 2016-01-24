@@ -24,6 +24,7 @@
 
 package strata1.injector.container;
 
+import strata1.injector.reflection.ITypeManager;
 import java.lang.annotation.Annotation;
 
 
@@ -101,6 +102,14 @@ interface IContainer
     public <T> T
     getInstance(IBindingIdentifier<T> id);
 
+    /************************************************************************
+     * Returns the {@code ITypeManager} associated 
+     * with this {@code IContainer}. 
+     *
+     * @return type manager associated with this container
+     */
+    public ITypeManager
+    getTypeManager();
     
     /************************************************************************
      * Determines if the container has the specified binding. 

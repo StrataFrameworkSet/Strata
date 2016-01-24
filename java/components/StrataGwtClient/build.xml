@@ -20,7 +20,7 @@
 			artifactId="${ant.project.name}" 
 			version="${version}">
 	        <dependency groupId="strata1" artifactId="StrataClient" version="${version}"/>
-        	<dependency groupId="com.google.gwt" artifactId="gwt-user" version="2.4.0"/>
+        	<dependency groupId="com.google.gwt" artifactId="gwt-user" version="2.6.1"/>
 	    </artifact:pom>
 		
 	    <artifact:dependencies 

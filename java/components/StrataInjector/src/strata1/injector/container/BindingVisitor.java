@@ -24,7 +24,8 @@
 
 package strata1.injector.container;
 
-import java.lang.reflect.Constructor;
+import strata1.injector.reflection.IConstructor;
+import strata1.injector.reflection.IType;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
@@ -104,8 +105,8 @@ class BindingVisitor<T>
     public void 
     visitTarget(ClassBindingTarget<T> target)
     {
-        Class<? extends T> type        = target.getType();
-        Constructor<?>     constructor = getInjectionConstructor(type);
+        IType<? extends T>        type        = getType(target.getType());
+        IConstructor<? extends T> constructor = getInjectionConstructor(target.getType());
           
         itsProvider = 
             new ConstructorBasedProvider<T>(
@@ -122,18 +123,13 @@ class BindingVisitor<T>
     public void 
     visitTarget(ProviderBindingTarget<T> target)
     {
-        Class<?>       providerType = target.getProviderType();
-        Constructor<?> constructor = null;
+        Class<? extends Provider<? extends T>> providerType = 
+            target.getProviderType();
         
         try
         {
             if ( target.hasProviderType() )
-            {
-                constructor = 
-                    providerType.getConstructor( new Class<?>[]{} );
-                itsProvider = 
-                    (Provider<T>)constructor.newInstance(new Object[]{});
-            }         
+                itsProvider = getProviderFromType( providerType );       
             else if ( target.hasProviderInstance() )
                 itsProvider = (Provider<T>)target.getProviderInstance();
             else
@@ -199,22 +195,53 @@ class BindingVisitor<T>
      * @param type
      * @return
      */
-    private Constructor<?> 
+    private IType<? extends T>
+    getType(Class<? extends T> type)
+    {
+        return 
+            itsContainer
+            .getTypeManager()
+            .getType( type );
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param type
+     * @return
+     */
+    private IConstructor<? extends T> 
     getInjectionConstructor(Class<? extends T> type)
     {
-        Constructor<?>[] constructors = type.getConstructors();
+        IType<? extends T> wrapperType = 
+            itsContainer
+                .getTypeManager()
+                .getType( type );
         
-        for (Constructor<?> constructor : constructors)
-            if ( constructor.isAnnotationPresent( Inject.class ))
-                return constructor;
+        if ( wrapperType.hasConstructor( Inject.class ) )
+            return wrapperType.getConstructor( Inject.class );
         
-        for (Constructor<?> constructor : constructors)
-            if ( constructor.getParameterTypes().length == 0 )
-                return constructor;
+        return wrapperType.getDefaultConstructor();        
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param providerType
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    private Provider<T>
+    getProviderFromType(Class<? extends Provider<? extends T>> providerType)
+    {
+        IType<? extends Provider<? extends T>> wrapperType = 
+            itsContainer
+                .getTypeManager()
+                .getType( providerType );
+        IConstructor<?> constructor = wrapperType.getDefaultConstructor();
         
-        throw 
-            new IllegalStateException(
-                "No suitable constructors for dependency injection." );
+        return (Provider<T>)constructor.create();
+        
     }
 }
 

@@ -25,6 +25,11 @@
 package strata1.injector.container;
 
 import static org.junit.Assert.assertNotNull;
+import strata1.injector.jrereflection.JreConstructor;
+import strata1.injector.jrereflection.JreTypeManager;
+import strata1.injector.reflection.IConstructor;
+import strata1.injector.reflection.IType;
+import strata1.injector.reflection.ITypeManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +58,7 @@ class ConstructorBasedProviderTest
     public void 
     setUp() throws Exception
     {
-        itsContainer = new Container();
+        itsContainer = new Container(new JreTypeManager());
         
         itsContainer
             .insertBinding( 
@@ -77,7 +82,7 @@ class ConstructorBasedProviderTest
         itsTarget = 
             new ConstructorBasedProvider<IFooBar>(
                 itsContainer,
-                FooBar.class,
+                itsContainer.getTypeManager().getType( FooBar.class ),
                 getInjectionConstructor(FooBar.class));
         
     }
@@ -115,22 +120,16 @@ class ConstructorBasedProviderTest
      * @param type
      * @return
      */
-    private <T> Constructor<?> 
+    private <T> IConstructor<? extends T> 
     getInjectionConstructor(Class<? extends T> type)
     {
-        Constructor<?>[] constructors = type.getConstructors();
+        ITypeManager       manager = new JreTypeManager();
+        IType<? extends T> wrapper = manager.getType( type );
         
-        for (Constructor<?> constructor : constructors)
-            if ( constructor.isAnnotationPresent( Inject.class ))
-                return constructor;
+        if ( wrapper.hasConstructor( Inject.class ) )
+            return wrapper.getConstructor( Inject.class );
         
-        for (Constructor<?> constructor : constructors)
-            if ( constructor.getParameterTypes().length == 0 )
-                return constructor;
-        
-        throw 
-            new IllegalStateException(
-                "No suitable constructors for dependency injection." );
+        return wrapper.getDefaultConstructor();        
     }
 
 }

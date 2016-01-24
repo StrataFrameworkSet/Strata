@@ -24,6 +24,7 @@
 
 package strata1.client.helloworld;
 
+import strata1.client.command.INullProvider;
 import strata1.client.view.IView;
 
 /****************************************************************************
@@ -33,8 +34,9 @@ import strata1.client.view.IView;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public interface IGreetingView
-    extends IView
+public 
+interface IGreetingView
+    extends IView<INullProvider>
 {
     public void 
     displayGreeting(String greeting);

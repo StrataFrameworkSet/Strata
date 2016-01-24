@@ -24,8 +24,9 @@
 
 package strata1.client.controller;
 
-import strata1.client.command.ICommand;
 import strata1.client.event.IChangeEvent;
+import strata1.client.model.IModel;
+import strata1.client.view.IView;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,15 +38,16 @@ import java.util.Map;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public abstract 
-class AbstractController
-	implements IController
+class AbstractController<P,V extends IView<P>,M extends IModel>
+	implements IController<P,V,M>
 {
-	private Map<String,ICommand>             itsCommands;
-	private Map<
-	            Class<
-	                ? extends IChangeEvent>,
-	                IHandler<IChangeEvent>>  itsHandlers;
-	
+    private Map<
+        Class<
+            ? extends IChangeEvent>,
+            IHandler<IChangeEvent>>  itsHandlers;
+    private V                        itsView;
+    private M                        itsModel;
+    	
 	/************************************************************************
 	 * Creates a new {@code AbstractController}. 
 	 *
@@ -54,31 +56,13 @@ class AbstractController
 	AbstractController()
 	{
 		super();
-		itsCommands = new HashMap<String,ICommand>();
-		itsHandlers = 
-		    new HashMap<
-		        Class<? extends IChangeEvent>,IHandler<IChangeEvent>>();
+        itsHandlers = 
+            new HashMap<
+                Class<? extends IChangeEvent>,IHandler<IChangeEvent>>();
+		itsView  = null;
+		itsModel = null;
 	}
 	
-	/************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public ICommand 
-    getCommand(String commandName)
-    {
-    	return itsCommands.get( commandName );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public boolean 
-    hasCommand(String commandName)
-    {
-        return itsCommands.containsKey( commandName );
-    }
 
     /************************************************************************
      * {@inheritDoc} 
@@ -91,15 +75,23 @@ class AbstractController
     }
 
     /************************************************************************
-     *  
-     *
-     * @param action
-     * @param handler
+     * {@inheritDoc} 
      */
-    protected void
-    setCommand(String commandName,ICommand command)
+    @Override
+    public V 
+    getView()
     {
-    	itsCommands.put( commandName,command );
+        return itsView;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public M 
+    getModel()
+    {
+        return itsModel;
     }
 
     /************************************************************************
@@ -114,6 +106,30 @@ class AbstractController
         IHandler<IChangeEvent> handler)
     {
     	itsHandlers.put( event,handler );
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param view
+     */
+    protected void
+    setView(V view,P downcastedThis)
+    {
+        itsView = view;
+        itsView.setProvider( downcastedThis );
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param model
+     */
+    protected void
+    setModel(M model)
+    {
+        itsModel = model;
+        itsModel.setProcessor( this );
     }
 }
 

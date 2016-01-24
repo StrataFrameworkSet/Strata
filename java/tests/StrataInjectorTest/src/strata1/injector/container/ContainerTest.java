@@ -28,6 +28,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import strata1.injector.jrereflection.JreTypeManager;
 import strata1.common.logger.ILogger;
 import strata1.common.logger.Logger;
 import org.junit.After;
@@ -254,7 +255,7 @@ class ContainerTest
     protected IContainer
     createContainer()
     {
-        return new Container();
+        return new Container(new JreTypeManager());
     }
 }
 

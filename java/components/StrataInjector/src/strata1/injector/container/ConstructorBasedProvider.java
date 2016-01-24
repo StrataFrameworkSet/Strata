@@ -24,6 +24,8 @@
 
 package strata1.injector.container;
 
+import strata1.injector.reflection.IConstructor;
+import strata1.injector.reflection.IType;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -45,9 +47,9 @@ public
 class ConstructorBasedProvider<T>
     implements Provider<T>
 {
-    private IContainer         itsContainer;
-    private Class<? extends T> itsType;
-    private Constructor<?>     itsConstructor;
+    private IContainer                itsContainer;
+    private IType<? extends T>        itsType;
+    private IConstructor<? extends T> itsConstructor;
     
     /************************************************************************
      * Creates a new {@code ConstructorBasedProvider}. 
@@ -55,9 +57,9 @@ class ConstructorBasedProvider<T>
      */
     public 
     ConstructorBasedProvider(
-        IContainer         container,
-        Class<? extends T> type,
-        Constructor<?>     constructor)
+        IContainer                container,
+        IType<? extends T>        type,
+        IConstructor<? extends T> constructor)
     {
         itsContainer   = container;
         itsType        = type;
@@ -73,9 +75,7 @@ class ConstructorBasedProvider<T>
     {
         try
         {
-            T instance = 
-                itsType.cast( 
-                    itsConstructor.newInstance( getArguments() ) );       
+            T instance = itsConstructor.create( getArguments() );       
             
             performFieldInjection(instance);
             performMethodInjection(instance);

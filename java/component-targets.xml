@@ -60,8 +60,18 @@
 	</target>
 	
 	<target
+	    name="copy-source-files"
+	    if="${copy.sources}">
+    	<copy todir="${output.dir}">
+    	    <fileset 
+    	    	dir="${source.dir}"
+    	        includes="**/*.java"/>
+    	</copy>        
+	</target>
+    
+	<target
 	    name="package"
-	    depends="compile">
+	    depends="compile,copy-source-files">
     	<copy todir="${output.dir}">
     	    <fileset 
     	    	dir="${source.dir}"

@@ -25,6 +25,7 @@
 package strata1.swtclient.swtview;
 
 import strata1.client.command.ExecutionException;
+import strata1.client.command.ILoginProvider;
 import strata1.client.shell.IDispatcher;
 import strata1.client.view.AbstractView;
 import strata1.client.view.ILoginView;
@@ -58,7 +59,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
  */
 public 
 class SwtLoginView
-    extends     AbstractView
+    extends     AbstractView<ILoginProvider>
     implements  ILoginView,
                 ISwtView
 {
@@ -415,7 +416,7 @@ class SwtLoginView
                 {
                     try
                     {
-                        invoke( "Login" );
+                        getProvider().getLoginCommand().execute();
                     }
                     catch(ExecutionException e)
                     {
@@ -438,7 +439,7 @@ class SwtLoginView
                 {
                     try
                     {
-                        invoke( "Cancel" );
+                        getProvider().getCancelCommand().execute();
                     }
                     catch(ExecutionException e)
                     {

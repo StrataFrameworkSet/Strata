@@ -24,7 +24,7 @@
 
 package strata1.client.region;
 
-import strata1.client.view.IView;
+import strata1.client.view.IViewable;
 
 /**
  * 
@@ -37,7 +37,7 @@ public
 interface IRegionManager
 {
     public void
-    registerWithRegion(String regionName,Class<? extends IView> viewType);
+    registerWithRegion(String regionName,Class<? extends IViewable> viewType);
     
     public void
     insertRegion(IRegion region);
@@ -50,7 +50,7 @@ interface IRegionManager
     hasRegion(String regionName);
     
     public boolean
-    isRegisteredWithRegion(String regionName,Class<? extends IView> viewType);
+    isRegisteredWithRegion(String regionName,Class<? extends IViewable> viewType);
 }
 
 // ##########################################################################

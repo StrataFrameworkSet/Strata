@@ -24,8 +24,9 @@
 
 package strata1.client.controller;
 
-import strata1.client.command.ICommandProvider;
 import strata1.client.event.IChangeEventProcessor;
+import strata1.client.model.IModel;
+import strata1.client.view.IView;
 
 /**
  * 
@@ -34,12 +35,21 @@ import strata1.client.event.IChangeEventProcessor;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public interface IController
-    extends ICommandProvider,
-            IChangeEventProcessor 
+public 
+interface IController<P,V extends IView<P>,M extends IModel>
+    extends IChangeEventProcessor 
 {
+    public V
+    getView();
+    
+    public M
+    getModel();
+    
     public void
     start();
+    
+    public void
+    stop();
 }
 
 // ##########################################################################

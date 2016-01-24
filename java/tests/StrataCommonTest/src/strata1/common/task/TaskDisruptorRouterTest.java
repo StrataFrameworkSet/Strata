@@ -134,9 +134,6 @@ class TaskDisruptorRouterTest
             .println(itsWriter.toString());
     }
     
-    /**
-     * Test method for {@link strata1.common.producerconsumer.ProducerConsumerManager#attachConsumer(strata1.common.producerconsumer.IConsumer)}.
-     */
     @Test
     public void 
     testAttachConsumer()
@@ -148,9 +145,6 @@ class TaskDisruptorRouterTest
         assertTrue( itsTarget.hasConsumer( consumer ));
     }
 
-    /**
-     * Test method for {@link strata1.common.producerconsumer.ProducerConsumerManager#detachConsumer(strata1.common.producerconsumer.IConsumer)}.
-     */
     @Test
     public void 
     testDetachConsumer()

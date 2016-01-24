@@ -41,7 +41,7 @@ import org.junit.Test;
 public 
 class DisruptorBroadcasterTest
 {
-    private static final int        MAX = 1000000;
+    private static final int        MAX = 10000000;
     
     private ICountRequestDispatcher itsTarget;
     private ICountRequestProducer   itsProducer1;    
@@ -60,7 +60,7 @@ class DisruptorBroadcasterTest
     public void 
     setUp() throws Exception
     {
-        itsTarget = new CountRequestDisruptorDispatcher(4096);
+        itsTarget = new CountRequestDisruptorDispatcher(1024*256);
         itsProducer1 = new CountRequestProducer(1,MAX,DispatchKind.BROADCAST);
         itsProducer2 = new CountRequestProducer(2,MAX,DispatchKind.BROADCAST);
         itsProducer3 = new CountRequestProducer(3,MAX,DispatchKind.BROADCAST);

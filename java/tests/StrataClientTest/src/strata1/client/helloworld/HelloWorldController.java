@@ -36,12 +36,14 @@ import strata1.client.controller.AbstractController;
  */
 public 
 class HelloWorldController
-    extends    AbstractController
-    implements IHelloWorldController
-{
-    private IHelloWorldModel itsModel;
-    private IHelloWorldView  itsView;
-    
+    extends    
+        AbstractController<
+            IHelloWorldProvider,
+            IHelloWorldView,
+            IHelloWorldModel>
+    implements 
+        IHelloWorldController
+{    
     /************************************************************************
      * Creates a new HelloWorldController. 
      *
@@ -49,23 +51,27 @@ class HelloWorldController
     public 
     HelloWorldController(IHelloWorldModel model,IHelloWorldView view)
     {
-        itsModel = model;
-        itsView  = view;
-       
-        setCommand( 
-            "Exit",
+        setModel( model );
+        setView( view,this );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ICommand 
+    getExitCommand()
+    {
+        return 
             new ICommand() 
             {
                 public void 
                 execute() 
                 {
-                    itsView.stop();
-                    System.exit( 0 );
+                    getView().stop();
+                    //System.exit( 0 );
                 }
-            } );
-        
-        itsModel.setProcessor( this );
-        itsView.setProvider( this );
+            };
     }
 
     /************************************************************************
@@ -75,8 +81,17 @@ class HelloWorldController
     public void 
     start()
     {
-        itsView.setGreeting( "Hello John!" );
-        itsView.start();
+        getView().setGreeting( "Hello John!" );
+        getView().start();
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    stop()
+    {
     }
 
 

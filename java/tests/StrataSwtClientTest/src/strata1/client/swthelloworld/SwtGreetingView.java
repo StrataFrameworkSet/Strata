@@ -24,7 +24,7 @@
 
 package strata1.client.swthelloworld;
 
-import strata1.client.command.ExecutionException;
+import strata1.client.command.INullProvider;
 import strata1.client.helloworld.IGreetingView;
 import strata1.client.view.AbstractView;
 import strata1.swtclient.swtview.ISwtView;
@@ -41,7 +41,7 @@ import org.eclipse.swt.widgets.Widget;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public class SwtGreetingView
-    extends AbstractView
+    extends AbstractView<INullProvider>
     implements IGreetingView, ISwtView
 {
     private Label itsGreeting;
@@ -88,16 +88,6 @@ public class SwtGreetingView
     public void hide()
     {
         itsGreeting.setVisible( false );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    invoke(String commandName)
-        throws ExecutionException
-    {
     }
 
     /************************************************************************

@@ -24,9 +24,9 @@
 
 package strata1.injector.container;
 
-import strata1.common.utility.ISynchronizer;
-import strata1.common.utility.ISynchronizerProvider;
-import strata1.common.utility.ReadWriteLockSynchronizer;
+import strata1.injector.reflection.ITypeManager;
+import strata1.common.synchronizer.ISynchronizer;
+import strata1.common.synchronizer.NullSynchronizer;
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,29 +44,32 @@ class Container
     implements IContainer
 {
     private Map<IBindingIdentifier<?>,Provider<?>> itsBindings;
+    private final ITypeManager                     itsTypeManager;
     private final ISynchronizer                    itsSynchronizer;
     
     /************************************************************************
      * Creates a new {@code Container}. 
      *
+     * @param manager
      */
     public 
-    Container()
+    Container(ITypeManager manager)
     {
-        itsBindings     = new HashMap<IBindingIdentifier<?>,Provider<?>>();
-        itsSynchronizer = new ReadWriteLockSynchronizer();
+        this( manager,new NullSynchronizer() );
     }
 
-    
     /************************************************************************
      * Creates a new {@code Container}. 
      *
+     * @param manager
+     * @param synchronizer
      */
     public 
-    Container(ISynchronizerProvider provider)
+    Container(ITypeManager manager,ISynchronizer synchronizer)
     {
         itsBindings     = new HashMap<IBindingIdentifier<?>,Provider<?>>();
-        itsSynchronizer = provider.get();
+        itsTypeManager  = manager;
+        itsSynchronizer = synchronizer;
     }
 
     /************************************************************************
@@ -118,6 +121,7 @@ class Container
     /************************************************************************
      * {@inheritDoc} 
      */
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T 
     getInstance(Class<T> type)
@@ -138,7 +142,8 @@ class Container
             if ( provider == null )
                 throw new IllegalStateException("provider is null.");
             
-            return type.cast( provider.get() );
+            //return type.cast( provider.get() );
+            return (T)provider.get();
         }
         finally
         {
@@ -149,6 +154,7 @@ class Container
     /************************************************************************
      * {@inheritDoc} 
      */
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T 
     getInstance(Class<T> type,String key)
@@ -169,7 +175,8 @@ class Container
             if ( provider == null )
                 throw new IllegalStateException("provider is null.");
             
-            return type.cast( provider.get() );
+            //return type.cast( provider.get() );
+            return (T)provider.get();
         }
         finally
         {
@@ -180,6 +187,7 @@ class Container
     /************************************************************************
      * {@inheritDoc} 
      */
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T 
     getInstance(Class<T> type,Class<? extends Annotation> key)
@@ -200,7 +208,8 @@ class Container
             if ( provider == null )
                 throw new IllegalStateException("provider is null.");
             
-            return type.cast( provider.get() );
+            //return type.cast( provider.get() );
+            return (T)provider.get();
         }
         finally
         {
@@ -212,6 +221,7 @@ class Container
     /************************************************************************
      * {@inheritDoc} 
      */
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T 
     getInstance(IBindingIdentifier<T> id)
@@ -230,12 +240,23 @@ class Container
             if ( provider == null )
                 throw new IllegalStateException("provider is null.");
             
-            return id.getType().cast( provider.get() );
+            //return id.getType().cast( provider.get() );
+            return (T)provider.get();
         }
         finally
         {
             itsSynchronizer.unlockFromReading();
         }
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ITypeManager 
+    getTypeManager()
+    {
+        return itsTypeManager;
     }
 
     /************************************************************************

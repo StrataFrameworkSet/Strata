@@ -1,33 +1,32 @@
 // ##########################################################################
-// # File Name:	GuiceAdapterModule.java
+// # File Name:	NullSynchronizer.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataInjector Framework.
+// # License:	This file is part of the StrataCommon Framework.
 // #
-// #   			The StrataInjector Framework is free software: you 
+// #   			The StrataCommon Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataInjector Framework is distributed in the 
+// #    		The StrataCommon Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataInjector
+// #			General Public License along with the StrataCommon
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.injector.guicecontainer;
-
-import com.google.inject.AbstractModule;
-import java.util.Queue;
+package strata1.common.synchronizer;
 
 /****************************************************************************
+ * Implements the {@code ISynchronizer} interface as a <b>Null Object</b> 
+ * that does not do anything.
  * 
  * @author 		
  *     Sapientia Systems
@@ -35,48 +34,48 @@ import java.util.Queue;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class GuiceAdapterModule
-    extends AbstractModule
+class NullSynchronizer
+    implements ISynchronizer
 {
-    private Queue<GuiceBindingPair<?>> itsPending;
-    
-    /************************************************************************
-     * Creates a new {@code GuiceAdapterModule}. 
-     *
-     */
-    public 
-    GuiceAdapterModule()
-    {
-        itsPending = null;
-    }
-    
-    /************************************************************************
-     * Creates a new {@code GuiceAdapterModule}. 
-     *
-     * @param module
-     */
-    public 
-    GuiceAdapterModule(Queue<GuiceBindingPair<?>> pending)
-    {
-        itsPending = pending;
-    }
 
+    /************************************************************************
+     * Creates a new {@code NullSynchronizer}. 
+     *
+     */
+    public 
+    NullSynchronizer() {}
+
+    /************************************************************************
+     * {@inheritDoc}
+     * Null Object methods do nothing. 
+     */
+    @Override
+    public void 
+    lockForReading() {}
 
     /************************************************************************
      * {@inheritDoc} 
+     * Null Object methods do nothing. 
      */
     @Override
-    protected void 
-    configure()
-    {
-        while (!itsPending.isEmpty())
-        {
-            GuiceBindingPair<?>    pair    = itsPending.remove();
-            
-            pair.setBinder(binder());
-            pair.process();
-        }
-    }
+    public void 
+    lockForWriting() {}
+
+    /************************************************************************
+     * {@inheritDoc} 
+     * Null Object methods do nothing. 
+     */
+    @Override
+    public void 
+    unlockFromReading() {}
+    
+    /************************************************************************
+     * {@inheritDoc} 
+     * Null Object methods do nothing. 
+     */
+    @Override
+    public void 
+    unlockFromWriting() {}
 }
 
 // ##########################################################################

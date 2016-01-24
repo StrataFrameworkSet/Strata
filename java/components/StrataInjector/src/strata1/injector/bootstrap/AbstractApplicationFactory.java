@@ -68,7 +68,7 @@ class AbstractApplicationFactory
     public IContainer 
     createContainer()
     {
-        return new Container();
+        return new Container(null);
     }
 
     /************************************************************************

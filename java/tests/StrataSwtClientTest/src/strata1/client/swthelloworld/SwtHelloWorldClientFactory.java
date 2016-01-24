@@ -89,7 +89,7 @@ class SwtHelloWorldClientFactory
     public IContainer 
     createContainer()
     {
-        return new Container();
+        return new Container(null);
     }
 
     /************************************************************************
@@ -99,7 +99,7 @@ class SwtHelloWorldClientFactory
     public IContainer 
     createContainer(String resourceLocation)
     {
-        return new Container();
+        return new Container(null);
     }
 
     /************************************************************************

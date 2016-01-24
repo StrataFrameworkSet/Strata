@@ -2,7 +2,8 @@
     xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-    http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+    http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd 
+    http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
     
     <broker 
         xmlns="http://activemq.apache.org/schema/core" 
@@ -63,6 +64,21 @@
 							    read="users,admins"
 								write="users,admins" 
 								admin="users,admins" />
+                            <authorizationEntry 
+                                queue="identitymanager.requests.>" 
+                                read="users,admins"
+                                write="users,admins" 
+                                admin="users,admins" />
+                            <authorizationEntry 
+                                queue="identitymanager.replies.>" 
+                                read="users,admins"
+                                write="users,admins" 
+                                admin="users,admins" />
+							<authorizationEntry 
+							    topic="identitymanager.events.>" 
+							    read="users,admins"
+								write="users,admins" 
+								admin="users,admins" />
 						</authorizationEntries>
 					</authorizationMap>
 				</map>
@@ -70,6 +86,7 @@
         </plugins>
         
         <transportConnectors>
+            <!--  
             <transportConnector 
                 name="tcp" 
                 uri="tcp://localhost:61616"/>
@@ -79,17 +96,16 @@
             <transportConnector 
                 name="stomp" 
                 uri="stomp+ssl://localhost:61618?needClientAuth=false"/>
-            <!--  
+             -->
             <transportConnector 
                 name="tcp" 
-                uri="tcp://ec2-54-68-199-128.us-west-2.compute.amazonaws.com:61616"/>
+                uri="tcp://ec2-54-68-247-101.us-west-2.compute.amazonaws.com:61616"/>
             <transportConnector 
                 name="ssl" 
-                uri="ssl://ec2-54-68-199-128.us-west-2.compute.amazonaws.com:61617?needClientAuth=false"/>
+                uri="ssl://ec2-54-68-247-101.us-west-2.compute.amazonaws.com:61617?needClientAuth=false"/>
             <transportConnector 
                 name="stomp" 
-                uri="stomp+ssl://ec2-54-68-199-128.us-west-2.compute.amazonaws.com:61618?needClientAuth=false"/>
-             -->
+                uri="stomp+ssl://ec2-54-68-247-101.us-west-2.compute.amazonaws.com:61618?needClientAuth=false"/>
         </transportConnectors>
 
         <destinationPolicy>
@@ -133,6 +149,36 @@
         </shutdownHooks>
 
     </broker>
+
+    <camelContext 
+    	id="camel" 
+    	xmlns="http://camel.apache.org/schema/spring">
+
+        <route>
+            <description>IdentityManager Requests: STOMP to JMS</description>
+            <from uri="activemq:identitymanager.request.2"/>
+            <to uri="activemq:identitymanager.request.1"/>
+        </route>
+        <route>
+            <description>IdentityManager Requests: STOMP to JMS</description>
+            <from uri="activemq:identitymanager.request.2"/>
+            <to uri="activemq:identitymanager.request.1"/>
+        </route>
+        
+    </camelContext>
+
+    <!-- configure the camel activemq component to use the current broker -->
+    <bean 
+    	id="activemq" 
+    	class="org.apache.activemq.camel.component.ActiveMQComponent" >
+        <property name="connectionFactory">
+          	<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+            	<property name="brokerURL" value="vm://amq-broker?create=false"/>
+            	<property name="userName" value="${activemq.username}"/>
+            	<property name="password" value="${activemq.password}"/>
+          	</bean>
+        </property>
+    </bean>
 
     <!-- Enable web consoles, REST and Ajax APIs and demos 
     <import resource="jetty.xml"/> -->

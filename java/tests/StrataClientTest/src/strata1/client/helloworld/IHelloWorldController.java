@@ -35,9 +35,8 @@ import strata1.client.controller.IController;
  */
 public 
 interface IHelloWorldController
-    extends IController
-{
-}
-
+    extends 
+        IHelloWorldProvider,
+        IController<IHelloWorldProvider,IHelloWorldView,IHelloWorldModel> {}
 
 // ##########################################################################

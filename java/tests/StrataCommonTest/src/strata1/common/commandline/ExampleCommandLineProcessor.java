@@ -43,9 +43,6 @@ class ExampleCommandLineProcessor
     private ICommandOption itsFloatOption;
     private ICommandOption itsDoubleOption;
     private ICommandOption itsDecimalOption;
-    private ICommandOption itsPathOption;
-    private ICommandOption itsMoneyOption;
-    private ICommandOption itsDateTimeOption;
     
     private ICommandParameter itsBooleanParameter;
     private ICommandParameter itsIntegerParameter;
@@ -53,9 +50,6 @@ class ExampleCommandLineProcessor
     private ICommandParameter itsFloatParameter;
     private ICommandParameter itsDoubleParameter;
     private ICommandParameter itsDecimalParameter;
-    private ICommandParameter itsPathParameter;
-    private ICommandParameter itsMoneyParameter;
-    private ICommandParameter itsDateTimeParameter;
     
     
     /************************************************************************
@@ -72,9 +66,6 @@ class ExampleCommandLineProcessor
         itsFloatOption = null;
         itsDoubleOption = null;
         itsDecimalOption = null;
-        itsPathOption = null;
-        itsMoneyOption = null;
-        itsDateTimeOption = null;
         
         itsBooleanParameter = null;
         itsIntegerParameter = null;
@@ -82,9 +73,6 @@ class ExampleCommandLineProcessor
         itsFloatParameter = null;
         itsDoubleParameter = null;
         itsDecimalParameter = null;
-        itsPathParameter = null;
-        itsMoneyParameter = null;
-        itsDateTimeParameter = null;
     }
 
     /************************************************************************
@@ -101,9 +89,6 @@ class ExampleCommandLineProcessor
         itsFloatOption = null;
         itsDoubleOption = null;
         itsDecimalOption = null;
-        itsPathOption = null;
-        itsMoneyOption = null;
-        itsDateTimeOption = null;
         
         itsBooleanParameter = null;
         itsIntegerParameter = null;
@@ -111,9 +96,6 @@ class ExampleCommandLineProcessor
         itsFloatParameter = null;
         itsDoubleParameter = null;
         itsDecimalParameter = null;
-        itsPathParameter = null;
-        itsMoneyParameter = null;
-        itsDateTimeParameter = null;
     }
 
     /************************************************************************
@@ -132,9 +114,6 @@ class ExampleCommandLineProcessor
             itsFloatOption.getFloat();
             itsDoubleOption.getDouble();
             itsDecimalOption.getBigDecimal();
-            itsPathOption.getPath();
-            itsMoneyOption.getMoney();
-            itsDateTimeOption.getDateTime();
             
             itsBooleanParameter.toBoolean();
             itsIntegerParameter.toInteger();
@@ -142,9 +121,6 @@ class ExampleCommandLineProcessor
             itsFloatParameter.toFloat();
             itsDoubleParameter.toDouble();
             itsDecimalParameter.toBigDecimal();
-            itsPathParameter.toPath();
-            itsMoneyParameter.toMoney();
-            itsDateTimeParameter.toDateTime();
 
         }
         catch (Throwable cause)
@@ -173,12 +149,6 @@ class ExampleCommandLineProcessor
             itsDoubleOption = option;
         else if ( option.isNamed( "decimal" ))
             itsDecimalOption = option;
-        else if ( option.isNamed( "path" ))
-            itsPathOption = option;
-        else if ( option.isNamed( "money" ))
-            itsMoneyOption = option;
-        else if ( option.isNamed( "datetime" ))
-            itsDateTimeOption = option;
         else
             throw 
                 new CommandLineException(
@@ -217,18 +187,6 @@ class ExampleCommandLineProcessor
             
         case 5:
             itsDecimalParameter = parameter;
-            break;
-            
-        case 6:
-            itsPathParameter = parameter;
-            break;
-            
-        case 7:
-            itsMoneyParameter = parameter;
-            break;
-            
-        case 8:
-            itsDateTimeParameter = parameter;
             break;
             
         default:

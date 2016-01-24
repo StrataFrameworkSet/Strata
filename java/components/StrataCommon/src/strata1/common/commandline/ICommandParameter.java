@@ -60,15 +60,6 @@ interface ICommandParameter
     
     public String
     toString();
-    
-    public Path
-    toPath() throws ConversionException;
-    
-    public Money
-    toMoney() throws ConversionException;
-    
-    public DateTime
-    toDateTime() throws ConversionException;
 
 }
 

@@ -325,7 +325,7 @@ class StompJmsMessageReceiverTest
     createMessagingSession()
     {
         String host =
-            "ssl://ec2-54-68-199-128.us-west-2.compute.amazonaws.com:61618";
+            "ssl://ec2-54-68-247-101.us-west-2.compute.amazonaws.com:61618";
             //"ssl://localhost:61618";
         
         StompJmsConnectionFactory factory = null;

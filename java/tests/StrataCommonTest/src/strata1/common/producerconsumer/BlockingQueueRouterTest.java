@@ -41,7 +41,7 @@ import org.junit.Test;
 public 
 class BlockingQueueRouterTest
 {
-    private static final int        MAX = 1000000;
+    private static final int        MAX = 10000000;
     
     private ICountRequestPriorityDispatcher itsTarget;
     private ICountRequestPriorityProducer   itsProducer1;    

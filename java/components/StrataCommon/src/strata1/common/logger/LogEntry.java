@@ -25,6 +25,7 @@
 package strata1.common.logger;
 
 import strata1.common.datetime.DateTime;
+import strata1.common.timepoint.TimePoint;
 
 /****************************************************************************
  * 
@@ -37,7 +38,7 @@ public
 class LogEntry
     implements ILogEntry
 {
-    private DateTime     itsTimestamp;
+    private TimePoint    itsTimestamp;
     private LoggingLevel itsLevel;
     private String       itsMessage;
     
@@ -60,7 +61,7 @@ class LogEntry
     public 
     LogEntry(LoggingLevel level,String message)
     {
-        itsTimestamp = new DateTime();
+        itsTimestamp = new TimePoint();
         itsLevel     = level;
         itsMessage   = message;
     }
@@ -69,7 +70,7 @@ class LogEntry
      * {@inheritDoc} 
      */
     @Override
-    public DateTime 
+    public TimePoint 
     getTimestamp()
     {
         return itsTimestamp;

@@ -24,7 +24,9 @@
 
 package strata1.client.swthelloworld;
 
+import strata1.injector.bootstrap.Bootstrapper;
 import strata1.client.application.ClientApplication;
+import strata1.client.application.DesktopApplication;
 
 /****************************************************************************
  * 
@@ -34,7 +36,7 @@ import strata1.client.application.ClientApplication;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public class SwtHelloWorldApp
-    extends ClientApplication
+    extends DesktopApplication
 {
 
     /************************************************************************
@@ -43,11 +45,10 @@ public class SwtHelloWorldApp
      * @param bootstrapper
      * @param factory
      */
-    public SwtHelloWorldApp()
+    public 
+    SwtHelloWorldApp()
     {
-        super( 
-            new SwtHelloWorldClientBootstrapper(),
-            new SwtHelloWorldClientFactory() );
+        super( new Bootstrapper(),new HelloWorldFactory() );
     }
 
     /************************************************************************

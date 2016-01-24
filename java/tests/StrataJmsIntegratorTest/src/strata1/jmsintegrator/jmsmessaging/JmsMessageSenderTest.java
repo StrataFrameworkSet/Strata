@@ -59,10 +59,9 @@ class JmsMessageSenderTest
     protected IMessagingSession 
     createMessagingSession()
     {
-        //String host = "ssl://localhost:61617";
-        
         String host =
-            "ssl://ec2-54-68-199-128.us-west-2.compute.amazonaws.com:61617";
+            //"ssl://localhost:61617";
+            "ssl://ec2-54-68-247-101.us-west-2.compute.amazonaws.com:61617";
         
         ActiveMQSslConnectionFactory factory = null;
         TrustManager[]               manager = null;

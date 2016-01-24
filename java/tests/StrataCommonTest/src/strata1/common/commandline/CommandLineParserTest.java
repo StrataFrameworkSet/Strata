@@ -262,18 +262,12 @@ class CommandLineParserTest
                 "3.5", 
                 "999999999999.99999999999", 
                 "3.57", 
-                "C:/temp/foo/bar", 
-                "357.11", 
-                "04/25/1967",
                 "--boolean=true",
                 "--integer=7",
                 "--long=999999999999",
                 "--float=3.5", 
                 "--double=999999999999.99999999999", 
-                "--decimal=3.57", 
-                "--path=C:/temp/foo/bar", 
-                "--money=357.11", 
-                "--datetime=04/25/1967" };
+                "--decimal=3.57" };
         
         itsTarget
             .setProcessor( new ExampleCommandLineProcessor() )

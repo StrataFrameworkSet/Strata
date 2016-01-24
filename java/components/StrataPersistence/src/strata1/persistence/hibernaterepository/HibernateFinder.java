@@ -441,9 +441,9 @@ class HibernateFinder<T>
 	{
 	    return
 	        query.getReturnTypes().length == 1 && (
-	        query.getReturnTypes()[0].equals( new LongType() ) ||
-	        query.getReturnTypes()[0].equals( new IntegerType() ) ||
-	        query.getReturnTypes()[0].equals( new ShortType() ) );
+	        query.getReturnTypes()[0].getClass().equals(LongType.class) ||
+	        query.getReturnTypes()[0].getClass().equals(IntegerType.class) ||
+	        query.getReturnTypes()[0].getClass().equals(ShortType.class) );
 	}
 }
 

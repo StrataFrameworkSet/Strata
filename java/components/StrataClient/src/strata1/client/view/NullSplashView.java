@@ -24,6 +24,7 @@
 
 package strata1.client.view;
 
+import strata1.client.command.INullProvider;
 import strata1.client.event.IChangeEvent;
 
 /****************************************************************************
@@ -35,7 +36,7 @@ import strata1.client.event.IChangeEvent;
  */
 public 
 class NullSplashView
-    extends    AbstractView
+    extends    AbstractView<INullProvider>
     implements ISplashView
 {
 

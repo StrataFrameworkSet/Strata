@@ -26,7 +26,6 @@ package strata1.common.logger;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.inject.Inject;
 
 /****************************************************************************
  * 
@@ -45,7 +44,6 @@ class Logger
      * Creates a new {@code Logger}. 
      *
      */
-    @Inject
     public
     Logger()
     {

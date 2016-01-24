@@ -4,13 +4,27 @@
 	<comment></comment>
 	<projects>
 		<project>StrataCommon</project>
-		<project>StrataEntity</project>
 		<project>StrataIntegrator</project>
 		<project>StrataInteractor</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.google.gdt.eclipse.core.webAppProjectValidator</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.google.gwt.eclipse.core.gwtProjectValidator</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -18,5 +32,27 @@
 	<natures>
 		<nature>org.eclipse.iam.jdt.core.mavenNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+		<nature>com.google.gwt.eclipse.core.gwtNature</nature>
 	</natures>
+	<filteredResources>
+		<filter>
+			<id>1441649517767</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-true-false-war</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1441649517767</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-true-false-gwt-unitCache</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>

@@ -24,7 +24,6 @@
 
 package strata1.client.view;
 
-import strata1.client.command.ICommandInvoker;
 import strata1.client.event.IChangeEventProcessor;
 
 /**
@@ -35,45 +34,24 @@ import strata1.client.event.IChangeEventProcessor;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IView
-    extends ICommandInvoker,
-            IChangeEventProcessor
+interface IView<P>
+    extends IViewable,IChangeEventProcessor
 {
+    /************************************************************************
+     *  
+     *
+     * @param provider
+     */
+    public void
+    setProvider(P provider);
+    
     /************************************************************************
      *  
      *
      * @return
      */
-    public String
-    getViewName();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    start();
-    
-    /************************************************************************
-     *  
-     *
-     */
-    public void
-    stop();
-    
-    /************************************************************************
-     * Makes a view visible. 
-     *
-     */
-    public void 
-    show();
-    
-    /************************************************************************
-     * Makes a view invisible. 
-     *
-     */
-    public void
-    hide();
+    public P
+    getProvider();
 }
 
 // ##########################################################################

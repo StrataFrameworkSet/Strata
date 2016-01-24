@@ -24,7 +24,7 @@
 
 package strata1.common.logger;
 
-import strata1.common.datetime.DateTime;
+import strata1.common.timepoint.TimePoint;
 
 /****************************************************************************
  * 
@@ -36,7 +36,7 @@ import strata1.common.datetime.DateTime;
 public 
 interface ILogEntry
 {
-    public DateTime 
+    public TimePoint 
     getTimestamp();
     
     public LoggingLevel

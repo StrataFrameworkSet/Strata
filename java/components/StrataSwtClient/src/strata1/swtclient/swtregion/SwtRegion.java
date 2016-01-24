@@ -91,7 +91,7 @@ public class SwtRegion
      */
     @Override
     public ISwtView 
-    getView()
+    getViewable()
     {
         return itsView;
     }

@@ -27,6 +27,7 @@ package strata1.injector.property;
 import static org.junit.Assert.*;
 import strata1.injector.container.Container;
 import strata1.injector.container.IContainer;
+import strata1.injector.jrereflection.JreTypeManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -87,7 +88,7 @@ class PropertiesModuleTest
     public void 
     testInitialize() throws Exception
     {
-        IContainer container = new Container();
+        IContainer container = new Container(new JreTypeManager());
         
         itsTarget.initialize( container );
         assertTrue( container.hasBinding( String.class,"FOO" ) );

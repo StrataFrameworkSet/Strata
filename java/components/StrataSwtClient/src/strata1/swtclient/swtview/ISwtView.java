@@ -24,7 +24,7 @@
 
 package strata1.swtclient.swtview;
 
-import strata1.client.view.IView;
+import strata1.client.view.IViewable;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 
@@ -37,13 +37,28 @@ import org.eclipse.swt.widgets.Widget;
  */
 public 
 interface ISwtView
-    extends IView
+    extends IViewable
 {
     public Widget
     getWidget();
     
     public Composite
     getComposite();
+    
+    /************************************************************************
+     * Makes a view visible. 
+     *
+     */
+    public void 
+    show();
+    
+    /************************************************************************
+     * Makes a view invisible. 
+     *
+     */
+    public void
+    hide();
+
 }
 
 

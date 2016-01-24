@@ -24,7 +24,7 @@
 
 package strata1.client.region;
 
-import strata1.client.view.IView;
+import strata1.client.view.IViewable;
 
 /**
  * 
@@ -43,8 +43,8 @@ interface IRegion
     public String
     getRegionName();
     
-    public IView
-    getView();
+    public IViewable
+    getViewable();
 }
 
 

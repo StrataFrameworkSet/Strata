@@ -135,39 +135,6 @@ interface ICommandOption
     /************************************************************************
      *  
      *
-     * @return
-     * @throws NoValueProvidedException
-     * @throws ConversionException
-     */
-    public Path
-    getPath() 
-        throws NoValueProvidedException,ConversionException;
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     * @throws NoValueProvidedException
-     * @throws ConversionException
-     */
-    public Money
-    getMoney() 
-        throws NoValueProvidedException,ConversionException;
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     * @throws NoValueProvidedException
-     * @throws ConversionException
-     */
-    public DateTime
-    getDateTime() 
-        throws NoValueProvidedException,ConversionException;
-
-    /************************************************************************
-     *  
-     *
      * @param name
      * @return
      */

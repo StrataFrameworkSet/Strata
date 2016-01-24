@@ -24,6 +24,7 @@
 
 package strata1.client.view;
 
+import strata1.client.command.ILoginProvider;
 import strata1.common.authentication.ICredential;
 
 
@@ -36,7 +37,7 @@ import strata1.common.authentication.ICredential;
  */
 public 
 interface ILoginView
-    extends IView
+    extends IView<ILoginProvider>
 {
     public void
     setInvalidUserName();
