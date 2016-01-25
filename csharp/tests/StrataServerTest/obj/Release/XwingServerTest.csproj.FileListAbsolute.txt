@@ -1,0 +1,4 @@
+C:\Development\Workspaces\Xwing\csharp\tests\XwingServerTest\bin\Release\XwingServerTest.dll
+C:\Development\Workspaces\Xwing\csharp\tests\XwingServerTest\bin\Release\XwingServerTest.pdb
+C:\Development\Workspaces\Xwing\csharp\tests\XwingServerTest\obj\Release\XwingServerTest.dll
+C:\Development\Workspaces\Xwing\csharp\tests\XwingServerTest\obj\Release\XwingServerTest.pdb

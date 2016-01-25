@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C75BCE2A-2856-471C-97C5-FA44CF737BE4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StrataTestSuite</RootNamespace>
+    <AssemblyName>StrataTestSuite</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\components\StrataAdministration\StrataAdministration.csproj">
+      <Project>{2998535f-e27d-4c41-ad61-07525da37d6d}</Project>
+      <Name>StrataAdministration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\components\StrataClient\StrataClient.csproj">
+      <Project>{4f31711b-95e8-4c50-9317-2d181a4e963b}</Project>
+      <Name>StrataClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\components\StrataCommon\StrataCommon.csproj">
+      <Project>{df734f29-4597-4304-b69d-aab78200eda8}</Project>
+      <Name>StrataCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\components\StrataEfPersistence\StrataEfPersistence.csproj">
+      <Project>{4c118bb6-13fd-4931-9ef1-0f5a3b2a0fef}</Project>
+      <Name>StrataEfPersistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\components\StrataEmsIntegration\StrataEmsIntegration.csproj">
+      <Project>{026d0237-d4c7-4ec0-b31a-6cd660fecfa6}</Project>
+      <Name>StrataEmsIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\components\StrataFlatFilePersistence\StrataFlatFilePersistence.csproj">
+      <Project>{3cb2719d-be69-42d6-b7bb-706c343dbf54}</Project>
+      <Name>StrataFlatFilePersistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\components\StrataIntegration\StrataIntegration.csproj">
+      <Project>{c175f76a-01fa-40da-8373-9820f322c912}</Project>
+      <Name>StrataIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\components\StrataNhibernatePersistence\StrataNhibernatePersistence.csproj">
+      <Project>{3e27f25a-4e70-4bcf-b757-26ebf06a0a16}</Project>
+      <Name>StrataNhibernatePersistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\components\StrataPersistence\StrataPersistence.csproj">
+      <Project>{3882218a-f917-4ad2-8d77-5afe3a1ade31}</Project>
+      <Name>StrataPersistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StrataAdministrationTest\StrataAdministrationTest.csproj">
+      <Project>{e6a88863-eb8a-4f97-a081-413d455b6083}</Project>
+      <Name>StrataAdministrationTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StrataClientTest\StrataClientTest.csproj">
+      <Project>{2f624e26-ffe1-4e68-ab31-1fc5af885a44}</Project>
+      <Name>StrataClientTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StrataCommonTest\StrataCommonTest.csproj">
+      <Project>{3d3bf1e6-ac34-4345-b930-3dc72631e06c}</Project>
+      <Name>StrataCommonTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StrataEfPersistenceTest\StrataEfPersistenceTest.csproj">
+      <Project>{1c8b9bae-0b5a-4d6a-b070-15788cdc91db}</Project>
+      <Name>StrataEfPersistenceTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StrataEmsIntegrationTest\StrataEmsIntegrationTest.csproj">
+      <Project>{498f02fa-0fa0-4dc9-adbc-e656c0953b71}</Project>
+      <Name>StrataEmsIntegrationTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StrataFlatFilePersistenceTest\StrataFlatFilePersistenceTest.csproj">
+      <Project>{e3f98818-2edc-4d5a-8fe1-6e22e62f7cd2}</Project>
+      <Name>StrataFlatFilePersistenceTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StrataIntegrationTest\StrataIntegrationTest.csproj">
+      <Project>{544fb027-5efe-456e-950f-cfb08588e6f0}</Project>
+      <Name>StrataIntegrationTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StrataNhibernatePersistenceTest\StrataNhibernatePersistenceTest.csproj">
+      <Project>{885cced5-18b5-4aa4-b873-3041869600c7}</Project>
+      <Name>StrataNhibernatePersistenceTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StrataPersistenceTest\StrataPersistenceTest.csproj">
+      <Project>{30dc5deb-ed45-4c6d-9552-98f67069c67d}</Project>
+      <Name>StrataPersistenceTest</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="StrataIntegrationSuite.orderedtest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="StrataCommitSuite.orderedtest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <!-- Additional Properties for Continuous Delivery -->
+  <PropertyGroup>
+    <VisualStudioDir>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE</VisualStudioDir>
+    <MsTestExe>%22$(VisualStudioDir)\mstest.exe%22</MsTestExe>
+    <CommitTests>$(OutputPath)\StrataCommitSuite.orderedtest</CommitTests>
+    <CommitTestSettings>StrataCommitSuite.testsettings</CommitTestSettings>
+    <CommitTestsReport>$(OutputPath)\TestReport-StrataCommitSuite.xml</CommitTestsReport>
+    <IntegrationTests>$(OutputPath)\StrataIntegrationSuite.orderedtest</IntegrationTests>
+    <IntegrationTestSettings>StrataIntegrationSuite.testsettings</IntegrationTestSettings>
+    <IntegrationTestsReport>$(OutputPath)\TestReport-StrataIntegrationSuite.xml</IntegrationTestsReport>
+  </PropertyGroup>
+  <!-- Additional Targets for Continuous Delivery -->
+  <Target Name="RunCommitStage">
+    <MSBuild Projects="$(MSBuildThisFile)" Targets="Build" Properties="Configuration=Debug" />
+    <MSBuild Projects="$(MSBuildThisFile)" Targets="Build" Properties="Configuration=Release" />
+    <Delete Files="$(CommitTestsReport)" />
+    <Exec Command="$(MsTestExe) /testcontainer:$(CommitTests) /resultsfile:$(CommitTestsReport) /testsettings:$(CommitTestSettings)">
+      <Output TaskParameter="ExitCode" PropertyName="TestSuccessOrNot" />
+    </Exec>
+  </Target>
+  <Target Name="RunIntegrationStage">
+    <Delete Files="$(IntegrationTestsReport)" />
+    <Exec Command="$(MsTestExe) /testcontainer:$(IntegrationTests) /resultsfile:$(IntegrationTestsReport) /testsettings:$(IntegrationTestSettings)">
+      <Output TaskParameter="ExitCode" PropertyName="TestSuccessOrNot" />
+    </Exec>
+  </Target>
+</Project>

@@ -1,0 +1,5 @@
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEmsIntegrationTest\bin\Debug\StrataEmsIntegrationTest.dll
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEmsIntegrationTest\bin\Debug\StrataEmsIntegrationTest.pdb
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEmsIntegrationTest\obj\Debug\StrataEmsIntegrationTest.dll
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEmsIntegrationTest\obj\Debug\StrataEmsIntegrationTest.pdb
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEmsIntegrationTest\obj\Debug\StrataEmsIntegrationTest.csprojResolveAssemblyReference.cache

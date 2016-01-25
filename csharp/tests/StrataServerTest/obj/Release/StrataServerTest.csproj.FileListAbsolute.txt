@@ -1,0 +1,4 @@
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataServerTest\bin\Release\StrataServerTest.dll
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataServerTest\bin\Release\StrataServerTest.pdb
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataServerTest\obj\Release\StrataServerTest.dll
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataServerTest\obj\Release\StrataServerTest.pdb

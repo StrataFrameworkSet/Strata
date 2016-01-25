@@ -1,0 +1,138 @@
+﻿<RibbonWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Regions="http://www.codeplex.com/CompositeWPF"
+    xmlns:MainClient="clr-namespace:Strata.Client.MainClient;assembly=StrataClientTest"
+    xmlns:WpfMainClient="clr-namespace:Strata.WpfClient.WpfMainClient"
+    xmlns:View="clr-namespace:Strata.Client.View;assembly=StrataClient"
+    x:Class="Strata.WpfClient.WpfMainClient.WpfMainView"
+    Title="WpfMainView"
+    Height="300"
+    Width="600"
+    Icon="../Resources/CG-Logo-New.png">
+    <DockPanel>
+        <Ribbon x:Name="ApplicationRibbon"  SelectedIndex="0" DockPanel.Dock="Top">
+            <Ribbon.HelpPaneContent>
+                <RibbonButton 
+                    x:Name="Help" 
+                    SmallImageSource="../Resources/16x16/help.png"
+                    Command="{Binding HelpCommand}"/>
+            </Ribbon.HelpPaneContent>
+
+            <Ribbon.QuickAccessToolBar>
+                <RibbonQuickAccessToolBar>
+                    <RibbonButton 
+						x:Name ="Save"
+						Command="{Binding SaveCommand}"
+						SmallImageSource="../Resources/16x16/save.png" />
+                </RibbonQuickAccessToolBar>
+            </Ribbon.QuickAccessToolBar>
+
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu 
+                    x:Name="AppMenu" 
+                    Label="File"
+                    Visibility="Visible"
+                    BorderThickness="0"
+                    BorderBrush="SteelBlue"
+                    FocusedBackground="SteelBlue"
+                    FocusedBorderBrush="SteelBlue" 
+                    Background="SteelBlue">
+                    <RibbonApplicationMenuItem
+                        x:Name="SaveMenu"
+                        Header="Save"
+                        ImageSource="../Resources/32x32/save.png"
+                        Command="{Binding SaveCommand}"/>
+                    <RibbonApplicationMenuItem
+                        x:Name="PrintMenu"
+                        Header="Print"
+                        ImageSource="../Resources/32x32/print.png"
+                        Command="{Binding PrintCommand}"/>
+                    <RibbonApplicationMenuItem
+                        x:Name="ExitMenu"
+                        Header="Exit"
+                        ImageSource="../Resources/32x32/close_window.png"
+                        Command="{Binding ExitCommand}"/>
+
+                </RibbonApplicationMenu>
+
+            </Ribbon.ApplicationMenu>
+
+
+            <RibbonTab 
+                Header="Edit" 
+                KeyTip="E">
+                <RibbonGroup 
+                    x:Name="Clipboard" 
+                    Header="Clipboard">
+                    <RibbonButton 
+						LargeImageSource="../Resources/32x32/clipboard_copy.png" 
+						Label="Copy" 
+						KeyTip="C" 
+						Command="{Binding CopyCommand}"/>
+                    <RibbonButton 
+						LargeImageSource="../Resources/32x32/clipboard_paste.png" 
+						Label="Paste" 
+						KeyTip="V" 
+						Command="{Binding PasteCommand}"/>
+                    <RibbonButton 
+						LargeImageSource="../Resources/32x32/clipboard_cut.png" 
+						Label="Cut" 
+						KeyTip="X" 
+						Command="{Binding CutCommand}"/>
+                </RibbonGroup>
+            </RibbonTab>
+            <RibbonTab 
+                x:Name="Tools" 
+                Header="Tools"
+                KeyTip="F"
+                Height="Auto"
+                Width="Auto"
+                VerticalAlignment="Top"
+                VerticalContentAlignment="Top">
+
+                <RibbonGroup
+                    Name="FileGroup"
+                    VerticalAlignment="Top">
+                    <RibbonButton 
+						SmallImageSource="../Resources/16x16/save.png" 
+						Label="Save" 
+						KeyTip="S" 
+						Command="{Binding SaveCommand}"/>
+                    <RibbonButton 
+						SmallImageSource="../Resources/16x16/close_window.png" 
+						Label="Exit" 
+						KeyTip="X" 
+						Command="{Binding ExitCommand}"/>
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+
+        <TabControl>
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabPanel}">
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                </Style>
+            </TabControl.Resources>
+            <View:CloseableTabItem Title="FooBar">
+                <DataGrid 
+            Name="AppGrid"
+            DockPanel.Dock="Bottom">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="A" Width="50" Binding="{Binding Path=A}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="B" Width="50" Binding="{Binding Path=B}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="C" Width="50" Binding="{Binding Path=C}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="D" Width="50" Binding="{Binding Path=D}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="E" Width="50" Binding="{Binding Path=E}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="F" Width="50" Binding="{Binding Path=F}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="G" Width="50" Binding="{Binding Path=G}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="H" Width="50" Binding="{Binding Path=H}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="I" Width="50" Binding="{Binding Path=I}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+            </View:CloseableTabItem>
+        </TabControl>
+    </DockPanel>
+</RibbonWindow>

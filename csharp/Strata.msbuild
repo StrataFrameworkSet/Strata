@@ -1,0 +1,73 @@
+<Project
+    xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+    ToolsVersion="4.0"
+    DefaultTargets="RunCommitStage">
+
+    <ItemGroup>
+        <ProjectReference Include="components\StrataCommon\StrataCommon.csproj"/>
+        <ProjectReference Include="components\StrataPersistence\StrataPersistence.csproj"/>
+        <ProjectReference Include="components\StrataNhibernatePersistence\StrataNhibernatePersistence.csproj"/>
+        <ProjectReference Include="components\StrataEfPersistence\StrataEfPersistence.csproj"/>
+        <ProjectReference Include="components\StrataFlatFilePersistence\StrataFlatFilePersistence.csproj"/>
+        <ProjectReference Include="components\StrataIntegration\StrataIntegration.csproj"/>
+        <ProjectReference Include="components\StrataEmsIntegration\StrataEmsIntegration.csproj"/>
+        <ProjectReference Include="components\StrataAdministration\StrataAdministration.csproj"/>
+        <ProjectReference Include="components\StrataClient\StrataClient.csproj"/>
+
+        <ProjectReference Include="tests\StrataCommonTest\StrataCommonTest.csproj"/>
+        <ProjectReference Include="tests\StrataPersistenceTest\StrataPersistenceTest.csproj"/>
+        <ProjectReference Include="tests\StrataNhibernatePersistenceTest\StrataNhibernatePersistenceTest.csproj"/>
+        <ProjectReference Include="tests\StrataEfPersistenceTest\StrataEfPersistenceTest.csproj"/>
+        <ProjectReference Include="tests\StrataFlatFilePersistenceTest\StrataFlatFilePersistenceTest.csproj"/>
+        <ProjectReference Include="tests\StrataIntegrationTest\StrataIntegrationTest.csproj"/>
+        <ProjectReference Include="tests\StrataEmsIntegrationTest\StrataEmsIntegrationTest.csproj"/>
+        <ProjectReference Include="tests\StrataAdministrationTest\StrataAdministrationTest.csproj"/>
+        <ProjectReference Include="tests\StrataClientTest\StrataClientTest.csproj"/>
+        <ProjectReference Include="tests\StrataTestSuite\StrataTestSuite.csproj"/>
+    </ItemGroup>    
+	
+	<PropertyGroup>
+		<NugetExecutable>C:\Tools\Nuget\2.8.2\nuget.exe</NugetExecutable>
+		<NuspecFile>Strata.nuspec</NuspecFile>
+	</PropertyGroup>
+   
+    <Target Name="Clean">
+        <MSBuild
+            Projects="@(ProjectReference)"
+            Targets="Clean"/>
+    </Target>
+
+    <Target
+		Name="Build">
+        <MSBuild
+            Projects="@(ProjectReference)"
+            Targets="Build"/>
+    </Target>
+
+   <Target
+		Name="Rebuild">
+        <MSBuild
+            Projects="@(ProjectReference)"
+            Targets="Rebuild"/>
+    </Target>
+
+    <Target
+        Name="RunCommitStage">
+        <MSBuild
+            Projects="@(ProjectReference)"
+            Targets="RunCommitStage"/>
+    </Target>
+
+    <Target
+        Name="RunIntegrationStage">
+        <MSBuild
+            Projects="@(ProjectReference)"
+            Targets="RunIntegrationStage"/>
+    </Target>
+
+    <Target
+        Name="Package">
+		<Exec Command="&quot;$(NugetExecutable)&quot; pack $(NuspecFile)" />
+    </Target>
+
+</Project>

@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping 
+    xmlns="urn:nhibernate-mapping-2.2"
+    assembly="StrataPersistenceTest"
+    namespace="Strata.Persistence.TradeDomain">
+
+    <class 
+        name="Trade" 
+        table="dbo.Trade"
+        batch-size="50">
+        <cache usage="read-write" region="Trade"/>
+        
+        <id name="TradeKey" column="TradeKey" unsaved-value="0" generator="native"/>
+        <version name="Version" column="Version"/>
+        
+        <property name="TradeId" column="TradeId"  unique="true" not-null="true"/>
+        <property name="ExternalTradeId" column="ExternalTradeId" not-null="true"/>
+        <property name="Cusip" column="Cusip"  not-null="true"/>
+        <property name="TransactionType" column="TransactionType"  not-null="true"/>
+
+        <property 
+            name="Price" 
+            type="Strata.NhibernatePersistence.NhibernateRepository.MoneyType, StrataNhibernatePersistence">
+            <column name="PriceCurrency" />
+            <column name="PriceAmount" />
+        </property>
+        <property
+            name="TradeAmount"
+            type="Strata.NhibernatePersistence.NhibernateRepository.MoneyType, StrataNhibernatePersistence">
+            <column name="TradeCurrency" />
+            <column name="TradeAmount" />
+        </property>
+
+        <property name="TraderId" column="TraderId" not-null="true"/>
+        <property name="BrokerCode" column="BrokerCode" not-null="true"/>
+        <property name="TradeDate" column="TradeDate" not-null="true"/>
+        <property name="SettlementDate" column="SettlementDate" not-null="true"/>
+        <property name="DeliveryDate" column="DeliveryDate" not-null="true"/>
+        
+        <list 
+            name="AccountAllocations"
+            cascade="all-delete-orphan"
+            batch-size="50">
+            <key>
+                <column name="TradeKey"/>
+            </key>
+            <index>
+                <column name="ListIndex"/>
+            </index>
+            <one-to-many class="AccountAllocation"/>
+        </list>
+    </class>
+    
+    <class
+        name="AccountAllocation"
+        table="dbo.AccountAllocation">
+        <cache usage="read-write" region="Trade"/>
+
+        <id name="AccountAllocationKey" column="AccountAllocationKey" unsaved-value="0" generator="native"/>
+        <version name="Version" column="Version"/>
+        
+        <property name="AccountAllocationId" column="AccountAllocationId" unique="true" not-null="true"/>
+        <property name="TradeId" column="TradeId"/>
+        <property name="DownstreamAllocationIdOriginal" column="DownstreamAllocationIdOriginal" not-null="true"/>
+        <property name="DownstreamAllocationIdLatest" column="DownstreamAllocationIdLatest" not-null="true"/>
+        <property name="ExternalAccountAllocationId" column="ExternalAccountAllocationId" not-null="true"/>
+        <property name="AccountCode" column="AccountCode" not-null="true"/>
+
+        <property
+            name="AccountAmount"
+            type="Strata.NhibernatePersistence.NhibernateRepository.MoneyType, StrataNhibernatePersistence">
+            <column name="AccountCurrency" />
+            <column name="AccountAmount" />
+        </property>
+
+        <property name="Comment" column="Comment" not-null="true"/>
+
+        <list
+            name="ManagerAllocations"
+            cascade="all-delete-orphan"
+            batch-size="50">
+            <key>
+                <column name="AccountAllocationKey"/>
+            </key>
+            <index>
+                <column name="ListIndex"/>
+            </index>
+            <one-to-many class="ManagerAllocation"/>
+        </list>
+    </class>
+    
+    <class
+        name="ManagerAllocation"
+        table="dbo.ManagerAllocation">
+        <cache usage="read-write" region="Trade"/>
+
+        <id name="ManagerAllocationKey" column="ManagerAllocationKey" unsaved-value="0" generator="native"/>
+        <version name="Version" column="Version"/>
+        
+        <property name="ManagerAllocationId" column="ManagerAllocationId" unique="true" not-null="true"/>
+        <property name="AccountAllocationId" column="AccountAllocationId"/>
+        <property name="ManagerId" column="ManagerId" not-null="true"/>
+
+        <property
+            name="ManagerAmount"
+            type="Strata.NhibernatePersistence.NhibernateRepository.MoneyType, StrataNhibernatePersistence">
+            <column name="ManagerCurrency" />
+            <column name="ManagerAmount" />
+        </property>
+    </class>
+    <query
+        name="Trade.GetTradesWithManagerId"
+        cacheable="true">
+        <![CDATA[
+            select distinct t
+            from Trade t
+                join t.AccountAllocations accountAllocation
+                join accountAllocation.ManagerAllocations managerAllocation
+            where managerAllocation.ManagerId = :id]]>
+    </query>
+    <query
+        name="Trade.GetTradeWithTradeId">
+        <![CDATA[
+            select distinct t
+            from Trade t
+            where t.TradeId = :id]]>
+    </query>
+    <query
+        name="Trade.HasTradeWithTradeId"
+        cacheable="true">
+        <![CDATA[
+            select count(t.TradeId)
+            from Trade t
+            where t.TradeId = :id]]>
+    </query>
+    <sql-query
+        name="Trade.RemoveTrades"
+        cacheable="false">
+        <![CDATA[
+            delete from 
+	            ManagerAllocation
+            where 
+	            AccountAllocationId in (
+	            select 
+		            AccountAllocationId
+	            from
+		            AccountAllocation
+	            where
+		            TradeId in ( :removedIds ) )
+	
+            delete from
+	            AccountAllocation
+            where
+	            TradeId in ( :removedIds )
+	
+            delete from
+	            Trade
+            where
+	            TradeId in ( :removedIds )]]>
+    </sql-query>
+
+    <sql-query
+        name="Trade.UpdateTrade"
+        cacheable="false">
+        <![CDATA[
+            update 
+                Trade 
+	        set 
+                Version = Version + 1,
+                TraderId = 7
+            where 
+	           TradeId = :tradeId
+	
+            update
+	            AccountAllocation
+            set
+                Version = Version + 1,
+                Comment = 'Updated Account Allocation'
+            where
+	            AccountAllocationId = :accountAllocationId
+                
+            update
+	            ManagerAllocation
+            set
+                Version = Version + 1
+            where
+	            ManagerAllocationId = :managerAllocationId]]>
+    </sql-query>
+
+</hibernate-mapping>

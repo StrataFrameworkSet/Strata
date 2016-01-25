@@ -1,0 +1,5 @@
+C:\Users\John\Workspaces\Xwing\csharp\tests\XwingWcfIntegrationTest\bin\Debug\XwingWcfIntegrationTest.dll
+C:\Users\John\Workspaces\Xwing\csharp\tests\XwingWcfIntegrationTest\bin\Debug\XwingWcfIntegrationTest.pdb
+C:\Users\John\Workspaces\Xwing\csharp\tests\XwingWcfIntegrationTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\John\Workspaces\Xwing\csharp\tests\XwingWcfIntegrationTest\obj\Debug\XwingWcfIntegrationTest.dll
+C:\Users\John\Workspaces\Xwing\csharp\tests\XwingWcfIntegrationTest\obj\Debug\XwingWcfIntegrationTest.pdb

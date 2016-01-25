@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>Strata</id>
+		<version>1.0.0</version>
+		<authors>jfl</authors>
+		<owners>jfl</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Strata 1.0.0 Framework Set</description>
+		<releaseNotes>
+		package: nuget pack Strata.nuspec
+		install: nuget install Strata -Version 1.0.0 -Source {full path to directory containing Strata.1.0.0.nupkg} -OutputDirectory {full path to install directory}
+		</releaseNotes>
+		<copyright>Copyright 2015</copyright>
+		<tags></tags>
+
+		<dependencies>
+			<dependency id="Disruptor" version="2.0"/>
+			<dependency id="Unity" version="3.5.1404"/>
+			<dependency id="Unity.Interception" version="3.5.1404"/>
+			<dependency id="EntityFramework" version="6.1.3"/>
+			<dependency id="EnterpriseLibrary.Logging" version="6.0.1304"/>
+			<dependency id="Iesi.Collections" version="4.0.1.4000"/>
+			<dependency id="NHibernate" version="4.0.4.4000"/>
+			<dependency id="NHibernate.Caches.SysCache2" version="4.0.0.4000"/>
+			<dependency id="Prism.Mvvm" version="1.1.1"/>
+			<dependency id="Prism.PubSubEvents" version="1.1.2"/>
+			<dependency id="Prism.Interactivity" version="5.0.0"/>
+			<dependency id="Prism.Composition" version="5.0.0"/>
+			<dependency id="Prism.UnityExtensions" version="5.0.1"/>
+			<dependency id="CommonServiceLocator" version="1.3.0"/>
+		</dependencies>
+		
+		<frameworkAssemblies>
+			<frameworkAssembly assemblyName="System"/>
+			<frameworkAssembly assemblyName="System.Core"/>
+			<frameworkAssembly assemblyName="System.Xml.Linq"/>
+			<frameworkAssembly assemblyName="System.Data.DataSetExtensions"/>
+			<frameworkAssembly assemblyName="System.Data"/>
+			<frameworkAssembly assemblyName="System.Xml"/>
+			<frameworkAssembly assemblyName="System.Xaml"/>
+			<frameworkAssembly assemblyName="Microsoft.CSharp"/>
+			<frameworkAssembly assemblyName="PresentationCore"/>
+			<frameworkAssembly assemblyName="PresentationFramework"/>
+			<frameworkAssembly assemblyName="WindowsBase"/>
+		</frameworkAssemblies>
+	</metadata>
+	<files>
+		<file src="components\StrataCommon\bin\Debug\StrataCommon.dll" target="lib\net45\Debug" /> 
+		<file src="components\StrataCommon\bin\Debug\StrataCommon.pdb" target="lib\net45\Debug" /> 
+		<file src="components\StrataAdministration\bin\Debug\StrataAdministration.dll" target="lib\net45\Debug" /> 
+		<file src="components\StrataAdministration\bin\Debug\StrataAdministration.pdb" target="lib\net45\Debug" /> 
+		<file src="components\StrataIntegration\bin\Debug\StrataIntegration.dll" target="lib\net45\Debug" /> 
+		<file src="components\StrataIntegration\bin\Debug\StrataIntegration.pdb" target="lib\net45\Debug" /> 
+		<file src="components\StrataEmsIntegration\bin\Debug\StrataEmsIntegration.dll" target="lib\net45\Debug" /> 
+		<file src="components\StrataEmsIntegration\bin\Debug\StrataEmsIntegration.pdb" target="lib\net45\Debug" /> 
+		<file src="components\StrataWcfIntegration\bin\Debug\StrataWcfIntegration.dll" target="lib\net45\Debug" /> 
+		<file src="components\StrataWcfIntegration\bin\Debug\StrataWcfIntegration.pdb" target="lib\net45\Debug" /> 
+		<file src="components\StrataPersistence\bin\Debug\StrataPersistence.dll" target="lib\net45\Debug" /> 
+		<file src="components\StrataPersistence\bin\Debug\StrataPersistence.pdb" target="lib\net45\Debug" /> 
+		<file src="components\StrataEfPersistence\bin\Debug\StrataEfPersistence.dll" target="lib\net45\Debug" /> 
+		<file src="components\StrataEfPersistence\bin\Debug\StrataEfPersistence.pdb" target="lib\net45\Debug" /> 
+		<file src="components\StrataNhibernatePersistence\bin\Debug\StrataNhibernatePersistence.dll" target="lib\net45\Debug" /> 
+		<file src="components\StrataNhibernatePersistence\bin\Debug\StrataNhibernatePersistence.pdb" target="lib\net45\Debug" /> 
+		<file src="components\StrataFlatFilePersistence\bin\Debug\StrataFlatFilePersistence.dll" target="lib\net45\Debug" /> 
+		<file src="components\StrataFlatFilePersistence\bin\Debug\StrataFlatFilePersistence.pdb" target="lib\net45\Debug" /> 
+		<file src="components\StrataClient\bin\Debug\StrataClient.dll" target="lib\net45\Debug" /> 
+		<file src="components\StrataClient\bin\Debug\StrataClient.pdb" target="lib\net45\Debug" /> 
+		<file src="components\StrataServer\bin\Debug\StrataServer.dll" target="lib\net45\Debug" /> 
+		<file src="components\StrataServer\bin\Debug\StrataServer.pdb" target="lib\net45\Debug" /> 
+
+		<file src="components\StrataCommon\bin\Release\StrataCommon.dll" target="lib\net45\Release" /> 
+		<file src="components\StrataAdministration\bin\Release\StrataAdministration.dll" target="lib\net45\Release" /> 
+		<file src="components\StrataIntegration\bin\Release\StrataIntegration.dll" target="lib\net45\Release" /> 
+		<file src="components\StrataEmsIntegration\bin\Release\StrataEmsIntegration.dll" target="lib\net45\Release" /> 
+		<file src="components\StrataWcfIntegration\bin\Release\StrataWcfIntegration.dll" target="lib\net45\Release" /> 
+		<file src="components\StrataPersistence\bin\Release\StrataPersistence.dll" target="lib\net45\Release" /> 
+		<file src="components\StrataEfPersistence\bin\Release\StrataEfPersistence.dll" target="lib\net45\Release" /> 
+		<file src="components\StrataNhibernatePersistence\bin\Release\StrataNhibernatePersistence.dll" target="lib\net45\Release" /> 
+		<file src="components\StrataFlatFilePersistence\bin\Release\StrataFlatFilePersistence.dll" target="lib\net45\Release" /> 
+		<file src="components\StrataClient\bin\Release\StrataClient.dll" target="lib\net45\Release" /> 
+		<file src="components\StrataServer\bin\Release\StrataServer.dll" target="lib\net45\Release" /> 
+		
+	</files>
+</package>

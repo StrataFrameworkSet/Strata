@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ConsoleCommandPrompt" xml:space="preserve">
+    <value>COMMAND:&gt;</value>
+  </data>
+  <data name="ConsoleEnteredCommand" xml:space="preserve">
+    <value>Console command entered: {0}</value>
+  </data>
+  <data name="ConsoleErrorServiceManagerNull" xml:space="preserve">
+    <value>ServiceManager is null.  Cannot refresh.</value>
+  </data>
+  <data name="ConsoleExitting" xml:space="preserve">
+    <value>Exit requested from console.</value>
+  </data>
+  <data name="ConsoleHelp" xml:space="preserve">
+    <value>Unknown command: {0}Known commands:      exit - Exits the application.     refresh - Refreshes the server's services.</value>
+  </data>
+  <data name="ConsoleRefreshedServices" xml:space="preserve">
+    <value>Refreshing services done.</value>
+  </data>
+  <data name="ConsoleRefreshingServices" xml:space="preserve">
+    <value>Refreshing services...</value>
+  </data>
+  <data name="ConsoleWarnDebugMode" xml:space="preserve">
+    <value>IDS - X-Wing Services Platform started in &gt;&gt; DEBUG &lt;&lt; mode.</value>
+  </data>
+  <data name="ErrorCannotCastService" xml:space="preserve">
+    <value>Could not cast service as IService: {0}</value>
+  </data>
+  <data name="ErrorContainerFactoryCreateOnlyOnce" xml:space="preserve">
+    <value>CreateContainer may only be called once per session.</value>
+  </data>
+  <data name="InterfaceMappedExceptionManager" xml:space="preserve">
+    <value>Unity: Interface [IExceptionManager] mapped to type [ExceptionManagerFacade].</value>
+  </data>
+  <data name="InterfaceMappedLogger" xml:space="preserve">
+    <value>Unity: Interface [ILogger] mapped to type [LoggerFacade].</value>
+  </data>
+  <data name="InterfaceMappedSecurityProvider" xml:space="preserve">
+    <value>Unity: Interface [ISecurityProvider] mapped to type [ActiveDirectorySecurityProvider].</value>
+  </data>
+  <data name="InterfaceMappedServiceMessageFactory" xml:space="preserve">
+    <value>Unity: Interface [IServiceMessageFactory] mapped to type [ServiceMessageFactory].</value>
+  </data>
+  <data name="ServiceManagerStoppedServices" xml:space="preserve">
+    <value>Stopped.  De-briefing at oh-eight-thirty.</value>
+  </data>
+  <data name="ServiceManagerStoppingServices" xml:space="preserve">
+    <value>Stopping services...</value>
+  </data>
+  <data name="ServiceManagerThread" xml:space="preserve">
+    <value>Service Manager</value>
+  </data>
+  <data name="ServiceManagerWCFClosed" xml:space="preserve">
+    <value>Closed WCF endpoint for {0}.</value>
+  </data>
+  <data name="ServiceManagerWCFClosing" xml:space="preserve">
+    <value>Closing WCF endpoint for {0}.</value>
+  </data>
+  <data name="ServiceManagerWCFHosted" xml:space="preserve">
+    <value>Service Manager: WCF Service hosted on URL [{0}].</value>
+  </data>
+  <data name="SystemStarted" xml:space="preserve">
+    <value>IDS - X-Wing Services Platform commencing operations.</value>
+  </data>
+  <data name="SystemStopped" xml:space="preserve">
+    <value>IDS - X-Wing Services Platform ceasing operations at request.</value>
+  </data>
+  <data name="UnityAddedExtension" xml:space="preserve">
+    <value>Unity: Extension added.</value>
+  </data>
+  <data name="UnityAddedPolicy" xml:space="preserve">
+    <value>Unity: Policy added: {0}</value>
+  </data>
+  <data name="UnityAddingInterceptionExtension" xml:space="preserve">
+    <value>Unity: Adding interception extension to container...</value>
+  </data>
+  <data name="UnityConfiguredContainer" xml:space="preserve">
+    <value>Unity: Container configured.</value>
+  </data>
+  <data name="UnityConfiguredEntLib" xml:space="preserve">
+    <value>Unity: Enterprise Library application blocks configured.</value>
+  </data>
+  <data name="UnityConfiguredInterception" xml:space="preserve">
+    <value>Unity: Interception configured.</value>
+  </data>
+  <data name="UnityConfiguringContainer" xml:space="preserve">
+    <value>Unity: Configuring container...</value>
+  </data>
+  <data name="UnityConfiguringEntLib" xml:space="preserve">
+    <value>Unity: Applying Enterprise Library configuration to the container...</value>
+  </data>
+  <data name="UnityConfiguringInterception" xml:space="preserve">
+    <value>Unity: Configuring interception...</value>
+  </data>
+  <data name="UnityCreatedContainer" xml:space="preserve">
+    <value>Unity: Container created.</value>
+  </data>
+  <data name="UnityCreatingContainer" xml:space="preserve">
+    <value>Unity: Creating container...</value>
+  </data>
+  <data name="WarnStoppingRunningService" xml:space="preserve">
+    <value>{0} is currently running.  Stopping...</value>
+  </data>
+</root>

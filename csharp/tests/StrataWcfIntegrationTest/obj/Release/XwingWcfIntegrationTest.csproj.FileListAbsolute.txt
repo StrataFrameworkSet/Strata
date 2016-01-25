@@ -1,0 +1,4 @@
+C:\Development\Workspaces\Xwing\csharp\tests\XwingWcfIntegrationTest\bin\Release\XwingWcfIntegrationTest.dll
+C:\Development\Workspaces\Xwing\csharp\tests\XwingWcfIntegrationTest\bin\Release\XwingWcfIntegrationTest.pdb
+C:\Development\Workspaces\Xwing\csharp\tests\XwingWcfIntegrationTest\obj\Release\XwingWcfIntegrationTest.dll
+C:\Development\Workspaces\Xwing\csharp\tests\XwingWcfIntegrationTest\obj\Release\XwingWcfIntegrationTest.pdb

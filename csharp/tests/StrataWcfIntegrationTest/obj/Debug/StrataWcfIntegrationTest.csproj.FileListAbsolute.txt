@@ -1,0 +1,4 @@
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataWcfIntegrationTest\bin\Debug\StrataWcfIntegrationTest.dll
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataWcfIntegrationTest\bin\Debug\StrataWcfIntegrationTest.pdb
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataWcfIntegrationTest\obj\Debug\StrataWcfIntegrationTest.dll
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataWcfIntegrationTest\obj\Debug\StrataWcfIntegrationTest.pdb

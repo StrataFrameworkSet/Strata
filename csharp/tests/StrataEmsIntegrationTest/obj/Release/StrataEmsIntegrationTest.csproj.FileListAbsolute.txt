@@ -1,0 +1,4 @@
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEmsIntegrationTest\bin\Release\StrataEmsIntegrationTest.dll
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEmsIntegrationTest\bin\Release\StrataEmsIntegrationTest.pdb
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEmsIntegrationTest\obj\Release\StrataEmsIntegrationTest.dll
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEmsIntegrationTest\obj\Release\StrataEmsIntegrationTest.pdb
