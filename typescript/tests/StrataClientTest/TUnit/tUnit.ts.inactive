@@ -1,0 +1,351 @@
+
+class Assert {
+
+    static equal(actual: any, expected: any): void {
+        if (actual !== expected) {
+            throw 'equal failed when passed ' +
+                '{' + (typeof actual) + '} "' + actual + '" and ' +
+                '{' + (typeof expected) + '} "' + expected + '"';
+        }
+    }
+
+    static notEqual(actual: any, expected: any): void {
+        if (actual === expected) {
+            throw 'notEqual failed when passed ' +
+                '{' + (typeof actual) + '} "' + actual + '" and ' +
+                '{' + (typeof expected) + '} "' + expected + '"';
+        }
+    }
+    
+    static equalNumber(expected: number, actual: number): void {
+        if (Math.abs(expected - actual) >  0.00000000000001) {
+            throw 'equal failed when passed ' + '{' + (typeof expected) + '} "' + expected + '" and ' + '{' + (typeof actual) + '} "' + actual + '"';
+        }
+    }
+
+    static notEqualNumber(expected: number, actual: number): void {
+        if (Math.abs(expected - actual) <= 0.00000000000001) {
+            alert(Math.abs(expected - actual).toString());
+            throw 'notEqual failed when passed ' + '{' + (typeof expected) + '} "' + expected + '" and ' + '{' + (typeof actual) + '} "' + actual + '"';
+        }
+    }
+
+
+    static isTrue(actual: boolean) {
+        if (!actual) {
+            throw 'isTrue failed when passed ' +
+                '{' + (typeof actual) + '} "' + actual + '"';
+        }
+    }
+
+    static isFalse(actual: boolean) {
+        if (actual) {
+            throw 'isFalse failed when passed ' +
+                '{' + (typeof actual) + '} "' + actual + '"';
+        }
+    }
+
+    static throws(actual: { (): void; }) {
+        var isThrown = false;
+        try {
+            actual();
+        } catch (ex) {
+            isThrown = true;
+        }
+        if (!isThrown) {
+            throw 'did not throw an error';
+        }
+    }
+
+    static fail() {
+        throw 'fail';
+    }
+}
+
+module tUnit {
+    export interface ITestClass {
+        /**Performed just before each test method is called. If a SetUp method fails or throws an exception, the test is not executed and a failure or error is reported. **/
+        setUp();
+
+        /**Performed after each test method. So long as any SetUp method runs without error, the TearDown method is guaranteed to run. It will not run if a SetUp method fails or throws an exception.**/
+        tearDown();
+
+        /**Performed once prior to executing the first test in the fixture. 
+        If a TestFixtueSetUp method fails or throws an exception, none of the tests in the fixure are executed and a failure or error is reported. **/
+        testFixtureSetUp();
+
+        /**Performed once after all tests are completed. **/
+        testFixtureTearDown();
+    }
+
+    export class Test {
+        private testDefinitions: TestDefintion[] = [];
+        private RESERVED_FUNCTION_NAMES: string[] = ['constructor', 'setUp', 'tearDown', 'testFixtureSetUp', 'testFixtureTearDown'];
+
+        addTestClass(testClass: ITestClass, name: string = 'Tests'): void {
+            this.testDefinitions.push(new TestDefintion(testClass, name));
+        }
+
+        isReservedFunctionName(functionName: string): boolean {
+            if (this.RESERVED_FUNCTION_NAMES.indexOf(functionName) >= 0) {
+                return true;
+            }
+
+            return false;
+        }
+
+        run() {
+            var testResult = new TestResult();
+
+            for (var i = 0; i < this.testDefinitions.length; ++i) {
+
+                var testClass = this.testDefinitions[i].testClass;
+                var testName = this.testDefinitions[i].name;
+
+                if (typeof testClass['testFixtureSetUp'] === 'function') {
+                    try {
+                        testClass['testFixtureSetUp']();
+                    } catch (err) {
+                        testResult.errors.push(new TestDescription('testFixtureSetUp for '+testName, 'N/A', err));
+                        continue;//so go next testClass.
+                    }
+                }
+
+
+                for (var prop in testClass) {
+
+                    if (!this.isReservedFunctionName(prop)) {
+                        if (typeof testClass[prop] === 'function') {
+
+                            if (typeof testClass['setUp'] === 'function') {
+                                try {
+                                    testClass['setUp']();
+                                } catch (err) {
+                                    testResult.errors.push(new TestDescription('setUp for '+testName, prop, err));
+                                    continue; //so go next test.
+                                }
+                            }
+
+
+                            try {
+                                testClass[prop]();
+                                testResult.passes.push(new TestDescription(testName, prop, 'OK'));
+                            } catch (err) {
+                                testResult.errors.push(new TestDescription(testName, prop, err));
+                            }
+
+                            if (typeof testClass['tearDown'] === 'function') {
+                                try {
+                                    testClass['tearDown']();
+                                } catch (err) {
+                                    testResult.errors.push(new TestDescription('tearDown for '+testName, prop, err));
+                                }
+                            }
+
+
+                        }
+
+                    }
+                }
+
+                if (typeof testClass['testFixtureTearDown'] === 'function') {
+                    try {
+                        testClass['testFixtureTearDown']();
+                    } catch (err) {
+                        testResult.errors.push(new TestDescription('testFixtureTearDown for '+testName, 'N/A', err));
+                    }
+                }
+
+            }
+            return testResult;
+     }
+
+        showResults(target: HTMLElement, result: TestResult) {
+            var template = '<article>' +
+                '<h1>' + this.getTestResult(result) + '</h1>' +
+                '<p>' + this.getTestSummary(result) + '</p>' +
+                '<section id="tsFail">' +
+                '<h2>Errors</h2>' +
+                '<ul class="bad">' + this.getTestResultList(result.errors) + '</ul>' +
+                '</section>' +
+                '<section id="tsOkay">' +
+                '<h2>Passing Tests</h2>' +
+                '<ul class="good">' + this.getTestResultList(result.passes) + '</ul>' +
+                '</section>' +
+                '</article>';
+
+            target.innerHTML = template;
+        }
+
+        private getTestResult(result: TestResult) {
+            return result.errors.length === 0 ? 'Test Passed' : 'Test Failed';
+        }
+
+        private getTestSummary(result: TestResult) {
+            return 'Total tests: <span id="tsUnitTotalCout">' + (result.passes.length + result.errors.length).toString() + '</span>. ' +
+                'Passed tests: <span id="tsUnitPassCount" class="good">' + result.passes.length + '</span>. ' +
+                'Failed tests: <span id="tsUnitFailCount" class="bad">' + result.errors.length + '</span>.';
+        }
+
+        private getTestResultList(testResults: TestDescription[]) {
+            var list = '';
+            var group = '';
+            var isFirst = true;
+            for (var i = 0; i < testResults.length; ++i) {
+                var result = testResults[i];
+                if (result.testName !== group) {
+                    group = result.testName;
+                    if (isFirst) {
+                        isFirst = false;
+                    } else {
+                        list += '</li></ul>';
+                    }
+                    list += '<li>' + result.testName + '<ul>';
+                }
+                list += '<li>' + result.funcName + '(): ' + this.encodeHtmlEntities(result.message) + '</li>';
+            }
+            return list + '</ul>';
+        }
+
+        private encodeHtmlEntities(input: string) {
+            var entitiesToReplace = { '&': '&amp;', '<': '&lt;', '>': '&gt;' };
+            input.replace(/[&<>]/g, function (entity) { return entitiesToReplace[entity] || entity; } );
+            return input;
+        }
+
+
+    }
+
+    export class TestContext implements ITestClass {
+
+        setUp() {
+        }
+
+        tearDown() {
+        }
+
+        testFixtureSetUp() { }
+
+        testFixtureTearDown() { }
+
+
+    }
+
+
+    export class TestClass extends TestContext {
+
+    }
+
+    export class FakeFunction {
+        constructor(public name: string, public delgate: { (...args: any[]): any; }) {
+        }
+    }
+
+    export class Fake {
+        constructor(obj: any) {
+            for (var prop in obj) {
+                if (typeof obj[prop] === 'function') {
+                    this[prop] = function () { };
+                } else {
+                    this[prop] = null;
+                }
+            }
+        }
+
+        create(): any {
+            return this;
+        }
+
+        addFunction(name: string, delegate: { (...args: any[]): any; }) {
+            this[name] = delegate;
+        }
+
+        addProperty(name: string, value: any) {
+            this[name] = value;
+        }
+    }
+
+    class TestDefintion {
+        constructor(public testClass: ITestClass, public name: string) {
+        }
+    }
+
+    class TestError implements Error {
+        constructor(public name: string, public message: string) {
+        }
+    }
+
+    export class TestDescription {
+        constructor(public testName: string, public funcName: string, public message: string) {
+        }
+    }
+
+    export class TestResult {
+        public passes: TestDescription[] = [];
+        public errors: TestDescription[] = [];
+    }
+
+    export class Assert {
+
+        static areIdentical(actual: any, expected: any): void {
+            if (actual !== expected) {
+                throw 'areIdentical failed when passed ' +
+                    '{' + (typeof actual) + '} "' + actual + '" and ' +
+                    '{' + (typeof expected) + '} "' + expected + '"';
+            }
+        }
+
+        static areNotIdentical(actual: any, expected: any): void {
+            if (actual === expected) {
+                throw 'areNotIdentical failed when passed ' +
+                    '{' + (typeof actual) + '} "' + actual + '" and ' +
+                    '{' + (typeof expected) + '} "' + expected + '"';
+            }
+        }
+
+        static isTrue(actual: boolean) {
+            if (!actual) {
+                throw 'isTrue failed when passed ' +
+                    '{' + (typeof actual) + '} "' + actual + '"';
+            }
+        }
+
+        static isFalse(actual: boolean) {
+            if (actual) {
+                throw 'isFalse failed when passed ' +
+                    '{' + (typeof actual) + '} "' + actual + '"';
+            }
+        }
+
+        static isTruthy(actual: any) {
+            if (!actual) {
+                throw 'isTrue failed when passed ' +
+                    '{' + (typeof actual) + '} "' + actual + '"';
+            }
+        }
+
+        static isFalsey(actual: any) {
+            if (actual) {
+                throw 'isFalse failed when passed ' +
+                    '{' + (typeof actual) + '} "' + actual + '"';
+            }
+        }
+
+        static throws(actual: { (): void; }) {
+            var isThrown = false;
+            try {
+                actual();
+            } catch (ex) {
+                isThrown = true;
+            }
+            if (!isThrown) {
+                throw 'did not throw an error';
+            }
+        }
+
+        static fail() {
+            throw 'fail';
+        }
+    }
+}
+
