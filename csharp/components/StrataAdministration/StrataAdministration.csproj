@@ -57,8 +57,17 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Disruptor">
-      <HintPath>..\..\packages\Disruptor.Net.2.0\lib\net45\Disruptor.dll</HintPath>
+    <Reference Include="Atomic, Version=2.8.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Disruptor-DamageBoy-IH.2.8.0.1\lib\net40\Atomic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Disruptor, Version=2.8.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Disruptor-DamageBoy-IH.2.8.0.1\lib\net40\Disruptor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Disruptor.Scheduler, Version=2.8.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Disruptor-DamageBoy-IH.2.8.0.1\lib\net40\Disruptor.Scheduler.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -132,6 +141,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -28,3 +28,5 @@ C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataAdministrationTes
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataAdministrationTest\bin\Debug\Atomic.xml
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataAdministrationTest\obj\Debug\StrataAdministrationTest.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataAdministrationTest\obj\Debug\StrataAdministrationTest.pdb
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataAdministrationTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataAdministrationTest\bin\Debug\StrataAdministrationTest.dll.config

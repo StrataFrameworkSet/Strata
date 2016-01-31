@@ -2,7 +2,6 @@ C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministrati
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\StrataAdministration.XML
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\StrataAdministration.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\StrataAdministration.pdb
-C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\Disruptor.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Logging.dll
@@ -13,8 +12,6 @@ C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministrati
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\Microsoft.Practices.Unity.Interception.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\Microsoft.Practices.Unity.RegistrationByConvention.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\StrataCommon.dll
-C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\Disruptor.Scheduler.dll
-C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\Atomic.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\StrataCommon.pdb
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\StrataCommon.xml
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\Disruptor.pdb
@@ -35,3 +32,4 @@ C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministrati
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\Atomic.xml
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\obj\Debug\StrataAdministration.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\obj\Debug\StrataAdministration.pdb
+C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\StrataAdministration.dll.config

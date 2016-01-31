@@ -17,7 +17,7 @@ namespace Strata.Common.Utility
     public 
     class AtomicLong
     {
-        private long value;
+        private long itsValue;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -26,7 +26,7 @@ namespace Strata.Common.Utility
         public
         AtomicLong(long val)
         {
-            value = val;
+            itsValue = val;
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ namespace Strata.Common.Utility
         public long
         AddAndGet(long delta)
         {
-            return Interlocked.Add( ref value,delta );    
+            return Interlocked.Add( ref itsValue,delta );    
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ namespace Strata.Common.Utility
         public long
         IncrementAndGet()
         {
-            return Interlocked.Increment( ref value );    
+            return Interlocked.Increment( ref itsValue );    
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -66,7 +66,7 @@ namespace Strata.Common.Utility
         public long
         GetAndIncrement()
         {
-            return Interlocked.Increment( ref value ) - 1;    
+            return Interlocked.Increment( ref itsValue ) - 1;    
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@ namespace Strata.Common.Utility
         public long
         DecrementAndGet()
         {
-            return Interlocked.Decrement( ref value );    
+            return Interlocked.Decrement( ref itsValue );    
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -86,7 +86,7 @@ namespace Strata.Common.Utility
         public long
         GetAndDecrement()
         {
-            return Interlocked.Decrement( ref value ) - 1;    
+            return Interlocked.Decrement( ref itsValue ) - 1;    
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -98,7 +98,7 @@ namespace Strata.Common.Utility
         {
             return
                 Interlocked
-                    .CompareExchange(ref value,expected,update) == update;
+                    .CompareExchange(ref itsValue,expected,update) == update;
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ namespace Strata.Common.Utility
         public long
         Get()
         {
-            return Interlocked.Add( ref value,0 );
+            return Interlocked.Add( ref itsValue,0 );
         }
     }
 }

@@ -28,3 +28,4 @@ C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataPersistenceTest\b
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataPersistenceTest\obj\Debug\StrataPersistenceTest.csprojResolveAssemblyReference.cache
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataPersistenceTest\obj\Debug\StrataPersistenceTest.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataPersistenceTest\obj\Debug\StrataPersistenceTest.pdb
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataPersistenceTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll

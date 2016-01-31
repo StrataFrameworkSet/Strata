@@ -75,12 +75,12 @@ namespace Strata.Common.Utility
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Returns the value for the specified key 
-        /// and index from the <c>IMultiMap</c>.
+        /// and itsIndex from the <c>IMultiMap</c>.
         /// </summary>
         /// 
         /// <param name="key">key part of the mapping</param>
-        /// <param name="index">index of specific value</param>
-        /// <returns>value mapped to key and index</returns>
+        /// <param name="index">itsIndex of specific value</param>
+        /// <returns>value mapped to key and itsIndex</returns>
         /// 
         V
         Get(K key,int index);

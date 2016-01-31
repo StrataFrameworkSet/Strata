@@ -31,7 +31,7 @@ namespace Strata.Common.Task
         /// </summary>
         /// 
         /// <param name="ind">
-        /// consumer's index within a list of like consumers
+        /// consumer's itsIndex within a list of like consumers
         /// </param>
         /// <param name="card">
         /// cardinality (count) of a list of like consumers

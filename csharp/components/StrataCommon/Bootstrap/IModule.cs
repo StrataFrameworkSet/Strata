@@ -10,10 +10,8 @@ namespace Strata.Common.Bootstrap
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// $comments$
+    /// 
     /// </summary>
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public
     interface IModule

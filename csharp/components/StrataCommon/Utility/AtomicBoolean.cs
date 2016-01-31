@@ -17,16 +17,16 @@ namespace Strata.Common.Utility
     public 
     class AtomicBoolean
     {
-        private int value;
+        private int itsValue;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>
         /// 
         public
-        AtomicBoolean(bool val)
+        AtomicBoolean(bool value)
         {
-            value = val ? 1 : 0;
+            itsValue = value ? 1 : 0;
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -34,9 +34,9 @@ namespace Strata.Common.Utility
         /// </summary>
         /// 
         public void
-        Set(bool val)
+        Set(bool value)
         {
-            Interlocked.Exchange( ref value,val ? 1 : 0 ); 
+            Interlocked.Exchange( ref itsValue,value ? 1 : 0 ); 
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ namespace Strata.Common.Utility
 
             return 
                 Interlocked.CompareExchange( 
-                    ref value,
+                    ref itsValue,
                     update ? 1 : 0,
                     temp ) == temp;
         }
@@ -62,7 +62,7 @@ namespace Strata.Common.Utility
         public bool
         Get()
         {
-            return Interlocked.Add( ref value,0 ) == 1;
+            return Interlocked.Add( ref itsValue,0 ) == 1;
         }
     }
 }

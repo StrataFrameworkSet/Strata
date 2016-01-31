@@ -48,7 +48,7 @@ namespace Strata.Common.Task
                     TaskEvent.createTaskEvent,
                     new MultiThreadedLowContentionClaimStrategy(bufferSize),
                     new SleepingWaitStrategy(),
-                    new RoundRobinThreadAffinedTaskScheduler(4));
+                    new RoundRobinThreadAffinedTaskScheduler(8));
 
             dispatchingIndicator = false;
         }

@@ -374,7 +374,7 @@ namespace Strata.Common.IdhSerialization
 		    catch(Exception) {
 			    throw new SerializationException("Could not parse int from value " + value + 
 					    " for attribute name " + name +
-					    " at index " + index);
+					    " at itsIndex " + index);
 		    }
 	    }
 
@@ -393,7 +393,7 @@ namespace Strata.Common.IdhSerialization
 		    catch(Exception) {
 			    throw new SerializationException("Could not parse long from value " + value + 
 					    " for attribute name " + name +
-					    " at index " + index);
+					    " at itsIndex " + index);
 		    }
 	    }
 
@@ -411,7 +411,7 @@ namespace Strata.Common.IdhSerialization
 		    catch(Exception e) {
 			    throw new SerializationException("Could not parse date from value " + value + 
 					    " for attribute name " + name +
-					    " at index " + index +
+					    " at itsIndex " + index +
                         " using format " + GetDateFormat() +
 					    " \n" + e);
 		    }
@@ -434,7 +434,7 @@ namespace Strata.Common.IdhSerialization
             {
                 throw new SerializationException("Could not parse date/time from value " + value +
                         " for attribute name " + name +
-                        " at index " + index +
+                        " at itsIndex " + index +
                         " using format " + GetDateTimeFormat() +
                         " \n" + e);
             }
@@ -459,7 +459,7 @@ namespace Strata.Common.IdhSerialization
 		    else {
 			    throw new SerializationException("Could not parse boolean from value " + value + 
 					    " for attribute name " + name +
-					    " at index " + index);
+					    " at itsIndex " + index);
 		    }
 	    }
 
@@ -477,7 +477,7 @@ namespace Strata.Common.IdhSerialization
 		    catch(Exception) {
 			    throw new SerializationException("Could not create decimal from value " + value + 
 					    " for attribute name " + name +
-					    " at index " + index);
+					    " at itsIndex " + index);
 		    }
 	    }
 

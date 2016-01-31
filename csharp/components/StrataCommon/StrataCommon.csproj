@@ -59,14 +59,17 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Atomic">
-      <HintPath>..\..\packages\Disruptor.Net.2.0\lib\net45\Atomic.dll</HintPath>
+    <Reference Include="Atomic, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Disruptor-2.8.0.1\lib\net40\Atomic.dll</HintPath>
     </Reference>
-    <Reference Include="Disruptor">
-      <HintPath>..\..\packages\Disruptor.Net.2.0\lib\net45\Disruptor.dll</HintPath>
+    <Reference Include="Disruptor, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Disruptor-2.8.0.1\lib\net40\Disruptor.dll</HintPath>
     </Reference>
-    <Reference Include="Disruptor.Scheduler">
-      <HintPath>..\..\packages\Disruptor.Net.2.0\lib\net45\Disruptor.Scheduler.dll</HintPath>
+    <Reference Include="Disruptor.Scheduler, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Disruptor-2.8.0.1\lib\net40\Disruptor.Scheduler.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -157,6 +160,22 @@
     <Compile Include="MoneyDomain\DefaultCurrencyProvider.cs" />
     <Compile Include="MoneyDomain\ICurrencyExchanger.cs" />
     <Compile Include="MoneyDomain\MoneyCalculator.cs" />
+    <Compile Include="ProducerConsumer\AbstractActiveProducer.cs" />
+    <Compile Include="ProducerConsumer\AbstractConsumer.cs" />
+    <Compile Include="ProducerConsumer\AbstractDispatcher.cs" />
+    <Compile Include="ProducerConsumer\AbstractProducer.cs" />
+    <Compile Include="ProducerConsumer\DispatchKind.cs" />
+    <Compile Include="ProducerConsumer\DisruptorDispatcher.cs" />
+    <Compile Include="ProducerConsumer\DisruptorEventHandler.cs" />
+    <Compile Include="ProducerConsumer\DisruptorExceptionHandler.cs" />
+    <Compile Include="ProducerConsumer\Event.cs" />
+    <Compile Include="ProducerConsumer\IConsumer.cs" />
+    <Compile Include="ProducerConsumer\IDispatcher.cs" />
+    <Compile Include="ProducerConsumer\IExceptionHandler.cs" />
+    <Compile Include="ProducerConsumer\IProducer.cs" />
+    <Compile Include="ProducerConsumer\ISelector.cs" />
+    <Compile Include="ProducerConsumer\NullExceptionHandler.cs" />
+    <Compile Include="ProducerConsumer\PrintStackTraceExceptionHandler.cs" />
     <Compile Include="Provisioning\LibrariesChangedArgs.cs" />
     <Compile Include="Provisioning\LibraryInfo.cs" />
     <Compile Include="Provisioning\LibraryProvisioner.cs" />
@@ -207,6 +226,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

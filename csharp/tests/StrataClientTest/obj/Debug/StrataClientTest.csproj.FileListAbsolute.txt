@@ -45,3 +45,4 @@ C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataClientTest\bin\De
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataClientTest\obj\Debug\StrataClientTest.csprojResolveAssemblyReference.cache
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataClientTest\obj\Debug\StrataClientTest.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataClientTest\obj\Debug\StrataClientTest.pdb
+C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataClientTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll

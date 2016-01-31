@@ -54,18 +54,22 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Atomic">
-      <HintPath>..\..\packages\Disruptor.Net.2.0\lib\net45\Atomic.dll</HintPath>
+    <Reference Include="Atomic, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Disruptor-2.8.0.1\lib\net40\Atomic.dll</HintPath>
     </Reference>
-    <Reference Include="Disruptor">
-      <HintPath>..\..\packages\Disruptor.Net.2.0\lib\net45\Disruptor.dll</HintPath>
+    <Reference Include="Disruptor, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Disruptor-2.8.0.1\lib\net40\Disruptor.dll</HintPath>
     </Reference>
-    <Reference Include="Disruptor.Scheduler">
-      <HintPath>..\..\packages\Disruptor.Net.2.0\lib\net45\Disruptor.Scheduler.dll</HintPath>
+    <Reference Include="Disruptor.Scheduler, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Disruptor-2.8.0.1\lib\net40\Disruptor.Scheduler.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libraries\VisualStudio\10.0\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\..\packages\Moq.4.2.1502.0911\lib\net40\Moq.dll</HintPath>
@@ -84,6 +88,15 @@
     <Compile Include="FileToolsTests.cs" />
     <Compile Include="MoneyDomain\CurrencyManagerTests.cs" />
     <Compile Include="MoneyDomain\DefaultCurrencyProviderTests.cs" />
+    <Compile Include="ProducerConsumer\CountRequest.cs" />
+    <Compile Include="ProducerConsumer\CountRequestConsumer.cs" />
+    <Compile Include="ProducerConsumer\CountRequestDisruptorDispatcher.cs" />
+    <Compile Include="ProducerConsumer\CountRequestProducer.cs" />
+    <Compile Include="ProducerConsumer\CountRequestSelector.cs" />
+    <Compile Include="ProducerConsumer\DisruptorRouterTest.cs" />
+    <Compile Include="ProducerConsumer\ICountRequestConsumer.cs" />
+    <Compile Include="ProducerConsumer\ICountRequestDispatcher.cs" />
+    <Compile Include="ProducerConsumer\ICountRequestProducer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringToolsTests.cs" />
     <Compile Include="Task\PerformanceTestTaskProducer.cs" />
