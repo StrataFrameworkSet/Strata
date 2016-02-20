@@ -32,7 +32,7 @@ namespace Strata.Common.ProducerConsumer
         /// </summary>
         /// 
         public
-        DisruptorDispatcher(Func<Event<T>> eventFactory, int bufferSize) :
+        DisruptorDispatcher(Func<Event<T>> eventFactory, int bufferSize):
             this(eventFactory, bufferSize, 8) {}
 
         //////////////////////////////////////////////////////////////////////
