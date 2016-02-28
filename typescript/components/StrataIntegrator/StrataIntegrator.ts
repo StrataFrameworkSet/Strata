@@ -57,7 +57,7 @@ module Strata1.Integrator.Messaging
         getNumberProperty(name: string): number;
         getStringProperty(name: string): string;
 
-        hasProperty(name: string): string;
+        hasProperty(name: string): boolean;
     }
 
 }
