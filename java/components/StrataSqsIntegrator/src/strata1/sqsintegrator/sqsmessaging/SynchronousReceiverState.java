@@ -24,16 +24,15 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.IMessageListener;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.MixedModeException;
 import strata1.integrator.messaging.NoMessageReceivedException;
 import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.services.sqs.AmazonSQS;
-import com.amazonaws.services.sqs.AmazonSQSClient;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.LockSupport;
 
 /****************************************************************************
  * 
@@ -46,6 +45,7 @@ class SynchronousReceiverState
     extends    AbstractMessageRetriever
     implements IReceiverState
 {
+    private final Queue<IMessage> itsBuffer;
 
     /************************************************************************
      * Creates a new {@code SynchronousReceiverState}. 
@@ -54,6 +54,7 @@ class SynchronousReceiverState
     SynchronousReceiverState(AWSCredentials credentials) 
     {
         super( credentials );
+        itsBuffer = new ConcurrentLinkedQueue<IMessage>();
     }
 
     /************************************************************************
@@ -104,27 +105,15 @@ class SynchronousReceiverState
     receive(String queueUrl,ISelector selector)
         throws MixedModeException
     {
-        AmazonSQSClient service = null;
-        IMessage        message = null;
+        IMessage message = itsBuffer.poll();
         
-        service = new AmazonSQSClient(getCredentials());
-        
-        try
+        while ( message == null )
         {
-            message = getMessageFromQueue(service,queueUrl,selector,0);
-            
-            while ( message == null )
-            {
-                sleepForSeconds( 5 );
-                message = getMessageFromQueue(service,queueUrl,selector,0);
-            }
-            
-            return message;
+            itsBuffer.addAll(getMessagesFromQueue(queueUrl,selector,2));
+            message = itsBuffer.poll();
         }
-        finally
-        {
-            service.shutdown();
-        }
+          
+        return message;
     }
 
     /************************************************************************
@@ -138,40 +127,27 @@ class SynchronousReceiverState
         long      timeOutMs)
         throws MixedModeException,NoMessageReceivedException
     {
-        AmazonSQSClient service = null;
-        IMessage        message = null;
-        int timeOutSecs = (int)(timeOutMs/1000);
+        int      secs = (int)(timeOutMs/1000);
+        int      waitTimeSecs = secs > 0 ? secs : 2;
+        int      remaining = waitTimeSecs;
+        IMessage message = itsBuffer.poll();
         
-        service = new AmazonSQSClient(getCredentials());
-        
-        try
+        while ( remaining > 0 )
         {
-            message = 
-                getMessageFromQueue(
-                    service,
-                    queueUrl,
-                    selector,
-                    timeOutSecs );
+            if ( message != null )
+                return message;
             
-            sleepForSeconds( 3 );
-            
-            if ( message == null )
-                message = 
-                    getMessageFromQueue(
-                        service,
-                        queueUrl,
-                        selector,
-                        0 );
-
-            if ( message == null )
-                throw new NoMessageReceivedException();
-            
+            itsBuffer.addAll(
+                getMessagesFromQueue(queueUrl,selector,2));
+            message = itsBuffer.poll();
+            remaining -= 2; 
+        }
+        
+        if ( message != null )
             return message;
-        }
-        finally
-        {
-            service.shutdown();
-        }
+        
+        throw new NoMessageReceivedException();
+
     }
 
     /************************************************************************
@@ -182,51 +158,19 @@ class SynchronousReceiverState
     receiveNoWait(String queueUrl,ISelector selector)
         throws MixedModeException,NoMessageReceivedException
     {
-        AmazonSQSClient service = null;
-        IMessage        message = null;
+        IMessage message = itsBuffer.poll();
         
-        service = new AmazonSQSClient(getCredentials());
+        for (int i=0;i<5;i++)
+        {
+            if ( message != null )
+                return message;
+            
+            itsBuffer.addAll(getMessagesFromQueue(queueUrl,selector,2));
+            message = itsBuffer.poll();
+        }
         
-        try
-        {
-            for (int i=0;i<5;i++)
-            {
-                message = 
-                    getMessageFromQueue(
-                        service,
-                        queueUrl,
-                        selector,
-                        0 );
-            
-                if ( message != null )
-                    return message;
-                
-                sleepForSeconds( 3 );
-            }
-            
-            throw new NoMessageReceivedException();
-        }
-        finally
-        {
-            service.shutdown();
-        }
+        throw new NoMessageReceivedException();
     }
-
-    /************************************************************************
-     *  
-     *
-     * @param seconds
-     */
-    private void 
-    sleepForSeconds(int seconds)
-    {
-        try
-        {
-            Thread.sleep( seconds*1000 );
-        }
-        catch(InterruptedException e) {}
-    }
-    
 }
 
 // ##########################################################################

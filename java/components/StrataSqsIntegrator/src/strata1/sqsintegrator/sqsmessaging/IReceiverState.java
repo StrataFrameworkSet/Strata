@@ -39,4 +39,7 @@ interface IReceiverState
     IMessage 
     receiveNoWait(String queueUrl,ISelector selector)
         throws MixedModeException,NoMessageReceivedException;
+    
+    void
+    close();
 }

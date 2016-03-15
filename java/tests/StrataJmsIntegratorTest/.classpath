@@ -1,34 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-    <classpathentry kind="src" path="src"/>
-    <classpathentry kind="output" path="bin"/>
-    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataIntegratorTest\1.0.0\StrataIntegratorTest-1.0.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataIntegrator\1.0.0\StrataIntegrator-1.0.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataCommon\1.0.0\StrataCommon-1.0.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\com\lmax\disruptor\3.2.1\disruptor-3.2.1.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\javax\inject\javax.inject\1\javax.inject-1.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\junit\junit\4.9\junit-4.9.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\hamcrest\hamcrest-core\1.1\hamcrest-core-1.1.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\mockito\mockito-all\1.9.0\mockito-all-1.9.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataJmsIntegrator\1.0.0\StrataJmsIntegrator-1.0.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\strata1\StrataInjector\1.0.0\StrataInjector-1.0.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\com\google\inject\guice\4.0-beta\guice-4.0-beta.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\aopalliance\aopalliance\1.0\aopalliance-1.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\com\google\guava\guava\11.0.1\guava-11.0.1.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\com\google\code\findbugs\jsr305\1.3.9\jsr305-1.3.9.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-core\3.0.6.RELEASE\spring-core-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-asm\3.0.6.RELEASE\spring-asm-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\commons-logging\commons-logging\1.1.1\commons-logging-1.1.1.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-context-support\3.0.6.RELEASE\spring-context-support-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-beans\3.0.6.RELEASE\spring-beans-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-context\3.0.6.RELEASE\spring-context-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-aop\3.0.6.RELEASE\spring-aop-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\springframework\spring-expression\3.0.6.RELEASE\spring-expression-3.0.6.RELEASE.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\javax\jms\javax.jms-api\2.0\javax.jms-api-2.0.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\apache\activemq\activemq-all\5.9.1\activemq-all-5.9.1.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\fusesource\stompjms\stompjms-client\1.19\stompjms-client-1.19.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\fusesource\hawtdispatch\hawtdispatch-transport\1.20\hawtdispatch-transport-1.20.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\fusesource\hawtdispatch\hawtdispatch\1.20\hawtdispatch-1.20.jar"/>
-    <classpathentry kind="var" path="REPO_ROOT\org\fusesource\hawtbuf\hawtbuf\1.9\hawtbuf-1.9.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/lmax/disruptor/3.2.1/disruptor-3.2.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/javax/inject/javax.inject/1/javax.inject-1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/junit/junit/4.9/junit-4.9.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/mockito/mockito-all/1.9.0/mockito-all-1.9.0.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/google/inject/guice/4.0-beta/guice-4.0-beta.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/google/guava/guava/11.0.1/guava-11.0.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/springframework/spring-core/3.0.6.RELEASE/spring-core-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/springframework/spring-asm/3.0.6.RELEASE/spring-asm-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/springframework/spring-context-support/3.0.6.RELEASE/spring-context-support-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/springframework/spring-beans/3.0.6.RELEASE/spring-beans-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/springframework/spring-context/3.0.6.RELEASE/spring-context-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/springframework/spring-aop/3.0.6.RELEASE/spring-aop-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/springframework/spring-expression/3.0.6.RELEASE/spring-expression-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/javax/jms/javax.jms-api/2.0/javax.jms-api-2.0.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/apache/activemq/activemq-all/5.9.1/activemq-all-5.9.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/skyscreamer/nevado-jms/1.3.0/nevado-jms-1.3.0.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/commons-codec/commons-codec/1.8/commons-codec-1.8.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/commons-logging/commons-logging-adapters/1.1/commons-logging-adapters-1.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/commons-lang/commons-lang/2.5/commons-lang-2.5.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/caucho/hessian/4.0.7/hessian-4.0.7.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/json/json/20090211/json-20090211.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/codehaus/jackson/jackson-core-asl/1.9.12/jackson-core-asl-1.9.12.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/amazonaws/aws-java-sdk/1.8.3/aws-java-sdk-1.8.3.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/apache/httpcomponents/httpclient/4.2/httpclient-4.2.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/apache/httpcomponents/httpcore/4.2/httpcore-4.2.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/fasterxml/jackson/core/jackson-core/2.1.1/jackson-core-2.1.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/fasterxml/jackson/core/jackson-databind/2.1.1/jackson-databind-2.1.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/com/fasterxml/jackson/core/jackson-annotations/2.1.1/jackson-annotations-2.1.1.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/joda-time/joda-time/2.9.2/joda-time-2.9.2.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/fusesource/stompjms/stompjms-client/1.19/stompjms-client-1.19.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/fusesource/hawtdispatch/hawtdispatch-transport/1.20/hawtdispatch-transport-1.20.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/fusesource/hawtdispatch/hawtdispatch/1.20/hawtdispatch-1.20.jar"/>
+	<classpathentry kind="var" path="REPO_ROOT/org/fusesource/hawtbuf/hawtbuf/1.9/hawtbuf-1.9.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataInjector"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegrator"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegratorTest"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataJmsIntegrator"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -27,6 +27,7 @@ package strata1.sqsintegrator.sqsmessaging;
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.MessagingSessionTest;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.sqs.AmazonSQSClient;
@@ -62,11 +63,9 @@ class SqsMessagingSessionTest
                 
         return 
             new SqsQueueMessagingSession(
-                new BasicAWSCredentials(
-                    "AKIAIUYU4ICABB3XGYMA",
-                    "GOes989CWbXzYX8xeQaziMiha0CFfVU49ZT8Q/cr"))
+                new DefaultAWSCredentialsProviderChain().getCredentials())
                 .insertQueue( 
-                    "foo.test",
+                    "foo-test",
                     "https://sqs.us-west-2.amazonaws.com/450471544890/foo-test" )
                 .insertSelector( 
                     "ReturnAddress='foo'",

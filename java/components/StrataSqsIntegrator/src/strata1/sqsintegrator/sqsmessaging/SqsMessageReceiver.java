@@ -33,6 +33,10 @@ import strata1.integrator.messaging.MixedModeException;
 import strata1.integrator.messaging.NoMessageReceivedException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQS;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /****************************************************************************
@@ -184,7 +188,7 @@ class SqsMessageReceiver
     public IMessage 
     receive() 
         throws MixedModeException
-    {
+    {        
         if ( itsState == null )
             itsState = new SynchronousReceiverState(itsCredentials);
         
@@ -226,6 +230,8 @@ class SqsMessageReceiver
     public void 
     close()
     {
+        if ( itsState != null )
+            itsState.close();
     }
 
 }

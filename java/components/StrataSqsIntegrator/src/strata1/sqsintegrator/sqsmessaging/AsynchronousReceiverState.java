@@ -47,6 +47,7 @@ class AsynchronousReceiverState
 {
     private final AWSCredentials  itsCredentials;
     private final ExecutorService itsExecutor;
+    private SqsMessageProcessor   itsProcessor;
     
     /************************************************************************
      * Creates a new {@code AsynchronousReceiverState}. 
@@ -56,6 +57,7 @@ class AsynchronousReceiverState
     {
         itsCredentials = credentials;
         itsExecutor    = Executors.newFixedThreadPool( 1 );
+        itsProcessor   = null;
     }
 
     /************************************************************************
@@ -76,13 +78,14 @@ class AsynchronousReceiverState
                 throw new IllegalStateException( "listener == null" );
             
             listeningFlag.compareAndSet( false,true );
-            itsExecutor.execute( 
+            itsProcessor = 
                 new SqsMessageProcessor(
                     itsCredentials,
                     queueUrl,
                     selector,
                     listener,
-                    listeningFlag ) );
+                    listeningFlag );
+            itsExecutor.execute( itsProcessor );
         }
     }
 
@@ -95,7 +98,11 @@ class AsynchronousReceiverState
         throws MixedModeException
     {
         if ( isListening( listeningFlag ) )
+        {
             listeningFlag.compareAndSet( true,false );
+            itsProcessor.close();
+            itsProcessor = null;
+        }
     }
 
     /************************************************************************
@@ -147,6 +154,18 @@ class AsynchronousReceiverState
                 "Can not call receiveNoWait in asynchronous mode." );
     }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    close()
+    {
+        if ( itsProcessor != null )
+            itsProcessor.close();
+    }
+
+    
 }
 
 // ##########################################################################

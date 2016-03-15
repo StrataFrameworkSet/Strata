@@ -76,8 +76,8 @@ class StompJmsMessageReceiverTest
         itsSessionA.startReceiving();
         itsSessionB.startReceiving();
         
-        itsSender = itsSessionA.createMessageSender( "foo.test" );
-        itsReceiver = itsSessionB.createMessageReceiver( "foo.test" );
+        itsSender = itsSessionA.createMessageSender( "foo-test" );
+        itsReceiver = itsSessionB.createMessageReceiver( "foo-test" );
     }
 
     /************************************************************************
@@ -89,7 +89,7 @@ class StompJmsMessageReceiverTest
     public void 
     tearDown() throws Exception
     {
-        cleanUpQueue( "foo.test" );
+        cleanUpQueue( "foo-test" );
         
         itsReceiver.close();
         
@@ -217,7 +217,7 @@ class StompJmsMessageReceiverTest
         itsReceiver.close();
         itsReceiver = 
             itsSessionB.createMessageReceiver( 
-                "foo.test",
+                "foo-test",
                 "FooProperty  >=  5" );
         
         expected1
@@ -279,11 +279,11 @@ class StompJmsMessageReceiverTest
         itsReceiver.close();
         receiver1 = 
             itsSessionB.createMessageReceiver( 
-                "foo.test",
+                "foo-test",
                 "FooProperty  >=  5" );
         receiver2 = 
             itsSessionB.createMessageReceiver( 
-                "foo.test",
+                "foo-test",
                 "FooProperty  <  5" );
         
         expected1
@@ -325,8 +325,8 @@ class StompJmsMessageReceiverTest
     createMessagingSession()
     {
         String host =
-            "ssl://ec2-54-68-247-101.us-west-2.compute.amazonaws.com:61618";
-            //"ssl://localhost:61618";
+            //"ssl://ec2-54-68-247-101.us-west-2.compute.amazonaws.com:61618";
+            "ssl://localhost:61618";
         
         StompJmsConnectionFactory factory = null;
         TrustManager[]            manager = null;

@@ -45,7 +45,7 @@
                                 write="admins,users,zymurgistics-senders" 
                                 admin="admins,users,zymurgistics-admins" />
                             <authorizationEntry 
-                                queue="foo.test" 
+                                queue="foo-test" 
                                 read="users,admins"
                                 write="users,admins" 
                                 admin="users,admins" />
@@ -86,7 +86,6 @@
         </plugins>
         
         <transportConnectors>
-            <!--  
             <transportConnector 
                 name="tcp" 
                 uri="tcp://localhost:61616"/>
@@ -96,7 +95,7 @@
             <transportConnector 
                 name="stomp" 
                 uri="stomp+ssl://localhost:61618?needClientAuth=false"/>
-             -->
+            <!--  
             <transportConnector 
                 name="tcp" 
                 uri="tcp://ec2-54-68-247-101.us-west-2.compute.amazonaws.com:61616"/>
@@ -106,6 +105,7 @@
             <transportConnector 
                 name="stomp" 
                 uri="stomp+ssl://ec2-54-68-247-101.us-west-2.compute.amazonaws.com:61618?needClientAuth=false"/>
+             -->
         </transportConnectors>
 
         <destinationPolicy>
@@ -150,6 +150,7 @@
 
     </broker>
 
+	<!--  
     <camelContext 
     	id="camel" 
     	xmlns="http://camel.apache.org/schema/spring">
@@ -167,7 +168,7 @@
         
     </camelContext>
 
-    <!-- configure the camel activemq component to use the current broker -->
+     configure the camel activemq component to use the current broker 
     <bean 
     	id="activemq" 
     	class="org.apache.activemq.camel.component.ActiveMQComponent" >
@@ -179,7 +180,7 @@
           	</bean>
         </property>
     </bean>
-
+	-->
     <!-- Enable web consoles, REST and Ajax APIs and demos 
     <import resource="jetty.xml"/> -->
 

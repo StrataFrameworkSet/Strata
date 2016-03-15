@@ -27,7 +27,12 @@ package strata1.integrator.messaging;
 import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /****************************************************************************
  * 
@@ -54,8 +59,8 @@ class MessageReceiverTest
         throws Exception
     {
         itsSession = createMessagingSession();
-        itsSender  = itsSession.createMessageSender( "foo.test" );
-        itsTarget  = itsSession.createMessageReceiver( "foo.test" );
+        itsSender  = itsSession.createMessageSender( "foo-test" );
+        itsTarget  = itsSession.createMessageReceiver( "foo-test" );
         
         itsSession.startReceiving();     
     }
@@ -71,7 +76,7 @@ class MessageReceiverTest
         throws Exception
     {
         itsTarget.close();
-        cleanUpQueue( "foo.test" );
+        cleanUpQueue( "foo-test" );
         itsSession.stopReceiving();
         itsTarget = null;
         itsSender = null;
@@ -138,7 +143,7 @@ class MessageReceiverTest
         itsTarget.close();
         itsTarget = 
             itsSession.createMessageReceiver( 
-                "foo.test",
+                "foo-test",
                 selector );
             
         assertNotNull( itsTarget.getSelector() );
@@ -155,13 +160,14 @@ class MessageReceiverTest
     {
         IMessageListener listener = new MockMessageListener();
         
-        assertFalse( itsTarget.isListening() );
-        
+        assertFalse( itsTarget.isListening() );       
         itsTarget
             .setListener( listener )
             .startListening();
         
         assertTrue( itsTarget.isListening() );
+        itsTarget.stopListening();
+        assertFalse( itsTarget.isListening() );               
     }
 
     /**
@@ -218,10 +224,8 @@ class MessageReceiverTest
         IStringMessage expected1 = itsSession.createStringMessage();
         IStringMessage expected2 = itsSession.createStringMessage();
         IStringMessage expected3 = itsSession.createStringMessage();
-        IMessage       actual1   = null;
-        IMessage       actual2   = null;
-        IMessage       actual3   = null;
-        
+        List<IMessage> actuals   = new ArrayList<IMessage>();
+       
         expected1
             .setCorrelationId( "testReceive" )
             .setPayload( "TestMessage1" );
@@ -236,17 +240,23 @@ class MessageReceiverTest
         itsSender.send( expected2 );
         itsSender.send( expected3 );
         
-        actual1 = itsTarget.receive();
-        actual2 = itsTarget.receive();
-        actual3 = itsTarget.receive();
+        actuals.add( itsTarget.receive() );
+        actuals.add( itsTarget.receive() );
+        actuals.add( itsTarget.receive() );
         
-        assertTrue( actual1 instanceof IStringMessage );
-        assertTrue( actual2 instanceof IStringMessage );
-        assertTrue( actual3 instanceof IStringMessage );
-               
-        assertEquals( expected1.getPayload(),((IStringMessage)actual1).getPayload() );
-        assertEquals( expected2.getPayload(),((IStringMessage)actual2).getPayload() );
-        assertEquals( expected3.getPayload(),((IStringMessage)actual3).getPayload() );
+        actuals = resequence( actuals );
+        
+        assertEquals( 3,actuals.size() );
+        
+        
+        assertTrue( actuals.get(0) instanceof IStringMessage );
+        assertTrue( actuals.get(1) instanceof IStringMessage );
+        assertTrue( actuals.get(2) instanceof IStringMessage );
+         
+        
+        assertEquals( expected1.getPayload(),((IStringMessage)actuals.get(0)).getPayload() );
+        assertEquals( expected2.getPayload(),((IStringMessage)actuals.get(1)).getPayload() );
+        assertEquals( expected3.getPayload(),((IStringMessage)actuals.get(2)).getPayload() );
     }
 
     /**
@@ -263,9 +273,7 @@ class MessageReceiverTest
         IStringMessage expected1 = itsSession.createStringMessage();
         IStringMessage expected2 = itsSession.createStringMessage();
         IStringMessage expected3 = itsSession.createStringMessage();
-        IMessage       actual1   = null;
-        IMessage       actual2   = null;
-        IMessage       actual3   = null;
+        List<IMessage> actuals   = new ArrayList<IMessage>();
         
         expected1
             .setCorrelationId( "testReceiveLong1" )
@@ -283,17 +291,23 @@ class MessageReceiverTest
         
         sleepIfNeeded( 20000 );
         
-        actual1 = itsTarget.receive( 10000 );
-        actual2 = itsTarget.receive( 10000);
-        actual3 = itsTarget.receive( 10000 );
+        actuals.add( itsTarget.receive(5000) );
+        actuals.add( itsTarget.receive(5000) );
+        actuals.add( itsTarget.receive(5000) );
         
-        assertTrue( actual1 instanceof IStringMessage );
-        assertTrue( actual2 instanceof IStringMessage );
-        assertTrue( actual3 instanceof IStringMessage );
-               
-        assertEquals( expected1.getPayload(),((IStringMessage)actual1).getPayload() );
-        assertEquals( expected2.getPayload(),((IStringMessage)actual2).getPayload() );
-        assertEquals( expected3.getPayload(),((IStringMessage)actual3).getPayload() );
+        actuals = resequence( actuals );
+        
+        assertEquals( 3,actuals.size() );
+        
+        
+        assertTrue( actuals.get(0) instanceof IStringMessage );
+        assertTrue( actuals.get(1) instanceof IStringMessage );
+        assertTrue( actuals.get(2) instanceof IStringMessage );
+         
+        
+        assertEquals( expected1.getPayload(),((IStringMessage)actuals.get(0)).getPayload() );
+        assertEquals( expected2.getPayload(),((IStringMessage)actuals.get(1)).getPayload() );
+        assertEquals( expected3.getPayload(),((IStringMessage)actuals.get(2)).getPayload() );
     }
 
 
@@ -311,26 +325,24 @@ class MessageReceiverTest
         IStringMessage expected1 = itsSession.createStringMessage();
         IMapMessage    expected2 = itsSession.createMapMessage();
         IStringMessage expected3 = itsSession.createStringMessage();
-        IMessage       actual1   = null;
-        IMessage       actual2   = null;
-        IMessage       actual3   = null;
+        List<IMessage> actuals   = new ArrayList<IMessage>();
         
         itsTarget.close();
         itsTarget = 
             itsSession.createMessageReceiver( 
-                "foo.test",
+                "foo-test",
                 "FooProperty  >=  5" );
         
         expected1
-            .setCorrelationId( "testReceiveLong2" )
+            .setCorrelationId( "testReceiveLong2.1" )
             .setIntProperty( "FooProperty",3 )
             .setPayload( "TestMessage1" );
         expected2
-            .setCorrelationId( "testReceiveLong2" )
+            .setCorrelationId( "testReceiveLong2.2" )
             .setIntProperty( "FooProperty",5 )
             .setString( "TestMessage","TestMessage2" );
         expected3
-            .setCorrelationId( "testReceiveLong2" )
+            .setCorrelationId( "testReceiveLong2.3" )
             .setIntProperty( "FooProperty",7 )
             .setPayload( "TestMessage3" );
         
@@ -340,19 +352,36 @@ class MessageReceiverTest
 
         sleepIfNeeded( 20000 );
 
-        actual2 = itsTarget.receive( 10000 );    
-        actual3 = itsTarget.receive( 10000 );
-              
+        actuals.add(itsTarget.receive( 10000 ));    
+        actuals.add(itsTarget.receive( 10000 ));    
+        
+        actuals = 
+            resequence(
+                actuals,
+                new Comparator<IMessage>()
+                {
+                    @Override
+                    public int 
+                    compare(IMessage x,IMessage y)
+                    {
+                        String xCorrelationId = x.getCorrelationId();
+                        String yCorrelationId = y.getCorrelationId();
+                        
+                        return xCorrelationId.compareTo( yCorrelationId );
+                    }     
+                } );
+        
+        /*
         assertTrue( actual2 instanceof IMapMessage );
         assertTrue( actual3 instanceof IStringMessage );
-               
-        assertEquals( expected2.getString("TestMessage"),((IMapMessage)actual2).getString("TestMessage") );
-        assertEquals( expected3.getPayload(),((IStringMessage)actual3).getPayload() );
+        */       
+        assertEquals( expected2.getString("TestMessage"),((IMapMessage)actuals.get(0)).getString("TestMessage") );
+        assertEquals( expected3.getPayload(),((IStringMessage)actuals.get(1)).getPayload() );
         
         
         try
         {
-            actual1 = itsTarget.receive( 10 );
+            actuals.add( itsTarget.receive( 10 ) );
             fail( "Should have thrown exception." );
         }
         catch (NoMessageReceivedException e) {}
@@ -375,31 +404,33 @@ class MessageReceiverTest
         IStringMessage   expected1 = itsSession.createStringMessage();
         IMapMessage      expected2 = itsSession.createMapMessage();
         IObjectMessage   expected3 = itsSession.createObjectMessage();
-        IMessage         actual1   = null;
-        IMessage         actual2   = null;
-        IMessage         actual3   = null;
+        List<IMessage>   actuals   = new ArrayList<IMessage>();
+        IMessage         actual    = null;
         
         itsTarget.close();
         receiver1 = 
             itsSession.createMessageReceiver( 
-                "foo.test",
+                "foo-test",
                 "FooProperty  >=  5" );
         receiver2 = 
             itsSession.createMessageReceiver( 
-                "foo.test",
+                "foo-test",
                 "FooProperty  <  5" );
         
         expected1
             .setCorrelationId( "testReceiveLong3" )
             .setIntProperty( "FooProperty",3 )
+            .setIntProperty( "SequenceNum",1 )
             .setPayload( "TestMessage1" );
         expected2
             .setCorrelationId( "testReceiveLong3" )
             .setIntProperty( "FooProperty",5 )
+            .setIntProperty( "SequenceNum",2 )
             .setString( "TestMessage","TestMessage2" );
         expected3
             .setCorrelationId( "testReceiveLong3" )
             .setIntProperty( "FooProperty",7 )
+            .setIntProperty( "SequenceNum",3 )
             .setPayload( "TestMessage3" );
         
         itsSender.send( expected1 );
@@ -408,19 +439,43 @@ class MessageReceiverTest
 
         sleepIfNeeded( 20000 );
 
-        actual2 = receiver1.receive( 10000 );    
-        actual3 = receiver1.receive( 10000 );
-              
-        assertTrue( actual2 instanceof IMapMessage );
-        assertTrue( actual3 instanceof IObjectMessage );
-               
-        assertEquals( expected2.getString("TestMessage"),((IMapMessage)actual2).getString("TestMessage") );
-        assertEquals( expected3.getPayload(),((IObjectMessage)actual3).getPayload() );
-         
-        actual1 = receiver2.receive( 10 );
+        actuals.add( receiver1.receive( 10000 ) );    
+        actuals.add( receiver1.receive( 10000 ) );    
         
-        assertTrue( actual1 instanceof IStringMessage );
-        assertEquals( expected1.getPayload(),((IStringMessage)actual1).getPayload() );
+        try
+        {
+            actuals.add( receiver1.receive( 10000 ) );    
+            fail( "Should have thrown NoMessageReceivedException" );
+        }
+        catch (NoMessageReceivedException e) {}
+          
+        actuals = 
+            resequence( 
+                actuals,
+                new Comparator<IMessage>()
+                {
+                    @Override
+                    public int 
+                    compare(IMessage x,IMessage y)
+                    {
+                        int seqX = x.getIntProperty( "SequenceNum" );
+                        int seqY = y.getIntProperty( "SequenceNum" );
+                        
+                        return seqX - seqY;
+                    }
+                    
+                } );
+        
+        assertTrue( actuals.get(0) instanceof IMapMessage );
+        assertTrue( actuals.get(1) instanceof IObjectMessage );
+              
+        assertEquals( expected2.getString("TestMessage"),((IMapMessage)actuals.get(0)).getString("TestMessage") );
+        assertEquals( expected3.getPayload(),((IObjectMessage)actuals.get(1)).getPayload() );
+         
+        actual = receiver2.receive( 10 );
+        
+        assertTrue( actual instanceof IStringMessage );
+        assertEquals( expected1.getPayload(),((IStringMessage)actual).getPayload() );
     }
 
     /**
@@ -436,9 +491,7 @@ class MessageReceiverTest
         IStringMessage expected1 = itsSession.createStringMessage();
         IStringMessage expected2 = itsSession.createStringMessage();
         IStringMessage expected3 = itsSession.createStringMessage();
-        IMessage       actual1   = null;
-        IMessage       actual2   = null;
-        IMessage       actual3   = null;
+        List<IMessage> actuals   = new ArrayList<IMessage>();
         
         expected1
             .setCorrelationId( "testReceiveNoWait1" )
@@ -455,18 +508,24 @@ class MessageReceiverTest
         itsSender.send( expected3 );
 
         sleepIfNeeded( 20000 );
-
-        actual1 = itsTarget.receiveNoWait();
-        actual2 = itsTarget.receiveNoWait();
-        actual3 = itsTarget.receiveNoWait();
         
-        assertTrue( actual1 instanceof IStringMessage );
-        assertTrue( actual2 instanceof IStringMessage );
-        assertTrue( actual3 instanceof IStringMessage );
-               
-        assertEquals( expected1.getPayload(),((IStringMessage)actual1).getPayload() );
-        assertEquals( expected2.getPayload(),((IStringMessage)actual2).getPayload() );
-        assertEquals( expected3.getPayload(),((IStringMessage)actual3).getPayload() );
+        actuals.add( itsTarget.receiveNoWait() );
+        actuals.add( itsTarget.receiveNoWait() );
+        actuals.add( itsTarget.receiveNoWait() );
+        
+        actuals = resequence( actuals );
+        
+        assertEquals( 3,actuals.size() );
+        
+        
+        assertTrue( actuals.get(0) instanceof IStringMessage );
+        assertTrue( actuals.get(1) instanceof IStringMessage );
+        assertTrue( actuals.get(2) instanceof IStringMessage );
+         
+        
+        assertEquals( expected1.getPayload(),((IStringMessage)actuals.get(0)).getPayload() );
+        assertEquals( expected2.getPayload(),((IStringMessage)actuals.get(1)).getPayload() );
+        assertEquals( expected3.getPayload(),((IStringMessage)actuals.get(2)).getPayload() );
     }
  
     /**
@@ -482,27 +541,28 @@ class MessageReceiverTest
         IStringMessage expected1 = itsSession.createStringMessage();
         IStringMessage expected2 = itsSession.createStringMessage();
         IStringMessage expected3 = itsSession.createStringMessage();
-        IMessage       actual1   = null;
-        IMessage       actual2   = null;
-        IMessage       actual3   = null;
-        
+        List<IMessage> actuals   = new ArrayList<IMessage>();
+                
         itsTarget.close();
         itsTarget = 
             itsSession.createMessageReceiver( 
-                "foo.test",
+                "foo-test",
                 "ReturnAddress='foo'" );
         
         expected1
             .setCorrelationId( "testReceiveNoWait2" )
             .setReturnAddress( "foo" )
+            .setIntProperty( "SequenceNum",1 )
             .setPayload( "TestMessage1" );
         
         expected2
             .setCorrelationId( "testReceiveNoWait2" )
+            .setIntProperty( "SequenceNum",2 )
             .setPayload( "TestMessage2" );
         expected3
             .setCorrelationId( "testReceiveNoWait2" )
             .setReturnAddress( "foo" )
+            .setIntProperty( "SequenceNum",3 )
             .setPayload( "TestMessage3" );
 
         sleepIfNeeded( 20000 );
@@ -511,18 +571,32 @@ class MessageReceiverTest
         itsSender.send( expected2 );
         itsSender.send( expected3 );
         
-        actual1 = itsTarget.receiveNoWait();
-        actual3 = itsTarget.receiveNoWait();
-        
-        assertTrue( actual1 instanceof IStringMessage );
-        assertTrue( actual3 instanceof IStringMessage );
-               
-        assertEquals( expected1.getPayload(),((IStringMessage)actual1).getPayload() );
-        assertEquals( expected3.getPayload(),((IStringMessage)actual3).getPayload() );
+        actuals.add(  itsTarget.receiveNoWait() );
+        actuals.add(  itsTarget.receiveNoWait() );
+             
+        actuals = 
+            resequence( 
+                actuals,
+                new Comparator<IMessage>()
+                {
+                    @Override
+                    public int 
+                    compare(IMessage x,IMessage y)
+                    {
+                        int seqX = x.getIntProperty( "SequenceNum" );
+                        int seqY = y.getIntProperty( "SequenceNum" );
+                        
+                        return seqX - seqY;
+                    }
+                    
+                } );
+
+        assertEquals( expected1.getPayload(),((IStringMessage)actuals.get(0)).getPayload() );
+        assertEquals( expected3.getPayload(),((IStringMessage)actuals.get(1)).getPayload() );
         
         try
         {
-            actual2 = itsTarget.receiveNoWait();
+            actuals.add(  itsTarget.receiveNoWait() );
             fail( "Should have thrown exception." );
         }
         catch (NoMessageReceivedException e) {}
@@ -556,6 +630,46 @@ class MessageReceiverTest
     sleepIfNeeded(long millis) {}
 
     /************************************************************************
+     * Resequences messages for platforms like SQS that do not guarantee FIFO 
+     *
+     * @param messages
+     * @return
+     */
+    private List<IMessage> 
+    resequence(List<IMessage> messages)
+    {
+        resequence( 
+            messages,
+            new Comparator<IMessage>() 
+            {
+                @Override
+                public int 
+                compare(IMessage x,IMessage y)
+                {
+                    IStringMessage m1 = (IStringMessage)x;
+                    IStringMessage m2 = (IStringMessage)y;
+                    
+                    return m1.getPayload().compareTo( m2.getPayload() );
+                }
+            });
+        
+        return messages;
+    }
+
+    /************************************************************************
+     * Resequences messages for platforms like SQS that do not guarantee FIFO 
+     *
+     * @param messages
+     * @return
+     */
+    private List<IMessage> 
+    resequence(List<IMessage> messages,Comparator<IMessage> comparator)
+    {
+        Collections.sort( messages,comparator );        
+        return messages;
+    }
+    
+    /************************************************************************
      *  
      *
      * @param string
@@ -570,13 +684,13 @@ class MessageReceiverTest
         
         try
         {
-            IMessage message = cleaner.receive( getCleanupTimeout() );
+            IMessage message = cleaner.receiveNoWait();
             
             while ( message != null )
             {
                 System.out.println( "Removing message: " + message.getCorrelationId() );
             
-                message = cleaner.receive( getCleanupTimeout() );
+                message = cleaner.receiveNoWait();
             }
         }
         catch (NoMessageReceivedException e) 

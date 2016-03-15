@@ -6,11 +6,13 @@
     id="WebApp_ID" 
     version="3.0">
   	<display-name>StrataActiveMq</display-name>
+
   	<servlet>
 		<servlet-name>BrokerServiceManager</servlet-name>
 		<servlet-class>strata1.activemq.management.BrokerServiceManager</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
     <context-param>
         <param-name>log4j-props-location</param-name>
         <param-value>WEB-INF/log4j.properties</param-value>
@@ -19,4 +21,16 @@
         <param-name>activemq-config-name</param-name>
         <param-value>strata-activemq.xml</param-value>
     </context-param>
+
+	<!--
+ 	<servlet>
+    	<servlet-name>AjaxServlet</servlet-name>
+    	<servlet-class>org.apache.activemq.web.AjaxServlet</servlet-class>
+ 	</servlet>
+
+  	<servlet-mapping>
+    	<servlet-name>AjaxServlet</servlet-name>
+    	<url-pattern>/amq/*</url-pattern>
+  	</servlet-mapping>
+	-->
 </web-app>

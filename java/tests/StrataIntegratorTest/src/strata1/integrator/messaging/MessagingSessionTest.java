@@ -75,7 +75,7 @@ class MessagingSessionTest
     public void 
     testCreateMessageSender()
     {
-        IMessageSender sender = itsTarget.createMessageSender( "foo.test" );
+        IMessageSender sender = itsTarget.createMessageSender( "foo-test" );
         
         assertNotNull( sender );
         assertEquals( itsTarget,sender.getSession() );
@@ -88,7 +88,7 @@ class MessagingSessionTest
     public void 
     testCreateMessageReceiverString()
     {
-        IMessageReceiver receiver = itsTarget.createMessageReceiver( "foo.test" );
+        IMessageReceiver receiver = itsTarget.createMessageReceiver( "foo-test" );
         
         try
         {
@@ -112,7 +112,7 @@ class MessagingSessionTest
     {
         String           selector = "ReturnAddress='foo'";
         IMessageReceiver receiver = 
-            itsTarget.createMessageReceiver( "foo.test",selector );
+            itsTarget.createMessageReceiver( "foo-test",selector );
         
         try
         {

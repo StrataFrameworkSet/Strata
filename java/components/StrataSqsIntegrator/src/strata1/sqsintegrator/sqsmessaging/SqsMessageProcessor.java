@@ -113,12 +113,12 @@ class SqsMessageProcessor
     getNextMessages()
     {
         List<IMessage> messages = 
-            super.getMessagesFromQueue( itsQueueUrl,itsSelector ); 
+            super.getMessagesFromQueue( itsQueueUrl,itsSelector,20 ); 
         
         while ( messages.isEmpty() && itsListeningFlag.get() )
         {
             messages = 
-                super.getMessagesFromQueue( itsQueueUrl,itsSelector ); 
+                super.getMessagesFromQueue( itsQueueUrl,itsSelector,20 ); 
             
             if ( messages.isEmpty() )
                 LockSupport.parkNanos( SECOND );

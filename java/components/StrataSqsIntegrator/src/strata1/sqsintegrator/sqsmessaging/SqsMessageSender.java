@@ -65,6 +65,7 @@ class SqsMessageSender
         itsSession     = session;
         itsQueueUrl    = queueUrl;
         itsCredentials = credentials;
+        
     }
 
     /************************************************************************

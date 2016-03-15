@@ -48,6 +48,7 @@ public abstract
 class AbstractMessageRetriever
 {
     private final AWSCredentials itsCredentials;
+    private AmazonSQSClient      itsService;
     
     /************************************************************************
      * Creates a new AbstractMessageRetriever. 
@@ -57,8 +58,19 @@ class AbstractMessageRetriever
     AbstractMessageRetriever(AWSCredentials credentials)
     {
         itsCredentials = credentials;
+        itsService     = new AmazonSQSClient(itsCredentials);
     }
 
+    /************************************************************************
+     *  
+     *
+     */
+    public void
+    close()
+    {
+        itsService.shutdown();
+    }
+    
     /************************************************************************
      *  
      *
@@ -74,24 +86,17 @@ class AbstractMessageRetriever
      *  
      *
      * @param queueUrl
-     * @param selector 
-     * @param waitTimeSecs
+     * @param selector TODO
      * @return
      */
-    protected IMessage
-    getMessageFromQueue(
-        String    queueUrl,
-        ISelector selector,
-        int       waitTimeSecs)
+    protected List<IMessage>
+    getMessagesFromQueue(String queueUrl,ISelector selector,int waitTimeSecs)
     {
-        AmazonSQSClient       service = null;
+        AmazonSQSClient       service = itsService;
         ReceiveMessageRequest request = null;
         ReceiveMessageResult  result  = null;
-        Message               message = null;
-        IMessage              output  = null;
-        
-        service = new AmazonSQSClient(itsCredentials);
-        
+        List<IMessage>        messages = new ArrayList<IMessage>();
+                
         try
         {
             request = 
@@ -100,147 +105,7 @@ class AbstractMessageRetriever
                     .withAttributeNames( "All" )
                     .withMessageAttributeNames( "All" )
                     .withWaitTimeSeconds( waitTimeSecs )
-                    .withMaxNumberOfMessages( 1 );
-                
-            result = service.receiveMessage( request );
-            
-            if ( result.getMessages().isEmpty() )
-                return null;
-            
-            message = result.getMessages().get( 0 );
-                       
-            switch ( getPayloadType(message) )
-            {
-            case STRING:
-                output = new SqsStringMessage(message);
-                break;
-                
-            case MAP:
-                output = new SqsMapMessage(message);
-                break;
-              
-            case OBJECT:
-                output = new SqsObjectMessage(message);
-                break;
-            }
-            
-            if ( selector == null )
-                throw new NullPointerException( "selector is null" );
-            
-            if ( output == null )
-                return null;
-            
-            if ( selector.evaluate( output ) )
-            {
-                removeMessageFromQueue( service,queueUrl,message );
-                return output;
-            }
-            else
-            {
-                makeVisibleToOtherReceivers( service,queueUrl,message );
-                return null;
-            }
-        }
-        finally
-        {
-            service.shutdown();
-        }
-    }
-    
-    /************************************************************************
-     *  
-     *
-     * @param queueUrl
-     * @param selector 
-     * @param waitTimeSecs
-     * @return
-     */
-    protected IMessage
-    getMessageFromQueue(
-        AmazonSQS service,
-        String    queueUrl,
-        ISelector selector,
-        int       waitTimeSecs)
-    {
-        ReceiveMessageRequest request = null;
-        ReceiveMessageResult  result  = null;
-        Message               message = null;
-        IMessage              output  = null;
-        
-        request = 
-            new ReceiveMessageRequest()
-                .withQueueUrl( queueUrl )
-                .withAttributeNames( "All" )
-                .withMessageAttributeNames( "All" )
-                .withWaitTimeSeconds( waitTimeSecs )
-                .withMaxNumberOfMessages( 1 );
-            
-        result = service.receiveMessage( request );
-        
-        if ( result.getMessages().isEmpty() )
-            return null;
-        
-        message = result.getMessages().get( 0 );
-                   
-        switch ( getPayloadType(message) )
-        {
-        case STRING:
-            output = new SqsStringMessage(message);
-            break;
-            
-        case MAP:
-            output = new SqsMapMessage(message);
-            break;
-          
-        case OBJECT:
-            output = new SqsObjectMessage(message);
-            break;
-        }
-        
-        if ( selector == null )
-            throw new NullPointerException( "selector is null" );
-        
-        if ( output == null )
-            return null;
-        
-        if ( selector.evaluate( output ) )
-        {
-            removeMessageFromQueue( service,queueUrl,message );
-            return output;
-        }
-        else
-        {
-            makeVisibleToOtherReceivers( service,queueUrl,message );
-            return null;
-        }
-    }
-    
-    
-    /************************************************************************
-     *  
-     *
-     * @param queueUrl
-     * @param selector TODO
-     * @return
-     */
-    protected List<IMessage>
-    getMessagesFromQueue(String queueUrl,ISelector selector)
-    {
-        AmazonSQSClient       service = null;
-        ReceiveMessageRequest request = null;
-        ReceiveMessageResult  result  = null;
-        List<IMessage>        messages = new ArrayList<IMessage>();
-        
-        service = new AmazonSQSClient(itsCredentials);
-        
-        try
-        {
-            request = 
-                new ReceiveMessageRequest()
-                    .withQueueUrl( queueUrl )
-                    .withAttributeNames( "All" )
-                    .withMessageAttributeNames( "All" )
-                    .withWaitTimeSeconds( 20 )
+                    .withVisibilityTimeout( 20 )
                     .withMaxNumberOfMessages( 10 );
                 
             result = service.receiveMessage( request );
@@ -278,7 +143,7 @@ class AbstractMessageRetriever
         }
         finally
         {
-            service.shutdown();
+            //service.shutdown();
         }
     }
 

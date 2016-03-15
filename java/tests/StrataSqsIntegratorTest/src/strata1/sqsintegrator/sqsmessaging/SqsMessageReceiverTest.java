@@ -30,6 +30,7 @@ import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.MessageReceiverTest;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,20 +63,15 @@ class SqsMessageReceiverTest
     protected IMessagingSession 
     createMessagingSession()
     {
-        // AccessKeyId = AKIAIUYU4ICABB3XGYMA
-        // SecretAccessKey = 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
-        
         Map<String,String> properties = new HashMap<String,String>();
            
         properties.put( "ReturnAddress","foo" );
         
         return 
             new SqsQueueMessagingSession(
-                new BasicAWSCredentials(
-                    "AKIAIUYU4ICABB3XGYMA",
-                    "GOes989CWbXzYX8xeQaziMiha0CFfVU49ZT8Q/cr"))
+                new DefaultAWSCredentialsProviderChain().getCredentials())
                 .insertQueue( 
-                    "foo.test",
+                    "foo-test",
                     "https://sqs.us-west-2.amazonaws.com/450471544890/foo-test" )
                 .insertSelector( 
                     "ReturnAddress='foo'",
@@ -122,12 +118,12 @@ class SqsMessageReceiverTest
     protected long 
     getCleanupTimeout()
     {
-        return 5000;
+        return 10;
     }
 
     /************************************************************************
      * {@inheritDoc} 
-     */
+    
     @Override
     protected void 
     sleepIfNeeded(long millis)
@@ -138,7 +134,7 @@ class SqsMessageReceiverTest
         }
         catch(InterruptedException e) {}
     }
-
+ */
 }
 
 // ##########################################################################
