@@ -448,6 +448,23 @@ class JmsMessage
     }
 
     /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    acknowledge()
+    {
+        try
+        {
+            getMessageImp().acknowledge();
+        }
+        catch(JMSException e)
+        {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /************************************************************************
      *  
      *
      * @return

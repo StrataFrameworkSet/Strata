@@ -52,7 +52,6 @@ class SqsMessageReceiver
 {
     private final ISqsMessagingSession itsSession;
     private final String               itsQueueUrl;
-    private final AWSCredentials       itsCredentials;
     private IMessageListener           itsListener;
     private String                     itsSelector;
     private ISelector                  itsSelectorImp;
@@ -66,12 +65,10 @@ class SqsMessageReceiver
     public 
     SqsMessageReceiver(
         ISqsMessagingSession session,
-        String               queueUrl,
-        AWSCredentials       credentials)
+        String               queueUrl)
     {
         itsSession       = session;
         itsQueueUrl      = queueUrl;
-        itsCredentials   = credentials;
         itsListener      = null;
         itsSelector      = null;
         itsSelectorImp   = new DefaultSelector();
@@ -82,12 +79,10 @@ class SqsMessageReceiver
     SqsMessageReceiver(
         ISqsMessagingSession session,
         String               queueUrl,
-        AWSCredentials       credentials,
         String               selector)
     {
         itsSession       = session;
         itsQueueUrl      = queueUrl;
-        itsCredentials   = credentials;
         itsListener      = null;
         itsSelector      = selector;
         itsSelectorImp   = session.getSelector( selector );
@@ -145,7 +140,7 @@ class SqsMessageReceiver
         throws MixedModeException
     {
         if ( itsState == null )
-            itsState = new AsynchronousReceiverState(itsCredentials);
+            itsState = new AsynchronousReceiverState(itsSession);
         
         itsState.startListening( 
             itsQueueUrl,
@@ -163,7 +158,7 @@ class SqsMessageReceiver
         throws MixedModeException
     {
         if ( itsState == null )
-            itsState = new AsynchronousReceiverState(itsCredentials);
+            itsState = new AsynchronousReceiverState(itsSession);
         
         itsState.stopListening( itsListeningFlag );
     }
@@ -176,7 +171,7 @@ class SqsMessageReceiver
     isListening()
     {
         if ( itsState == null )
-            itsState = new AsynchronousReceiverState(itsCredentials);
+            itsState = new AsynchronousReceiverState(itsSession);
         
         return itsState.isListening( itsListeningFlag );
     }
@@ -190,7 +185,7 @@ class SqsMessageReceiver
         throws MixedModeException
     {        
         if ( itsState == null )
-            itsState = new SynchronousReceiverState(itsCredentials);
+            itsState = new SynchronousReceiverState(itsSession);
         
         return itsState.receive( itsQueueUrl,itsSelectorImp );
     }
@@ -204,7 +199,7 @@ class SqsMessageReceiver
         throws MixedModeException,NoMessageReceivedException
     {
         if ( itsState == null )
-            itsState = new SynchronousReceiverState(itsCredentials);
+            itsState = new SynchronousReceiverState(itsSession);
         
         return itsState.receive( itsQueueUrl,itsSelectorImp,timeOutInMs );
     }
@@ -218,7 +213,7 @@ class SqsMessageReceiver
         throws MixedModeException,NoMessageReceivedException
     {
         if ( itsState == null )
-            itsState = new SynchronousReceiverState(itsCredentials);
+            itsState = new SynchronousReceiverState(itsSession);
         
         return itsState.receiveNoWait( itsQueueUrl,itsSelectorImp );
     }

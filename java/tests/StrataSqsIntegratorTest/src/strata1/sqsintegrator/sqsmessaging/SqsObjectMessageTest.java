@@ -24,6 +24,7 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import strata1.integrator.messaging.IObjectMessage;
 import strata1.integrator.messaging.ObjectMessageTest;
 
@@ -38,13 +39,18 @@ public
 class SqsObjectMessageTest
     extends ObjectMessageTest
 {
+    private final ISqsMessagingSession itsSession;
 
     /************************************************************************
      * Creates a new SqsObjectMessageTest. 
      *
      */
     public 
-    SqsObjectMessageTest() {}
+    SqsObjectMessageTest() 
+    {
+        itsSession = new SqsQueueMessagingSession(
+            new DefaultAWSCredentialsProviderChain().getCredentials());
+    }
 
     /************************************************************************
      * {@inheritDoc} 
@@ -53,7 +59,7 @@ class SqsObjectMessageTest
     protected IObjectMessage 
     getTarget()
     {
-        return new SqsObjectMessage();
+        return new SqsObjectMessage(itsSession);
     }
 
 }

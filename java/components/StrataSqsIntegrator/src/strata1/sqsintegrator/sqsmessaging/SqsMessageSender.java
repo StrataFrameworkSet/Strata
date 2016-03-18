@@ -28,7 +28,6 @@ import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.IMessageSender;
 import strata1.integrator.messaging.IMessagingSession;
 import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.GetQueueAttributesRequest;
 import com.amazonaws.services.sqs.model.GetQueueAttributesResult;
@@ -48,9 +47,8 @@ public
 class SqsMessageSender
     implements IMessageSender
 {
-    private final IMessagingSession itsSession;
-    private final String            itsQueueUrl;
-    private final AWSCredentials    itsCredentials;
+    private final ISqsMessagingSession itsSession;
+    private final String               itsQueueUrl;
     
     /************************************************************************
      * Creates a new SqsMessageSender. 
@@ -58,14 +56,11 @@ class SqsMessageSender
      */
     public 
     SqsMessageSender(
-        IMessagingSession session,
-        String            queueUrl,
-        AWSCredentials    credentials)
+        ISqsMessagingSession session,
+        String               queueUrl)
     {
         itsSession     = session;
         itsQueueUrl    = queueUrl;
-        itsCredentials = credentials;
-        
     }
 
     /************************************************************************
@@ -75,28 +70,20 @@ class SqsMessageSender
     public void 
     setTimeToLive(long milliseconds)
     {
-        AmazonSQSClient           service = null;
+        AmazonSQSClient           service = itsSession.getImp();
         Long                      seconds = null;
         SetQueueAttributesRequest request = null;
         
-        service = new AmazonSQSClient(itsCredentials);
         seconds = new Long(milliseconds/1000);
         
-        try
-        {
-            request = 
-                new SetQueueAttributesRequest()
-                    .withQueueUrl( itsQueueUrl )
-                    .addAttributesEntry( 
-                        "MessageRetentionPeriod",
-                        seconds < 60 ? "60" : seconds.toString() );
-            
-            service.setQueueAttributes( request );
-        }
-        finally
-        {
-            service.shutdown();
-        }
+        request = 
+            new SetQueueAttributesRequest()
+                .withQueueUrl( itsQueueUrl )
+                .addAttributesEntry( 
+                    "MessageRetentionPeriod",
+                    seconds < 60 ? "60" : seconds.toString() );
+        
+        service.setQueueAttributes( request );
     }
 
     /************************************************************************
@@ -116,32 +103,23 @@ class SqsMessageSender
     public long 
     getTimeToLive()
     {
-        AmazonSQSClient           service = null;
+        AmazonSQSClient           service = itsSession.getImp();
         GetQueueAttributesRequest request = null;
         GetQueueAttributesResult  result  = null;
         Long                      seconds = null;
         
-        service = new AmazonSQSClient(itsCredentials);
+        request = 
+            new GetQueueAttributesRequest()
+                .withQueueUrl( itsQueueUrl )
+                .withAttributeNames( "MessageRetentionPeriod" );     
+        result = service.getQueueAttributes( request );
+        seconds = 
+            new Long(
+                result
+                    .getAttributes()
+                    .get( "MessageRetentionPeriod" ) );
         
-        try
-        {
-            request = 
-                new GetQueueAttributesRequest()
-                    .withQueueUrl( itsQueueUrl )
-                    .withAttributeNames( "MessageRetentionPeriod" );     
-            result = service.getQueueAttributes( request );
-            seconds = 
-                new Long(
-                    result
-                        .getAttributes()
-                        .get( "MessageRetentionPeriod" ) );
-            
-            return seconds*1000;
-        }
-        finally
-        {
-            service.shutdown();
-        }
+        return seconds*1000;
     }
 
     /************************************************************************
@@ -152,27 +130,17 @@ class SqsMessageSender
     public void 
     send(IMessage message)
     {
-        AmazonSQSClient    service    = null;
-        Message            messageImp = null;
+        AmazonSQSClient    service    = itsSession.getImp();
+        Message            messageImp = ((SqsMessage)message).getMessageImp();
         SendMessageRequest request    = null;
         SendMessageResult  result     = null;
-        
-        service = new AmazonSQSClient(itsCredentials);
-        
-        try
-        {
-            messageImp = ((SqsMessage)message).getMessageImp();
-            request =
-                new SendMessageRequest()
-                    .withQueueUrl( itsQueueUrl )
-                    .withMessageAttributes( messageImp.getMessageAttributes() )
-                    .withMessageBody( messageImp.getBody() );
-            result = service.sendMessage( request );
-        }
-        finally
-        {
-            service.shutdown();
-        }
+            
+        request =
+            new SendMessageRequest()
+                .withQueueUrl( itsQueueUrl )
+                .withMessageAttributes( messageImp.getMessageAttributes() )
+                .withMessageBody( messageImp.getBody() );
+        result = service.sendMessage( request );
     }
 
 }

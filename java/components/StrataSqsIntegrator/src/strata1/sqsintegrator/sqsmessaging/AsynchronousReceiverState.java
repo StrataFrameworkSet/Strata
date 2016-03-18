@@ -45,19 +45,19 @@ import java.util.concurrent.atomic.AtomicBoolean;
 class AsynchronousReceiverState
     implements IReceiverState
 {
-    private final AWSCredentials  itsCredentials;
-    private final ExecutorService itsExecutor;
-    private SqsMessageProcessor   itsProcessor;
+    private final ISqsMessagingSession itsSession;
+    private final ExecutorService      itsExecutor;
+    private SqsMessageProcessor        itsProcessor;
     
     /************************************************************************
      * Creates a new {@code AsynchronousReceiverState}. 
      *
      */ 
-    AsynchronousReceiverState(AWSCredentials credentials) 
+    AsynchronousReceiverState(ISqsMessagingSession session) 
     {
-        itsCredentials = credentials;
-        itsExecutor    = Executors.newFixedThreadPool( 1 );
-        itsProcessor   = null;
+        itsSession   = session;
+        itsExecutor  = Executors.newFixedThreadPool( 1 );
+        itsProcessor = null;
     }
 
     /************************************************************************
@@ -80,7 +80,7 @@ class AsynchronousReceiverState
             listeningFlag.compareAndSet( false,true );
             itsProcessor = 
                 new SqsMessageProcessor(
-                    itsCredentials,
+                    itsSession,
                     queueUrl,
                     selector,
                     listener,

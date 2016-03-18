@@ -59,13 +59,13 @@ class SqsMessageProcessor
      *
      */
     SqsMessageProcessor(
-        final AWSCredentials   credentials,
-        final String           queueUrl,
-        final ISelector        selector,
-        final IMessageListener listener,
-        final AtomicBoolean    listeningFlag)
+        final ISqsMessagingSession session,
+        final String               queueUrl,
+        final ISelector            selector,
+        final IMessageListener     listener,
+        final AtomicBoolean        listeningFlag)
     {
-        super( credentials );
+        super( session );
         itsQueueUrl      = queueUrl;
         itsSelector      = selector;
         itsListener      = listener;

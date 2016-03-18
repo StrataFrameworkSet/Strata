@@ -78,7 +78,7 @@ class JmsQueueMessagingSession
     public 
     JmsQueueMessagingSession(QueueConnectionFactory f)
     {
-        this( f,Session.DUPS_OK_ACKNOWLEDGE );
+        this( f,Session.AUTO_ACKNOWLEDGE|Session.DUPS_OK_ACKNOWLEDGE );
     }
 
     /************************************************************************

@@ -28,6 +28,7 @@ import static org.junit.Assert.*;
 import strata1.integrator.messaging.IMapMessage;
 import strata1.integrator.messaging.MapMessageTest;
 import org.junit.Test;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 
 /****************************************************************************
  * 
@@ -40,19 +41,24 @@ public
 class SqsMapMessageTest
     extends MapMessageTest
 {
-
+    private final ISqsMessagingSession itsSession;
+    
     /************************************************************************
      * Creates a new SqsMapMessageTest. 
      *
      */
     public 
-    SqsMapMessageTest() {}
+    SqsMapMessageTest() 
+    {
+        itsSession = new SqsQueueMessagingSession(
+            new DefaultAWSCredentialsProviderChain().getCredentials());
+    }
 
     @Test
     public void
     testConstructor()
     {
-        SqsMapMessage expected = new SqsMapMessage();
+        SqsMapMessage expected = new SqsMapMessage(itsSession);
         SqsMapMessage actual = null;
         
         expected
@@ -60,7 +66,7 @@ class SqsMapMessageTest
             .setInt( "Bar",5 )
             .setString( "FooBar","xxxxxxx" );
         
-        actual = new SqsMapMessage( expected.getMessageImp() ); 
+        actual = new SqsMapMessage( itsSession,expected.getMessageImp() ); 
         assertEquals(expected.getBoolean("Foo"),actual.getBoolean("Foo"));
         assertEquals(expected.getInt("Bar"),actual.getInt("Bar"));
         assertEquals(expected.getString("FooBar"),actual.getString("FooBar"));  
@@ -73,7 +79,7 @@ class SqsMapMessageTest
     protected IMapMessage 
     getTarget()
     {
-        return new SqsMapMessage();
+        return new SqsMapMessage(itsSession);
     }
 
 }

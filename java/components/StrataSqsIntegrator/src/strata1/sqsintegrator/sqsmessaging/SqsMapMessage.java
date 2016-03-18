@@ -58,8 +58,9 @@ class SqsMapMessage
      *
      */
     public 
-    SqsMapMessage()
+    SqsMapMessage(ISqsMessagingSession session)
     {
+        super( session );
         setPayloadType( PayloadType.MAP );
         itsPayload = new HashMap<String,String>();
     }
@@ -70,9 +71,9 @@ class SqsMapMessage
      * @param imp
      */
     public 
-    SqsMapMessage(Message imp)
+    SqsMapMessage(ISqsMessagingSession session,Message imp)
     {
-        super( imp );
+        super( session,imp );
         setPayloadType( PayloadType.MAP );
         itsPayload = fromString( imp.getBody() );
     }

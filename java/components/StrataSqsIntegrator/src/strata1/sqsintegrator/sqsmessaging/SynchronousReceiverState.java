@@ -51,9 +51,9 @@ class SynchronousReceiverState
      * Creates a new {@code SynchronousReceiverState}. 
      *
      */ 
-    SynchronousReceiverState(AWSCredentials credentials) 
+    SynchronousReceiverState(ISqsMessagingSession session) 
     {
-        super( credentials );
+        super( session );
         itsBuffer = new ConcurrentLinkedQueue<IMessage>();
     }
 

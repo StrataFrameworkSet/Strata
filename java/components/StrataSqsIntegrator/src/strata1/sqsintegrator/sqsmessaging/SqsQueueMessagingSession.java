@@ -33,6 +33,7 @@ import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.IStringMessage;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClient;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -51,9 +52,11 @@ class SqsQueueMessagingSession
     implements ISqsMessagingSession
 {
     private final AWSCredentials        itsCredentials;
+    private AmazonSQSClient             itsImp;
     private final Map<String,String>    itsQueueUrls;
     private final Map<String,ISelector> itsSelectors;
     private final AtomicBoolean         itsReceivingFlag;
+    private final AcknowledgementMode   itsAcknowledgementMode;
     
     /************************************************************************
      * Creates a new SqsQueueMessagingSession. 
@@ -62,10 +65,24 @@ class SqsQueueMessagingSession
     public 
     SqsQueueMessagingSession(AWSCredentials credentials)
     {
+        this( credentials,AcknowledgementMode.AUTO_ACKNOWLEDGEMENT );
+    }
+
+    /************************************************************************
+     * Creates a new SqsQueueMessagingSession. 
+     *
+     */
+    public 
+    SqsQueueMessagingSession(
+        AWSCredentials credentials,
+        AcknowledgementMode ackMode)
+    {
         itsCredentials = credentials;
+        itsImp         = new AmazonSQSClient(credentials);
         itsQueueUrls = new HashMap<String,String>();
         itsSelectors = new HashMap<String,ISelector>();
         itsReceivingFlag = new AtomicBoolean(false);
+        itsAcknowledgementMode = ackMode;
     }
 
     /************************************************************************
@@ -75,7 +92,7 @@ class SqsQueueMessagingSession
     public IMessageSender 
     createMessageSender(String id)
     {
-        return new SqsMessageSender( this,getQueueUrl(id),itsCredentials );
+        return new SqsMessageSender( this,getQueueUrl(id) );
     }
 
     /************************************************************************
@@ -85,7 +102,7 @@ class SqsQueueMessagingSession
     public IMessageReceiver 
     createMessageReceiver(String id)
     {
-        return new SqsMessageReceiver( this,getQueueUrl(id),itsCredentials );
+        return new SqsMessageReceiver( this,getQueueUrl(id) );
     }
 
     /************************************************************************
@@ -96,7 +113,7 @@ class SqsQueueMessagingSession
     createMessageReceiver(String id,String selector)
     {
         return 
-            new SqsMessageReceiver(this,getQueueUrl(id),itsCredentials,selector);
+            new SqsMessageReceiver(this,getQueueUrl(id),selector);
     }
 
     /************************************************************************
@@ -106,7 +123,7 @@ class SqsQueueMessagingSession
     public IStringMessage 
     createStringMessage()
     {
-        return new SqsStringMessage();
+        return new SqsStringMessage(this);
     }
 
     /************************************************************************
@@ -116,7 +133,7 @@ class SqsQueueMessagingSession
     public IMapMessage 
     createMapMessage()
     {
-        return new SqsMapMessage();
+        return new SqsMapMessage(this);
     }
 
     /************************************************************************
@@ -126,7 +143,7 @@ class SqsQueueMessagingSession
     public IObjectMessage 
     createObjectMessage()
     {
-        return new SqsObjectMessage();
+        return new SqsObjectMessage(this);
     }
 
     /************************************************************************
@@ -166,6 +183,8 @@ class SqsQueueMessagingSession
     public void 
     close()
     {
+        if ( itsImp != null )
+            itsImp.shutdown();
     }
 
     /************************************************************************
@@ -211,6 +230,22 @@ class SqsQueueMessagingSession
     {
         itsSelectors.put( normalize(expression),selector );
         return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    acknowledge(SqsMessage message)
+    {
+        if (
+            itsAcknowledgementMode != 
+                AcknowledgementMode.AUTO_ACKNOWLEDGEMENT )
+            return;
+        
+        
+            
     }
 
     /************************************************************************
@@ -266,6 +301,16 @@ class SqsQueueMessagingSession
         return itsSelectors.containsKey( normalize(expression) );
     }
     
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public AmazonSQSClient 
+    getImp()
+    {
+        return itsImp;
+    }
+
     /************************************************************************
      *  
      *

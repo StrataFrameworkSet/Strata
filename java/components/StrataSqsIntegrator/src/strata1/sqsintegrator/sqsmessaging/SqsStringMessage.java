@@ -45,8 +45,9 @@ class SqsStringMessage
      *
      */
     public
-    SqsStringMessage()
+    SqsStringMessage(ISqsMessagingSession session)
     {
+        super( session );
         setPayloadType( PayloadType.STRING );
     }
     
@@ -56,9 +57,9 @@ class SqsStringMessage
      * @param imp
      */
     public 
-    SqsStringMessage(Message imp)
+    SqsStringMessage(ISqsMessagingSession session,Message imp)
     {
-        super( imp );
+        super( session,imp );
         setPayloadType( PayloadType.STRING );
     }
     

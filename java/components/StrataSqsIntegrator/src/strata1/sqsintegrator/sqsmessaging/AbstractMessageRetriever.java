@@ -47,7 +47,7 @@ import java.util.List;
 public abstract 
 class AbstractMessageRetriever
 {
-    private final AWSCredentials itsCredentials;
+    private final ISqsMessagingSession itsSession;
     private AmazonSQSClient      itsService;
     
     /************************************************************************
@@ -55,10 +55,10 @@ class AbstractMessageRetriever
      *
      */
     public 
-    AbstractMessageRetriever(AWSCredentials credentials)
+    AbstractMessageRetriever(ISqsMessagingSession session)
     {
-        itsCredentials = credentials;
-        itsService     = new AmazonSQSClient(itsCredentials);
+        itsSession = session;
+        itsService = itsSession.getImp(); 
     }
 
     /************************************************************************
@@ -68,20 +68,8 @@ class AbstractMessageRetriever
     public void
     close()
     {
-        itsService.shutdown();
     }
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    protected AWSCredentials
-    getCredentials()
-    {
-        return itsCredentials;
-    }
-    
+        
     /************************************************************************
      *  
      *
@@ -117,15 +105,15 @@ class AbstractMessageRetriever
                 switch ( getPayloadType(message) )
                 {
                 case STRING:
-                    output = new SqsStringMessage(message);
+                    output = new SqsStringMessage(itsSession,message);
                     break;
                     
                 case MAP:
-                    output = new SqsMapMessage(message);
+                    output = new SqsMapMessage(itsSession,message);
                     break;
                   
                 case OBJECT:
-                    output = new SqsObjectMessage(message);
+                    output = new SqsObjectMessage(itsSession,message);
                     break;
                 }
                 

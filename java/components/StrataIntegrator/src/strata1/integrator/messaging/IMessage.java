@@ -108,6 +108,9 @@ interface IMessage
     
     public boolean
     hasProperty(String name);
+    
+    public void
+    acknowledge();
 }
 
 // ##########################################################################

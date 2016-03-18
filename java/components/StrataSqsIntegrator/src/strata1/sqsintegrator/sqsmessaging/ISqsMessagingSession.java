@@ -24,6 +24,7 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
+import com.amazonaws.services.sqs.AmazonSQSClient;
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.ISelector;
 
@@ -55,6 +56,12 @@ interface ISqsMessagingSession
     
     public boolean
     hasSelector(String expression);
+    
+    public void
+    acknowledge(SqsMessage message);
+    
+    public AmazonSQSClient 
+    getImp();
 }
 
 // ##########################################################################

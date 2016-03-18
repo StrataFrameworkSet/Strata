@@ -55,8 +55,9 @@ class SqsObjectMessage
      *
      */
     public 
-    SqsObjectMessage()
+    SqsObjectMessage(ISqsMessagingSession session)
     {
+        super( session );
         setPayloadType( PayloadType.OBJECT );
     }
 
@@ -66,9 +67,9 @@ class SqsObjectMessage
      * @param imp
      */
     public 
-    SqsObjectMessage(Message imp)
+    SqsObjectMessage(ISqsMessagingSession session,Message imp)
     {
-        super( imp );
+        super( session,imp );
         setPayloadType( PayloadType.OBJECT );
     }
 

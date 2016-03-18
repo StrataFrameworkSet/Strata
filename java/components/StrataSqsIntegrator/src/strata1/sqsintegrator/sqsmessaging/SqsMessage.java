@@ -46,7 +46,8 @@ class SqsMessage
     public static final String DELIVERY_MODE  = "DeliveryMode";
     public static final String PAYLOAD_TYPE   = "PayloadType";
     
-    private final Message itsImp;
+    private final ISqsMessagingSession itsSession;
+    private final Message              itsImp;
     
 
     
@@ -55,9 +56,9 @@ class SqsMessage
      *
      */
     protected 
-    SqsMessage()
+    SqsMessage(ISqsMessagingSession session)
     {
-        this( new Message() );
+        this( session,new Message() );
     }
     
     /************************************************************************
@@ -66,9 +67,10 @@ class SqsMessage
      * @param imp
      */
     protected 
-    SqsMessage(Message imp)
+    SqsMessage(ISqsMessagingSession session,Message imp)
     {
-        itsImp = imp;
+        itsSession = session;
+        itsImp     = imp;
     }
 
     /************************************************************************
@@ -562,6 +564,16 @@ class SqsMessage
             itsImp
                 .getMessageAttributes()
                 .containsKey( name );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    acknowledge()
+    {
+        itsSession.acknowledge(this);
     }
 
     /************************************************************************
