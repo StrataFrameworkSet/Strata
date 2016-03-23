@@ -58,6 +58,8 @@ module Strata1.Integrator.Messaging
         getStringProperty(name: string): string;
 
         hasProperty(name: string): boolean;
+
+        acknowledge(): void;
     }
 
 }
@@ -121,7 +123,6 @@ module Strata1.Integrator.Messaging
     interface IMessageListener
     {
         onMessage(message: IStringMessage): void;
-        onMessage(message: IMapMessage): void;    
     }
 }
 
@@ -146,7 +147,7 @@ module Strata1.Integrator.Messaging
 module Strata1.Integrator.Messaging
 {
     export
-        interface IMessageReceiver
+    interface IMessageReceiver
     {
         setListener(listener: IMessageListener): IMessageReceiver;
 
@@ -178,7 +179,6 @@ module Strata1.Integrator.Messaging
         createMessageReceiver(id: string): IMessageReceiver;
         createMessageReceiver(id: string,selector: string): IMessageReceiver;
         createStringMessage(): IStringMessage;
-        createMapMessage(): IMapMessage;
     
         startReceiving(): void;
         stopReceiving(): void;
@@ -215,7 +215,7 @@ module Strata1.Integrator.Messaging
 module Strata1.Integrator.Messaging
 {
     export
-        class MixedModeException
+    class MixedModeException
         extends MessagingException
     {
         constructor(message: string)
@@ -231,6 +231,21 @@ module Strata1.Integrator.Messaging
 {
     export
     class NoMessageReceivedException
+        extends MessagingException
+    {
+        constructor(message: string)
+        {
+            super(message);
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+module Strata1.Integrator.Messaging
+{
+    export
+    class NoListenerException
         extends MessagingException
     {
         constructor(message: string)

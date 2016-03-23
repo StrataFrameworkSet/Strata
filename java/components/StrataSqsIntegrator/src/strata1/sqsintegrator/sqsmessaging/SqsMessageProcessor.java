@@ -30,8 +30,6 @@ import strata1.integrator.messaging.IMessageListener;
 import strata1.integrator.messaging.IObjectMessage;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.IStringMessage;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.services.sqs.AmazonSQS;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.LockSupport;
@@ -47,7 +45,7 @@ class SqsMessageProcessor
     extends    AbstractMessageRetriever
     implements Runnable
 {
-    private static final long SECOND = 1000000000;
+    private static final long HALF_SECOND = 500000000;
     
     private final String           itsQueueUrl;
     private final ISelector        itsSelector;
@@ -121,7 +119,7 @@ class SqsMessageProcessor
                 super.getMessagesFromQueue( itsQueueUrl,itsSelector,20 ); 
             
             if ( messages.isEmpty() )
-                LockSupport.parkNanos( SECOND );
+                LockSupport.parkNanos( HALF_SECOND );
         }
         
         return messages;

@@ -34,6 +34,7 @@ import strata1.integrator.messaging.IStringMessage;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
+import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -74,11 +75,11 @@ class SqsQueueMessagingSession
      */
     public 
     SqsQueueMessagingSession(
-        AWSCredentials credentials,
+        AWSCredentials      credentials,
         AcknowledgementMode ackMode)
     {
         itsCredentials = credentials;
-        itsImp         = new AmazonSQSClient(credentials);
+        itsImp         = new AmazonSQSClient(itsCredentials);
         itsQueueUrls = new HashMap<String,String>();
         itsSelectors = new HashMap<String,ISelector>();
         itsReceivingFlag = new AtomicBoolean(false);
@@ -239,12 +240,12 @@ class SqsQueueMessagingSession
     public void 
     acknowledge(SqsMessage message)
     {
-        if (
-            itsAcknowledgementMode != 
-                AcknowledgementMode.AUTO_ACKNOWLEDGEMENT )
-            return;
-        
-        
+       if ( !message.hasQueueUrl() )
+           throw 
+               new IllegalStateException(
+                   "SqsMessage must have a queueUrl to acknowledge.");
+       
+       removeMessageFromQueue( itsImp,message ); 
             
     }
 
@@ -279,6 +280,16 @@ class SqsQueueMessagingSession
     }
 
     /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public AcknowledgementMode 
+    getAcknowledgementMode()
+    {
+        return itsAcknowledgementMode;
+    }
+
+    /************************************************************************
      *  
      *
      * @param queueId
@@ -309,6 +320,25 @@ class SqsQueueMessagingSession
     getImp()
     {
         return itsImp;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @param service 
+     * @param message
+     */
+    private void 
+    removeMessageFromQueue(AmazonSQS service,SqsMessage message)
+    {
+        DeleteMessageRequest request = 
+            new DeleteMessageRequest()
+                .withQueueUrl( 
+                    message.getQueueUrl() )
+                .withReceiptHandle( 
+                    message.getMessageImp().getReceiptHandle() );
+        
+        service.deleteMessage( request );
     }
 
     /************************************************************************

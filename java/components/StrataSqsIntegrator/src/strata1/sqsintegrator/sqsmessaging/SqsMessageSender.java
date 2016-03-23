@@ -27,7 +27,6 @@ package strata1.sqsintegrator.sqsmessaging;
 import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.IMessageSender;
 import strata1.integrator.messaging.IMessagingSession;
-import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.GetQueueAttributesRequest;
 import com.amazonaws.services.sqs.model.GetQueueAttributesResult;

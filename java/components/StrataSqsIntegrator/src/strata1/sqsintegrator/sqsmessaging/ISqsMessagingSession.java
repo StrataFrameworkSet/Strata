@@ -51,6 +51,9 @@ interface ISqsMessagingSession
     public ISelector
     getSelector(String expression);
     
+    public AcknowledgementMode
+    getAcknowledgementMode();
+    
     public boolean
     hasQueue(String queueId);
     

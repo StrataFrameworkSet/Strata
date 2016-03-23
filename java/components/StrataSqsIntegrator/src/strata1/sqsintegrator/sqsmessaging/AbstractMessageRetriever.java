@@ -26,11 +26,9 @@ package strata1.sqsintegrator.sqsmessaging;
 
 import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.ISelector;
-import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.ChangeMessageVisibilityRequest;
-import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.ReceiveMessageResult;
@@ -48,7 +46,7 @@ public abstract
 class AbstractMessageRetriever
 {
     private final ISqsMessagingSession itsSession;
-    private AmazonSQSClient      itsService;
+    private AmazonSQSClient            itsService;
     
     /************************************************************************
      * Creates a new AbstractMessageRetriever. 
@@ -80,9 +78,9 @@ class AbstractMessageRetriever
     protected List<IMessage>
     getMessagesFromQueue(String queueUrl,ISelector selector,int waitTimeSecs)
     {
-        AmazonSQSClient       service = itsService;
-        ReceiveMessageRequest request = null;
-        ReceiveMessageResult  result  = null;
+        AmazonSQSClient       service  = itsService;
+        ReceiveMessageRequest request  = null;
+        ReceiveMessageResult  result   = null;
         List<IMessage>        messages = new ArrayList<IMessage>();
                 
         try
@@ -117,10 +115,14 @@ class AbstractMessageRetriever
                     break;
                 }
                 
+                ((SqsMessage)output).setQueueUrl( queueUrl );
+                
                 if ( selector.evaluate( output ) )
                 {
-                    removeMessageFromQueue( service,queueUrl,message );
                     messages.add( output );
+
+                    if ( itsSession.getAcknowledgementMode() == AcknowledgementMode.AUTO_ACKNOWLEDGEMENT )
+                        output.acknowledge();                    
                 }
                 else
                     makeVisibleToOtherReceivers( service,queueUrl,message );
@@ -157,27 +159,6 @@ class AbstractMessageRetriever
                         .getMessageAttributes()
                         .get( SqsMessage.PAYLOAD_TYPE )
                         .getStringValue() );
-    }
-
-    /************************************************************************
-     *  
-     *
-     * @param service 
-     * @param queueUrl 
-     * @param message
-     */
-    private void 
-    removeMessageFromQueue(
-        AmazonSQS service,
-        String    queueUrl,
-        Message   message)
-    {
-        DeleteMessageRequest request = 
-            new DeleteMessageRequest()
-                .withQueueUrl( queueUrl )
-                .withReceiptHandle( message.getReceiptHandle() );
-        
-        service.deleteMessage( request );
     }
 
     /************************************************************************

@@ -24,15 +24,14 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.IMessageListener;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.MixedModeException;
 import strata1.integrator.messaging.NoMessageReceivedException;
-import com.amazonaws.auth.AWSCredentials;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /****************************************************************************
  * 

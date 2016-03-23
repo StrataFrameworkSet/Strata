@@ -29,7 +29,6 @@ import strata1.integrator.messaging.IMapMessage;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.util.Base64;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -480,7 +479,6 @@ class SqsMapMessage
      * @param payload
      * @return
      */
-    @SuppressWarnings("unchecked")
     private Map<String,String> 
     fromString(String payload)
     {

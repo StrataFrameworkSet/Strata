@@ -398,6 +398,9 @@ module Strata1.ActiveMqIntegrator.ActiveMqMessaging
     import IMessageListener = Strata1.Integrator.Messaging.IMessageListener;
     import IMessageReceiver = Strata1.Integrator.Messaging.IMessageReceiver;
     import IMessagingSession = Strata1.Integrator.Messaging.IMessagingSession;
+    import MessagingException = Strata1.Integrator.Messaging.MessagingException;
+    import NoListenerException = Strata1.Integrator.Messaging.NoListenerException;
+    import NoMessageReceivedException = Strata1.Integrator.Messaging.NoMessageReceivedException;
 
     export
     class ActiveMqMessageReceiver
@@ -448,7 +451,7 @@ module Strata1.ActiveMqIntegrator.ActiveMqMessaging
             this.receiverImp.addListener(
                 this.listenerId,
                 this.destination,
-                null);
+                this.handler);
             this.listening = true;
         }
 
@@ -460,7 +463,7 @@ module Strata1.ActiveMqIntegrator.ActiveMqMessaging
 
         isListening(): boolean
         {
-            return 
+            return this.listening;
         }
 
         receive(timeOutInMs?: number): IMessage
@@ -479,6 +482,20 @@ module Strata1.ActiveMqIntegrator.ActiveMqMessaging
 
         close(): void
         {
+        }
+
+        handler(message:IStringMessage|IMapMessage): void
+        {
+            if(this.listener == null)
+                throw new NoListenerException(
+                        "Message receiver: " +
+                        this.listenerId +
+                        " does not have a listener");
+
+            if(typeof message === 'IStringMessage')
+                this.listener.onMessage(<IStringMessage>message);
+            else if(typeof message === 'IMapMessage')
+                this.listener.onMessage(<IMapMessage>message);               
         }
     }
 }

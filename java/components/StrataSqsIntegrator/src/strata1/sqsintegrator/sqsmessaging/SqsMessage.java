@@ -48,7 +48,7 @@ class SqsMessage
     
     private final ISqsMessagingSession itsSession;
     private final Message              itsImp;
-    
+    private String                     itsQueueUrl;
 
     
     /************************************************************************
@@ -69,8 +69,9 @@ class SqsMessage
     protected 
     SqsMessage(ISqsMessagingSession session,Message imp)
     {
-        itsSession = session;
-        itsImp     = imp;
+        itsSession  = session;
+        itsImp      = imp;
+        itsQueueUrl = null;
     }
 
     /************************************************************************
@@ -576,6 +577,41 @@ class SqsMessage
         itsSession.acknowledge(this);
     }
 
+    /************************************************************************
+     *  
+     *
+     * @param queueUrl
+     * @return
+     */
+    public SqsMessage
+    setQueueUrl(String queueUrl)
+    {
+        itsQueueUrl = queueUrl;
+        return this;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public String
+    getQueueUrl()
+    {
+        return itsQueueUrl;
+    }
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public boolean
+    hasQueueUrl()
+    {
+        return itsQueueUrl != null && !itsQueueUrl.isEmpty();
+    }
+    
     /************************************************************************
      *  
      *
