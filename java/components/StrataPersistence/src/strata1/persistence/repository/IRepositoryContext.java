@@ -25,7 +25,7 @@
 package strata1.persistence.repository;
 
 
-import strata1.common.utility.ISynchronizer;
+import strata1.common.synchronizer.ISynchronizer;
 
 /**
  * The base class of all repository contexts. Participates in the 

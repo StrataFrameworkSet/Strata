@@ -25,6 +25,7 @@
 package strata1.sqsintegrator.sqsmessaging;
 
 import strata1.integrator.messaging.DeliveryMode;
+import strata1.integrator.messaging.IMapMessage;
 import strata1.integrator.messaging.IObjectMessage;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.util.Base64;
@@ -92,6 +93,17 @@ class SqsObjectMessage
     setCorrelationId(String correlationId)
     {
         super.setCorrelationId( correlationId );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setSequenceNum(long sequenceNum)
+    {
+        super.setSequenceNum( sequenceNum );
         return this;
     }
 

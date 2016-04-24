@@ -25,8 +25,8 @@
 package strata1.persistence.hibernaterepository;
 
 
-import strata1.common.utility.ISynchronizer;
-import strata1.common.utility.ReadWriteLockSynchronizer;
+import strata1.common.lockingsynchronizer.ReadWriteLockSynchronizer;
+import strata1.common.synchronizer.ISynchronizer;
 import strata1.persistence.repository.IRepositoryContext;
 import org.hibernate.SessionFactory;
 

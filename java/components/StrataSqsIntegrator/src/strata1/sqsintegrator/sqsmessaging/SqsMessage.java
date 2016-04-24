@@ -42,6 +42,7 @@ class SqsMessage
     implements IMessage
 {
     public static final String CORRELATION_ID = "CorrelationId";
+    public static final String SEQUENCE_NUM   = "SequenceNum";
     public static final String RETURN_ADDRESS = "ReturnAddress";
     public static final String DELIVERY_MODE  = "DeliveryMode";
     public static final String PAYLOAD_TYPE   = "PayloadType";
@@ -103,6 +104,28 @@ class SqsMessage
                 .put( CORRELATION_ID,value );
         else
             itsImp.addMessageAttributesEntry( CORRELATION_ID,value );
+        
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMessage 
+    setSequenceNum(long sequenceNum)
+    {
+        MessageAttributeValue value = 
+            new MessageAttributeValue()
+                .withDataType( "Number.long" )
+                .withStringValue( new Long(sequenceNum).toString() );
+        
+        if ( hasProperty( SEQUENCE_NUM ) )
+            itsImp
+                .getMessageAttributes()
+                .put( SEQUENCE_NUM,value );
+        else
+            itsImp.addMessageAttributesEntry( SEQUENCE_NUM,value );
         
         return this;
     }
@@ -354,6 +377,26 @@ class SqsMessage
             properties
                 .get( CORRELATION_ID )
                 .getStringValue();
+    }
+
+    /************************************************************************
+     * {@inheritDoc}
+     */
+    @Override
+    public long 
+    getSequenceNum()
+    {
+        Map<String,MessageAttributeValue> properties = 
+            itsImp.getMessageAttributes();
+        
+        if ( !properties.containsKey( SEQUENCE_NUM ) )
+            return 0L;
+        
+        return 
+            new Long(
+                properties
+                    .get( SEQUENCE_NUM )
+                    .getStringValue());
     }
 
     /************************************************************************

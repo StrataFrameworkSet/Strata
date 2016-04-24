@@ -35,6 +35,9 @@ interface IStringMessage
     setCorrelationId(String correlationId);
     
     public IStringMessage
+    setSequenceNum(long sequenceNum);
+    
+    public IStringMessage
     setReturnAddress(String returnAddress);
     
     public IStringMessage

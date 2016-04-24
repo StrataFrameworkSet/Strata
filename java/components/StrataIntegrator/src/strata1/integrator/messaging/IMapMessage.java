@@ -44,6 +44,9 @@ interface IMapMessage
     setCorrelationId(String correlationId);
     
     public IMapMessage
+    setSequenceNum(long sequenceNum);
+    
+    public IMapMessage
     setReturnAddress(String returnAddress);
     
     public IMapMessage

@@ -41,6 +41,7 @@ class JmsMessage
     implements IMessage
 {
     private static final String RETURN_ADDRESS_PROPERTY = "ReturnAddress";
+    private static final String SEQUENCE_NUM_PROPERTY = "SequenceNum";
     
     /************************************************************************
      * Creates a new JmsMessage. 
@@ -78,6 +79,26 @@ class JmsMessage
         try
         {
             getMessageImp().setJMSCorrelationID( correlationId );
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalArgumentException( e );
+        }
+        
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMessage 
+    setSequenceNum(long sequenceNum)
+    {
+        try
+        {
+            getMessageImp()
+                .setLongProperty( SEQUENCE_NUM_PROPERTY,sequenceNum );
         }
         catch (JMSException e)
         {
@@ -321,6 +342,28 @@ class JmsMessage
      * {@inheritDoc} 
      */
     @Override
+    public long 
+    getSequenceNum()
+    {
+        try
+        {           
+            if ( getMessageImp().propertyExists( SEQUENCE_NUM_PROPERTY ))
+                return 
+                    getMessageImp()
+                        .getLongProperty( SEQUENCE_NUM_PROPERTY );
+            
+            return 0L;
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
     public String 
     getReturnAddress()
     {
@@ -364,7 +407,14 @@ class JmsMessage
     public byte 
     getByteProperty(String name)
     {
-        return 0;
+        try
+        {
+            return getMessageImp().getByteProperty( name );
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
     }
 
     /************************************************************************
@@ -374,7 +424,14 @@ class JmsMessage
     public boolean 
     getBooleanProperty(String name)
     {
-        return false;
+        try
+        {
+            return getMessageImp().getBooleanProperty( name );
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
     }
 
     /************************************************************************
@@ -384,7 +441,14 @@ class JmsMessage
     public short 
     getShortProperty(String name)
     {
-        return 0;
+        try
+        {
+            return getMessageImp().getShortProperty( name );
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
     }
 
     /************************************************************************
@@ -394,7 +458,14 @@ class JmsMessage
     public int 
     getIntProperty(String name)
     {
-        return 0;
+        try
+        {
+            return getMessageImp().getIntProperty( name );
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
     }
 
     /************************************************************************
@@ -404,7 +475,14 @@ class JmsMessage
     public long 
     getLongProperty(String name)
     {
-        return 0;
+        try
+        {
+            return getMessageImp().getLongProperty( name );
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
     }
 
     /************************************************************************
@@ -414,7 +492,14 @@ class JmsMessage
     public float 
     getFloatProperty(String name)
     {
-        return 0;
+        try
+        {
+            return getMessageImp().getFloatProperty( name );
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
     }
 
     /************************************************************************
@@ -424,7 +509,14 @@ class JmsMessage
     public double 
     getDoubleProperty(String name)
     {
-        return 0;
+        try
+        {
+            return getMessageImp().getDoubleProperty( name );
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
     }
 
     /************************************************************************
@@ -434,7 +526,14 @@ class JmsMessage
     public String 
     getStringProperty(String name)
     {
-        return null;
+        try
+        {
+            return getMessageImp().getStringProperty( name );
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
     }
 
     /************************************************************************
@@ -444,7 +543,14 @@ class JmsMessage
     public boolean 
     hasProperty(String name)
     {
-        return false;
+        try
+        {
+            return getMessageImp().propertyExists( name );
+        }
+        catch (JMSException e)
+        {
+            throw new IllegalStateException( e );
+        }
     }
 
     /************************************************************************

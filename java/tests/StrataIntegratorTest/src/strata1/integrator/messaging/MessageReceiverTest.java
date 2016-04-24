@@ -494,12 +494,15 @@ class MessageReceiverTest
         List<IMessage> actuals   = new ArrayList<IMessage>();
         
         expected1
+            .setSequenceNum( 1L )
             .setCorrelationId( "testReceiveNoWait1" )
             .setPayload( "TestMessage1" );
         expected2
+            .setSequenceNum( 2L )
             .setCorrelationId( "testReceiveNoWait1" )
             .setPayload( "TestMessage2" );
         expected3
+            .setSequenceNum( 3L )
             .setCorrelationId( "testReceiveNoWait1" )
             .setPayload( "TestMessage3" );
         
@@ -513,8 +516,19 @@ class MessageReceiverTest
         actuals.add( itsTarget.receiveNoWait() );
         actuals.add( itsTarget.receiveNoWait() );
         
-        actuals = resequence( actuals );
-        
+        actuals = 
+            resequence( 
+                actuals,                
+                new Comparator<IMessage>() 
+                {
+                    @Override
+                    public int 
+                    compare(IMessage x,IMessage y)
+                    {
+                        return (int)(x.getSequenceNum()-y.getSequenceNum());
+                    }
+                } );
+            
         assertEquals( 3,actuals.size() );
         
         
@@ -638,22 +652,21 @@ class MessageReceiverTest
     private List<IMessage> 
     resequence(List<IMessage> messages)
     {
-        resequence( 
-            messages,
-            new Comparator<IMessage>() 
-            {
-                @Override
-                public int 
-                compare(IMessage x,IMessage y)
+        return 
+            resequence( 
+                messages,
+                new Comparator<IMessage>() 
                 {
-                    IStringMessage m1 = (IStringMessage)x;
-                    IStringMessage m2 = (IStringMessage)y;
-                    
-                    return m1.getPayload().compareTo( m2.getPayload() );
-                }
-            });
-        
-        return messages;
+                    @Override
+                    public int 
+                    compare(IMessage x,IMessage y)
+                    {
+                        IStringMessage m1 = (IStringMessage)x;
+                        IStringMessage m2 = (IStringMessage)y;
+                        
+                        return m1.getPayload().compareTo( m2.getPayload() );
+                    }
+                });
     }
 
     /************************************************************************
@@ -684,13 +697,13 @@ class MessageReceiverTest
         
         try
         {
-            IMessage message = cleaner.receiveNoWait();
+            IMessage message = cleaner.receive(2000);
             
             while ( message != null )
             {
                 System.out.println( "Removing message: " + message.getCorrelationId() );
             
-                message = cleaner.receiveNoWait();
+                message = cleaner.receive(2000);
             }
         }
         catch (NoMessageReceivedException e) 

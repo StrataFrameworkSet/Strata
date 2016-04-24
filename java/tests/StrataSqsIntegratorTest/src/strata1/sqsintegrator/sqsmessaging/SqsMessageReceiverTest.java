@@ -29,9 +29,8 @@ import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.MessageReceiverTest;
-import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.services.sqs.AmazonSQSClient;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,14 +61,16 @@ class SqsMessageReceiverTest
     @Override
     protected IMessagingSession 
     createMessagingSession()
-    {
+    {       
+        String path = "C:/Users/John/.aws/credentials";
+        String profile = "default";
         Map<String,String> properties = new HashMap<String,String>();
-           
+
         properties.put( "ReturnAddress","foo" );
-        
+
         return 
-            new SqsQueueMessagingSession(
-                new DefaultAWSCredentialsProviderChain().getCredentials())
+            new SqsQueueMessagingSession(                
+                new ProfileCredentialsProvider(path,profile).getCredentials())
                 .insertQueue( 
                     "foo-test",
                     "https://sqs.us-west-2.amazonaws.com/450471544890/foo-test" )

@@ -78,6 +78,17 @@ class InMemoryBytesMessage
      */
     @Override
     public IBytesMessage 
+    setSequenceNum(long sequenceNum)
+    {
+        super.setSequenceNum( sequenceNum );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IBytesMessage 
     setReturnAddress(String returnAddress)
     {
         super.setReturnAddress( returnAddress );

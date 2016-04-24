@@ -26,7 +26,7 @@ package strata1.sqsintegrator.sqsmessaging;
 
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.MessageSenderTest;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 
 /****************************************************************************
  * 
@@ -39,7 +39,6 @@ public
 class SqsMessageSenderTest
     extends MessageSenderTest
 {
-
     /************************************************************************
      * Creates a new {@code SqsMessageSenderTest}. 
      *
@@ -54,15 +53,18 @@ class SqsMessageSenderTest
     protected IMessagingSession 
     createMessagingSession()
     {
+        String path = "C:/Users/John/.aws/credentials";
+        String profile = "default";
+        
         return 
             new SqsQueueMessagingSession(                
-                new DefaultAWSCredentialsProviderChain().getCredentials())
+                new ProfileCredentialsProvider(path,profile).getCredentials())
                 .insertQueue( 
                     "foo-test",
                     "https://sqs.us-west-2.amazonaws.com/450471544890/foo-test" )
                 .insertSelector( 
                     "ReturnAddress='foo'",
-                    new DefaultSelector() );
+                    new DefaultSelector() );        
     }
 
 }

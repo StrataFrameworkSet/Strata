@@ -25,6 +25,7 @@
 package strata1.integrator.inmemorymessaging;
 
 import strata1.integrator.messaging.DeliveryMode;
+import strata1.integrator.messaging.IBytesMessage;
 import strata1.integrator.messaging.IObjectMessage;
 import java.io.Serializable;
 
@@ -71,6 +72,17 @@ class InMemoryObjectMessage
     setCorrelationId(String correlationId)
     {
         super.setCorrelationId( correlationId );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IObjectMessage 
+    setSequenceNum(long sequenceNum)
+    {
+        super.setSequenceNum( sequenceNum );
         return this;
     }
 

@@ -104,6 +104,17 @@ class SqsMapMessage
      */
     @Override
     public IMapMessage 
+    setSequenceNum(long sequenceNum)
+    {
+        super.setSequenceNum( sequenceNum );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMapMessage 
     setReturnAddress(String returnAddress)
     {
         super.setReturnAddress( returnAddress );

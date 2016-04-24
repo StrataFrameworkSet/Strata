@@ -49,6 +49,7 @@ class InMemoryMessage
 {
     private String                   itsMessageId;
     private String                   itsCorrelationId;
+    private Long                     itsSequenceNum;
     private String                   itsReturnAddress;
     private DeliveryMode             itsDeliveryMode;
     private long                     itsTimeToLive;
@@ -63,6 +64,7 @@ class InMemoryMessage
     {
         itsMessageId     = null;
         itsCorrelationId = null;
+        itsSequenceNum   = null;
         itsReturnAddress = null;
         itsDeliveryMode  = DeliveryMode.NON_PERSISTENT;
         itsTimeToLive    = 10000;
@@ -88,6 +90,17 @@ class InMemoryMessage
     setCorrelationId(String correlationId)
     {
         itsCorrelationId = correlationId;
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IMessage 
+    setSequenceNum(long sequenceNum)
+    {
+        itsSequenceNum = sequenceNum;
         return this;
     }
 
@@ -219,6 +232,16 @@ class InMemoryMessage
     getCorrelationId()
     {
         return itsCorrelationId;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public long 
+    getSequenceNum()
+    {
+        return itsSequenceNum;
     }
 
     /************************************************************************

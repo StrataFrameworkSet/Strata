@@ -28,6 +28,7 @@ import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.MessagingSessionTest;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.sqs.AmazonSQSClient;
@@ -58,12 +59,12 @@ class SqsMessagingSessionTest
     protected IMessagingSession 
     createMessagingSesssion()
     {
-        // AccessKeyId = AKIAIUYU4ICABB3XGYMA
-        // SecretAccessKey = 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
-                
+        String path = "C:/Users/John/.aws/credentials";
+        String profile = "default";
+        
         return 
-            new SqsQueueMessagingSession(
-                new DefaultAWSCredentialsProviderChain().getCredentials())
+            new SqsQueueMessagingSession(                
+                new ProfileCredentialsProvider(path,profile).getCredentials())
                 .insertQueue( 
                     "foo-test",
                     "https://sqs.us-west-2.amazonaws.com/450471544890/foo-test" )

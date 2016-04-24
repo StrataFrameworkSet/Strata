@@ -25,11 +25,7 @@
 package strata1.jmsintegrator.jmsmessaging;
 
 import org.apache.activemq.MessageTransformerSupport;
-import org.apache.activemq.command.ActiveMQMapMessage;
-import org.apache.activemq.command.ActiveMQObjectMessage;
-import org.apache.activemq.command.ActiveMQTextMessage;
 import org.fusesource.hawtbuf.Buffer;
-import org.fusesource.stomp.jms.message.StompJmsMapMessage;
 import org.fusesource.stomp.jms.util.StompTranslator;
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
@@ -41,11 +37,7 @@ import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /****************************************************************************
  * 

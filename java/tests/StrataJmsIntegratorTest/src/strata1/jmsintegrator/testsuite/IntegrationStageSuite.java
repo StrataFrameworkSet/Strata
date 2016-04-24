@@ -44,10 +44,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     JmsMessagingSessionTest.class,
     JmsMessageSenderTest.class,
-    JmsMessageReceiverTest.class,
-    SqsJmsMessageSenderTest.class,
-    SqsJmsMessageReceiverTest.class,
-    StompJmsMessageReceiverTest.class})
+    JmsMessageReceiverTest.class})
 public 
 class IntegrationStageSuite {}
 

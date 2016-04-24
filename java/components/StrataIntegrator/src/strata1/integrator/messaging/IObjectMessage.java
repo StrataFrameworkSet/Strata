@@ -44,6 +44,9 @@ interface IObjectMessage
     setCorrelationId(String correlationId);
     
     public IObjectMessage
+    setSequenceNum(long sequenceNum);
+    
+    public IObjectMessage
     setReturnAddress(String returnAddress);
     
     public IObjectMessage

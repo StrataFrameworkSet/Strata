@@ -40,6 +40,9 @@ interface IMessage
     public IMessage
     setCorrelationId(String correlationId);
     
+    public IMessage 
+    setSequenceNum(long sequenceNum);
+    
     public IMessage
     setReturnAddress(String returnAddress);
     
@@ -75,6 +78,9 @@ interface IMessage
     
     public String 
     getCorrelationId();
+    
+    public long 
+    getSequenceNum();
     
     public String 
     getReturnAddress();

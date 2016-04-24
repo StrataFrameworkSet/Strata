@@ -24,8 +24,8 @@
 
 package strata1.persistence.inmemoryrepository;
 
-import strata1.common.utility.ISynchronizer;
-import strata1.common.utility.ReadWriteLockSynchronizer;
+import strata1.common.lockingsynchronizer.ReadWriteLockSynchronizer;
+import strata1.common.synchronizer.ISynchronizer;
 import strata1.persistence.repository.IRepositoryContext;
 import java.util.ArrayList;
 import java.util.HashMap;

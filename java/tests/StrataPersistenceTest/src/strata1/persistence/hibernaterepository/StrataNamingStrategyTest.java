@@ -25,7 +25,6 @@
 package strata1.persistence.hibernaterepository;
 
 import static org.junit.Assert.fail;
-import strata1.persistence.hibernaterepository.StrataNamingStrategy;
 import strata1.persistence.testdomain.EmailAddress;
 import strata1.persistence.testdomain.IParty;
 import org.junit.After;

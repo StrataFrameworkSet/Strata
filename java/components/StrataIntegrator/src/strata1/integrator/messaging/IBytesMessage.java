@@ -44,6 +44,9 @@ interface IBytesMessage
     setCorrelationId(String correlationId);
     
     public IBytesMessage
+    setSequenceNum(long sequenceNum);
+    
+    public IBytesMessage
     setReturnAddress(String returnAddress);
     
     public IBytesMessage

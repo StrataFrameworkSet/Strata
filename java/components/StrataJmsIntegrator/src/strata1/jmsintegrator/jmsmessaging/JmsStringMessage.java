@@ -25,6 +25,7 @@
 package strata1.jmsintegrator.jmsmessaging;
 
 import strata1.integrator.messaging.DeliveryMode;
+import strata1.integrator.messaging.IBytesMessage;
 import strata1.integrator.messaging.IStringMessage;
 import javax.jms.JMSException;
 import javax.jms.TextMessage;
@@ -72,6 +73,17 @@ class JmsStringMessage
     setCorrelationId(String correlationId)
     {
         super.setCorrelationId( correlationId );
+        return this;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IStringMessage 
+    setSequenceNum(long sequenceNum)
+    {
+        super.setSequenceNum( sequenceNum );
         return this;
     }
 
