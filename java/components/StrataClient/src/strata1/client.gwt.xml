@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.6.1//EN" "http://google-web-toolkit.googlecode.com/svn/tags/2.6.1/distro-source/core/src/gwt-module.dtd">
+<module>
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name="strata1.common" />
+	<source path="client/command"/>
+	<source path="client/controller"/>
+	<source path="client/event"/>
+	<source path="client/model"/>
+	<source path="client/shell"/>
+	<source path="client/view"/>
+</module>
