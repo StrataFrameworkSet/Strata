@@ -112,7 +112,9 @@ class AbstractMessagingProxy<K,R,L>
         IMessagingSession eventSession,
         String            eventSelector)
     {
-        itsReturnAddress    = createReturnAddress(returnAddressPrefix);
+        itsReturnAddress    = createReturnAddress(
+        					      returnAddressPrefix,
+        					      commandSession);
         itsRequestChannelId = requestChannelId;
         itsReplyChannelId   = replyChannelId;
         itsEventChannelId   = eventChannelId;
@@ -441,8 +443,8 @@ class AbstractMessagingProxy<K,R,L>
      * @param prefix
      * @return
      */
-    private String
-    createReturnAddress(String prefix)
+    protected String
+    createReturnAddress(String prefix,IMessagingSession session)
     {
         return 
             prefix +

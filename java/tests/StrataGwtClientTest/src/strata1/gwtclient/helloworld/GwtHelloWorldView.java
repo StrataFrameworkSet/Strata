@@ -25,7 +25,6 @@
 package strata1.gwtclient.helloworld;
 
 import strata1.client.command.ExecutionException;
-import strata1.client.event.IChangeEvent;
 import strata1.client.helloworld.IHelloWorldProvider;
 import strata1.client.helloworld.IHelloWorldView;
 import strata1.gwtclient.gwtview.AbstractGwtView;

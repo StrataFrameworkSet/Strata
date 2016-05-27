@@ -24,7 +24,6 @@
 
 package strata1.swtclient.swtview;
 
-import strata1.client.command.ILoginProvider;
 import strata1.client.command.INullProvider;
 import strata1.client.shell.IDispatcher;
 import strata1.client.view.AbstractView;

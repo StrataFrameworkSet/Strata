@@ -26,11 +26,9 @@ package strata1.injector.bootstrap;
 
 import strata1.injector.container.Container;
 import strata1.injector.container.IContainer;
-import strata1.injector.container.IModule;
 import strata1.common.commandline.ICommandLineParser;
 import strata1.common.logger.ILogger;
 import strata1.common.logger.Logger;
-import java.util.List;
 
 /****************************************************************************
  * 
@@ -75,12 +73,33 @@ class AbstractApplicationFactory
      * {@inheritDoc} 
      */
     @Override
+    @Deprecated
     public ILogger 
     createLogger()
     {
         return new Logger();
     }
 
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public ILoggerProvider 
+    createLoggerProvider()
+    {
+        return 
+            new ILoggerProvider()
+            {   
+                @Override
+                public ILogger 
+                get()
+                {
+                    return new Logger();
+                }               
+            };
+    }
+
+    
 }
 
 // ##########################################################################

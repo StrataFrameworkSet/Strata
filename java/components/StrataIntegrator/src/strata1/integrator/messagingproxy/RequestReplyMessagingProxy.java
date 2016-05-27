@@ -93,7 +93,8 @@ class RequestReplyMessagingProxy<K,R>
         String            replyChannelId,
         IMessagingSession commandSession)
     {
-        itsReturnAddress    = createReturnAddress(returnAddressPrefix);
+        itsReturnAddress    = createReturnAddress(
+        						  returnAddressPrefix,commandSession);
         itsRequestChannelId = requestChannelId;
         itsReplyChannelId   = replyChannelId;
         itsCommandSession   = commandSession;
@@ -343,8 +344,8 @@ class RequestReplyMessagingProxy<K,R>
      * @param prefix
      * @return
      */
-    private String
-    createReturnAddress(String prefix)
+    protected String
+    createReturnAddress(String prefix,IMessagingSession session)
     {
         return 
             prefix +

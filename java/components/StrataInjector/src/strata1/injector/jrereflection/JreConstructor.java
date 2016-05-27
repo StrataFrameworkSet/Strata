@@ -27,7 +27,6 @@ package strata1.injector.jrereflection;
 import strata1.injector.reflection.IConstructor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /****************************************************************************
  * 

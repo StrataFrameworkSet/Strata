@@ -27,8 +27,6 @@ package strata1.injector.bootstrap;
 import java.util.List;
 import strata1.common.commandline.ICommandLineParser;
 import strata1.common.logger.ILogger;
-import strata1.common.task.ITaskConsumer;
-import strata1.common.task.ITaskFlowManager;
 import strata1.injector.container.IContainer;
 import strata1.injector.container.IModule;
 
@@ -63,8 +61,17 @@ interface IApplicationFactory
      *
      * @return
      */
+    @Deprecated
     public ILogger
     createLogger();
+    
+    /************************************************************************
+     *  
+     *
+     * @return
+     */
+    public ILoggerProvider
+    createLoggerProvider();
     
     /************************************************************************
      *  

@@ -28,10 +28,10 @@ import java.util.Collections;
 import java.util.List;
 import strata1.common.commandline.ICommandLineParser;
 import strata1.common.logger.ILogger;
-import strata1.common.task.ITaskFlowManager;
 import strata1.injector.container.Binder;
 import strata1.injector.container.IContainer;
 import strata1.injector.container.IModule;
+import strata1.injector.container.ThreadScope;
 
 /****************************************************************************
  * 
@@ -204,17 +204,19 @@ class Bootstrapper
     protected void 
     createLogger(IApplicationFactory factory)
     {
-        itsLogger = factory.createLogger();
-        
-        if ( getLogger() == null )
-            throw new IllegalStateException("logger is null");
-        
-        getLogger().logInfo( "Registering logger with container" );
         getContainer()
             .insertBinding(
                 Binder
                     .bindType( ILogger.class )
-                    .toInstance( itsLogger ) );
+                    .toProvider( factory.createLoggerProvider() )
+                    .withScope( new ThreadScope<ILogger>() ));
+
+        itsLogger = getContainer().getInstance( ILogger.class );
+        
+        if ( getLogger() == null )
+            throw new IllegalStateException("logger is null");     
+        
+        getLogger().logInfo( "Registering logger with container" );
     }
 
     /************************************************************************

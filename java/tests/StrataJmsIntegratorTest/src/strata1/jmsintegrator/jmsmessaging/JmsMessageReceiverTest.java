@@ -26,19 +26,9 @@ package strata1.jmsintegrator.jmsmessaging;
 
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.MessageReceiverTest;
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.ActiveMQSslConnectionFactory;
-import org.fusesource.stomp.jms.StompJmsConnectionFactory;
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509KeyManager;
 import javax.net.ssl.X509TrustManager;
-import java.net.Socket;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.Principal;
-import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 

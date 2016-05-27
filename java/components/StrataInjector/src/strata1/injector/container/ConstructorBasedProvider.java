@@ -27,7 +27,6 @@ package strata1.injector.container;
 import strata1.injector.reflection.IConstructor;
 import strata1.injector.reflection.IType;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;

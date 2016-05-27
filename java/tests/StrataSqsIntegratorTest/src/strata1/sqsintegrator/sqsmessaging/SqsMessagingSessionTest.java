@@ -26,12 +26,7 @@ package strata1.sqsintegrator.sqsmessaging;
 
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.MessagingSessionTest;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.sqs.AmazonSQSClient;
 
 /****************************************************************************
  * 

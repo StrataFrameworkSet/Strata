@@ -28,7 +28,6 @@ import java.io.Serializable;
 import javax.jms.JMSException;
 import javax.jms.ObjectMessage;
 import strata1.integrator.messaging.DeliveryMode;
-import strata1.integrator.messaging.IBytesMessage;
 import strata1.integrator.messaging.IObjectMessage;
 
 /****************************************************************************

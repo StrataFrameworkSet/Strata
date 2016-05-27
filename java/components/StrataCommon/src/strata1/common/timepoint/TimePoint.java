@@ -29,7 +29,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Formatter;
 
 /**
  * Provides a simplified abstraction for representing date/time values

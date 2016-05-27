@@ -1,7 +1,7 @@
 <project name="BuildProperties">
 
 	<property name="compiler" value="javac1.7"/>
-	<property name="version" value="1.0.0"/>
+	<property name="version" value="1.0.1"/>
     <property name="workspace.dir" value="${basedir}/../.."/>
     
     <property name="repository.dir" value="${workspace.dir}/.repository"/>

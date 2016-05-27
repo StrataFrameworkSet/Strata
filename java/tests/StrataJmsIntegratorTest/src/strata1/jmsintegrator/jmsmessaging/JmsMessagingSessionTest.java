@@ -26,7 +26,6 @@ package strata1.jmsintegrator.jmsmessaging;
 
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.MessagingSessionTest;
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.ActiveMQSslConnectionFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;

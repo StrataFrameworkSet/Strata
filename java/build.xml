@@ -19,6 +19,7 @@
     <property name="gwtclient.root" value="${components.root}/StrataGwtClient"/>
     <property name="integrator.root" value="${components.root}/StrataIntegrator"/>
     <property name="jmsintegrator.root" value="${components.root}/StrataJmsIntegrator"/>
+    <property name="sqsintegrator.root" value="${components.root}/StrataSqsIntegrator"/>
     <property name="persistence.root" value="${components.root}/StrataPersistence"/>
     <property name="server.root" value="${components.root}/StrataServer"/>
     
@@ -31,43 +32,36 @@
     <property name="gwtclienttest.root" value="${tests.root}/StrataGwtClientTest"/>
     <property name="integratortest.root" value="${tests.root}/StrataIntegratorTest"/>
     <property name="jmsintegratortest.root" value="${tests.root}/StrataJmsIntegratorTest"/>
+    <property name="sqsintegratortest.root" value="${tests.root}/StrataSqsIntegratorTest"/>
     <property name="persistencetest.root" value="${tests.root}/StrataPersistenceTest"/>
     <property name="servertest.root" value="${tests.root}/StrataServerTest"/>
  
     <filelist id="build.files">
         <file name="${common.root}/build.xml"/>
-        <file name="${commontest.root}/build.xml"/>
-        
         <file name="${injector.root}/build.xml"/>
-        <file name="${injectortest.root}/build.xml"/>
-                
         <file name="${inspector.root}/build.xml"/>
-        <file name="${inspectortest.root}/build.xml"/>
-        
         <file name="${integrator.root}/build.xml"/>
-        <file name="${integratortest.root}/build.xml"/>
-        
         <file name="${jmsintegrator.root}/build.xml"/>
-        <file name="${jmsintegratortest.root}/build.xml"/>
-                
+        <file name="${sqsintegrator.root}/build.xml"/>
         <file name="${client.root}/build.xml"/>
-        <file name="${clienttest.root}/build.xml"/>
-                
         <file name="${swtclient.root}/build.xml"/>
-        <file name="${swtclienttest.root}/build.xml"/>
-                
         <file name="${androidclient.root}/build.xml"/>
-        <file name="${androidclienttest.root}/build.xml"/>
-                
         <file name="${gwtclient.root}/build.xml"/>
-        <file name="${gwtclienttest.root}/build.xml"/>
-                
         <file name="${persistence.root}/build.xml"/>
-        <file name="${persistencetest.root}/build.xml"/>
-                
         <file name="${server.root}/build.xml"/>
-        <file name="${servertest.root}/build.xml"/>
-                       
+
+        <file name="${commontest.root}/build.xml"/>        
+        <file name="${injectortest.root}/build.xml"/>
+        <file name="${inspectortest.root}/build.xml"/>        
+        <file name="${integratortest.root}/build.xml"/>        
+        <file name="${jmsintegratortest.root}/build.xml"/>
+        <file name="${sqsintegratortest.root}/build.xml"/>                
+        <file name="${clienttest.root}/build.xml"/>                
+        <file name="${swtclienttest.root}/build.xml"/>                
+        <file name="${androidclienttest.root}/build.xml"/>                
+        <file name="${gwtclienttest.root}/build.xml"/>                
+        <file name="${persistencetest.root}/build.xml"/>                
+        <file name="${servertest.root}/build.xml"/>                       
     </filelist>
         
  	<macrodef 

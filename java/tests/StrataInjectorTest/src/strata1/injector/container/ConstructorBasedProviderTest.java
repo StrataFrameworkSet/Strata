@@ -25,7 +25,6 @@
 package strata1.injector.container;
 
 import static org.junit.Assert.assertNotNull;
-import strata1.injector.jrereflection.JreConstructor;
 import strata1.injector.jrereflection.JreTypeManager;
 import strata1.injector.reflection.IConstructor;
 import strata1.injector.reflection.IType;
@@ -33,7 +32,6 @@ import strata1.injector.reflection.ITypeManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import java.lang.reflect.Constructor;
 import javax.inject.Inject;
 
 /****************************************************************************

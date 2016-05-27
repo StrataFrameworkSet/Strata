@@ -29,7 +29,6 @@ import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.MessageReceiverTest;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import java.util.HashMap;
 import java.util.Map;

@@ -24,7 +24,6 @@
 
 package strata1.common.logger;
 
-import strata1.common.datetime.DateTime;
 import strata1.common.timepoint.TimePoint;
 
 /****************************************************************************

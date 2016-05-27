@@ -26,8 +26,6 @@ package strata1.client.application;
 
 import strata1.injector.bootstrap.IBootstrapper;
 import strata1.injector.bootstrap.IApplicationFactory;
-import strata1.client.bootstrap.IClientBootstrapper;
-import strata1.client.bootstrap.IClientFactory;
 
 /****************************************************************************
  * 

@@ -24,6 +24,7 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
+import strata1.integrator.inmemorymessaging.SimpleSelector;
 import strata1.integrator.messaging.IBytesMessage;
 import strata1.integrator.messaging.IMapMessage;
 import strata1.integrator.messaging.IMessageReceiver;
@@ -37,6 +38,7 @@ import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,6 +60,7 @@ class SqsQueueMessagingSession
     private final Map<String,ISelector> itsSelectors;
     private final AtomicBoolean         itsReceivingFlag;
     private final AcknowledgementMode   itsAcknowledgementMode;
+    private final SelectorFactory       itsFactory;
     
     /************************************************************************
      * Creates a new SqsQueueMessagingSession. 
@@ -84,6 +87,7 @@ class SqsQueueMessagingSession
         itsSelectors = new HashMap<String,ISelector>();
         itsReceivingFlag = new AtomicBoolean(false);
         itsAcknowledgementMode = ackMode;
+        itsFactory = new SelectorFactory();
     }
 
     /************************************************************************
@@ -276,10 +280,16 @@ class SqsQueueMessagingSession
     public ISelector
     getSelector(String selector)
     {
+    	String key = normalize(selector);
+    	
+    	if ( !hasSelector(key) && itsFactory.isStringEquals(key) )
+    		insertSelector( key,itsFactory.createStringEqualsSelector(key) );
+    	
         return itsSelectors.get( normalize(selector) );
     }
 
-    /************************************************************************
+
+	/************************************************************************
      * {@inheritDoc} 
      */
     @Override

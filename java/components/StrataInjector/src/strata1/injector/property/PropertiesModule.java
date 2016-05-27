@@ -26,10 +26,6 @@ package strata1.injector.property;
 
 import strata1.injector.container.AbstractModule;
 import strata1.injector.container.IContainer;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 /****************************************************************************
