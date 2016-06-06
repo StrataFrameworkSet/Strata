@@ -93,7 +93,7 @@ class AbstractMessageRetriever
                     .withWaitTimeSeconds( waitTimeSecs )
                     .withVisibilityTimeout( 20 )
                     .withMaxNumberOfMessages( 10 );
-                
+            
             result = service.receiveMessage( request );
                     
             for (Message message : result.getMessages() )
@@ -125,7 +125,9 @@ class AbstractMessageRetriever
                         output.acknowledge();                    
                 }
                 else
+                {
                     makeVisibleToOtherReceivers( service,queueUrl,message );
+                }
                 
             }
             

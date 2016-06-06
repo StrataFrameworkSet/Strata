@@ -81,6 +81,9 @@ class SqsMessageReceiver
         itsSelector      = selector;
         itsSelectorImp   = session.getSelector( selector );
         itsListeningFlag = new AtomicBoolean(false);
+        
+        if ( itsSelectorImp == null )
+            throw new NullPointerException( "Selector imp is null." );
     }
 
     /************************************************************************
