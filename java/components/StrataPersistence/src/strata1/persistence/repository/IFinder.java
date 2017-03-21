@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	IFinder.java
+// # File Name:	INamedQuery.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -51,7 +51,7 @@ interface IFinder<T>
 {
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @return {@code IFinder<T>}
+	 * @return {@code INamedQuery<T>}
 	 * 
 	 */
 	@Override
@@ -102,7 +102,7 @@ interface IFinder<T>
 	clear();
 	
 	/************************************************************************
-	 * Returns the <code>IFinder</code>'s name. 
+	 * Returns the <code>INamedQuery</code>'s name. 
 	 *
 	 * @return	finder's name
 	 */

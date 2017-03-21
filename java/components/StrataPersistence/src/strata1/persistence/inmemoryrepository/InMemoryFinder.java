@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	InMemoryFinder.java
+// # File Name:	InMemoryNamedQuery.java
 // #
 // # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -57,7 +57,7 @@ class InMemoryFinder<T>
 	private Iterator<T>				  itsIterator;
 		
 	/************************************************************************
-	 * Creates a new InMemoryFinder. 
+	 * Creates a new InMemoryNamedQuery. 
 	 * @param type TODO
 	 *
 	 */
@@ -80,7 +80,7 @@ class InMemoryFinder<T>
 	}
 
 	/************************************************************************
-	 * Creates a new InMemoryFinder. 
+	 * Creates a new InMemoryNamedQuery. 
 	 *
 	 */
 	public 

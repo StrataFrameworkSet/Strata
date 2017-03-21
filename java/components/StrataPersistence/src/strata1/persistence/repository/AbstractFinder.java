@@ -41,7 +41,7 @@ class AbstractFinder<T>
 	private InputKeeper	itsInputs;
 	
 	/************************************************************************
-	 * Creates a new AbstractFinder. 
+	 * Creates a new AbstractNamedQuery. 
 	 *
 	 * @param name
 	 */
@@ -54,7 +54,7 @@ class AbstractFinder<T>
 	}
 
 	/************************************************************************
-	 * Creates a new AbstractFinder. 
+	 * Creates a new AbstractNamedQuery. 
 	 *
 	 * @param other
 	 */
@@ -68,7 +68,7 @@ class AbstractFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IFinder#setInput(String,Object)
+	 * @see INamedQuery#setInput(String,Object)
 	 */
 	@Override
 	public void 
@@ -80,7 +80,7 @@ class AbstractFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IFinder#setInput(int,Object)
+	 * @see INamedQuery#setInput(int,Object)
 	 */
 	@Override
 	public void 
@@ -92,7 +92,7 @@ class AbstractFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IFinder#setInput(Collection)
+	 * @see INamedQuery#setInput(Collection)
 	 */
 	@Override
 	public void 
@@ -104,7 +104,7 @@ class AbstractFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IFinder#clearInputs()
+	 * @see INamedQuery#clearInputs()
 	 */
 	@Override
 	public void 
@@ -115,7 +115,7 @@ class AbstractFinder<T>
 
 	/************************************************************************
 	 * {@inheritDoc} 
-	 * @see IFinder#getName()
+	 * @see INamedQuery#getName()
 	 */
 	@Override
 	public String 

@@ -1,0 +1,39 @@
+<project 
+	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+	name="StrataFoundation" 
+	default="run-commit-stage">
+	
+	<import file="../../component-targets.xml"/>
+		
+	
+	<target name="define-properties">
+		
+		<property name="copy.sources" value="true"/>
+	    <property name="source.dir" value="src"/>
+	    <property name="output.dir" value="bin"/>
+	    <property name="distribution.dir" value="lib"/>
+	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
+	    <property name="component.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
+		
+		<artifact:pom 
+			name="Strata Application Framework"
+			id="${ant.project.name}" 
+			groupId="strata1" 
+			artifactId="${ant.project.name}" 
+			version="${version}">
+	        <dependency groupId="com.lmax" artifactId="disruptor" version="3.2.1"/>
+	        <dependency groupId="javax.mail" artifactId="mail" version="1.4.7"/>
+	        <dependency groupId="com.fasterxml.jackson.core" artifactId="jackson-databind" version="2.7.3"/>
+		</artifact:pom>
+			
+	    <artifact:dependencies 
+	    	pathId="dependency.classpath"
+	    	pomRefId="${ant.project.name}">
+	        <localRepository path="${repository.dir}"/>
+	    </artifact:dependencies>
+		
+		<property name="component.classpath" value="dependency.classpath"/>
+				
+	</target>
+		
+</project>	

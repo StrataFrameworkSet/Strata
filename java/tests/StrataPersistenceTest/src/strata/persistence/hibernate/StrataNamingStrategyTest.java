@@ -22,15 +22,16 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata1.persistence.hibernaterepository;
+package strata.persistence.hibernate;
 
 import static org.junit.Assert.fail;
-import strata1.persistence.testdomain.EmailAddress;
-import strata1.persistence.testdomain.IParty;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import junit.framework.Assert;
+import strata.persistence.testdomain.EmailAddress;
+import strata.persistence.testdomain.IParty;
 
 /****************************************************************************
  * 
@@ -111,7 +112,7 @@ class StrataNamingStrategyTest
     }
 
     /**
-     * Test method for {@link strata1.persistence.hibernaterepository.StrataNamingStrategy#tableName(java.lang.String)}.
+     * Test method for {@link strata.persistence.hibernate.StrataNamingStrategy#tableName(java.lang.String)}.
      */
     @Test
     public void 
@@ -129,7 +130,7 @@ class StrataNamingStrategyTest
     }
 
     /**
-     * Test method for {@link strata1.persistence.hibernaterepository.StrataNamingStrategy#columnName(java.lang.String)}.
+     * Test method for {@link strata.persistence.hibernate.StrataNamingStrategy#columnName(java.lang.String)}.
      */
     @Test
     public void testColumnNameString()
@@ -146,7 +147,7 @@ class StrataNamingStrategyTest
     }
 
     /**
-     * Test method for {@link strata1.persistence.hibernaterepository.StrataNamingStrategy#collectionTableName(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
+     * Test method for {@link strata.persistence.hibernate.StrataNamingStrategy#collectionTableName(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
      */
     @Test
     public void testCollectionTableNameStringStringStringStringString()
@@ -155,7 +156,7 @@ class StrataNamingStrategyTest
     }
 
     /**
-     * Test method for {@link strata1.persistence.hibernaterepository.StrataNamingStrategy#joinKeyColumnName(java.lang.String, java.lang.String)}.
+     * Test method for {@link strata.persistence.hibernate.StrataNamingStrategy#joinKeyColumnName(java.lang.String, java.lang.String)}.
      */
     @Test
     public void testJoinKeyColumnNameStringString()
@@ -164,7 +165,7 @@ class StrataNamingStrategyTest
     }
 
     /**
-     * Test method for {@link strata1.persistence.hibernaterepository.StrataNamingStrategy#foreignKeyColumnName(java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
+     * Test method for {@link strata.persistence.hibernate.StrataNamingStrategy#foreignKeyColumnName(java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
      */
     @Test
     public void testForeignKeyColumnNameStringStringStringString()
@@ -173,7 +174,7 @@ class StrataNamingStrategyTest
     }
 
     /**
-     * Test method for {@link strata1.persistence.hibernaterepository.StrataNamingStrategy#logicalColumnName(java.lang.String, java.lang.String)}.
+     * Test method for {@link strata.persistence.hibernate.StrataNamingStrategy#logicalColumnName(java.lang.String, java.lang.String)}.
      */
     @Test
     public void testLogicalColumnNameStringString()
@@ -182,7 +183,7 @@ class StrataNamingStrategyTest
     }
 
     /**
-     * Test method for {@link strata1.persistence.hibernaterepository.StrataNamingStrategy#logicalCollectionTableName(java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
+     * Test method for {@link strata.persistence.hibernate.StrataNamingStrategy#logicalCollectionTableName(java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
      */
     @Test
     public void testLogicalCollectionTableNameStringStringStringString()
@@ -191,7 +192,7 @@ class StrataNamingStrategyTest
     }
 
     /**
-     * Test method for {@link strata1.persistence.hibernaterepository.StrataNamingStrategy#logicalCollectionColumnName(java.lang.String, java.lang.String, java.lang.String)}.
+     * Test method for {@link strata.persistence.hibernate.StrataNamingStrategy#logicalCollectionColumnName(java.lang.String, java.lang.String, java.lang.String)}.
      */
     @Test
     public void testLogicalCollectionColumnNameStringStringString()

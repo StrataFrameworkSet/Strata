@@ -49,5 +49,6 @@
 	<classpathentry kind="var" path="REPO_ROOT/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar"/>
 	<classpathentry kind="var" path="REPO_ROOT/org/slf4j/slf4j-simple/1.6.1/slf4j-simple-1.6.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataFoundation"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
