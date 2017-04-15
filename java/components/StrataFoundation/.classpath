@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="var" path="REPO_ROOT/com/fasterxml/jackson/core/jackson-core/2.7.3/jackson-core-2.7.3.jar"/>
-	<classpathentry kind="var" path="REPO_ROOT/com/fasterxml/jackson/core/jackson-databind/2.7.3/jackson-databind-2.7.3.jar"/>
-	<classpathentry kind="output" path="bin"/>
+    <classpathentry kind="src" path="src"/>
+    <classpathentry kind="output" path="bin"/>
+    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\com\google\inject\guice\4.1.0\guice-4.1.0.jar"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\javax\inject\javax.inject\1\javax.inject-1.jar"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\aopalliance\aopalliance\1.0\aopalliance-1.0.jar"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\com\google\guava\guava\19.0\guava-19.0.jar"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\com\google\inject\extensions\guice-servlet\4.1.0\guice-servlet-4.1.0.jar"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\javax\servlet\servlet-api\2.5\servlet-api-2.5.jar"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\com\lmax\disruptor\3.2.1\disruptor-3.2.1.jar"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\javax\mail\mail\1.4.7\mail-1.4.7.jar"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\javax\activation\activation\1.1\activation-1.1.jar"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\com\fasterxml\jackson\core\jackson-databind\2.7.3\jackson-databind-2.7.3.jar"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\com\fasterxml\jackson\core\jackson-annotations\2.7.0\jackson-annotations-2.7.0.jar"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\com\fasterxml\jackson\core\jackson-core\2.7.3\jackson-core-2.7.3.jar"/>
+    <classpathentry kind="lib" path="C:\Development\Strata\java\.repository\org\apache\logging\log4j\log4j-api\2.8.1\log4j-api-2.8.1.jar"/>
 </classpath>

@@ -24,7 +24,6 @@
 
 package strata.persistence.hibernate;
 
-import strata1.persistence.hibernaterepository.HibernateFinder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

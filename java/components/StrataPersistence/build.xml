@@ -17,10 +17,10 @@
 		<artifact:pom 
 			name="Strata Application Framework"
 			id="${ant.project.name}" 
-			groupId="strata1" 
+			groupId="strata" 
 			artifactId="${ant.project.name}" 
 			version="${version}">
-	        <dependency groupId="strata1" artifactId="StrataCommon" version="${version}"/>
+	        <dependency groupId="strata" artifactId="StrataFoundation" version="${version}"/>
 		    <dependency groupId="org.springframework" artifactId="spring-orm" version="3.0.6.RELEASE"/>
 	        <dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
 	        <dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>

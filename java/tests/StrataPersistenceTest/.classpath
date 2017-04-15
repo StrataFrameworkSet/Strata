@@ -51,7 +51,6 @@
 	<classpathentry kind="var" path="REPO_ROOT/junit/junit/4.9/junit-4.9.jar"/>
 	<classpathentry kind="var" path="REPO_ROOT/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
 	<classpathentry kind="var" path="REPO_ROOT/org/mockito/mockito-all/1.9.0/mockito-all-1.9.0.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataPersistence"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataFoundation"/>
 	<classpathentry kind="output" path="bin"/>

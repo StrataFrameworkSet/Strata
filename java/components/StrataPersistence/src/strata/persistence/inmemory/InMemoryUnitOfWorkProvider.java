@@ -24,9 +24,6 @@
 
 package strata.persistence.inmemory;
 
-import strata1.common.lockingsynchronizer.ReadWriteLockSynchronizer;
-import strata1.common.synchronizer.ISynchronizer;
-import strata1.persistence.repository.IRepositoryContext;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +46,6 @@ public
 class InMemoryUnitOfWorkProvider 
 	implements IUnitOfWorkProvider
 {
-	private final ISynchronizer                   itsSynchronizer;
     private Map<EntityIdentifier,Object>          itsEntities;
 	private InMemoryUnitOfWork                    itsUnitOfWork;
 	private INamedQueryMap                        itsNamedQueries;
@@ -64,7 +60,6 @@ class InMemoryUnitOfWorkProvider
 	InMemoryUnitOfWorkProvider()
 	{
 		super();
-		itsSynchronizer = new ReadWriteLockSynchronizer();
         itsEntities     = new HashMap<EntityIdentifier,Object>();
 		itsUnitOfWork   = new InMemoryUnitOfWork(this,itsEntities);
 		itsNamedQueries = new NamedQueryMap();
