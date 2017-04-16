@@ -1,35 +1,33 @@
 // ##########################################################################
-// # File Name:	IBootstrapper.java
+// # File Name:	ProviderBasedBinder.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2017, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataInitializer Framework.
+// # License:	This file is part of the StrataFoundation Framework.
 // #
-// #   			The StrataInitializer Framework is free software: you 
+// #   			The StrataFoundation Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataInitializer Framework is distributed in the 
+// #    		The StrataFoundation Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataInitializer
+// #			General Public License along with the StrataFoundation
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata.foundation.bootstrap;
+package strata.foundation.injection;
 
-import java.util.List;
-import strata.foundation.commandline.ICommandLineParser;
-import strata.foundation.injection.IContainer;
-import strata.foundation.injection.IModule;
+import java.lang.annotation.Annotation;
+import javax.inject.Provider;
 
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -37,41 +35,39 @@ import strata.foundation.injection.IModule;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBootstrapper
+class ProviderBasedBinder<T>extends AbstractBinder<T>
 {
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    ICommandLineParser
-    getCommandLineParser();
+    private final Provider<? extends T> itsProvider;
     
     /************************************************************************
-     *  
+     * Creates a new ProviderBasedBinder. 
      *
-     * @return
+     * @param builder
+     * @param provider
+     * @param scope
      */
-    IContainer
-    getContainer();
+    public 
+    ProviderBasedBinder(
+        IKeyBindingBuilder<T>       builder,
+        Provider<? extends T>       provider,
+        Class<? extends Annotation> scope)
+    {
+        super( builder,scope );
+        itsProvider = provider;
+    }
 
     /************************************************************************
-     *  
-     *
-     * @param factory
+     * {@inheritDoc} 
      */
-    void
-    run(IApplicationFactory factory);
-    
-    /************************************************************************
-     *  
-     *
-     * @param factory
-     * @param arguments
-     */
-    void
-    run(IApplicationFactory factory,String[] arguments);
+    @Override
+    public void 
+    bind()
+    {
+        getBuilder()
+            .toProvider( itsProvider )
+            .withScope( getScope() );
+    }
+
 }
-
 
 // ##########################################################################

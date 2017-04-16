@@ -85,35 +85,12 @@ class Bootstrapper
      * {@inheritDoc} 
      */
     @Override
-    public List<IModule> 
-    getModules()
-    {
-        return Collections.unmodifiableList( itsModules );
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IStartStopController 
-    getStartStopController()
-    {
-        return itsStartStopController;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
     public void 
     run(IApplicationFactory factory)
     {
         try
         {
-            createCommandLineParser(factory);
             createContainer(factory);
-            createStartStopController(factory);
-            configureStartStopController();
         }
         catch (Exception e)
         {
@@ -136,8 +113,6 @@ class Bootstrapper
                 parseCommandLine(arguments);
             
             createContainer(factory);
-            createStartStopController(factory);
-            configureStartStopController();
         }
         catch (Exception e)
         {
@@ -173,22 +148,6 @@ class Bootstrapper
     /************************************************************************
      *  
      *
-     * @param factory
-     */
-    protected void
-    createStartStopController(IApplicationFactory factory)
-    {
-        itsStartStopController = factory.createStartStopController();
-        
-        if ( getStartStopController() == null )
-            throw 
-                new IllegalStateException("start/stop controller is null.");
-        
-    }
-    
-    /************************************************************************
-     *  
-     *
      * @param arguments
      * @return
      */
@@ -212,17 +171,6 @@ class Bootstrapper
         throws Exception
     {
         getCommandLineParser().parse( arguments );
-    }
-    
-    /************************************************************************
-     *  
-     *
-     */
-    protected void 
-    configureStartStopController()
-    {
-        getStartStopController()
-            .setContainer( getContainer() );
     }
 
 

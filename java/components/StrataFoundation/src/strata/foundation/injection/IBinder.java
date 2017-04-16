@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	AbstractBootstrapModule.java
+// # File Name:	IBinder.java
 // #
 // # Copyright:	2017, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,10 +22,7 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata.foundation.bootstrap;
-
-import strata.foundation.injection.AbstractModule;
-import strata.foundation.logger.ILogger;
+package strata.foundation.injection;
 
 /****************************************************************************
  * 
@@ -34,40 +31,11 @@ import strata.foundation.logger.ILogger;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public
-class BootstrapModule 
-    extends AbstractModule
+public 
+interface IBinder<T>
 {
-    private final IApplicationFactory itsFactory;
-    
-    /************************************************************************
-     * Creates a new AbstractBootstrapModule. 
-     *
-     * @param name
-     */
-    public 
-    BootstrapModule(IApplicationFactory factory)
-    {
-        super( "BootstrapModule" );
-        itsFactory = factory;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    initialize()
-    {
-        itsFactory
-            .createLoggerBinder( bindType(ILogger.class) )
-            .bind();
-        
-        itsFactory
-            .createControllerBinder(bindType(IStartStopController.class))
-            .bind();        
-    }
-
+    void
+    bind();
 }
 
 // ##########################################################################

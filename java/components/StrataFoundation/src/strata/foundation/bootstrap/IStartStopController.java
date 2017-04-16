@@ -24,8 +24,6 @@
 
 package strata.foundation.bootstrap;
 
-import strata.foundation.injection.IContainer;
-
 /****************************************************************************
  * 
  * @author 		
@@ -36,9 +34,6 @@ import strata.foundation.injection.IContainer;
 public 
 interface IStartStopController
 {
-    public IStartStopController
-    setContainer(IContainer container);
-    
     public void
     startApplication();
     

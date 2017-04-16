@@ -7,8 +7,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import strata.foundation.injection.AbstractModule;
+import strata.foundation.injection.IBinder;
 import strata.foundation.injection.IContainer;
+import strata.foundation.injection.IKeyBindingBuilder;
 import strata.foundation.injection.IModule;
+import strata.foundation.injection.ProviderBasedBinder;
+import strata.foundation.injection.SingletonScope;
+import strata.foundation.injection.TargetBasedBinder;
 import strata.foundation.injection.TestModule;
 import strata.foundation.logger.ILogger;
 
@@ -28,43 +33,26 @@ class BootstrapModuleTest
                     {
 
                         @Override
-                        public Definition<ILogger> 
-                        createLoggerDefinition()
+                        public IBinder<ILogger> 
+                        createLoggerBinder(IKeyBindingBuilder<ILogger> builder)
                         {
                             return 
-                                new Definition<ILogger>(
-                                    LoggerProvider.class,
+                                new ProviderBasedBinder<ILogger>(
+                                    builder,
+                                    new LoggerProvider(),
                                     AbstractModule.getDefaultScope());
                         }
 
                         @Override
-                        public IStartStopController 
-                        createStartStopController()
+                        public IBinder<IStartStopController> 
+                        createControllerBinder(IKeyBindingBuilder<IStartStopController> builder)
                         {
                             return 
-                                new IStartStopController()
-                                {
-
-                                    @Override
-                                    public IStartStopController 
-                                    setContainer(IContainer container)
-                                    {
-                                        return this;
-                                    }
-
-                                    @Override
-                                    public void 
-                                    startApplication()
-                                    {
-                                    }
-
-                                    @Override
-                                    public void 
-                                    stopApplication()
-                                    {
-                                    }
-                                
-                                };
+                                new TargetBasedBinder<IStartStopController>(
+                                    builder,
+                                    TestStartStopController.class,
+                                    SingletonScope.class);
+                            
                         }
 
                         @Override

@@ -1,35 +1,30 @@
 // ##########################################################################
-// # File Name:	IBootstrapper.java
+// # File Name:	TestStartStopController.java
 // #
-// # Copyright:	2011, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2017, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataInitializer Framework.
+// # License:	This file is part of the StrataFoundationTest Framework.
 // #
-// #   			The StrataInitializer Framework is free software: you 
+// #   			The StrataFoundationTest Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataInitializer Framework is distributed in the 
+// #    		The StrataFoundationTest Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataInitializer
+// #			General Public License along with the StrataFoundationTest
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
 package strata.foundation.bootstrap;
 
-import java.util.List;
-import strata.foundation.commandline.ICommandLineParser;
-import strata.foundation.injection.IContainer;
-import strata.foundation.injection.IModule;
-
-/**
+/****************************************************************************
  * 
  * @author 		
  *     Sapientia Systems
@@ -37,41 +32,37 @@ import strata.foundation.injection.IModule;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-interface IBootstrapper
+class TestStartStopController 
+    implements IStartStopController
 {
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    ICommandLineParser
-    getCommandLineParser();
-    
-    /************************************************************************
-     *  
-     *
-     * @return
-     */
-    IContainer
-    getContainer();
 
     /************************************************************************
-     *  
+     * Creates a new TestStartStopController. 
      *
-     * @param factory
      */
-    void
-    run(IApplicationFactory factory);
-    
+    public 
+    TestStartStopController()
+    {
+    }
+
     /************************************************************************
-     *  
-     *
-     * @param factory
-     * @param arguments
+     * {@inheritDoc} 
      */
-    void
-    run(IApplicationFactory factory,String[] arguments);
+    @Override
+    public void 
+    startApplication()
+    {
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public void 
+    stopApplication()
+    {
+    }
+
 }
-
 
 // ##########################################################################

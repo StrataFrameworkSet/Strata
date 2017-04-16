@@ -25,7 +25,9 @@
 package strata.foundation.bootstrap;
 
 import strata.foundation.commandline.ICommandLineParser;
+import strata.foundation.injection.IBinder;
 import strata.foundation.injection.IContainer;
+import strata.foundation.injection.IKeyBindingBuilder;
 import strata.foundation.logger.ILogger;
 
 /**
@@ -49,18 +51,20 @@ interface IApplicationFactory
     /************************************************************************
      *  
      *
+     * @param builder 
      * @return
      */
-    public Definition<ILogger>
-    createLoggerDefinition();
+    public IBinder<ILogger>
+    createLoggerBinder(IKeyBindingBuilder<ILogger> builder);
     
     /************************************************************************
      *  
      *
+     * @param builder 
      * @return
      */
-    public IStartStopController
-    createStartStopController();
+    public IBinder<IStartStopController>
+    createControllerBinder(IKeyBindingBuilder<IStartStopController> builder);
 
     /************************************************************************
      *  
