@@ -91,8 +91,7 @@ class PriorityEventProcessor<T>
         boolean[] processedSequence = new boolean[numPriorities];
         long[]    cachedAvailableSequence = new long[numPriorities];
         long[]    nextSequence = new long[numPriorities];
-        T         event = null;
-       
+        
         if (!itsRunningFlag.compareAndSet(false, true))
             throw 
                 new IllegalStateException(
@@ -250,6 +249,7 @@ class PriorityEventProcessor<T>
      * @param cachedAvailableSequence
      * @param nextSequence
      * @param i
+     * @return
      * @throws AlertException
      * @throws InterruptedException
      * @throws TimeoutException
@@ -268,6 +268,7 @@ class PriorityEventProcessor<T>
     {
         T event;
         DisruptorPriorityLevel<T> priority  = itsPriorities[i];
+        @SuppressWarnings("unused")
         long                      available = priority.getBarrier().waitFor(-1);
         Sequence                  workSequence  = priority.getSequence();
     

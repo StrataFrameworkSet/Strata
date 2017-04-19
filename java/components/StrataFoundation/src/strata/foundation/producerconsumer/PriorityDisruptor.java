@@ -109,6 +109,7 @@ class PriorityDisruptor<T>
      *
      * @param array
      */
+    @SuppressWarnings("unchecked")
     public void 
     handleEventsWith(EventHandler<T>... handlers)
     {

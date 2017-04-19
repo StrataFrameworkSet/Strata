@@ -40,7 +40,7 @@ class ProducerConsumerManager<T>
     implements IProducerConsumerManager<T>
 {
     private Set<IProducer<T>> itsProducers;
-    private IDispatcher<T>        itsRouter;  
+    private IDispatcher<T>    itsRouter;  
     private Set<IConsumer<T>> itsConsumers;
     
     /************************************************************************
@@ -186,17 +186,6 @@ class ProducerConsumerManager<T>
      */
     @Override
     public void 
-    startConsumers()
-    {
-        for (IConsumer<T> consumer : itsConsumers);
-            //consumer.startConsuming();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
     stopProducers()
     {
         for (IProducer<T> producer : itsProducers)
@@ -208,20 +197,9 @@ class ProducerConsumerManager<T>
      */
     @Override
     public void 
-    stopConsumers()
-    {
-        for (IConsumer<T> consumer : itsConsumers);
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
     startUp()
     {
         startProducers();
-        startConsumers();
     }
 
     /************************************************************************
@@ -232,7 +210,6 @@ class ProducerConsumerManager<T>
     shutDown()
     {
         stopProducers();
-        stopConsumers();
     }
 
 }

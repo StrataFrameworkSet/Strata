@@ -64,13 +64,7 @@ interface IProducerConsumerManager<T>
     startProducers();
     
     public void
-    startConsumers();
-    
-    public void
     stopProducers();
-    
-    public void
-    stopConsumers();
     
     public void
     startUp();
