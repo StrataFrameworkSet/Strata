@@ -41,10 +41,8 @@ public
 class Bootstrapper
     implements IBootstrapper
 {
-    private ICommandLineParser   itsCommandLineParser;
-    private IContainer           itsContainer;
-    private List<IModule>        itsModules;
-    private IStartStopController itsStartStopController;
+    private ICommandLineParser itsCommandLineParser;
+    private IContainer         itsContainer;
     
     /************************************************************************
      * Creates a new {@code Bootstrapper}. 
@@ -56,8 +54,6 @@ class Bootstrapper
     {
         itsCommandLineParser   = null;
         itsContainer           = null;
-        itsModules             = null;
-        itsStartStopController = null;
     }
 
     /************************************************************************
