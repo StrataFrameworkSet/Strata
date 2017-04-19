@@ -1,33 +1,28 @@
 // ##########################################################################
-// # File Name:	SingletonScope.java
+// # File Name:	TestTaskSelector.java
 // #
 // # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataInjector Framework.
+// # License:	This file is part of the StrataCommonTest Framework.
 // #
-// #   			The StrataInjector Framework is free software: you 
+// #   			The StrataCommonTest Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataInjector Framework is distributed in the 
+// #    		The StrataCommonTest Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataInjector
+// #			General Public License along with the StrataCommonTest
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata.foundation.standardinjection;
-
-import javax.inject.Provider;
-import strata.foundation.injection.IBindingVisitor;
-import strata.foundation.injection.IScopeModifier;
-import strata.foundation.injection.SingletonProvider;
+package strata.foundation.task;
 
 /****************************************************************************
  * 
@@ -37,38 +32,62 @@ import strata.foundation.injection.SingletonProvider;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class SingletonScopeModifier
-    implements IScopeModifier
+class TestTaskSelector
+    implements ITaskSelector
 {
-
+    private int itsTaskId;
+    
     /************************************************************************
-     * Creates a new {@code SingletonScope}. 
+     * Creates a new {@code TestTaskSelector}. 
      *
      */
     public 
-    SingletonScopeModifier() {}
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public <T> void 
-    accept(IBindingVisitor<T> visitor)
+    TestTaskSelector(int taskId)
     {
-        visitor.visitScope( this );
+        itsTaskId = taskId;
     }
 
     /************************************************************************
      * {@inheritDoc} 
      */
     @Override
-    public <T> Provider<T> 
-    getScopedProvider(Provider<T> source)
+    public boolean 
+    match(ITask task)
     {
-        return new SingletonProvider<T>( source );
+        if ( task.hasProperty( Integer.class,"taskId" ) )
+            return 
+                task
+                    .getProperty( Integer.class,"taskId" )
+                    .equals(itsTaskId);
+            
+        return false;
     }
 
-    
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    equals(Object other)
+    {
+        if ( other instanceof TestTaskSelector)
+            return itsTaskId == ((TestTaskSelector)other).itsTaskId;
+        
+        return false;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public int 
+    hashCode()
+    {
+        int hash = 31 * itsTaskId;
+        
+        return hash;
+    }
+
 }
 
 // ##########################################################################

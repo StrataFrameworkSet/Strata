@@ -1,6 +1,6 @@
 package strata.foundation.bootstrap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;

@@ -24,11 +24,11 @@
 
 package strata.foundation.guiceinjection;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.internal.BindingBuilder;
 import strata.foundation.injection.IKeyBindingBuilder;
 import strata.foundation.injection.IModule;
 import strata.foundation.injection.IModuleAdapter;
-import com.google.inject.AbstractModule;
-import com.google.inject.internal.BindingBuilder;
 
 /****************************************************************************
  * 

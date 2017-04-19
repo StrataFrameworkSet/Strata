@@ -2,9 +2,9 @@ package strata.foundation.standardinjection;
 
 import strata.foundation.injection.IBinding;
 import strata.foundation.injection.IBindingIdentifier;
-import strata.foundation.injection.IScopeModifier;
 import strata.foundation.injection.IBindingTarget;
 import strata.foundation.injection.IBindingVisitor;
+import strata.foundation.injection.IScopeModifier;
 
 // ##########################################################################
 // # File Name:	Binding.java

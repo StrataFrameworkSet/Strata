@@ -24,7 +24,6 @@
 
 package strata.foundation.bootstrap;
 
-import java.util.Collections;
 import java.util.List;
 import strata.foundation.commandline.ICommandLineParser;
 import strata.foundation.injection.IContainer;

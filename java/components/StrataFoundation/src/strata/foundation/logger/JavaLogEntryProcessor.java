@@ -40,6 +40,16 @@ class JavaLogEntryProcessor
     private final java.util.logging.Logger itsLogger;
     
     /************************************************************************
+     * Creates a new JavaLogEntryProcessor. 
+     *
+     */
+    public
+    JavaLogEntryProcessor()
+    {
+        this( java.util.logging.Logger.getGlobal() );
+    }
+    
+    /************************************************************************
      * Creates a new Log4jLogEntryProcessor. 
      *
      */

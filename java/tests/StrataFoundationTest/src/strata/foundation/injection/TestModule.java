@@ -24,10 +24,6 @@
 
 package strata.foundation.injection;
 
-import strata.foundation.injection.AbstractModule;
-import strata.foundation.injection.SingletonScope;
-import strata.foundation.injection.ThreadScope;
-
 /****************************************************************************
  * 
  * @author 		

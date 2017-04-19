@@ -30,8 +30,8 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import strata.foundation.injection.IBinding;
 import strata.foundation.injection.IBindingIdentifier;
-import strata.foundation.injection.IScopeModifier;
 import strata.foundation.injection.IBindingVisitor;
+import strata.foundation.injection.IScopeModifier;
 import strata.foundation.injection.InstanceProvider;
 
 /****************************************************************************

@@ -25,8 +25,8 @@
 package strata.foundation.standardinjection;
 
 import javax.inject.Provider;
-import strata.foundation.injection.IScopeModifier;
 import strata.foundation.injection.IBindingVisitor;
+import strata.foundation.injection.IScopeModifier;
 
 /****************************************************************************
  * 
