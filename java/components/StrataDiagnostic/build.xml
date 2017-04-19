@@ -1,0 +1,37 @@
+<project 
+	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+	name="StrataInspector" 
+	default="run-commit-stage">
+	
+	<import file="../../component-targets.xml"/>
+	
+	<target name="define-properties">
+		
+	    <property name="source.dir" value="src"/>
+	    <property name="output.dir" value="bin"/>
+	    <property name="distribution.dir" value="lib"/>
+	    
+	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
+	    <property name="component.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
+		
+		<artifact:pom 
+			name="Strata Application Framework"
+			id="${ant.project.name}" 
+			groupId="strata1" 
+			artifactId="${ant.project.name}" 
+			version="${version}">
+		    <dependency groupId="org.springframework" artifactId="spring-core" version="3.0.6.RELEASE"/>
+	        <dependency groupId="org.springframework" artifactId="spring-context-support" version="3.0.6.RELEASE"/>
+		</artifact:pom>
+				
+	    <artifact:dependencies 
+	    	pathId="dependency.classpath"
+	    	pomRefId="${ant.project.name}">
+	        <localRepository path="${repository.dir}"/>
+	    </artifact:dependencies>
+
+		<property name="component.classpath" value="dependency.classpath"/>
+		
+	</target>
+    
+</project>	
