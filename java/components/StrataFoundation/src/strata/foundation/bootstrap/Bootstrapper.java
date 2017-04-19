@@ -24,10 +24,8 @@
 
 package strata.foundation.bootstrap;
 
-import java.util.List;
 import strata.foundation.commandline.ICommandLineParser;
 import strata.foundation.injection.IContainer;
-import strata.foundation.injection.IModule;
 
 
 /****************************************************************************

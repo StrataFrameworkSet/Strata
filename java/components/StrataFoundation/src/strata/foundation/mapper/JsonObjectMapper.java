@@ -32,6 +32,10 @@ class JsonObjectMapper<T>
     private final ObjectMapper       itsMapper;
     private final Map<String,String> itsTypeMappings;
     
+    /************************************************************************
+     * Creates a new JsonObjectMapper. 
+     *
+     */
     public
     JsonObjectMapper()
     {
