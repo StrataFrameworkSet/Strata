@@ -1,6 +1,6 @@
 <project 
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
-	name="StrataInspector" 
+	name="StrataDiagnostic" 
 	default="run-commit-stage">
 	
 	<import file="../../component-targets.xml"/>
