@@ -1,9 +1,9 @@
 <project 
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
-	name="StrataCommonTest" 
+	name="StrataDiagnosticTest" 
 	default="run-commit-stage">
 	
-	<import file="../../component-targets.xml"/>
+	<import file="../../test-targets.xml"/>
 	
 	<target name="define-properties">
 		
@@ -13,17 +13,17 @@
 	    
 	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
 	    <property name="test.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
-		<property name="commit.test.suite" value="strata1.common.testsuite.CommitStageSuite"/>
-		<property name="integration.test.suite" value="strata1.common.testsuite.IntegrationStageSuite"/>
+	    <property name="commit.test.suite" value="strata.diagnostic.testsuite.CommitStageSuite"/>
+		<property name="integration.test.suite" value="strata.diagnostic.testsuite.IntegrationStageSuite"/>
 	    <property name="test.reports" value="${output.dir}/reports"/>
 		
 		<artifact:pom 
 			name="Strata Application Framework"
 			id="${ant.project.name}" 
-			groupId="strata1" 
+			groupId="strata" 
 			artifactId="${ant.project.name}" 
 			version="${version}">
-		    <dependency groupId="strata1" artifactId="StrataCommon" version="${version}"/>
+	        <dependency groupId="strata" artifactId="StrataDiagnostic" version="${version}"/>
 	        <dependency groupId="junit" artifactId="junit" version="4.9"/>
 	        <dependency groupId="org.mockito" artifactId="mockito-all" version="1.9.0"/>
 	    </artifact:pom>
