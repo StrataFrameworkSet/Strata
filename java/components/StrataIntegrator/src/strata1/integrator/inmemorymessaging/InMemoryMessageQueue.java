@@ -26,9 +26,9 @@ package strata1.integrator.inmemorymessaging;
 
 import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.ISelector;
-import strata1.common.lockingsynchronizer.ReadWriteLockSynchronizer;
-import strata1.common.synchronizer.ISynchronizer;
 import java.util.LinkedList;
+import strata.foundation.utility.ISynchronizer;
+import strata.foundation.utility.ReadWriteLockSynchronizer;
 
 /****************************************************************************
  * 

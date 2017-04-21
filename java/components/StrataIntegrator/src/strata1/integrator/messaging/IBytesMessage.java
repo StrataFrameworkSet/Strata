@@ -24,8 +24,6 @@
 
 package strata1.integrator.messaging;
 
-import java.io.Serializable;
-
 /****************************************************************************
  * 
  * @author 		

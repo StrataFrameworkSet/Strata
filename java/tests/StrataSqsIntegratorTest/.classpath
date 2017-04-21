@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegrator"/>
 	<classpathentry kind="var" path="M2_REPO/com/amazonaws/aws-java-sdk/1.8.9.1/aws-java-sdk-1.8.9.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
@@ -16,5 +15,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/apache/httpcomponents/httpclient/4.2/httpclient-4.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/httpcomponents/httpcore/4.2/httpcore-4.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/joda-time/joda-time/2.4/joda-time-2.4.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataFoundation"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
