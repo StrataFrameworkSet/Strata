@@ -24,8 +24,7 @@
 	<classpathentry kind="var" path="REPO_ROOT/com/fasterxml/jackson/core/jackson-databind/2.1.1/jackson-databind-2.1.1.jar"/>
 	<classpathentry kind="var" path="REPO_ROOT/com/fasterxml/jackson/core/jackson-annotations/2.1.1/jackson-annotations-2.1.1.jar"/>
 	<classpathentry kind="var" path="REPO_ROOT/joda-time/joda-time/2.7/joda-time-2.7.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataInjector"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegrator"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataFoundation"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -50,8 +50,7 @@
 	<classpathentry kind="var" path="REPO_ROOT/javax/inject/javax.inject/1/javax.inject-1-sources.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataClient"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataClientTest"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataGwtClient"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataInjector"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataFoundation"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -24,18 +24,13 @@
 
 package strata1.client.helloworld;
 
-import strata1.common.authentication.FakeAuthenticator;
-import strata1.common.logger.ILogger;
 import strata1.client.controller.ILoginController;
 import strata1.client.controller.LoginController;
 import strata1.client.shell.IDispatcher;
 import strata1.client.view.ILoginView;
 import strata1.client.view.ISplashView;
-import strata1.injector.container.AbstractModule;
-import strata1.injector.container.IContainer;
-import strata1.injector.container.IModule;
-//import strata1.client.swthelloworld.SwtGreetingView;
-import java.util.HashMap;
+import strata.foundation.injection.AbstractModule;
+import strata.foundation.injection.IModule;
 
 /****************************************************************************
  * 
@@ -46,7 +41,7 @@ import java.util.HashMap;
  */
 public abstract
 class GreetingModule
-    extends AbstractModule
+    extends    AbstractModule
     implements IModule
 {
  
@@ -65,9 +60,8 @@ class GreetingModule
      */
     @Override
     public void 
-    initialize(IContainer container)
+    initialize()
     {
-        ILogger         logger = null;
         IDispatcher     dispatcher = null;
         
         ILoginController      loginController  = null;
@@ -85,42 +79,23 @@ class GreetingModule
         view       = createHelloWorldView( dispatcher );
         controller = new HelloWorldController( model,view );
         
-        loginController.setContainer( container );
         loginController.setLoginView( loginView );
         loginController.setMainController( controller );
         
-        logger = container.getInstance( ILogger.class );
+        bindType( IDispatcher.class )
+            .toInstance(dispatcher);
+                
+        bindType( IHelloWorldModel.class )
+            .toInstance(model);
         
-        loginController.setLogger( logger );
-        loginController.setAuthenticator(
-            new FakeAuthenticator(
-                new HashMap<String,String>()
-                {
-    
-                    private static final long serialVersionUID = 1L;
-                    
-                    {
-                        put("john","foobar");
-                        put("nay","FOOBAR");
-                    }
-                }) );
+        bindType( IHelloWorldView.class )
+            .toInstance(view);
         
-        container
-            .insertBinding( 
-                bindType( IDispatcher.class )
-                    .toInstance(dispatcher) )
-            .insertBinding( 
-                bindType( IHelloWorldModel.class )
-                    .toInstance(model) )
-            .insertBinding( 
-                bindType( IHelloWorldView.class )
-                    .toInstance(view) )
-            .insertBinding( 
-                bindType( ILoginController.class )
-                    .toInstance(loginController) )
-            .insertBinding( 
-                bindType( IHelloWorldController.class )
-                    .toInstance(controller) );
+        bindType( ILoginController.class )
+            .toInstance(loginController);
+        
+        bindType( IHelloWorldController.class )
+            .toInstance(controller);
     }
     
     protected abstract ILoginView

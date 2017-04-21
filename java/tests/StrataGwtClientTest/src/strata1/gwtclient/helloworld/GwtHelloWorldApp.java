@@ -24,10 +24,11 @@
 
 package strata1.gwtclient.helloworld;
 
-import strata1.injector.bootstrap.Bootstrapper;
-import strata1.injector.bootstrap.IApplicationFactory;
-import strata1.injector.bootstrap.IBootstrapper;
 import com.google.gwt.core.client.EntryPoint;
+import strata.foundation.bootstrap.Bootstrapper;
+import strata.foundation.bootstrap.IApplicationFactory;
+import strata.foundation.bootstrap.IBootstrapper;
+import strata.foundation.bootstrap.IStartStopController;
 
 /****************************************************************************
  * 
@@ -63,7 +64,8 @@ class GwtHelloWorldApp
     {
         itsBootstrapper.run( itsFactory );
         itsBootstrapper
-            .getStartStopController()
+            .getContainer()
+            .getInstance( IStartStopController.class )
             .startApplication();
     }
 

@@ -24,11 +24,19 @@
 
 package strata1.gwtclient.helloworld;
 
-import strata1.injector.bootstrap.AbstractApplicationFactory;
-import strata1.injector.bootstrap.IStartStopController;
-import strata1.injector.container.IModule;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Provider;
+import strata.foundation.bootstrap.AbstractApplicationFactory;
+import strata.foundation.bootstrap.IStartStopController;
+import strata.foundation.injection.AbstractModule;
+import strata.foundation.injection.IBinder;
+import strata.foundation.injection.IKeyBindingBuilder;
+import strata.foundation.injection.IModule;
+import strata.foundation.injection.ProviderBasedBinder;
+import strata.foundation.injection.TargetBasedBinder;
+import strata.foundation.logger.ILogger;
+import strata.foundation.logger.*;
 
 /****************************************************************************
  * 
@@ -53,6 +61,45 @@ class GwtHelloWorldFactory
      * {@inheritDoc} 
      */
     @Override
+    public IBinder<ILogger> 
+    createLoggerBinder(IKeyBindingBuilder<ILogger> builder)
+    {
+        return 
+            new ProviderBasedBinder<ILogger>(
+                builder,
+                new Provider<ILogger>()
+                {
+                    @Override
+                    public ILogger 
+                    get()
+                    {                        
+                        return 
+                            new Logger()
+                                .attachProcessor( new JavaLogEntryProcessor() );
+                    }
+                    
+                },
+                AbstractModule.getDefaultScope());
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IBinder<IStartStopController> 
+    createControllerBinder(IKeyBindingBuilder<IStartStopController> builder)
+    {
+        return 
+            new TargetBasedBinder<IStartStopController>(
+                builder,
+                GwtHelloWorldStartStopController.class,
+                AbstractModule.getDefaultScope() );
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
     public List<IModule> 
     createModules()
     {
@@ -60,16 +107,6 @@ class GwtHelloWorldFactory
         
         modules.add( new GwtGreetingModule() );
         return modules;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IStartStopController 
-    createStartStopController()
-    {
-        return new GwtHelloWorldStartStopController();
     }
 
 }

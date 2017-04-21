@@ -29,8 +29,6 @@ import strata1.client.command.ILoginProvider;
 import strata1.client.shell.IDispatcher;
 import strata1.client.view.AbstractView;
 import strata1.client.view.ILoginView;
-import strata1.common.authentication.ICredential;
-import strata1.common.authentication.UserNameAndPasswordCredential;
 import strata1.swtclient.swtshell.ISwtDispatcher;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -213,17 +211,6 @@ class SwtLoginView
     getPassword()
     {
         return itsPasswordField.getText();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public ICredential 
-    getCredential()
-    {
-        return 
-            new UserNameAndPasswordCredential(getUserName(),getPassword());
     }
 
     /************************************************************************

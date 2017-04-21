@@ -25,15 +25,14 @@
 package strata1.gwtclient.helloworld;
 
 import strata1.client.command.ExecutionException;
-import strata1.client.event.IChangeEvent;
 import strata1.client.helloworld.IHelloWorldProvider;
 import strata1.client.helloworld.IHelloWorldView;
 import strata1.gwtclient.gwtview.AbstractGwtView;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.MenuBar;
-import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.MenuItem;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 /****************************************************************************
  * 
