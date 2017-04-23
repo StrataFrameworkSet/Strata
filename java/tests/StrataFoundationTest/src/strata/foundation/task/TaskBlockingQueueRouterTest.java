@@ -26,7 +26,6 @@ package strata.foundation.task;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import java.io.PrintWriter;
 import java.io.StringWriter;
 import org.junit.After;
 import org.junit.Before;
