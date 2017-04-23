@@ -26,9 +26,17 @@ package strata.foundation.bootstrap;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Provider;
 import strata.foundation.commandline.ICommandLineParser;
+import strata.foundation.injection.AbstractModule;
+import strata.foundation.injection.IBinder;
 import strata.foundation.injection.IContainer;
+import strata.foundation.injection.IKeyBindingBuilder;
 import strata.foundation.injection.IModule;
+import strata.foundation.injection.ProviderBasedBinder;
+import strata.foundation.logger.ILogger;
+import strata.foundation.logger.JavaLogEntryProcessor;
+import strata.foundation.logger.Logger;
 import strata.foundation.standardinjection.StandardContainer;
 
 /****************************************************************************
@@ -58,6 +66,30 @@ class AbstractApplicationFactory
     createCommandLineParser()
     {
         return null;
+    }
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public IBinder<ILogger> 
+    createLoggerBinder(IKeyBindingBuilder<ILogger> builder)
+    {
+        return 
+            new ProviderBasedBinder<ILogger>(
+                builder,
+                new Provider<ILogger>() 
+                {
+                    @Override
+                    public ILogger 
+                    get()
+                    {
+                        return 
+                            new Logger()
+                                .attachProcessor( 
+                                    new JavaLogEntryProcessor() );
+                    }},
+                AbstractModule.getDefaultScope() );
     }
 
     /************************************************************************

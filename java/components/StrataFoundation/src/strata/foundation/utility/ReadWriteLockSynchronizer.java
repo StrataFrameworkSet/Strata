@@ -53,7 +53,7 @@ class ReadWriteLockSynchronizer
 	ReadWriteLockSynchronizer()
 	{
 		super();
-		itsLock = new ReentrantReadWriteLock();
+		itsLock             = new ReentrantReadWriteLock();
 	}
 	
 	/************************************************************************
@@ -72,7 +72,7 @@ class ReadWriteLockSynchronizer
 	 * {@inheritDoc} 
 	 */
 	@Override
-	public void 
+	public synchronized void 
 	lockForReading()
 	{
 		itsLock.readLock().lock();

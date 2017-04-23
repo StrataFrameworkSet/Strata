@@ -22,10 +22,8 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata.diagnostic.task;
+package strata.diagnostic.core;
 
-import strata.diagnostic.core.IDiagnostic;
-import strata.diagnostic.core.IDiagnosticResult;
 import strata.foundation.task.AbstractTask;
 
 /****************************************************************************

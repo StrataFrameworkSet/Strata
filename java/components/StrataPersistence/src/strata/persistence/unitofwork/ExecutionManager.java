@@ -62,10 +62,12 @@ class ExecutionManager
         Exception   exception  = null;
         long        sleepTime  = 10;
         
+        if ( listener == null )
+            listener = new NullExecutionListener();
+        
         for (int attempt=1;attempt<=itsMaxAttempts;attempt++)
         {
-            if ( listener != null ) 
-                listener.onAttempt( attempt );
+            listener.onAttempt( attempt );
             
             try
             {      
@@ -74,29 +76,22 @@ class ExecutionManager
                 output = runner.run();
                 unitOfWork.commit();
                 
-                if ( listener != null )
-                    listener.onCommitSucceeded();
-                
+                listener.onCommitSucceeded();
                 return output;
             }
             catch (Exception c)
             {
-                exception = c;
-                
-                if ( listener != null )
-                    listener.onCommitFailed( c );
+                exception = c;                
+                listener.onCommitFailed( c );
                 
                 try 
                 {
-                    unitOfWork.rollback();
-                    
-                    if ( listener != null )
-                        listener.onRollbackSucceeded();
+                    unitOfWork.rollback();                    
+                    listener.onRollbackSucceeded();
                 }
                 catch (Exception r)
                 {
-                    if ( listener != null )
-                        listener.onRollbackFailed( r );
+                    listener.onRollbackFailed( r );
                 }
             }
             finally
@@ -122,7 +117,7 @@ class ExecutionManager
     execute(IOperationRunner<T> runner)
         throws Exception
     {
-        return execute( null,runner );
+        return execute( new NullExecutionListener(),runner );
     }
 
     /************************************************************************
@@ -137,10 +132,12 @@ class ExecutionManager
         Exception   exception  = null;
         long        sleepTime  = 10;
         
+        if ( listener == null )
+            throw new NullPointerException("listener can not be null.");
+
         for (int attempt=1;attempt<=itsMaxAttempts;attempt++)
         {
-            if ( listener != null ) 
-                listener.onAttempt( attempt );
+            listener.onAttempt( attempt );
             
             try
             {      
@@ -149,29 +146,22 @@ class ExecutionManager
                 runner.run();
                 unitOfWork.commit();
                 
-                if ( listener != null )
-                    listener.onCommitSucceeded();
-                
+                listener.onCommitSucceeded();                
                 return;
             }
             catch (Exception c)
             {
                 exception = c;
-                
-                if ( listener != null )
-                    listener.onCommitFailed( c );
+                listener.onCommitFailed( c );
                 
                 try 
                 {
                     unitOfWork.rollback();
-                    
-                    if ( listener != null )
-                        listener.onRollbackSucceeded();
+                    listener.onRollbackSucceeded();
                 }
                 catch (Exception r)
                 {
-                    if ( listener != null )
-                        listener.onRollbackFailed( r );
+                    listener.onRollbackFailed( r );
                 }
             }
             finally
@@ -195,7 +185,7 @@ class ExecutionManager
     execute(INoOutputOperationRunner runner)
         throws Exception
     {
-        execute( null,runner );
+        execute( new NullExecutionListener(),runner );
     }
 }
 

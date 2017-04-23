@@ -28,7 +28,6 @@ package strata.persistence.hibernatetestdomain;
 import org.hibernate.cfg.Configuration;
 import strata.persistence.hibernate.HibernateUnitOfWorkProvider;
 import strata.persistence.testdomain.ExecutionManagerTest;
-import strata.persistence.testdomain.PersonRepositoryTest;
 import strata.persistence.unitofwork.IUnitOfWorkProvider;
 
 /****************************************************************************

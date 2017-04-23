@@ -24,7 +24,7 @@
 
 package strata.foundation.utility;
 
-/**
+/****************************************************************************
  * Provides a simplified interface for doing read and write lock
  * synchronization using a multiple reader/single writer access
  * pattern.

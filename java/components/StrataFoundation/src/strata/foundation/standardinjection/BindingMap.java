@@ -33,6 +33,8 @@ import strata.foundation.injection.IBindingBuilder;
 import strata.foundation.injection.IBindingIdentifier;
 import strata.foundation.utility.ISynchronizer;
 import strata.foundation.utility.NullSynchronizer;
+import strata.foundation.utility.ReadLock;
+import strata.foundation.utility.WriteLock;
 
 /****************************************************************************
  * 
@@ -79,14 +81,9 @@ class BindingMap
     public <T> IBindingMap 
     insertBinding(IBindingBuilder<T> builder)
     {
-        try
+        try (WriteLock lock = new WriteLock(itsSynchronizer))
         {
-            itsSynchronizer.lockForWriting();
             return insertBinding( builder.getBinding() );
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromWriting();
         }
     }
 
@@ -99,9 +96,8 @@ class BindingMap
     {
         BindingVisitor<T> visitor = null;
         
-        try
+        try (WriteLock lock = new WriteLock(itsSynchronizer))
         {
-            itsSynchronizer.lockForWriting();
             visitor = new BindingVisitor<T>(this);
             
             if ( itsBindings.containsKey( binding.getIdentifier() ) )
@@ -110,12 +106,7 @@ class BindingMap
             binding.accept( visitor );     
             itsBindings.put( visitor.getIdentifier(),visitor.getProvider() );
             return this;
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromWriting();
-        }
-        
+        }        
     }
 
     /************************************************************************
@@ -129,9 +120,8 @@ class BindingMap
         IBindingIdentifier<T> id = null;
         Provider<?>           provider = null;
         
-        try
+        try (ReadLock lock = new ReadLock(itsSynchronizer))
         {
-            itsSynchronizer.lockForReading();
             id = new TypeBindingIdentifier<T>(type);
             
             if ( !hasBinding( id ) )
@@ -144,10 +134,6 @@ class BindingMap
             
             //return type.cast( provider.get() );
             return (T)provider.get();
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromReading();
         }
     }
 
@@ -162,9 +148,8 @@ class BindingMap
         IBindingIdentifier<T> id = null;
         Provider<?>           provider = null;
         
-        try
+        try (ReadLock lock = new ReadLock(itsSynchronizer))
         {
-            itsSynchronizer.lockForReading();
             id = new TypeAndNameBindingIdentifier<T>(type,key);
            
             if ( !hasBinding( id ) )
@@ -177,10 +162,6 @@ class BindingMap
             
             //return type.cast( provider.get() );
             return (T)provider.get();
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromReading();
         }
     }
 
@@ -195,9 +176,8 @@ class BindingMap
         IBindingIdentifier<T> id = null;   
         Provider<?>           provider = null;
         
-        try
+        try (ReadLock lock = new ReadLock(itsSynchronizer))
         {
-            itsSynchronizer.lockForReading();
             id = new TypeAndAnnotationBindingIdentifier<T>(type,key);
             
             if ( !hasBinding( id ) )
@@ -211,11 +191,6 @@ class BindingMap
             //return type.cast( provider.get() );
             return (T)provider.get();
         }
-        finally
-        {
-            itsSynchronizer.unlockFromReading();
-        }
-
     }
 
     /************************************************************************
@@ -228,10 +203,8 @@ class BindingMap
     {
         Provider<?> provider = null;
         
-        try
+        try (ReadLock lock = new ReadLock(itsSynchronizer))
         {
-            itsSynchronizer.lockForReading();
-            
             if ( !hasBinding( id ) )
                 return null;
             
@@ -243,10 +216,6 @@ class BindingMap
             //return id.getType().cast( provider.get() );
             return (T)provider.get();
         }
-        finally
-        {
-            itsSynchronizer.unlockFromReading();
-        }
     }
 
     /************************************************************************
@@ -256,14 +225,9 @@ class BindingMap
     public <T> boolean 
     hasBinding(Class<T> type)
     {
-        try
+        try (ReadLock lock = new ReadLock(itsSynchronizer))
         {
-            itsSynchronizer.lockForReading();
             return hasBinding( new TypeBindingIdentifier<T>(type) );
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromReading();
         }
     }
 
@@ -274,14 +238,9 @@ class BindingMap
     public <T> boolean 
     hasBinding(Class<T> type,String key)
     {
-        try
+        try (ReadLock lock = new ReadLock(itsSynchronizer))
         {
-            itsSynchronizer.lockForReading();
             return hasBinding(new TypeAndNameBindingIdentifier<T>(type,key));
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromReading();
         }
     }
 
@@ -292,16 +251,11 @@ class BindingMap
     public <T> boolean 
     hasBinding(Class<T> type,Class<? extends Annotation> key)
     {
-        try
+        try (ReadLock lock = new ReadLock(itsSynchronizer))
         {
-            itsSynchronizer.lockForReading();
             return 
                 hasBinding(
                     new TypeAndAnnotationBindingIdentifier<T>(type,key));
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromReading();
         }
     }
 
@@ -312,14 +266,9 @@ class BindingMap
     public <T> boolean 
     hasBinding(IBindingIdentifier<T> id)
     {
-        try
+        try (ReadLock lock = new ReadLock(itsSynchronizer))
         {
-            itsSynchronizer.lockForReading();
             return itsBindings.containsKey( id );
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromReading();
         }
     }
 
