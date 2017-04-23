@@ -24,14 +24,11 @@
 
 package strata1.jmsintegrator.testsuite;
 
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 import strata1.jmsintegrator.jmsmessaging.JmsMessageReceiverTest;
 import strata1.jmsintegrator.jmsmessaging.JmsMessageSenderTest;
 import strata1.jmsintegrator.jmsmessaging.JmsMessagingSessionTest;
-import strata1.jmsintegrator.jmsmessaging.SqsJmsMessageReceiverTest;
-import strata1.jmsintegrator.jmsmessaging.SqsJmsMessageSenderTest;
-import strata1.jmsintegrator.jmsmessaging.StompJmsMessageReceiverTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 /**
  * 

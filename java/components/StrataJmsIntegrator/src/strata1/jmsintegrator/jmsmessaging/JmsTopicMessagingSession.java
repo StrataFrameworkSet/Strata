@@ -24,6 +24,11 @@
 
 package strata1.jmsintegrator.jmsmessaging;
 
+import javax.jms.JMSException;
+import javax.jms.Session;
+import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
 import strata1.integrator.messaging.IBytesMessage;
 import strata1.integrator.messaging.IMapMessage;
 import strata1.integrator.messaging.IMessageReceiver;
@@ -31,11 +36,6 @@ import strata1.integrator.messaging.IMessageSender;
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.IObjectMessage;
 import strata1.integrator.messaging.IStringMessage;
-import javax.jms.JMSException;
-import javax.jms.Topic;
-import javax.jms.TopicConnection;
-import javax.jms.TopicConnectionFactory;
-import javax.jms.Session;
 
 /****************************************************************************
  * 

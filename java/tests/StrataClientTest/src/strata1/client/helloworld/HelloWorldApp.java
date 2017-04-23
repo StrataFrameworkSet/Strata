@@ -24,6 +24,7 @@
 
 package strata1.client.helloworld;
 
+import strata1.client.region.RegionInitializationException;
 import strata.foundation.bootstrap.IApplicationFactory;
 import strata.foundation.bootstrap.IBootstrapper;
 

@@ -24,10 +24,10 @@
 
 package strata1.jmsintegrator.jmsmessaging;
 
-import strata1.integrator.messaging.DeliveryMode;
-import strata1.integrator.messaging.IBytesMessage;
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
+import strata1.integrator.messaging.DeliveryMode;
+import strata1.integrator.messaging.IBytesMessage;
 
 /****************************************************************************
  * 

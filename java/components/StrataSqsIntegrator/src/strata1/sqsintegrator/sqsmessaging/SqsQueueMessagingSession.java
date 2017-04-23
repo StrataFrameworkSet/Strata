@@ -24,6 +24,15 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClient;
+import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import strata1.integrator.messaging.IBytesMessage;
 import strata1.integrator.messaging.IMapMessage;
 import strata1.integrator.messaging.IMessageReceiver;
@@ -31,15 +40,6 @@ import strata1.integrator.messaging.IMessageSender;
 import strata1.integrator.messaging.IObjectMessage;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.IStringMessage;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.services.sqs.AmazonSQS;
-import com.amazonaws.services.sqs.AmazonSQSClient;
-import com.amazonaws.services.sqs.model.DeleteMessageRequest;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /****************************************************************************
  * 

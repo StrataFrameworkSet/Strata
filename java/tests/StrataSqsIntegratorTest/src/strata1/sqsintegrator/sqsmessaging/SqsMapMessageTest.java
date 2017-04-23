@@ -24,11 +24,11 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
-import static org.junit.Assert.*;
-import strata1.integrator.messaging.IMapMessage;
-import strata1.integrator.messaging.MapMessageTest;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import strata1.integrator.messaging.IMapMessage;
+import strata1.integrator.messaging.MapMessageTest;
 
 /****************************************************************************
  * 

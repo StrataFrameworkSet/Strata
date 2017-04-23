@@ -24,9 +24,9 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Map;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /****************************************************************************
  * 

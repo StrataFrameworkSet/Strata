@@ -24,19 +24,19 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
-import strata1.integrator.messaging.DeliveryMode;
-import strata1.integrator.messaging.IMapMessage;
-import com.amazonaws.services.sqs.model.Message;
-import com.amazonaws.util.Base64;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import com.amazonaws.services.sqs.model.Message;
+import com.amazonaws.util.Base64;
+import strata1.integrator.messaging.DeliveryMode;
+import strata1.integrator.messaging.IMapMessage;
 
 /****************************************************************************
  * 

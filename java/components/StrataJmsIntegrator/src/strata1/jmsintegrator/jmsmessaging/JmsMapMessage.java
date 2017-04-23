@@ -24,14 +24,13 @@
 
 package strata1.jmsintegrator.jmsmessaging;
 
-import strata1.integrator.messaging.DeliveryMode;
-import strata1.integrator.messaging.IBytesMessage;
-import strata1.integrator.messaging.IMapMessage;
-import javax.jms.JMSException;
-import javax.jms.MapMessage;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import javax.jms.JMSException;
+import javax.jms.MapMessage;
+import strata1.integrator.messaging.DeliveryMode;
+import strata1.integrator.messaging.IMapMessage;
 
 /****************************************************************************
  * 

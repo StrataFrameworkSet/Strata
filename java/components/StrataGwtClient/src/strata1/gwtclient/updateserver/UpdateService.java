@@ -24,15 +24,15 @@
 
 package strata1.gwtclient.updateserver;
 
-import strata1.gwtclient.updateclient.IUpdateService;
-import strata1.gwtclient.updateclient.UpdateException;
-import strata1.gwtclient.updateclient.UpdateRequest;
-import strata1.gwtclient.updateclient.UpdateResponse;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
+import strata1.gwtclient.updateclient.IUpdateService;
+import strata1.gwtclient.updateclient.UpdateException;
+import strata1.gwtclient.updateclient.UpdateRequest;
+import strata1.gwtclient.updateclient.UpdateResponse;
 
 /****************************************************************************
  * 

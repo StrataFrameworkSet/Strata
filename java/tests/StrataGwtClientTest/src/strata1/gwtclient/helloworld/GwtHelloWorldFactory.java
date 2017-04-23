@@ -36,7 +36,8 @@ import strata.foundation.injection.IModule;
 import strata.foundation.injection.ProviderBasedBinder;
 import strata.foundation.injection.TargetBasedBinder;
 import strata.foundation.logger.ILogger;
-import strata.foundation.logger.*;
+import strata.foundation.logger.JavaLogEntryProcessor;
+import strata.foundation.logger.Logger;
 
 /****************************************************************************
  * 

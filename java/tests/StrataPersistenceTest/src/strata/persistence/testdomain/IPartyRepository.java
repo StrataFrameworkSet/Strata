@@ -24,8 +24,8 @@
 
 package strata.persistence.testdomain;
 
-import strata.persistence.repository.IRepository;
 import java.util.List;
+import strata.persistence.repository.IRepository;
 
 /****************************************************************************
  * 

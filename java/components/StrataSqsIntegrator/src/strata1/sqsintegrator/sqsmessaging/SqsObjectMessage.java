@@ -24,11 +24,6 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
-import strata1.integrator.messaging.DeliveryMode;
-import strata1.integrator.messaging.IMapMessage;
-import strata1.integrator.messaging.IObjectMessage;
-import com.amazonaws.services.sqs.model.Message;
-import com.amazonaws.util.Base64;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,6 +32,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import com.amazonaws.services.sqs.model.Message;
+import com.amazonaws.util.Base64;
+import strata1.integrator.messaging.DeliveryMode;
+import strata1.integrator.messaging.IObjectMessage;
 
 /****************************************************************************
  * 

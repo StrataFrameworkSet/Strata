@@ -24,7 +24,6 @@
 
 package strata1.integrator.inmemorymessaging;
 
-import strata1.integrator.inmemorymessaging.InMemoryMessagingSession;
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.MessagingSessionTest;
 

@@ -24,14 +24,14 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.IMessageListener;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.MixedModeException;
 import strata1.integrator.messaging.NoMessageReceivedException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /****************************************************************************
  * 

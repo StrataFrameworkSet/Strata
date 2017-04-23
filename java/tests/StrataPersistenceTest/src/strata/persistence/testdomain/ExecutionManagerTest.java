@@ -1,15 +1,12 @@
 package strata.persistence.testdomain;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import java.util.Currency;
-import java.util.List;
 import strata.foundation.value.DateTime;
-import strata.foundation.value.Money;
 import strata.persistence.namedquery.INamedQuery;
 import strata.persistence.repository.InsertFailedException;
 import strata.persistence.unitofwork.ExecutionManager;

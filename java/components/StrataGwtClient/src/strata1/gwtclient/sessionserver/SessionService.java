@@ -24,8 +24,8 @@
 
 package strata1.gwtclient.sessionserver;
 
-import strata1.gwtclient.sessionclient.ISessionService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import strata1.gwtclient.sessionclient.ISessionService;
 
 /****************************************************************************
  * 
