@@ -74,8 +74,7 @@ class ExecutionManager
                 unitOfWork = itsProvider.getUnitOfWork();
                 exception  = null;
                 output = runner.run();
-                unitOfWork.commit();
-                
+                unitOfWork.commit();                
                 listener.onCommitSucceeded();
                 return output;
             }
