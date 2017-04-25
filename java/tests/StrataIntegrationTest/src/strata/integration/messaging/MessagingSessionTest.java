@@ -1,0 +1,221 @@
+// ##########################################################################
+// # File Name:	MessagingSessionTest.java
+// #
+// # Copyright:	2014, Sapientia Systems, LLC. All Rights Reserved.
+// #
+// # License:	This file is part of the StrataIntegratorTest Framework.
+// #
+// #   			The StrataIntegratorTest Framework is free software: you 
+// #			can redistribute it and/or modify it under the terms of 
+// #			the GNU Lesser General Public License as published by
+// #    		the Free Software Foundation, either version 3 of the 
+// #			License, or (at your option) any later version.
+// #
+// #    		The StrataIntegratorTest Framework is distributed in the 
+// #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
+// #			without even the implied warranty of MERCHANTABILITY or 
+// #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
+// #			General Public License for more details.
+// #
+// #    		You should have received a copy of the GNU Lesser 
+// #			General Public License along with the StrataIntegratorTest
+// #			Framework. If not, see http://www.gnu.org/licenses/.
+// ##########################################################################
+
+package strata.integration.messaging;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+/****************************************************************************
+ * 
+ * @author 		
+ *     Sapientia Systems
+ * @conventions	
+ *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
+ */
+public abstract
+class MessagingSessionTest
+{
+    private IMessagingSession itsTarget;
+    
+    /************************************************************************
+     *  
+     *
+     * @throws java.lang.Exception
+     */
+    @Before
+    public void 
+    setUp() throws Exception
+    {
+        itsTarget = createMessagingSesssion();
+        itsTarget.startReceiving();
+    }
+
+    /************************************************************************
+     *  
+     *
+     * @throws java.lang.Exception
+     */
+    @After
+    public void 
+    tearDown() throws Exception
+    {
+        itsTarget.stopReceiving();
+        itsTarget.close();
+        itsTarget = null;
+    }
+
+    /**
+     * Test method for {@link IMessagingSession#createMessageSender(String)}.
+     */
+    @Test
+    public void 
+    testCreateMessageSender()
+    {
+        IMessageSender sender = itsTarget.createMessageSender( "foo-test" );
+        
+        assertNotNull( sender );
+        assertEquals( itsTarget,sender.getSession() );
+    }
+
+    /**
+     * Test method for {@link IMessagingSession#createMessageReceiver(String)}.
+     */
+    @Test
+    public void 
+    testCreateMessageReceiverString()
+    {
+        IMessageReceiver receiver = itsTarget.createMessageReceiver( "foo-test" );
+        
+        try
+        {
+            assertNotNull( receiver );
+            assertEquals( itsTarget,receiver.getSession() );
+            assertNull( receiver.getListener() );
+            assertNull( null,receiver.getSelector() );
+        }
+        finally
+        {
+            receiver.close();
+        }
+    }
+
+    /**
+     * Test method for {@link IMessagingSession#createMessageReceiver(String,String)}.
+     */
+    @Test
+    public void 
+    testCreateMessageReceiverStringString()
+    {
+        String           selector = "ReturnAddress='foo'";
+        IMessageReceiver receiver = 
+            itsTarget.createMessageReceiver( "foo-test",selector );
+        
+        try
+        {
+            assertNotNull( receiver );
+            assertEquals( itsTarget,receiver.getSession() );
+            assertNull( receiver.getListener() );
+            assertEquals( selector,receiver.getSelector() );
+        }
+        finally
+        {
+            receiver.close();
+        }
+    }
+
+    /**
+     * Test method for {@link IMessagingSession#createStringMessage()}.
+     */
+    @Test
+    public void 
+    testCreateStringMessage()
+    {
+        IStringMessage message = itsTarget.createStringMessage();
+        
+        assertNotNull( message );
+        assertNull( message.getPayload() );
+    }
+
+    /**
+     * Test method for {@link IMessagingSession#createMapMessage()}.
+     */
+    @Test
+    public void 
+    testCreateMapMessage()
+    {
+        IMapMessage message = itsTarget.createMapMessage();
+        
+        assertNotNull( message );
+        assertTrue( message.getItemKeys().isEmpty() );
+    }
+
+    /**
+     * Test method for {@link IMessagingSession#createObjectMessage()}.
+     */
+    @Test
+    public void 
+    testCreateObjectMessage()
+    {
+        IObjectMessage message = itsTarget.createObjectMessage();
+        
+        assertNotNull( message );
+        assertNull( message.getPayload() );
+    }
+
+    /**
+     * Test method for {@link IMessagingSession#startReceiving()}.
+     */
+    @Test
+    public void 
+    testStartReceiving()
+    {
+        itsTarget.stopReceiving();
+        assertFalse( itsTarget.isReceiving() );
+        itsTarget.startReceiving();
+        assertTrue( itsTarget.isReceiving() );
+        itsTarget.startReceiving();
+        assertTrue( itsTarget.isReceiving() );
+    }
+
+    /**
+     * Test method for {@link IMessagingSession#stopReceiving()}.
+     */
+    @Test
+    public void 
+    testStopReceiving()
+    {
+        assertTrue( itsTarget.isReceiving() );
+        itsTarget.stopReceiving();
+        assertFalse( itsTarget.isReceiving() );
+        itsTarget.stopReceiving();
+        assertFalse( itsTarget.isReceiving() );
+    }
+
+    /**
+     * Test method for {@link IMessagingSession#isReceiving()}.
+     */
+    @Test
+    public void 
+    testIsReceiving()
+    {
+        assertTrue( itsTarget.isReceiving() );
+        itsTarget.stopReceiving();
+        assertFalse( itsTarget.isReceiving() );
+        itsTarget.stopReceiving();
+        assertFalse( itsTarget.isReceiving() );
+    }
+
+    protected abstract IMessagingSession 
+    createMessagingSesssion();
+
+}
+
+// ##########################################################################
