@@ -11,7 +11,6 @@
 	<classpathentry kind="var" path="REPO_ROOT/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar"/>
 	<classpathentry kind="var" path="REPO_ROOT/org/json/json/20090211/json-20090211.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataClient"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegrator"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
