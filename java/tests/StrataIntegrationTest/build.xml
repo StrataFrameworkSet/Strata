@@ -3,19 +3,16 @@
 	name="StrataIntegrationTest" 
 	default="run-commit-stage">
 	
-	<import file="../../test-targets.xml"/>
+	<import file="../../component-targets.xml"/>
 	
 	<target name="define-properties">
 		
+		<property name="copy.sources" value="true"/>
 	    <property name="source.dir" value="src"/>
 	    <property name="output.dir" value="bin"/>
 	    <property name="distribution.dir" value="lib"/>
-	    
 	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
-	    <property name="test.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
-	    <property name="commit.test.suite" value="strata.integration.testsuite.CommitStageSuite"/>
-		<property name="integration.test.suite" value="strata.integration.testsuite.IntegrationStageSuite"/>
-	    <property name="test.reports" value="${output.dir}/reports"/>
+	    <property name="component.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
 		
 		<artifact:pom 
 			name="Strata Application Framework"
@@ -39,7 +36,7 @@
 	        <localRepository path="${repository.dir}"/>
 	    </artifact:dependencies>
 		
-		<property name="test.classpath" value="dependency.classpath"/>
+		<property name="component.classpath" value="dependency.classpath"/>
 		
 	</target>
     

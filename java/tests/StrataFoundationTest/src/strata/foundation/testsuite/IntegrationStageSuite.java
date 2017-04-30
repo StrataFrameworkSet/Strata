@@ -26,13 +26,6 @@ package strata.foundation.testsuite;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import strata.foundation.utility.CopyableTest;
-import strata.foundation.utility.SingletonProxyTest;
-import strata.foundation.utility.SynchronizerTest;
-import strata.foundation.value.CurrencyExchangerTest;
-import strata.foundation.value.DateTimeTest;
-import strata.foundation.value.MoneyCalculatorTest;
-import strata.foundation.value.MoneyTest;
 
 /**
  * 
@@ -42,14 +35,7 @@ import strata.foundation.value.MoneyTest;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({
-	DateTimeTest.class,
-	MoneyTest.class,
-	CurrencyExchangerTest.class,
-	MoneyCalculatorTest.class,
-	CopyableTest.class,
-	SingletonProxyTest.class,
-	SynchronizerTest.class})
+@Suite.SuiteClasses({})
 public 
 class IntegrationStageSuite {}
 
