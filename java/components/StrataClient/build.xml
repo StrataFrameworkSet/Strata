@@ -19,9 +19,8 @@
 			groupId="strata1" 
 			artifactId="${ant.project.name}" 
 			version="${version}">
-	        <dependency groupId="strata1" artifactId="StrataCommon" version="${version}"/>
-	        <dependency groupId="strata1" artifactId="StrataInjector" version="${version}"/>
-	        <dependency groupId="strata1" artifactId="StrataIntegrator" version="${version}"/>
+	        <dependency groupId="strata" artifactId="StrataFoundation" version="${version}"/>
+	        <dependency groupId="strata" artifactId="StrataIntegration" version="${version}"/>
 	    </artifact:pom>
 
 	    <artifact:dependencies 

@@ -24,6 +24,7 @@
 
 package strata.integration.jmsmessaging;
 
+import org.junit.Ignore;
 import org.skyscreamer.nevado.jms.NevadoConnectionFactory;
 import org.skyscreamer.nevado.jms.connector.amazonaws.AmazonAwsSQSConnectorFactory;
 import com.amazonaws.auth.AWSCredentials;
@@ -39,6 +40,7 @@ import strata.integration.messaging.MessageReceiverTest;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
+@Ignore
 public 
 class SqsJmsMessageReceiverTest
     extends MessageReceiverTest

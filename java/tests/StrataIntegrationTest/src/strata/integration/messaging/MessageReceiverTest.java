@@ -36,6 +36,7 @@ import java.util.Comparator;
 import java.util.List;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /****************************************************************************
@@ -51,7 +52,7 @@ class MessageReceiverTest
     private IMessagingSession itsSession;
     private IMessageSender    itsSender;
     private IMessageReceiver  itsTarget;
-
+    
     /************************************************************************
      *  
      *
@@ -66,7 +67,8 @@ class MessageReceiverTest
         itsSender  = itsSession.createMessageSender( "foo-test" );
         itsTarget  = itsSession.createMessageReceiver( "foo-test" );
         
-        itsSession.startReceiving();     
+        itsSession.startReceiving();
+        cleanUpQueue( "foo-test",500 );
     }
 
     /************************************************************************
@@ -80,7 +82,7 @@ class MessageReceiverTest
         throws Exception
     {
         itsTarget.close();
-        cleanUpQueue( "foo-test" );
+        cleanUpQueue( "foo-test",2000 );
         itsSession.stopReceiving();
         itsTarget = null;
         itsSender = null;
@@ -689,11 +691,12 @@ class MessageReceiverTest
     /************************************************************************
      *  
      *
+     * @param milliseconds TODO
      * @param string
      * @throws MixedModeException 
      */
     private void 
-    cleanUpQueue(String queue) 
+    cleanUpQueue(String queue,long milliseconds) 
         throws MixedModeException
     {
         IMessageReceiver cleaner = 
@@ -701,13 +704,13 @@ class MessageReceiverTest
         
         try
         {
-            IMessage message = cleaner.receive(2000);
+            IMessage message = cleaner.receive(milliseconds);
             
             while ( message != null )
             {
                 System.out.println( "Removing message: " + message.getCorrelationId() );
             
-                message = cleaner.receive(2000);
+                message = cleaner.receive(milliseconds);
             }
         }
         catch (NoMessageReceivedException e) 

@@ -29,8 +29,8 @@
 	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/json/json/20090211/json-20090211.jar"/>
 	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/codehaus/jackson/jackson-core-asl/1.9.12/jackson-core-asl-1.9.12.jar"/>
 	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/fusesource/stompjms/stompjms-client/1.19/stompjms-client-1.19.jar"/>
-	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/fusesource/hawtdispatch/hawtdispatch-transport/1.20/hawtdispatch-transport-1.20.jar"/>
-	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/fusesource/hawtdispatch/hawtdispatch/1.20/hawtdispatch-1.20.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/fusesource/hawtdispatch/hawtdispatch-transport/1.22/hawtdispatch-transport-1.22.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/fusesource/hawtdispatch/hawtdispatch/1.22/hawtdispatch-1.22.jar"/>
 	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/fusesource/hawtbuf/hawtbuf/1.9/hawtbuf-1.9.jar"/>
 	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/junit/junit/4.9/junit-4.9.jar"/>
 	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
