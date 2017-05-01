@@ -38,12 +38,14 @@
     <target 
         name="init"
         depends="define-properties">
+        <echo message="init ${artifact.name}"/>
         <mkdir dir="${output.dir}"/>
     </target>
 
     <target 
         name="clean"
         depends="define-properties">
+        <echo message="clean ${artifact.name}"/>
         <delete dir="${output.dir}"/>
     	<delete file="${component.artifact}"/>
     </target>
@@ -51,6 +53,7 @@
 	<target 
 		name="compile" 
 		depends="init">
+        <echo message="compile ${artifact.name}"/>
 		<javac 
 			srcdir="${source.dir}" 
 			destdir="${output.dir}" 
@@ -72,6 +75,7 @@
 	<target
 	    name="package"
 	    depends="compile,copy-source-files">
+        <echo message="package ${artifact.name}"/>
     	<copy todir="${output.dir}">
     	    <fileset 
     	    	dir="${source.dir}"
@@ -85,6 +89,7 @@
     <target
         name="install-to-local-repository"
         depends="package">
+        <echo message="install-to-local-repository ${artifact.name}"/>
 		<artifact:writepom 
 		    pomRefId="${ant.project.name}" 
 		    file="${output.dir}/${ant.project.name}-pom.xml" />
@@ -101,6 +106,7 @@
     <target
         name="deploy-to-remote-repository"
         depends="init">
+        <echo message="deploy-to-remote-repository ${artifact.name}"/>
 		<artifact:writepom 
 		    pomRefId="${ant.project.name}" 
 		    file="${output.dir}/${ant.project.name}-pom.xml" />
@@ -117,11 +123,13 @@
 	<target 
 		name="run-commit-stage"
 		depends="install-to-local-repository">
+        <echo message="run-commit-stage ${artifact.name}"/>
 	</target>
  
      <target 
         name="run-integration-stage"
     	depends="init">
+        <echo message="run-integration-stage ${artifact.name}"/>
     </target>
 
 	<target 

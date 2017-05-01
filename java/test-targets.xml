@@ -93,6 +93,7 @@
 	<target 
 		name="run-commit-stage"
 		depends="install-to-local-repository">
+        <echo message="run-commit-stage ${artifact.name}"/>
 		<junit 
 			printsummary="true" 
 			showoutput="true" 
@@ -119,6 +120,7 @@
     <target 
         name="run-integration-stage"
     	depends="init">
+        <echo message="run-commit-stage ${artifact.name}"/>
 		<junit 
 			printsummary="true" 
 			showoutput="true" 
