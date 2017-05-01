@@ -24,11 +24,6 @@
 
 package strata1.swtclient.swtview;
 
-import strata1.client.command.ExecutionException;
-import strata1.client.command.ILoginProvider;
-import strata1.client.shell.IDispatcher;
-import strata1.client.view.AbstractView;
-import strata1.client.view.ILoginView;
 import strata1.swtclient.swtshell.ISwtDispatcher;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -47,6 +42,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.wb.swt.SWTResourceManager;
+import strata.presentation.command.ExecutionException;
+import strata.presentation.command.ILoginProvider;
+import strata.presentation.shell.IDispatcher;
+import strata.presentation.view.AbstractView;
+import strata.presentation.view.ILoginView;
 
 /****************************************************************************
  * 

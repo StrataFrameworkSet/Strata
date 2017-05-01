@@ -2,18 +2,32 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="var" path="REPO_ROOT/com/lmax/disruptor/3.2.1/disruptor-3.2.1.jar"/>
-	<classpathentry kind="var" path="REPO_ROOT/javax/inject/javax.inject/1/javax.inject-1.jar"/>
-	<classpathentry kind="var" path="REPO_ROOT/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar"/>
-	<classpathentry kind="var" path="REPO_ROOT/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="var" path="REPO_ROOT/com/google/gwt/gwt-user/2.6.1/gwt-user-2.6.1.jar"/>
-	<classpathentry kind="var" path="REPO_ROOT/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA.jar"/>
-	<classpathentry kind="var" path="REPO_ROOT/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar"/>
-	<classpathentry kind="var" path="REPO_ROOT/org/json/json/20090211/json-20090211.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataClient"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/google/inject/guice/4.1.0/guice-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/javax/inject/javax.inject/1/javax.inject-1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/google/guava/guava/19.0/guava-19.0.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/google/inject/extensions/guice-servlet/4.1.0/guice-servlet-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/lmax/disruptor/3.2.1/disruptor-3.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/javax/mail/mail/1.4.7/mail-1.4.7.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/javax/activation/activation/1.1/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/fasterxml/jackson/core/jackson-databind/2.7.3/jackson-databind-2.7.3.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/fasterxml/jackson/core/jackson-annotations/2.7.0/jackson-annotations-2.7.0.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/fasterxml/jackson/core/jackson-core/2.7.3/jackson-core-2.7.3.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/apache/logging/log4j/log4j-api/2.8.1/log4j-api-2.8.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/javax/jms/javax.jms-api/2.0/javax.jms-api-2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/amazonaws/aws-java-sdk/1.8.3/aws-java-sdk-1.8.3.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/apache/httpcomponents/httpclient/4.2/httpclient-4.2.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/apache/httpcomponents/httpcore/4.2/httpcore-4.2.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/commons-codec/commons-codec/1.3/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/joda-time/joda-time/2.9.9/joda-time-2.9.9.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/google/gwt/gwt-user/2.6.1/gwt-user-2.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/json/json/20090211/json-20090211.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataFoundation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegration"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataPresentation"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

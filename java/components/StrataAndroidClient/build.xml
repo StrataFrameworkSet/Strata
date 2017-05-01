@@ -19,8 +19,8 @@
 			groupId="strata1" 
 			artifactId="${ant.project.name}" 
 			version="${version}">
+			<dependency groupId="strata" artifactId="StrataPresentation" version="${version}"/>	        
 	        <dependency groupId="com.google.android" artifactId="android" version="4.1.1.4"/>
-			<dependency groupId="strata1" artifactId="StrataClient" version="${version}"/>	        
 	    </artifact:pom>
 
 	    <artifact:dependencies 

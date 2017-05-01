@@ -24,12 +24,8 @@
 
 package strata1.client.swthelloworld;
 
-import strata1.client.command.ExecutionException;
 import strata1.client.helloworld.IHelloWorldProvider;
 import strata1.client.helloworld.IHelloWorldView;
-import strata1.client.region.RegionInitializationException;
-import strata1.client.shell.IDispatcher;
-import strata1.client.view.AbstractView;
 import strata1.swtclient.swtshell.ISwtDispatcher;
 import strata1.swtclient.swtview.ISwtView;
 import org.eclipse.swt.SWT;
@@ -46,6 +42,9 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
+import strata.presentation.command.ExecutionException;
+import strata.presentation.shell.IDispatcher;
+import strata.presentation.view.AbstractView;
 
 /**
  * 

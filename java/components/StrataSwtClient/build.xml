@@ -19,7 +19,7 @@
 			groupId="strata1" 
 			artifactId="${ant.project.name}" 
 			version="${version}">
-	        <dependency groupId="strata1" artifactId="StrataClient" version="${version}"/>
+	        <dependency groupId="strata" artifactId="StrataPresentation" version="${version}"/>
         	<dependency groupId="org.eclipse.swt" artifactId="org.eclipse.swt.win32.win32.x86_64" version="4.4"/>
 	    </artifact:pom>
 		

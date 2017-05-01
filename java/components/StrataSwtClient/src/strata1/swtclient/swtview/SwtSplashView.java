@@ -24,10 +24,6 @@
 
 package strata1.swtclient.swtview;
 
-import strata1.client.command.INullProvider;
-import strata1.client.shell.IDispatcher;
-import strata1.client.view.AbstractView;
-import strata1.client.view.ISplashView;
 import strata1.swtclient.swtshell.ISwtDispatcher;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
@@ -45,6 +41,10 @@ import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.wb.swt.SWTResourceManager;
+import strata.presentation.command.INullProvider;
+import strata.presentation.shell.IDispatcher;
+import strata.presentation.view.AbstractView;
+import strata.presentation.view.ISplashView;
 
 /****************************************************************************
  * 

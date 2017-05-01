@@ -24,11 +24,11 @@
 
 package strata1.gwtclient.helloworld;
 
-import strata1.client.controller.ILoginController;
 import strata1.client.helloworld.IHelloWorldController;
 import javax.inject.Inject;
 import strata.foundation.bootstrap.IStartStopController;
 import strata.foundation.injection.IContainer;
+import strata.presentation.controller.ILoginController;
 
 /****************************************************************************
  * 

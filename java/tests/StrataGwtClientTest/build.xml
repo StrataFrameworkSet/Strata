@@ -20,7 +20,7 @@
 			groupId="strata1" 
 			artifactId="${ant.project.name}" 
 			version="${version}">
-	        <dependency groupId="strata1" artifactId="StrataClientTest" version="${version}"/>
+	        <dependency groupId="strata" artifactId="StrataPresentationTest" version="${version}"/>
 		    <dependency groupId="strata1" artifactId="StrataGwtClient" version="${version}"/>
 		    <dependency groupId="net.wetheinter" artifactId="xapi-gwt-reflect" version="0.4"/>
 	        <dependency groupId="junit" artifactId="junit" version="4.9"/>

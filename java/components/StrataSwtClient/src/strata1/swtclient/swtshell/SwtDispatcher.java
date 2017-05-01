@@ -24,8 +24,8 @@
 
 package strata1.swtclient.swtshell;
 
-import strata1.client.shell.AbstractDispatcher;
 import org.eclipse.swt.widgets.Display;
+import strata.presentation.shell.AbstractDispatcher;
 
 /****************************************************************************
  * 
