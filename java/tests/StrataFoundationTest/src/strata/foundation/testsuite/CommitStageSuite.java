@@ -26,10 +26,14 @@ package strata.foundation.testsuite;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import strata.foundation.guiceinjection.GuiceBootstrapModuleTest;
+import strata.foundation.guiceinjection.GuiceContainerTest;
 import strata.foundation.producerconsumer.BlockingQueueBroadcasterTest;
 import strata.foundation.producerconsumer.BlockingQueueRouterTest;
 import strata.foundation.producerconsumer.DisruptorBroadcasterTest;
 import strata.foundation.producerconsumer.DisruptorRouterTest;
+import strata.foundation.standardinjection.StandardBootstrapModuleTest;
+import strata.foundation.standardinjection.StandardContainerTest;
 import strata.foundation.task.TaskBlockingQueueRouterTest;
 import strata.foundation.task.TaskDisruptorRouterTest;
 import strata.foundation.utility.CopyableTest;
@@ -58,6 +62,10 @@ import strata.foundation.value.TimePointTest;
 	CopyableTest.class,
 	SingletonProxyTest.class,
 	SynchronizerTest.class,
+	StandardBootstrapModuleTest.class,
+	StandardContainerTest.class,
+	GuiceBootstrapModuleTest.class,
+	GuiceContainerTest.class,
 	DisruptorRouterTest.class,
 	DisruptorBroadcasterTest.class,
 	BlockingQueueRouterTest.class,

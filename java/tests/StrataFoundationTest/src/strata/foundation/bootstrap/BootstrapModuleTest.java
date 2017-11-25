@@ -9,8 +9,8 @@ import org.junit.Test;
 import strata.foundation.injection.AbstractModule;
 import strata.foundation.injection.IBinder;
 import strata.foundation.injection.IContainer;
-import strata.foundation.injection.IKeyBindingBuilder;
 import strata.foundation.injection.IModule;
+import strata.foundation.injection.ISourceBindingBuilder;
 import strata.foundation.injection.ProviderBasedBinder;
 import strata.foundation.injection.SingletonScope;
 import strata.foundation.injection.TargetBasedBinder;
@@ -34,7 +34,7 @@ class BootstrapModuleTest
 
                         @Override
                         public IBinder<ILogger> 
-                        createLoggerBinder(IKeyBindingBuilder<ILogger> builder)
+                        createLoggerBinder(ISourceBindingBuilder<ILogger> builder)
                         {
                             return 
                                 new ProviderBasedBinder<ILogger>(
@@ -45,7 +45,7 @@ class BootstrapModuleTest
 
                         @Override
                         public IBinder<IStartStopController> 
-                        createControllerBinder(IKeyBindingBuilder<IStartStopController> builder)
+                        createControllerBinder(ISourceBindingBuilder<IStartStopController> builder)
                         {
                             return 
                                 new TargetBasedBinder<IStartStopController>(
