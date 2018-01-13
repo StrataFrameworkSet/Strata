@@ -44,7 +44,7 @@ import strata.foundation.injection.ISourceBindingBuilder;
  */
 public 
 class BindingBuilder<T>
-    implements IKeyBindingBuilder<T>
+    implements ISourceBindingBuilder<T>
 {
     // Binding Identifier
     private Class<T>                       itsInterfaceType;
@@ -87,7 +87,7 @@ class BindingBuilder<T>
      * {@inheritDoc} 
      */
     @Override
-    public ISourceBindingBuilder<T> 
+    public IBindingBuilder<T> 
     withKey(String key)
     {
         itsStringKey = key;
@@ -98,7 +98,7 @@ class BindingBuilder<T>
      * {@inheritDoc} 
      */
     @Override
-    public <A extends Annotation> ISourceBindingBuilder<T> 
+    public <A extends Annotation> IBindingBuilder<T> 
     withKey(Class<A> key)
     {
         itsAnnotationKey = key;
@@ -109,7 +109,7 @@ class BindingBuilder<T>
      * {@inheritDoc} 
      */
     @Override
-    public <A extends Annotation> ISourceBindingBuilder<T> 
+    public <A extends Annotation> IBindingBuilder<T> 
     withKey(A key)
     {
         itsAnnotationKey = key.getClass();
@@ -147,7 +147,7 @@ class BindingBuilder<T>
      * {@inheritDoc} 
      */
     @Override
-    public <P extends Provider<? extends T>>IScopeBindingBuilder<T> 
+    public <P extends Provider<? extends T>> IScopeBindingBuilder<T> 
     toProvider(Class<P> provider)
     {
         itsImplementationType = null;
@@ -161,7 +161,7 @@ class BindingBuilder<T>
      * {@inheritDoc} 
      */
     @Override
-    public IBindingBuilder<T> 
+    public IScopeBindingBuilder<T> 
     toInstance(T instance)
     {
         itsImplementationType = null;
@@ -176,7 +176,7 @@ class BindingBuilder<T>
      * {@inheritDoc} 
      */
     @Override
-    public IBindingBuilder<T> 
+    public IKeyBindingBuilder<T> 
     withScope(Class<? extends Annotation> scope)
     {
         itsScope = itsModifiers.get( scope );

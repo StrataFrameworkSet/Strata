@@ -25,6 +25,7 @@
 package strata.foundation.injection;
 
 import java.lang.annotation.Annotation;
+import strata.foundation.logger.ILogger;
 
 /****************************************************************************
  * 
@@ -93,7 +94,7 @@ class AbstractModule
      * @param type
      * @return
      */
-    protected <T> IKeyBindingBuilder<T>
+    protected <T> ISourceBindingBuilder<T>
     bindType(Class<T> type)
     {
         return itsAdapter.bindType( type );

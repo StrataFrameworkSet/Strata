@@ -24,6 +24,8 @@
 
 package strata.foundation.injection;
 
+import strata.foundation.logger.ILogger;
+
 /****************************************************************************
  * 
  * @author 		
@@ -37,7 +39,7 @@ interface IModuleAdapter
     void
     setAdaptee(IModule adaptee);
     
-    <T> IKeyBindingBuilder<T>
+    <T> ISourceBindingBuilder<T>
     bindType(Class<T> type);
 }
 

@@ -37,7 +37,7 @@ public abstract
 class AbstractBinder<T> 
     implements IBinder<T>
 {
-    private final IKeyBindingBuilder<T>       itsBuilder;
+    private final ISourceBindingBuilder<T>    itsBuilder;
     private final Class<? extends Annotation> itsScope;
     
     /************************************************************************
@@ -46,7 +46,7 @@ class AbstractBinder<T>
      */
     public 
     AbstractBinder(
-        IKeyBindingBuilder<T>       builder,
+        ISourceBindingBuilder<T>    builder,
         Class<? extends Annotation> scope)
     {
         itsBuilder = builder;
@@ -58,7 +58,7 @@ class AbstractBinder<T>
      *
      * @return
      */
-    protected IKeyBindingBuilder<T>
+    protected ISourceBindingBuilder<T>
     getBuilder()
     {
         return itsBuilder;

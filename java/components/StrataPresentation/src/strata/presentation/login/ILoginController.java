@@ -22,11 +22,12 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata.presentation.controller;
+package strata.presentation.login;
 
 import strata.foundation.injection.IContainer;
 import strata.foundation.logger.ILogger;
 import strata.presentation.command.ILoginProvider;
+import strata.presentation.controller.IController;
 import strata.presentation.model.INullModel;
 import strata.presentation.view.ILoginView;
 
