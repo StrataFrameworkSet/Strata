@@ -1,6 +1,6 @@
 //  ##########################################################################
 //  # File Name: NhibernateRepositoryMethod.cs
-//  # Copyright: 2013, Sapientia Systems, LLC.
+//  # Copyright: 2011-2018, Sapientia Systems, LLC.
 //  ##########################################################################
  
 using System;

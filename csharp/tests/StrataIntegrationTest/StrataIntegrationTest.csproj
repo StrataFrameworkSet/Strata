@@ -90,10 +90,6 @@
       <Project>{C175F76A-01FA-40DA-8373-9820F322C912}</Project>
       <Name>StrataIntegration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\components\StrataPersistence\StrataPersistence.csproj">
-      <Project>{3882218A-F917-4AD2-8D77-5AFE3A1ADE31}</Project>
-      <Name>StrataPersistence</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

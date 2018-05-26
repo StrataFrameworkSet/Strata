@@ -34,3 +34,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataNhibernatePe
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataNhibernatePersistence\obj\Debug\StrataNhibernatePersistence.csprojResolveAssemblyReference.cache
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataNhibernatePersistence\obj\Debug\StrataNhibernatePersistence.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataNhibernatePersistence\obj\Debug\StrataNhibernatePersistence.pdb
+C:\Development\Strata\csharp\components\StrataNhibernatePersistence\obj\Debug\StrataNhibernatePersistence.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\components\StrataNhibernatePersistence\obj\Debug\StrataNhibernatePersistence.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\components\StrataNhibernatePersistence\obj\Debug\StrataNhibernatePersistence.dll
+C:\Development\Strata\csharp\components\StrataNhibernatePersistence\obj\Debug\StrataNhibernatePersistence.pdb

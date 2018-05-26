@@ -32,3 +32,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataCommon\bin\D
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataCommon\obj\Debug\StrataCommon.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataCommon\obj\Debug\StrataCommon.pdb
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataCommon\obj\Debug\StrataCommon.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\components\StrataCommon\obj\Debug\StrataCommon.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\components\StrataCommon\obj\Debug\StrataCommon.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\components\StrataCommon\obj\Debug\StrataCommon.dll
+C:\Development\Strata\csharp\components\StrataCommon\obj\Debug\StrataCommon.pdb

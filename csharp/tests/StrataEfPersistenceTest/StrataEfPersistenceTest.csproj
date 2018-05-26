@@ -116,10 +116,6 @@
       <Project>{4C118BB6-13FD-4931-9EF1-0F5A3B2A0FEF}</Project>
       <Name>StrataEfPersistence</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\components\StrataPersistence\StrataPersistence.csproj">
-      <Project>{3882218A-F917-4AD2-8D77-5AFE3A1ADE31}</Project>
-      <Name>StrataPersistence</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StrataPersistenceTest\StrataPersistenceTest.csproj">
       <Project>{30dc5deb-ed45-4c6d-9552-98f67069c67d}</Project>
       <Name>StrataPersistenceTest</Name>

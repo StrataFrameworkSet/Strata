@@ -34,3 +34,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataFlatFilePersisten
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataFlatFilePersistenceTest\obj\Debug\StrataFlatFilePersistenceTest.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataFlatFilePersistenceTest\obj\Debug\StrataFlatFilePersistenceTest.pdb
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataFlatFilePersistenceTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Development\Strata\csharp\tests\StrataFlatFilePersistenceTest\obj\Debug\StrataFlatFilePersistenceTest.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\tests\StrataFlatFilePersistenceTest\obj\Debug\StrataFlatFilePersistenceTest.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\tests\StrataFlatFilePersistenceTest\obj\Debug\StrataFlatFilePersistenceTest.dll
+C:\Development\Strata\csharp\tests\StrataFlatFilePersistenceTest\obj\Debug\StrataFlatFilePersistenceTest.pdb

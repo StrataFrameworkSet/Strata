@@ -31,3 +31,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataFlatFilePers
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataFlatFilePersistence\obj\Debug\StrataFlatFilePersistence.csprojResolveAssemblyReference.cache
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataFlatFilePersistence\obj\Debug\StrataFlatFilePersistence.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataFlatFilePersistence\obj\Debug\StrataFlatFilePersistence.pdb
+C:\Development\Strata\csharp\components\StrataFlatFilePersistence\obj\Debug\StrataFlatFilePersistence.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\components\StrataFlatFilePersistence\obj\Debug\StrataFlatFilePersistence.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\components\StrataFlatFilePersistence\obj\Debug\StrataFlatFilePersistence.dll
+C:\Development\Strata\csharp\components\StrataFlatFilePersistence\obj\Debug\StrataFlatFilePersistence.pdb

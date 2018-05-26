@@ -85,10 +85,6 @@
       <Project>{3e27f25a-4e70-4bcf-b757-26ebf06a0a16}</Project>
       <Name>StrataNhibernatePersistence</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\components\StrataPersistence\StrataPersistence.csproj">
-      <Project>{3882218a-f917-4ad2-8d77-5afe3a1ade31}</Project>
-      <Name>StrataPersistence</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StrataAdministrationTest\StrataAdministrationTest.csproj">
       <Project>{e6a88863-eb8a-4f97-a081-413d455b6083}</Project>
       <Name>StrataAdministrationTest</Name>

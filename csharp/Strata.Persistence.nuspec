@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>Strata.Persistence</id>
+		<version>0.5.1</version>
+		<authors>John Liebenau</authors>
+		<owners>John Liebenau</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Strata Persistence Framework 0.5.1</description>
+		<releaseNotes>
+		</releaseNotes>
+		<copyright>Copyright 2017</copyright>
+		<tags></tags>
+
+		<dependencies>
+			<dependency id="Strata.Foundation" version="0.5.0"/>
+ 		</dependencies>
+		
+		<frameworkAssemblies>
+			<frameworkAssembly assemblyName="System"/>
+			<frameworkAssembly assemblyName="System.Core"/>
+			<frameworkAssembly assemblyName="System.Xml.Linq"/>
+			<frameworkAssembly assemblyName="System.Xml"/>
+			<frameworkAssembly assemblyName="Microsoft.CSharp"/>
+		</frameworkAssemblies>
+	</metadata>
+	<files>
+		<file src="components\Strata.Persistence\bin\Debug\Strata.Persistence.dll" target="lib\net45\Debug" /> 
+		<file src="components\Strata.Persistence\bin\Debug\Strata.Persistence.pdb" target="lib\net45\Debug" /> 
+	</files>
+</package>

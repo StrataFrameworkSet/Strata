@@ -46,3 +46,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataClientTest\obj\De
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataClientTest\obj\Debug\StrataClientTest.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataClientTest\obj\Debug\StrataClientTest.pdb
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataClientTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Development\Strata\csharp\tests\StrataClientTest\obj\Debug\StrataClientTest.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\tests\StrataClientTest\obj\Debug\StrataClientTest.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\tests\StrataClientTest\obj\Debug\StrataClientTest.dll
+C:\Development\Strata\csharp\tests\StrataClientTest\obj\Debug\StrataClientTest.pdb

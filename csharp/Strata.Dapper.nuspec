@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>Strata.Dapper</id>
+		<version>0.5.1</version>
+		<authors>John Liebenau</authors>
+		<owners>John Liebenau</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Strata Dapper Framework 0.5.1</description>
+		<releaseNotes>
+		</releaseNotes>
+		<copyright>Copyright 2017</copyright>
+		<tags></tags>
+
+		<dependencies>
+			<dependency id="Strata.Persistence" version="0.5.1"/>
+			<dependency id="Dapper" version="1.50.4"/>
+			<dependency id="DapperExtensions" version="1.6.3"/>
+ 		</dependencies>
+		
+		<frameworkAssemblies>
+			<frameworkAssembly assemblyName="System"/>
+			<frameworkAssembly assemblyName="System.Core"/>
+			<frameworkAssembly assemblyName="System.Xml.Linq"/>
+			<frameworkAssembly assemblyName="System.Xml"/>
+			<frameworkAssembly assemblyName="Microsoft.CSharp"/>
+		</frameworkAssemblies>
+	</metadata>
+	<files>
+		<file src="components\Strata.Dapper\bin\Debug\Strata.Dapper.dll" target="lib\net45\Debug" /> 
+		<file src="components\Strata.Dapper\bin\Debug\Strata.Dapper.pdb" target="lib\net45\Debug" /> 
+	</files>
+</package>

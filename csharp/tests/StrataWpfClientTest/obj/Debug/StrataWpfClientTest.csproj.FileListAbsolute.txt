@@ -62,3 +62,8 @@ C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataWpfClientTest\obj
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataWpfClientTest\obj\Debug\StrataWpfClientTest.csproj.GenerateResource.Cache
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataWpfClientTest\obj\Debug\StrataWpfClientTest.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataWpfClientTest\obj\Debug\StrataWpfClientTest.pdb
+C:\Development\Strata\csharp\tests\StrataWpfClientTest\obj\Debug\StrataWpfClientTest.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\tests\StrataWpfClientTest\obj\Debug\StrataWpfClientTest_MarkupCompile.cache
+C:\Development\Strata\csharp\tests\StrataWpfClientTest\obj\Debug\StrataWpfClientTest_MarkupCompile.lref
+C:\Development\Strata\csharp\tests\StrataWpfClientTest\obj\Debug\StrataWpfClientTest.dll
+C:\Development\Strata\csharp\tests\StrataWpfClientTest\obj\Debug\StrataWpfClientTest.pdb

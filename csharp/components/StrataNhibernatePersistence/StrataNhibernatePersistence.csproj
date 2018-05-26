@@ -94,10 +94,6 @@
       <Project>{DF734F29-4597-4304-B69D-AAB78200EDA8}</Project>
       <Name>StrataCommon</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StrataPersistence\StrataPersistence.csproj">
-      <Project>{3882218A-F917-4AD2-8D77-5AFE3A1ADE31}</Project>
-      <Name>StrataPersistence</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

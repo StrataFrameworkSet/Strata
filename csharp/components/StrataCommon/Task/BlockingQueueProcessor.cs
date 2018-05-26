@@ -1,6 +1,6 @@
 //  ##########################################################################
 //  # File Name: BlockingQueueProcessor.cs
-//  # Copyright: 2014, Sapientia Systems, LLC.
+//  # Copyright: 2011-2018, Sapientia Systems, LLC.
 //  ##########################################################################
  
 using System;

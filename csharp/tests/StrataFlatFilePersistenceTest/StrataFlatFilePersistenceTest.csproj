@@ -92,10 +92,6 @@
       <Project>{3CB2719D-BE69-42D6-B7BB-706C343DBF54}</Project>
       <Name>StrataFlatFilePersistence</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\components\StrataPersistence\StrataPersistence.csproj">
-      <Project>{3882218A-F917-4AD2-8D77-5AFE3A1ADE31}</Project>
-      <Name>StrataPersistence</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StrataPersistenceTest\StrataPersistenceTest.csproj">
       <Project>{30dc5deb-ed45-4c6d-9552-98f67069c67d}</Project>
       <Name>StrataPersistenceTest</Name>

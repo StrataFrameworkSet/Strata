@@ -33,3 +33,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministrati
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\obj\Debug\StrataAdministration.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\obj\Debug\StrataAdministration.pdb
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataAdministration\bin\Debug\StrataAdministration.dll.config
+C:\Development\Strata\csharp\components\StrataAdministration\obj\Debug\StrataAdministration.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\components\StrataAdministration\obj\Debug\StrataAdministration.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\components\StrataAdministration\obj\Debug\StrataAdministration.dll
+C:\Development\Strata\csharp\components\StrataAdministration\obj\Debug\StrataAdministration.pdb

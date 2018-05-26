@@ -63,3 +63,11 @@ C:\Users\John\Development\Workspaces\Strata\csharp\applications\StrataWpfTestApp
 C:\Users\John\Development\Workspaces\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp.csproj.GenerateResource.Cache
 C:\Users\John\Development\Workspaces\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp.exe
 C:\Users\John\Development\Workspaces\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp.pdb
+C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\Main\WpfTestApp.g.cs
+C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp_MarkupCompile.cache
+C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\Strata.WpfTestApp.Properties.Resources.resources
+C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp.csproj.GenerateResource.Cache
+C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp.exe
+C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp.pdb

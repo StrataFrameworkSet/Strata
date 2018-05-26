@@ -63,9 +63,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Disruptor-2.8.0.1\lib\net40\Atomic.dll</HintPath>
     </Reference>
-    <Reference Include="Disruptor, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Disruptor-2.8.0.1\lib\net40\Disruptor.dll</HintPath>
+    <Reference Include="Disruptor, Version=3.3.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Disruptor.3.3.7\lib\net45\Disruptor.dll</HintPath>
     </Reference>
     <Reference Include="Disruptor.Scheduler, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
