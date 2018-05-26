@@ -64,9 +64,11 @@
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Shared\AbstractDomainEvent.cs" />
     <Compile Include="Shared\AbstractDomainEventSource.cs" />
+    <Compile Include="Shared\AbstractEntity.cs" />
     <Compile Include="Shared\IDomainEvent.cs" />
     <Compile Include="Shared\IDomainEventObserver.cs" />
     <Compile Include="Shared\IDomainEventSource.cs" />
+    <Compile Include="Shared\IEntity.cs" />
     <Compile Include="UnitOfWork\AbstractUnitOfWork.cs" />
     <Compile Include="UnitOfWork\AbstractUnitOfWorkProvider.cs" />
     <Compile Include="UnitOfWork\AbstractUnitOfWorkState.cs" />

@@ -84,11 +84,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strata.Dapper", "components
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strata.DapperTest", "tests\Strata.DapperTest\Strata.DapperTest.csproj", "{3D42BAA3-23E9-49BB-AA02-78DCC825A9C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strata.Service", "components\Strata.Service\Strata.Service.csproj", "{67A131D0-7832-4177-88AB-622A6835218F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strata.Domain", "components\Strata.Domain\Strata.Domain.csproj", "{078CED98-5AA0-45BC-94D9-6F76B5D5A051}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strata.DomainTest", "tests\Strata.DomainTest\Strata.DomainTest.csproj", "{483AF538-E192-4936-BBBB-750DF123DFB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strata.Application", "components\Strata.Application\Strata.Application.csproj", "{0C057D4D-A024-4F8A-A4F2-5202A4F47444}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -289,12 +289,6 @@ Global
 		{3D42BAA3-23E9-49BB-AA02-78DCC825A9C6}.Publish|Any CPU.Build.0 = Release|Any CPU
 		{3D42BAA3-23E9-49BB-AA02-78DCC825A9C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D42BAA3-23E9-49BB-AA02-78DCC825A9C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{67A131D0-7832-4177-88AB-622A6835218F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67A131D0-7832-4177-88AB-622A6835218F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67A131D0-7832-4177-88AB-622A6835218F}.Publish|Any CPU.ActiveCfg = Release|Any CPU
-		{67A131D0-7832-4177-88AB-622A6835218F}.Publish|Any CPU.Build.0 = Release|Any CPU
-		{67A131D0-7832-4177-88AB-622A6835218F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67A131D0-7832-4177-88AB-622A6835218F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{078CED98-5AA0-45BC-94D9-6F76B5D5A051}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{078CED98-5AA0-45BC-94D9-6F76B5D5A051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{078CED98-5AA0-45BC-94D9-6F76B5D5A051}.Publish|Any CPU.ActiveCfg = Release|Any CPU
@@ -307,6 +301,12 @@ Global
 		{483AF538-E192-4936-BBBB-750DF123DFB2}.Publish|Any CPU.Build.0 = Release|Any CPU
 		{483AF538-E192-4936-BBBB-750DF123DFB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{483AF538-E192-4936-BBBB-750DF123DFB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C057D4D-A024-4F8A-A4F2-5202A4F47444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C057D4D-A024-4F8A-A4F2-5202A4F47444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C057D4D-A024-4F8A-A4F2-5202A4F47444}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{0C057D4D-A024-4F8A-A4F2-5202A4F47444}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{0C057D4D-A024-4F8A-A4F2-5202A4F47444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C057D4D-A024-4F8A-A4F2-5202A4F47444}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -347,9 +347,9 @@ Global
 		{E1373332-1F63-4E23-A10C-9CA9793320D3} = {DA50BDB6-6DEC-4C6E-B168-9F160AA9FD25}
 		{8E16E056-622B-487F-BF85-5A34426309A6} = {CCC1B63D-8D6A-46C9-9F07-78912CA463C6}
 		{3D42BAA3-23E9-49BB-AA02-78DCC825A9C6} = {DA50BDB6-6DEC-4C6E-B168-9F160AA9FD25}
-		{67A131D0-7832-4177-88AB-622A6835218F} = {CCC1B63D-8D6A-46C9-9F07-78912CA463C6}
 		{078CED98-5AA0-45BC-94D9-6F76B5D5A051} = {CCC1B63D-8D6A-46C9-9F07-78912CA463C6}
 		{483AF538-E192-4936-BBBB-750DF123DFB2} = {DA50BDB6-6DEC-4C6E-B168-9F160AA9FD25}
+		{0C057D4D-A024-4F8A-A4F2-5202A4F47444} = {CCC1B63D-8D6A-46C9-9F07-78912CA463C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45
