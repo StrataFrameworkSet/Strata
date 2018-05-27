@@ -76,15 +76,15 @@ namespace Strata.Dapper.Repository
                         .ToString());
 
             provider
-                .InsertRetriever<long,Trade>( (trade) => trade.TradeKey )
-                .InsertAssigner<long,Trade>( (trade,key) => trade.TradeKey = key )
+                .InsertRetriever<long,Trade>( (trade) => trade.PrimaryId )
+                .InsertAssigner<long,Trade>( (trade,key) => trade.PrimaryId = key )
                 .InsertNamedQuery<Trade>(
                     "Trade.GetTradesWithManagerId",
                     @"  select 
                         distinct t.*
                         from     Trade t,AccountAllocation a,ManagerAllocation m
                         where    t.TradeKey = a.TradeKey and
-                                 a.AccountAllocationKey = m.AccountAllocationKey and
+                                 a.PrimaryId = m.PrimaryId and
                                  m.ManagerId = @id");
 
             return provider;

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Strata.Domain.Shared;
 using Strata.Foundation.Value;
 
 namespace Strata.Domain.TradeDomain
@@ -20,12 +21,14 @@ namespace Strata.Domain.TradeDomain
     ///  
     public partial 
     class AccountAllocation: 
+        AbstractEntity<
+            long,
+            AccountAllocation,
+            IAccountAllocationDomainEvent,
+            IAccountAllocationDomainEventObserver>,
         IComparable
     {
-        public virtual long                     AccountAllocationKey { get; set; }
         public virtual long                     TradeKey { get; set; }
-        public virtual int                      Version { get; set; }
-
         public virtual int                      AccountAllocationId { get; set; }
         public virtual int                      TradeId { get; set; }
         public virtual int                      DownstreamAllocationIdOriginal { get; set; }
@@ -40,7 +43,7 @@ namespace Strata.Domain.TradeDomain
         public 
         AccountAllocation()
         {
-            AccountAllocationKey = 0;
+            PrimaryId = 0;
             TradeKey = 0;
             AccountAllocationId = 0;
             TradeId = 0;
@@ -56,7 +59,7 @@ namespace Strata.Domain.TradeDomain
         public 
         AccountAllocation(AccountAllocation other)
         {
-            AccountAllocationKey = other.AccountAllocationKey;
+            PrimaryId = other.PrimaryId;
             TradeKey = other.TradeKey;
             AccountAllocationId = other.AccountAllocationId;
             TradeId = other.TradeId;
@@ -137,7 +140,7 @@ namespace Strata.Domain.TradeDomain
         {
             StringBuilder b = new StringBuilder();
             b.Append("Allocation:");
-            b.Append("  AccountAllocationKey=" + AccountAllocationKey);
+            b.Append("  PrimaryId=" + PrimaryId);
             b.Append(", Version:" + Version);
             b.Append(", AccountAllocationId=" + AccountAllocationId);
             b.Append(", DownstreamAllocationIdOriginal=" + DownstreamAllocationIdOriginal);
@@ -153,6 +156,18 @@ namespace Strata.Domain.TradeDomain
             return b.ToString();
         }
 
+        public virtual AccountAllocation
+        Notify(string eventName)
+        {
+            Notify(new AccountAllocationDomainEvent(eventName,this));
+            return this;
+        }
+
+        protected override AccountAllocation
+        GetSelf()
+        {
+            return this;
+        }
     }
 }
 

@@ -224,7 +224,7 @@ namespace Strata.Domain.TradeDomain
         public static long 
         GetKey(Trade trade)
         {
-            return trade.TradeKey;
+            return trade.PrimaryId;
         }
     }
 }

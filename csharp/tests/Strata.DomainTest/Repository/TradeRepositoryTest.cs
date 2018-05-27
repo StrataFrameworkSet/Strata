@@ -5,16 +5,19 @@ using Strata.Domain.TradeDomain;
 using Strata.Domain.UnitOfWork;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Strata.Domain.Repository
 {
     [TestFixture]
     public abstract 
-    class TradeRepositoryTest
+    class TradeRepositoryTest:
+        IAccountAllocationDomainEventObserver
     {
         protected ITradeRepository target;
         protected TradeGenerator   generator;
         protected List<long>       tradeKeys;
+        protected List<string>     events;
 
         public virtual void 
         SetUp()
@@ -24,6 +27,7 @@ namespace Strata.Domain.Repository
 
             generator = new TradeGenerator();
             tradeKeys = new List<long>();
+            events = new List<string>();
         }
 
         public virtual void 
@@ -41,6 +45,7 @@ namespace Strata.Domain.Repository
                 
             unitOfWork.Commit();
             target = null;
+            events.Clear();
         }
 
         public virtual void 
@@ -49,12 +54,12 @@ namespace Strata.Domain.Repository
             Trade expected = this.CreateTestTrade();
             Trade actual = null;
 
-            Assert.IsFalse(target.HasTrade(expected.TradeKey));
+            Assert.IsFalse(target.HasTrade(expected.PrimaryId));
             expected = target.InsertTrade(expected);
             target.Provider.GetUnitOfWork().Commit();
-            Assert.IsTrue(target.HasTrade(expected.TradeKey));
-            tradeKeys.Add(expected.TradeKey);
-            actual = target.GetTrade(expected.TradeKey);
+            Assert.IsTrue(target.HasTrade(expected.PrimaryId));
+            tradeKeys.Add(expected.PrimaryId);
+            actual = target.GetTrade(expected.PrimaryId);
             Assert.IsNotNull(actual);
 
             //Assert.AreEqual(expected.TradeId,actual.TradeId);
@@ -69,23 +74,23 @@ namespace Strata.Domain.Repository
             Trade actual = null;
             Money managerAmount = null;
 
-            Assert.IsFalse(target.HasTrade(expected.TradeKey));
+            Assert.IsFalse(target.HasTrade(expected.PrimaryId));
             expected = target.InsertTrade(expected);
             target.Provider.GetUnitOfWork().Commit();
-            Assert.IsTrue(target.HasTrade(expected.TradeKey));
-            tradeKeys.Add(expected.TradeKey);
-            actual = target.GetTrade(expected.TradeKey).Copy();
+            Assert.IsTrue(target.HasTrade(expected.PrimaryId));
+            tradeKeys.Add(expected.PrimaryId);
+            actual = target.GetTrade(expected.PrimaryId).Copy();
             Assert.IsNotNull(actual);
             Assert.AreEqual(expected,actual);
             expected.ExternalTradeId = generator.CreateExternalTradeId();
             Assert.AreNotEqual(expected,actual);
             expected = target.UpdateTrade(expected);
-            actual = target.GetTrade(expected.TradeKey).Copy();
+            actual = target.GetTrade(expected.PrimaryId).Copy();
             Assert.IsNotNull(actual);
             Assert.AreEqual(expected,actual);
             target.Provider.GetUnitOfWork().Commit();
 
-            expected = target.GetTrade( expected.TradeKey );
+            expected = target.GetTrade( expected.PrimaryId);
 
             expected.AccountAllocations[0].Comment = "New Comment";
             managerAmount = expected.AccountAllocations[0].ManagerAllocations[0].ManagerAmount;
@@ -94,7 +99,7 @@ namespace Strata.Domain.Repository
             expected = target.UpdateTrade(expected);
             target.Provider.GetUnitOfWork().Commit();
 
-            actual = target.GetTrade(expected.TradeKey);
+            actual = target.GetTrade(expected.PrimaryId);
             Assert.IsNotNull(actual);
             Assert.AreEqual(expected,actual);
             target.Provider.GetUnitOfWork().Commit();
@@ -105,12 +110,12 @@ namespace Strata.Domain.Repository
         {
             Trade trade = this.CreateTestTrade();
  
-            Assert.IsFalse(target.HasTrade(trade.TradeKey));
+            Assert.IsFalse(target.HasTrade(trade.PrimaryId));
             target.InsertTrade(trade);
-            Assert.IsTrue(target.HasTrade(trade.TradeKey));
+            Assert.IsTrue(target.HasTrade(trade.PrimaryId));
             target.RemoveTrade(trade);
             target.Provider.GetUnitOfWork().Commit();
-            Assert.IsFalse(target.HasTrade(trade.TradeKey));
+            Assert.IsFalse(target.HasTrade(trade.PrimaryId));
         }
 
         public virtual void 
@@ -119,17 +124,17 @@ namespace Strata.Domain.Repository
             Trade expected = this.CreateTestTrade();
             Trade actual = null;
 
-            Assert.IsFalse(target.HasTrade(expected.TradeKey));
+            Assert.IsFalse(target.HasTrade(expected.PrimaryId));
             expected = target.InsertTrade(expected);
-            Assert.IsTrue(target.HasTrade(expected.TradeKey));
-            tradeKeys.Add(expected.TradeKey);
-            actual = target.GetTrade(expected.TradeKey).Copy();
+            Assert.IsTrue(target.HasTrade(expected.PrimaryId));
+            tradeKeys.Add(expected.PrimaryId);
+            actual = target.GetTrade(expected.PrimaryId).Copy();
             Assert.IsNotNull(actual);
             Assert.AreEqual(expected,actual);
             expected.ExternalTradeId = generator.CreateExternalTradeId();
             Assert.AreNotEqual(expected,actual);
             expected = target.UpdateTrade(expected);
-            actual = target.GetTrade( expected.TradeKey );
+            actual = target.GetTrade( expected.PrimaryId);
             target.Provider.GetUnitOfWork().Commit();
             Assert.AreEqual(expected,actual);
         }
@@ -142,8 +147,8 @@ namespace Strata.Domain.Repository
             int allocationId = expected.AccountAllocations.First().AccountAllocationId;
 
             expected = target.InsertTrade(expected);
-            Assert.IsTrue(target.HasTrade(expected.TradeKey));
-            tradeKeys.Add(expected.TradeKey);
+            Assert.IsTrue(target.HasTrade(expected.PrimaryId));
+            tradeKeys.Add(expected.PrimaryId);
             target.Provider.GetUnitOfWork().Commit();
 
             actual = 
@@ -153,7 +158,16 @@ namespace Strata.Domain.Repository
             Assert.AreEqual(expected,actual);
             target.Provider.GetUnitOfWork().Commit();
 
-            expected = target.GetTrade( actual.TradeKey );
+            actual
+                .AccountAllocations
+                .First()
+                .Attach(this)
+                .Notify("FooEvent")
+                .Notify("BarEvent");
+
+            CheckEvents("FooEvent","BarEvent");
+
+            expected = target.GetTrade( actual.PrimaryId);
 
             expected.AccountAllocations.Clear();
             expected = target.UpdateTrade(expected);
@@ -176,8 +190,8 @@ namespace Strata.Domain.Repository
 
             a.ManagerAllocations.Add( m );
             t = target.InsertTrade(t);
-            Assert.IsTrue(target.HasTrade(t.TradeKey));
-            tradeKeys.Add(t.TradeKey);
+            Assert.IsTrue(target.HasTrade(t.PrimaryId));
+            tradeKeys.Add(t.PrimaryId);
             target.Provider.GetUnitOfWork().Commit();
 
             expected = target.GetTradesWithManagerId( m.ManagerId );
@@ -193,13 +207,13 @@ namespace Strata.Domain.Repository
             Trade actual = null;
             int   counter = 0;
 
-            Assert.IsFalse(target.HasTrade(expected.TradeKey));
+            Assert.IsFalse(target.HasTrade(expected.PrimaryId));
             expected = target.InsertTrade(expected);
             target.Provider.GetUnitOfWork().Commit();
 
-            Assert.IsTrue(target.HasTrade(expected.TradeKey));
-            tradeKeys.Add(expected.TradeKey);
-            actual = target.GetTrade(expected.TradeKey).Copy();
+            Assert.IsTrue(target.HasTrade(expected.PrimaryId));
+            tradeKeys.Add(expected.PrimaryId);
+            actual = target.GetTrade(expected.PrimaryId).Copy();
             target.Provider.GetUnitOfWork().Commit();
             Assert.IsNotNull(actual);
             Assert.AreEqual(expected,actual);
@@ -211,16 +225,10 @@ namespace Strata.Domain.Repository
 
             Assert.AreEqual(1,counter);
             expected = actual;
-            actual = target.GetTrade(expected.TradeKey).Copy();
+            actual = target.GetTrade(expected.PrimaryId).Copy();
             Assert.IsNotNull(actual);
             Assert.AreEqual(expected,actual);
          }
-
-        //[Test]
-        public virtual void 
-        GenerateSchema()
-        {
-        }
 
         public virtual void TestGetAllTrades()
         {
@@ -230,24 +238,36 @@ namespace Strata.Domain.Repository
             expected.AccountAllocations = new List<AccountAllocation>();
             expected2.AccountAllocations = new List<AccountAllocation>();
 
-            Assert.IsFalse(target.HasTrade(expected.TradeKey));
-            Assert.IsFalse(target.HasTrade(expected2.TradeKey));
+            Assert.IsFalse(target.HasTrade(expected.PrimaryId));
+            Assert.IsFalse(target.HasTrade(expected2.PrimaryId));
 
             expected = target.InsertTrade(expected);
             expected2 = target.InsertTrade(expected2);
 
             target.Provider.GetUnitOfWork().Commit();
 
-            Assert.IsTrue(target.HasTrade(expected.TradeKey));
-            Assert.IsTrue(target.HasTrade(expected2.TradeKey));
+            Assert.IsTrue(target.HasTrade(expected.PrimaryId));
+            Assert.IsTrue(target.HasTrade(expected2.PrimaryId));
 
-            tradeKeys.Add(expected.TradeKey);
-            tradeKeys.Add(expected2.TradeKey);
+            tradeKeys.Add(expected.PrimaryId);
+            tradeKeys.Add(expected2.PrimaryId);
 
             var actual = target.GetAllTrades();
 
             Assert.IsNotNull(actual);
             Assert.AreEqual(2,actual.Count);
+        }
+
+        public void 
+        OnEvent(IAccountAllocationDomainEvent evnt)
+        {
+            events.Add(evnt.Name);
+        }
+
+        public void 
+        OnException(Exception exception)
+        {
+            throw new NotImplementedException();
         }
 
         protected abstract IUnitOfWorkProvider
@@ -259,5 +279,11 @@ namespace Strata.Domain.Repository
             return generator.CreateTrade();
         }
 
+        protected void
+        CheckEvents(params string[] eventNames)
+        {
+            foreach (string eventName in eventNames)
+                Assert.IsTrue(events.Contains(eventName));
+        }
     }
 }

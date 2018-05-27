@@ -33,13 +33,13 @@ namespace Strata.Domain.TradeDomain
         protected override bool 
         HasUnassignedKey(Trade entity)
         {
-            return entity.TradeKey == 0;
+            return entity.PrimaryId == 0;
         }
 
         protected override void 
         AssignKey(Trade entity,long key)
         {
-            entity.TradeKey = key;
+            entity.PrimaryId = key;
         }
 
         protected override long 

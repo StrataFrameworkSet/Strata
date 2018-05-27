@@ -78,7 +78,7 @@ namespace Strata.EntityFramework.Repository
                     distinct t.*
                     from     Trade t,AccountAllocation a,ManagerAllocation m
                     where    t.TradeKey = a.TradeKey and
-                             a.AccountAllocationKey = m.AccountAllocationKey and
+                             a.PrimaryId = m.PrimaryId and
                              m.ManagerId = @id" );
 
             return provider;

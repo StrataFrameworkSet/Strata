@@ -69,7 +69,7 @@ namespace Strata.EntityFramework.Repository
         {
             foreach (AccountAllocation a in AccountAllocations)
             {
-                Trade trade = Trades.SingleOrDefault( t => t.TradeKey == a.TradeKey );
+                Trade trade = Trades.SingleOrDefault( t => t.PrimaryId == a.TradeKey );
 
                 if ( IsOrphan( trade,a ) )
                     AccountAllocations.Remove( a );
@@ -83,7 +83,7 @@ namespace Strata.EntityFramework.Repository
             {
                 AccountAllocation allocation = 
                     AccountAllocations.SingleOrDefault( 
-                        t => t.AccountAllocationKey == a.AccountAllocationKey );
+                        t => t.PrimaryId == a.AccountAllocationKey );
 
                 if ( IsOrphan( allocation,a ) )
                     ManagerAllocations.Remove( a );

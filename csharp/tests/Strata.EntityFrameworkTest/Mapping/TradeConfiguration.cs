@@ -25,10 +25,17 @@ namespace Strata.EntityFramework.Mapping
         {
             ToTable( "Trade" );
 
-            HasKey( t => t.TradeKey );
-            Property( t => t.TradeKey )
+            HasKey( t => t.PrimaryId );
+            Property( t => t.PrimaryId)
+                .HasColumnName("TradeKey")
                 .HasDatabaseGeneratedOption( 
                     (System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption?)DatabaseGeneratedOption.Identity );
+
+            Property(t => t.Version)
+                .IsConcurrencyToken();
+
+            Ignore(t => t.Created);
+            Ignore(t => t.LastModified);
 
             Property( t => t.TradeId )
                 .HasColumnName( "TradeId" )

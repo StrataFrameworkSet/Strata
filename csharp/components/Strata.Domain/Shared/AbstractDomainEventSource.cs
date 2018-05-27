@@ -19,7 +19,7 @@ namespace Strata.Domain.Shared
         where E: IDomainEvent<S>
         where O: IDomainEventObserver<E>
     {
-        public ISet<O> Observers { get; protected set; }
+        public virtual ISet<O> Observers { get; protected set; }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -34,7 +34,7 @@ namespace Strata.Domain.Shared
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         ///  
-        public S 
+        public virtual S 
         AttachFrom(S other)
         {
             return Attach(other.Observers);
@@ -43,7 +43,7 @@ namespace Strata.Domain.Shared
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         ///  
-        public S 
+        public virtual S
         Attach(ISet<O> observers)
         {
             observers.ForEach((O observer) => Observers.Add(observer));
@@ -53,7 +53,7 @@ namespace Strata.Domain.Shared
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         ///  
-        public S 
+        public virtual S
         Attach(O observer)
         {
             Observers.Add(observer);
@@ -63,7 +63,7 @@ namespace Strata.Domain.Shared
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         ///  
-        public S 
+        public virtual S
         Detach(O observer)
         {
             Observers.Remove(observer);
@@ -73,7 +73,7 @@ namespace Strata.Domain.Shared
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         ///  
-        public bool 
+        public virtual bool
         Has(O observer)
         {
             return Observers.Contains(observer);
@@ -82,7 +82,7 @@ namespace Strata.Domain.Shared
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         ///  
-        public S 
+        public virtual S
         Notify(E evnt)
         {
             Observers.ForEach((O observer) => observer.OnEvent(evnt));

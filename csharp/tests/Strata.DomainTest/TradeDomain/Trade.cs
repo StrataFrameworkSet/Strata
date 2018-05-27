@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Strata.Foundation.Utility;
 using Strata.Foundation.Value;
+using Strata.Domain.Shared;
 
 namespace Strata.Domain.TradeDomain
 {
@@ -21,11 +22,9 @@ namespace Strata.Domain.TradeDomain
     ///  
     public 
     class Trade:
+        AbstractEntity<long>,
         ICopyable
     {
-        public virtual long                     TradeKey { get; set; }
-        public virtual int                      Version { get; set; }
-
         public virtual int                      TradeId { get; set; }
         public virtual int                      ExternalTradeId { get; set; }
         public virtual String                   Cusip { get; set; }
@@ -47,7 +46,7 @@ namespace Strata.Domain.TradeDomain
         public
         Trade()
         {
-            TradeKey = 0;
+            PrimaryId = 0;
             TradeId = 0;
             ExternalTradeId = 0;
             Cusip = String.Empty;
@@ -69,7 +68,7 @@ namespace Strata.Domain.TradeDomain
         public
         Trade(Trade other)
         {
-            TradeKey = other.TradeKey;
+            PrimaryId = other.PrimaryId;
             TradeId = other.TradeId;
             ExternalTradeId = other.ExternalTradeId;
             Cusip = other.Cusip;
@@ -145,7 +144,7 @@ namespace Strata.Domain.TradeDomain
         {
             StringBuilder b = new StringBuilder();
             b.Append("Trade:");
-            b.Append("  TradeKey:" + TradeKey);
+            b.Append("  PrimaryId:" + PrimaryId);
             b.Append(", Version:" + Version);
             b.Append(", TradeId=" + TradeId);
             b.Append(", BrokerCode=" + BrokerCode);

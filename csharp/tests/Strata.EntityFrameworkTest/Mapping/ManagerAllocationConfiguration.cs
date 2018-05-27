@@ -33,7 +33,7 @@ namespace Strata.EntityFramework.Mapping
                 .HasDatabaseGeneratedOption( 
                     DatabaseGeneratedOption.Identity );
             Property( a => a.AccountAllocationKey )
-                .HasColumnName( "AccountAllocationKey" );
+                .HasColumnName( "PrimaryId" );
 
             Property( m => m.ManagerAllocationId )
                 .HasColumnName( "ManagerAllocationId" )

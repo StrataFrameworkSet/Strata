@@ -44,7 +44,7 @@ namespace Strata.Domain.Repository
             Trade trade = new Trade();
 
             if ( createKeys )
-                trade.TradeKey = generator.Next(1,int.MaxValue);
+                trade.PrimaryId = generator.Next(1,int.MaxValue);
 
             trade.TradeAmount = new Money(CurrencyManager.GetInstanceByCode("USD"), 1000);
             trade.BrokerCode = "BRKR";

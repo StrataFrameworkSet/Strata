@@ -41,10 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Service\AbstractProcessor.cs" />
-    <Compile Include="Service\AbstractService.cs" />
-    <Compile Include="Service\ServiceReply.cs" />
-    <Compile Include="Service\ServiceRequest.cs" />
+    <Compile Include="Core\AbstractServiceEvent.cs" />
+    <Compile Include="Core\AbstractServiceEventSource.cs" />
+    <Compile Include="Core\AbstractProcessor.cs" />
+    <Compile Include="Core\AbstractService.cs" />
+    <Compile Include="Core\IServiceEvent.cs" />
+    <Compile Include="Core\IServiceEventObserver.cs" />
+    <Compile Include="Core\IServiceEventSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -68,15 +68,17 @@ namespace Strata.Nhibernate.Repository
 
         [Ignore("use when needed")]
         [Test]
-        public override void 
+        public void 
         GenerateSchema()
         {
             Configuration config = new Configuration();
 
-            config.AddAssembly("Strata.DomainTest");         
+            config.AddAssembly("Strata.NhibernateTest");         
             config.Configure();
 
-            new SchemaExport(config).Create( true,true );
+            new SchemaExport(config)
+                .SetOutputFile(@"C:\Temp\StataAutomatedTest.sql")
+                .Create( true,true );
         }
 
         protected override IUnitOfWorkProvider

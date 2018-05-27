@@ -132,6 +132,8 @@
     <Compile Include="Task\TaskBlockingQueueDispatcher.cs" />
     <Compile Include="Task\TaskConsumer.cs" />
     <Compile Include="Task\TaskDisruptorDispatcher.cs" />
+    <Compile Include="Transfer\ServiceReply.cs" />
+    <Compile Include="Transfer\ServiceRequest.cs" />
     <Compile Include="Utility\AtomicBoolean.cs" />
     <Compile Include="Utility\AtomicLong.cs" />
     <Compile Include="Utility\CopyExtension.cs" />

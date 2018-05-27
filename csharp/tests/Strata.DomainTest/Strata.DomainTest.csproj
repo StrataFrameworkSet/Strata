@@ -7,7 +7,7 @@
     <ProjectGuid>{483AF538-E192-4936-BBBB-750DF123DFB2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Strata.DomainTest</RootNamespace>
+    <RootNamespace>Strata.Domain</RootNamespace>
     <AssemblyName>Strata.DomainTest</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -49,6 +49,9 @@
     <Compile Include="Repository\TradeGenerator.cs" />
     <Compile Include="Repository\TradeRepositoryTest.cs" />
     <Compile Include="TradeDomain\AccountAllocation.cs" />
+    <Compile Include="TradeDomain\AccountAllocationDomainEvent.cs" />
+    <Compile Include="TradeDomain\IAccountAllocationDomainEvent.cs" />
+    <Compile Include="TradeDomain\IAccountAllocationDomainEventObserver.cs" />
     <Compile Include="TradeDomain\ITradeRepository.cs" />
     <Compile Include="TradeDomain\ManagerAllocation.cs" />
     <Compile Include="TradeDomain\Trade.cs" />

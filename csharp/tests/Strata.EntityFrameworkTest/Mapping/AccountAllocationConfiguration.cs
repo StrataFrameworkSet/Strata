@@ -23,10 +23,15 @@ namespace Strata.EntityFramework.Mapping
         {
             ToTable( "AccountAllocation" );
 
-            HasKey( a => a.AccountAllocationKey );
-            Property( a => a.AccountAllocationKey )
+            HasKey( a => a.PrimaryId );
+            Property( a => a.PrimaryId )
+                .HasColumnName("AccountAllocationKey")
                 .HasDatabaseGeneratedOption( 
                     DatabaseGeneratedOption.Identity );
+            Ignore(a => a.Version);
+            Ignore(a => a.Created);
+            Ignore(a => a.LastModified);
+
             Property( a => a.TradeKey )
                 .HasColumnName( "TradeKey" );
 

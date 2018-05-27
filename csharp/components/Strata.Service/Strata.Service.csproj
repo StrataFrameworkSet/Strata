@@ -41,10 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\AbstractProcessor.cs" />
-    <Compile Include="Core\AbstractService.cs" />
-    <Compile Include="Core\ServiceReply.cs" />
-    <Compile Include="Core\ServiceRequest.cs" />
+    <Compile Include="Transfer\ServiceReply.cs" />
+    <Compile Include="Transfer\ServiceRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
