@@ -8,7 +8,7 @@ namespace Strata.Foundation.ProducerConsumer
     public 
     class DisruptorRouterTest
     {
-        private static long MAX = 10000000L;
+        private static long MAX = 1000000L;
 
         private ICountRequestDispatcher itsTarget;
         private ICountRequestProducer itsProducer1;

@@ -3,13 +3,12 @@
 //  # Copyright: 2011-2018, Sapientia Systems, LLC.
 //  ##########################################################################
 
+using Strata.Domain.NamedQuery;
+using Strata.Domain.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Strata.Foundation.Utility;
-using Strata.Domain.NamedQuery;
-using Strata.Domain.UnitOfWork;
 
 namespace Strata.Domain.Repository
 {
@@ -152,9 +151,9 @@ namespace Strata.Domain.Repository
     /// </summary>
     ///  
     public abstract
-    class AbstractRepository<K,E,T>:
-        IRepository<K,E>
-        where E: class, T
+    class AbstractRepository<K,S,T>:
+        IRepository<K,S>
+        where S: class, T
         where T : class
     {
         public IUnitOfWorkProvider Provider { get; protected set; }
@@ -173,26 +172,26 @@ namespace Strata.Domain.Repository
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual E
-        Insert(E entity)
+        public virtual S
+        Insert(S entity)
         {
-            return (E)GetUnitOfWork().Insert<K,T>((T)entity);
+            return (S)GetUnitOfWork().Insert<K,T>((T)entity);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual E
-        Update(E entity)
+        public virtual S
+        Update(S entity)
         {
-            return (E)GetUnitOfWork().Update<K,T>((T)entity);
+            return (S)GetUnitOfWork().Update<K,T>((T)entity);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
         public virtual void
-        Remove(E entity)
+        Remove(S entity)
         {
             GetUnitOfWork().Remove<K,T>((T)entity);
         }
@@ -200,51 +199,51 @@ namespace Strata.Domain.Repository
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual E
+        public virtual S
         GetUnique(K key)
         {
-            return (E)GetUnitOfWork().GetUniqueWithKey<K,T>(key);
+            return (S)GetUnitOfWork().GetUniqueWithKey<K,T>(key);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual E
-        GetUnique(Expression<Func<E,bool>> predicate)
+        public virtual S
+        GetUnique(Expression<Func<S,bool>> predicate)
         {
-            return GetUnitOfWork().GetUniqueWithPredicate<E>(predicate);
+            return GetUnitOfWork().GetUniqueWithPredicate<S>(predicate);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual IList<E>
-        GetAll(Expression<Func<E,bool>> predicate)
+        public virtual IList<S>
+        GetAll(Expression<Func<S,bool>> predicate)
         {
 
-            return GetUnitOfWork().GetAllWithPredicate<E>(predicate);
+            return GetUnitOfWork().GetAllWithPredicate<S>(predicate);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual IList<E>
+        public virtual IList<S>
         GetAll()
         {
             return 
                 GetUnitOfWork()
                     .GetAll<T>()
-                    .Cast<E>()
+                    .Cast<S>()
                     .ToList();
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual INamedQuery<E>
+        public virtual INamedQuery<S>
         GetNamedQuery(string queryName)
         {
-            return GetUnitOfWork().GetNamedQuery<E>(queryName);
+            return GetUnitOfWork().GetNamedQuery<S>(queryName);
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -260,9 +259,9 @@ namespace Strata.Domain.Repository
         /// <inheritDoc/>
         /// 
         public virtual bool
-        HasAny(Expression<Func<E,bool>> predicate)
+        HasAny(Expression<Func<S,bool>> predicate)
         {
-            return GetUnitOfWork().HasUniqueWithPredicate<E>(predicate);
+            return GetUnitOfWork().HasUniqueWithPredicate<S>(predicate);
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -271,7 +270,7 @@ namespace Strata.Domain.Repository
         public virtual bool
         HasNamedQuery(string queryName)
         {
-            return GetUnitOfWork().HasNamedQuery<E>(queryName);
+            return GetUnitOfWork().HasNamedQuery<S>(queryName);
         }
 
         //////////////////////////////////////////////////////////////////////

@@ -8,7 +8,6 @@ using NHibernate.Engine;
 using NHibernate.Type;
 using NHibernate.UserTypes;
 using Strata.Foundation.Utility;
-using Strata.Foundation.Value;
 using System;
 using System.Data.Common;
 
@@ -21,8 +20,9 @@ namespace Strata.Nhibernate.Mapping
     /// </summary>
     /// 
     public
-    class MappableDictionaryType<K,T>:
+    class MappableDictionaryType<K,T,D>:
         ICompositeUserType
+        where D: MappableDictionary<K,T>,new()
     {
         public String[] 
         PropertyNames
@@ -33,13 +33,13 @@ namespace Strata.Nhibernate.Mapping
         public IType[] 
         PropertyTypes
         {
-            get { return new IType[] {NHibernateUtil.String}; }
+            get { return new IType[] {NHibernateUtil.StringClob}; }
         }
 
         public Type 
         ReturnedClass
         {
-            get { return typeof(MappableDictionary<K,T>); }
+            get { return typeof(D); }
         }
 
         public bool
@@ -59,26 +59,30 @@ namespace Strata.Nhibernate.Mapping
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public Object 
+        public Object
         GetPropertyValue(Object component,int property)
         {
-            MappableDictionary<K,T> mappable = 
-                (MappableDictionary<K,T>)component;
-        
-            if ( property == 0 ) 
+            D mappable = (D)component;
+
+            if (mappable == null)
+                return null;
+
+            if (property == 0)
                 return mappable.Contents;
-        
+
             throw new HibernateException("unknown property");
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public void 
+        public void
         SetPropertyValue(Object component,int property,Object value)
         {
-            MappableDictionary<K,T> mappable = 
-                (MappableDictionary<K,T>)component;
+            D mappable = (D)component;
+
+            if (mappable == null)
+                return;
 
             if (property == 0)
                 mappable.Contents = (string)value;
@@ -90,121 +94,127 @@ namespace Strata.Nhibernate.Mapping
         /// <inheritDoc/>
         /// 
         public new bool
-        Equals(Object x,Object y) 
+        Equals(Object x,Object y)
         {
-            if ( x == y )
+            if (ReferenceEquals(x,y))
                 return true;
-        
-            if ( x == null || y == null )
+
+            if (x == null || y == null)
                 return false;
-        
-            return x.Equals( y );
+
+            return x.Equals(y);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public int 
-        GetHashCode(Object x) 
+        public int
+        GetHashCode(Object x)
         {
-            if ( x == null )
+            if (x == null)
                 return 0;
-        
+
             return x.GetHashCode();
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public Object 
+        public Object
         NullSafeGet(
-            DbDataReader        reader,
-            String[]            names,
+            DbDataReader reader,
+            String[] names,
             ISessionImplementor session,
-            Object              owner) 
+            Object owner)
         {
-            String  contentsColumn = names[0];
-            String  contents       = null;
+            string contentsColumn = names[0];
+            object contents = null;
 
-            if( reader == null )
+            if (reader == null)
                 return null;
-            
-            contents = 
+
+            contents =
                 NHibernateUtil
-                    .String
+                    .StringClob
                     .NullSafeGet(
                         reader,
                         contentsColumn,
                         session,
-                        owner).ToString();
-    
-            return new MappableDictionary<K,T>() { Contents = contents };
+                        owner);
+
+            return 
+                contents != null 
+                    ? new D() { Contents = contents.ToString() }
+                    : null;
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public void 
+        public void
         NullSafeSet(
-            DbCommand           st,
-            Object              value,
-            int                 index,
-            bool[]              settable,
-            ISessionImplementor session) 
-        {
-            String  contents = "";
-
-            if( value == null )
-                return;
-
-            contents = ((MappableDictionary<K,T>)value).Contents;
- 
-            NHibernateUtil.String.NullSafeSet(st,contents,index,session);
-        }
-
-        //////////////////////////////////////////////////////////////////////
-        /// <inheritDoc/>
-        /// 
-        public Object 
-        DeepCopy(Object value) 
-        {
-            return (MappableDictionary<K,T>)value;
-        }
-
-        //////////////////////////////////////////////////////////////////////
-        /// <inheritDoc/>
-        /// 
-        public Object 
-        Disassemble(
-            Object              value,
+            DbCommand st,
+            Object value,
+            int index,
+            bool[] settable,
             ISessionImplementor session)
         {
-            return (MappableDictionary<K,T>)value;
+            string contents = string.Empty;
+
+            if (value == null)
+            {
+                NHibernateUtil.StringClob.NullSafeSet(st,null,index,session);
+                return;
+            }
+
+            contents = ((D)value).Contents;
+
+            NHibernateUtil.StringClob.NullSafeSet(st,contents,index,session);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public Object 
+        public Object
+        DeepCopy(Object value)
+        {
+            return (D)value;
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <inheritDoc/>
+        /// 
+        public Object
+        Disassemble(
+            Object value,
+            ISessionImplementor session)
+        {
+            return (D)value;
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <inheritDoc/>
+        /// 
+        public Object
         Assemble(
-            Object              cached,
+            Object cached,
             ISessionImplementor session,
-            Object              owner) 
+            Object owner)
         {
-            return (MappableDictionary<K,T>)cached;
+            return (D)cached;
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public Object 
+        public Object
         Replace(
-            Object              original,
-            Object              target,
+            Object original,
+            Object target,
             ISessionImplementor session,
-            Object              owner) 
+            Object owner)
         {
-            return (MappableDictionary<K,T>)original;
+            return (D)original;
         }
 
     }

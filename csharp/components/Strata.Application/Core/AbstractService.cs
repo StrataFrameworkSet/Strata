@@ -39,7 +39,7 @@ namespace Strata.Application.Core
         /// <summary>
         /// </summary>
         ///  
-        protected TReply
+        protected virtual TReply
         Execute<TReply,TRequest>(
             Func<TRequest,TReply> action,
             TRequest              request,
@@ -59,7 +59,7 @@ namespace Strata.Application.Core
 
                     try
                     {
-                        TReply reply = action(LogRequest(request));
+                        TReply reply = DoAction(action,LogRequest(request));
 
                         Commit(unitOfWork,request);
 
@@ -107,12 +107,26 @@ namespace Strata.Application.Core
         /// <summary>
         /// </summary>
         ///  
-        protected TReply
+        protected virtual TReply
         Execute<TReply, TRequest>(Func<TRequest,TReply> action,TRequest request)
             where TRequest : ServiceRequest
             where TReply : ServiceReply, new()
         {
             return Execute<TReply,TRequest>(action,request,1);
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        ///  
+        protected virtual TReply 
+        DoAction<TRequest,TReply>(
+            Func<TRequest,TReply> action,
+            TRequest              request)
+            where TRequest : ServiceRequest
+            where TReply : ServiceReply, new()
+        {
+            return action(request);
         }
 
         //////////////////////////////////////////////////////////////////////////
@@ -175,7 +189,6 @@ namespace Strata.Application.Core
                 GetCurrentTimeInMilliseconds() -
                 request.ReceivedTimestamp;
             reply.SentTimestamp = GetCurrentTimeInMilliseconds();
-            reply.IsSuccessful = true;
             return reply;
         }
 

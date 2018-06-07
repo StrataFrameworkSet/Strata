@@ -58,8 +58,9 @@ namespace Strata.Ninject.Injection
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public T 
+        public T
         GetInstance<T>()
+            where T: class
         {
             return Kernel.Get<T>();
         }
@@ -69,6 +70,7 @@ namespace Strata.Ninject.Injection
         /// 
         public T 
         GetInstance<T>(string key)
+            where T: class
         {
             return Kernel.Get<T>(key);
         }
@@ -77,7 +79,9 @@ namespace Strata.Ninject.Injection
         /// <inheritDoc/>
         /// 
         public T 
-        GetInstance<T,K>(K key) where K: Attribute
+        GetInstance<T,K>(K key) 
+            where T: class
+            where K: Attribute
         {
             throw new NotImplementedException();
         }

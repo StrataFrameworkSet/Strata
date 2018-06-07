@@ -28,7 +28,8 @@ namespace Strata.Foundation.Injection
         /// <returns>an instance created from the binding</returns>
         /// 
         T
-        GetInstance<T>();
+        GetInstance<T>()
+            where T: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -42,7 +43,8 @@ namespace Strata.Foundation.Injection
         /// <returns>an instance created from the binding</returns>
         /// 
         T
-        GetInstance<T>(string key);
+        GetInstance<T>(string key)
+            where T: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -59,6 +61,7 @@ namespace Strata.Foundation.Injection
         /// 
         T
         GetInstance<T,K>(K key)
+            where T: class
             where K: Attribute;
 
         //////////////////////////////////////////////////////////////////////

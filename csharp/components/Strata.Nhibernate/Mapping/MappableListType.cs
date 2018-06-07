@@ -17,27 +17,27 @@ namespace Strata.Nhibernate.Mapping
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
     /// User defined type Nhibernate mapper 
-    /// for <c>MappableList{T}</c> objects.
+    /// for <c>MappableListType{T}</c> objects.
     /// </summary>
     /// 
     public
     class MappableListType<T,L>:
         ICompositeUserType
-        where L: MappableList<T>, new()
+        where L: MappableList<T>,new()
     {
-        public String[] 
+        public String[]
         PropertyNames
         {
-            get { return new String[] {"Contents"}; }
+            get { return new String[] { "Contents" }; }
         }
 
-        public IType[] 
+        public IType[]
         PropertyTypes
         {
-            get { return new IType[] {NHibernateUtil.String}; }
+            get { return new IType[] { NHibernateUtil.StringClob }; }
         }
 
-        public Type 
+        public Type
         ReturnedClass
         {
             get { return typeof(L); }
@@ -55,29 +55,36 @@ namespace Strata.Nhibernate.Mapping
         /// </summary>
         /// 
         public
-        MappableListType() {}
+        MappableListType()
+        { }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public Object 
+        public Object
         GetPropertyValue(Object component,int property)
         {
             L mappable = (L)component;
-        
-            if ( property == 0 ) 
+
+            if (mappable == null)
+                return null;
+
+            if (property == 0)
                 return mappable.Contents;
-        
+
             throw new HibernateException("unknown property");
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public void 
+        public void
         SetPropertyValue(Object component,int property,Object value)
         {
             L mappable = (L)component;
+
+            if (mappable == null)
+                return;
 
             if (property == 0)
                 mappable.Contents = (string)value;
@@ -89,83 +96,89 @@ namespace Strata.Nhibernate.Mapping
         /// <inheritDoc/>
         /// 
         public new bool
-        Equals(Object x,Object y) 
+        Equals(Object x,Object y)
         {
-            if ( x == y )
+            if (ReferenceEquals(x,y))
                 return true;
-        
-            if ( x == null || y == null )
+
+            if (x == null || y == null)
                 return false;
-        
-            return x.Equals( y );
+
+            return x.Equals(y);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public int 
-        GetHashCode(Object x) 
+        public int
+        GetHashCode(Object x)
         {
-            if ( x == null )
+            if (x == null)
                 return 0;
-        
+
             return x.GetHashCode();
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public Object 
+        public Object
         NullSafeGet(
-            DbDataReader        reader,
-            String[]            names,
+            DbDataReader reader,
+            String[] names,
             ISessionImplementor session,
-            Object              owner) 
+            Object owner)
         {
-            String  contentsColumn = names[0];
-            String  contents       = null;
+            string contentsColumn = names[0];
+            object contents = null;
 
-            if( reader == null )
+            if (reader == null)
                 return null;
-            
-            contents = 
+
+            contents =
                 NHibernateUtil
-                    .String
+                    .StringClob
                     .NullSafeGet(
                         reader,
                         contentsColumn,
                         session,
-                        owner).ToString();
-    
-            return new L() { Contents = contents };
+                        owner);
+
+            return 
+                contents != null 
+                    ? new L() { Contents = contents.ToString() }
+                    : null;
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public void 
+        public void
         NullSafeSet(
-            DbCommand           st,
-            Object              value,
-            int                 index,
-            bool[]              settable,
-            ISessionImplementor session) 
+            DbCommand st,
+            Object value,
+            int index,
+            bool[] settable,
+            ISessionImplementor session)
         {
-            String  contents = "";
+            string contents = string.Empty;
 
-            if( value == null )
+            if (value == null)
+            {
+                NHibernateUtil.StringClob.NullSafeSet(st,null,index,session);
                 return;
+            }
 
             contents = ((L)value).Contents;
- 
-            NHibernateUtil.String.NullSafeSet(st,contents,index,session);
+
+            NHibernateUtil.StringClob.NullSafeSet(st,contents,index,session);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public Object 
-        DeepCopy(Object value) 
+        public Object
+        DeepCopy(Object value)
         {
             return (L)value;
         }
@@ -173,9 +186,9 @@ namespace Strata.Nhibernate.Mapping
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public Object 
+        public Object
         Disassemble(
-            Object              value,
+            Object value,
             ISessionImplementor session)
         {
             return (L)value;
@@ -184,11 +197,11 @@ namespace Strata.Nhibernate.Mapping
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public Object 
+        public Object
         Assemble(
-            Object              cached,
+            Object cached,
             ISessionImplementor session,
-            Object              owner) 
+            Object owner)
         {
             return (L)cached;
         }
@@ -196,12 +209,12 @@ namespace Strata.Nhibernate.Mapping
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public Object 
+        public Object
         Replace(
-            Object              original,
-            Object              target,
+            Object original,
+            Object target,
             ISessionImplementor session,
-            Object              owner) 
+            Object owner)
         {
             return (L)original;
         }

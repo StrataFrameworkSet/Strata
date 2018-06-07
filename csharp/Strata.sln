@@ -92,6 +92,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strata.Application", "compo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strata.ApplicationTest", "tests\Strata.ApplicationTest\Strata.ApplicationTest.csproj", "{D5AF0ECC-726D-49B1-9224-D207F928C7F2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{30D21B11-F552-4A4C-93CC-D2827DF51460}"
+	ProjectSection(SolutionItems) = preProject
+		Comment.snippet = Comment.snippet
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -359,6 +364,7 @@ Global
 		{483AF538-E192-4936-BBBB-750DF123DFB2} = {DA50BDB6-6DEC-4C6E-B168-9F160AA9FD25}
 		{0C057D4D-A024-4F8A-A4F2-5202A4F47444} = {CCC1B63D-8D6A-46C9-9F07-78912CA463C6}
 		{D5AF0ECC-726D-49B1-9224-D207F928C7F2} = {DA50BDB6-6DEC-4C6E-B168-9F160AA9FD25}
+		{30D21B11-F552-4A4C-93CC-D2827DF51460} = {05EE8A5A-E066-4888-917E-1919269B3178}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E5CB16E-927D-4CEF-8A70-6E3A7093796F}

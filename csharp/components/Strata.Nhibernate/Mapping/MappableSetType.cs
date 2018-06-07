@@ -33,7 +33,7 @@ namespace Strata.Nhibernate.Mapping
         public IType[] 
         PropertyTypes
         {
-            get { return new IType[] {NHibernateUtil.String}; }
+            get { return new IType[] {NHibernateUtil.StringClob}; }
         }
 
         public Type 
@@ -128,21 +128,24 @@ namespace Strata.Nhibernate.Mapping
             Object              owner) 
         {
             string contentsColumn = names[0];
-            string contents       = null;
+            object contents       = null;
 
             if( reader == null )
                 return null;
             
             contents = 
                 NHibernateUtil
-                    .String
+                    .StringClob
                     .NullSafeGet(
                         reader,
                         contentsColumn,
                         session,
-                        owner).ToString();
+                        owner);
     
-            return new S() { Contents = contents };
+            return 
+                contents != null 
+                    ? new S() { Contents = contents.ToString() }
+                    : null;
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -160,13 +163,13 @@ namespace Strata.Nhibernate.Mapping
 
             if (value == null)
             {
-                NHibernateUtil.String.NullSafeSet(st,null,index,session);
+                NHibernateUtil.StringClob.NullSafeSet(st,null,index,session);
                 return;
             }
 
             contents = ((S)value).Contents;
  
-            NHibernateUtil.String.NullSafeSet(st,contents,index,session);
+            NHibernateUtil.StringClob.NullSafeSet(st,contents,index,session);
         }
 
         //////////////////////////////////////////////////////////////////////

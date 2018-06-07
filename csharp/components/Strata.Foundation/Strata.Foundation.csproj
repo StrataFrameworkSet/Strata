@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Disruptor, Version=3.3.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Disruptor.3.3.7\lib\net45\Disruptor.dll</HintPath>
     </Reference>
@@ -46,6 +49,7 @@
       <HintPath>..\..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -66,6 +70,9 @@
     <Compile Include="Bootstrap\IBootstrapper.cs" />
     <Compile Include="Bootstrap\IStartStopController.cs" />
     <Compile Include="Bootstrap\NullStartStopController.cs" />
+    <Compile Include="Decoration\Decorator.cs" />
+    <Compile Include="Decoration\DecoratorFactory.cs" />
+    <Compile Include="Decoration\IDecoratorFactory.cs" />
     <Compile Include="Email\EmailAttachment.cs" />
     <Compile Include="Email\EmailMessage.cs" />
     <Compile Include="Email\IEmailAttachment.cs" />
@@ -74,10 +81,14 @@
     <Compile Include="Email\SmtpEmailSession.cs" />
     <Compile Include="Injection\AbstractBinder.cs" />
     <Compile Include="Injection\AbstractModule.cs" />
+    <Compile Include="Injection\DecoratedContainer.cs" />
+    <Compile Include="Injection\DecoratorMap.cs" />
     <Compile Include="Injection\IBinder.cs" />
     <Compile Include="Injection\IBinding.cs" />
     <Compile Include="Injection\IBindingBuilder.cs" />
     <Compile Include="Injection\IContainer.cs" />
+    <Compile Include="Injection\IContainerHolder.cs" />
+    <Compile Include="Injection\IDecoratorMap.cs" />
     <Compile Include="Injection\IKeyBindingBuilder.cs" />
     <Compile Include="Injection\IModule.cs" />
     <Compile Include="Injection\IModuleAdapter.cs" />
