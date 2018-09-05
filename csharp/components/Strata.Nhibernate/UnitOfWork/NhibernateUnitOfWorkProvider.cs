@@ -69,7 +69,7 @@ namespace Strata.Nhibernate.UnitOfWork
         /// </summary>
         /// 
         public
-         NhibernateUnitOfWorkProvider(String[] assemblyNames,bool useCache=false)
+        NhibernateUnitOfWorkProvider(String[] assemblyNames,bool useCache=false)
         {
             Configuration config = new Configuration();
 
@@ -91,7 +91,7 @@ namespace Strata.Nhibernate.UnitOfWork
         public override IUnitOfWork
         GetUnitOfWork()
         {
-            if ( !unitOfWork.IsActive() )
+            if ( unitOfWork == null || !unitOfWork.IsActive() )
                 unitOfWork = new NhibernateUnitOfWork(this);
 
             return unitOfWork;

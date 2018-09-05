@@ -106,6 +106,7 @@
     <Compile Include="Logging\NlogLogger.cs" />
     <Compile Include="Logging\NullLogger.cs" />
     <Compile Include="Logging\TextWriterLogger.cs" />
+    <Compile Include="Mapper\DateConverter.cs" />
     <Compile Include="Mapper\IObjectMapper.cs" />
     <Compile Include="Mapper\JsonObjectMapper.cs" />
     <Compile Include="ProducerConsumer\AbstractActiveProducer.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Value\AbstractCurrencyExchanger.cs" />
     <Compile Include="Value\Currency.cs" />
     <Compile Include="Value\CurrencyManager.cs" />
+    <Compile Include="Value\Date.cs" />
     <Compile Include="Value\DefaultCurrencyProvider.cs" />
     <Compile Include="Value\HashedString.cs" />
     <Compile Include="Value\PhoneNumber.cs" />

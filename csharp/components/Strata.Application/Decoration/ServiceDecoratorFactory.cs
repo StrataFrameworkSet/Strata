@@ -29,7 +29,7 @@ namespace Strata.Application.Decoration
         /// </summary>
         ///
         public
-        ServiceDecoratorFactory():
+        ServiceDecoratorFactory() :
             this(null,1) {}
 
         //////////////////////////////////////////////////////////////////////
@@ -37,10 +37,18 @@ namespace Strata.Application.Decoration
         /// </summary>
         ///
         public
-        ServiceDecoratorFactory(IContainer container,int maxTries)
+        ServiceDecoratorFactory(int maxRetries):
+            this(null,maxRetries) {}
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        ///
+        public
+        ServiceDecoratorFactory(IContainer container,int maxRetries)
         {
             Container  = container;
-            MaxRetries = maxTries;
+            MaxRetries = maxRetries;
         }
 
         //////////////////////////////////////////////////////////////////////

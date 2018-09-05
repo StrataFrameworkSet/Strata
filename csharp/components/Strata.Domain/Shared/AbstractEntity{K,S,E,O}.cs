@@ -36,6 +36,20 @@ namespace Strata.Domain.Shared
             Created      = DateTime.Now;
             LastModified = Created;
         }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        ///  
+        protected
+        AbstractEntity(AbstractEntity<K,S,E,O> other):
+            base(other)
+        {
+            PrimaryId = other.PrimaryId;
+            Version = other.Version;
+            Created = other.Created;
+            LastModified = other.LastModified;
+        }
     }
 }
 

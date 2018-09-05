@@ -3,6 +3,7 @@
 //  # Copyright: 2017, Sapientia Systems, LLC.
 //  ##########################################################################
 
+using Strata.Foundation.Value;
 using System;
 using System.Runtime.Serialization;
 
@@ -17,6 +18,7 @@ namespace Strata.Foundation.Injection
     interface IFoo
     {
         string FooName { get; }
+        Date   Created { get; }
     }
 }
 

@@ -18,10 +18,10 @@ namespace Strata.Foundation.Utility
     class MappableSet<T>:
         ISet<T>
     {
-        public int    Count { get { return itsImp.Count; } }
-        public bool   IsReadOnly { get { return itsImp.IsReadOnly; } }
+        public virtual int Count { get { return itsImp.Count; } }
+        public virtual bool IsReadOnly { get { return itsImp.IsReadOnly; } }
 
-        public string Contents
+        public virtual string Contents
         {
             get
             {
@@ -44,97 +44,97 @@ namespace Strata.Foundation.Utility
             itsMapper = new JsonObjectMapper<ISet<T>>();
         }
 
-        public bool 
+        public virtual bool
         Add(T item)
         {
             return itsImp.Add(item);
         }
 
-        public void 
+        public virtual void
         UnionWith(IEnumerable<T> other)
         {
             itsImp.UnionWith(other);
         }
 
-        public void 
+        public virtual void
         IntersectWith(IEnumerable<T> other)
         {
             itsImp.IntersectWith(other);
         }
 
-        public void 
+        public virtual void
         ExceptWith(IEnumerable<T> other)
         {
             itsImp.ExceptWith(other);
         }
 
-        public void 
+        public virtual void
         SymmetricExceptWith(IEnumerable<T> other)
         {
             itsImp.SymmetricExceptWith(other);
         }
 
-        public bool 
+        public virtual bool
         IsSubsetOf(IEnumerable<T> other)
         {
             return itsImp.IsSubsetOf(other);
         }
 
-        public bool 
+        public virtual bool
         IsSupersetOf(IEnumerable<T> other)
         {
             return itsImp.IsSupersetOf(other);
         }
 
-        public bool 
+        public virtual bool
         IsProperSupersetOf(IEnumerable<T> other)
         {
             return itsImp.IsProperSupersetOf(other);
         }
 
-        public bool 
+        public virtual bool
         IsProperSubsetOf(IEnumerable<T> other)
         {
             return itsImp.IsProperSubsetOf(other);
         }
 
-        public bool 
+        public virtual bool
         Overlaps(IEnumerable<T> other)
         {
             return itsImp.Overlaps(other);
         }
 
-        public bool 
+        public virtual bool
         SetEquals(IEnumerable<T> other)
         {
             return itsImp.SetEquals(other);
         }
 
-        public void 
+        public virtual void
         Clear()
         {
             itsImp.Clear();
         }
 
-        public bool 
+        public virtual bool
         Contains(T item)
         {
             return itsImp.Contains(item);
         }
 
-        public void 
+        public virtual void
         CopyTo(T[] array,int arrayIndex)
         {
             itsImp.CopyTo(array,arrayIndex);
         }
 
-        public bool 
+        public virtual bool
         Remove(T item)
         {
             return itsImp.Remove(item);
         }
 
-        public IEnumerator<T> 
+        public virtual IEnumerator<T> 
         GetEnumerator()
         {
             return itsImp.GetEnumerator();

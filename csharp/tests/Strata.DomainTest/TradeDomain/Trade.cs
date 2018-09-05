@@ -36,7 +36,7 @@ namespace Strata.Domain.TradeDomain
         public virtual String                   BrokerCode { get; set; }
         public virtual DateTime                 TradeDate { get; set; }
         public virtual DateTime                 SettlementDate { get; set; }
-        public virtual DateTime                 DeliveryDate { get; set; }
+        public virtual Date                     DeliveryDate { get; set; }
         public virtual IList<AccountAllocation> AccountAllocations { get; set; }
         
         //////////////////////////////////////////////////////////////////////
@@ -57,7 +57,7 @@ namespace Strata.Domain.TradeDomain
             BrokerCode = String.Empty;
             TradeDate = DateTime.MinValue;
             SettlementDate = DateTime.MinValue;
-            DeliveryDate = DateTime.MinValue;
+            DeliveryDate = Date.MinValue;
             AccountAllocations = new List<AccountAllocation>();
         }
 

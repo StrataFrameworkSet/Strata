@@ -89,7 +89,7 @@ namespace Strata.Nhibernate.Mapping
         public void 
         SetPropertyValue(Object component,int property,Object value)
         {
-            throw new HibernateException("HashedString is immutable");
+            //throw new HibernateException("HashedString is immutable");
         }
 
         //////////////////////////////////////////////////////////////////////

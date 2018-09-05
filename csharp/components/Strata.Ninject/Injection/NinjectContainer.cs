@@ -52,8 +52,41 @@ namespace Strata.Ninject.Injection
         /// </summary>
         /// 
         public
-        NinjectContainer(params IModule[] modules):
-            this( new List<IModule>( modules ) ) {}
+        NinjectContainer(IContainer wrapper,IList<IModule> modules)
+        {
+            IList<INinjectModule> ninjectModules = new List<INinjectModule>();
+
+            ninjectModules.Add(new NinjectSetupModule(wrapper));
+
+            foreach (IModule module in modules)
+            {
+                NinjectModuleAdapter adapter = new NinjectModuleAdapter();
+
+                adapter.SetAdaptee(module);
+                ninjectModules.Add(adapter);
+            }
+
+            Kernel = new StandardKernel(ninjectModules.ToArray());
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        public
+        NinjectContainer(params IModule[] modules) :
+            this(new List<IModule>(modules))
+        { }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        public
+        NinjectContainer(IContainer wrapper,params IModule[] modules):
+            this( wrapper,new List<IModule>( modules ) ) {}
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>

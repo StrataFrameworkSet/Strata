@@ -87,7 +87,10 @@ namespace Strata.Nhibernate.Mapping
                 return;
 
             if (property == 0)
+            {
                 mappable.Contents = (string)value;
+                return;
+            }
 
             throw new HibernateException("unknown property");
         }

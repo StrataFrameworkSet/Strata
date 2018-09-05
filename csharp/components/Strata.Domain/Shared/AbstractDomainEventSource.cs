@@ -32,6 +32,16 @@ namespace Strata.Domain.Shared
         }
 
         //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        ///  
+        protected
+        AbstractDomainEventSource(AbstractDomainEventSource<S,E,O> other)
+        {
+            Observers = new HashSet<O>(other.Observers);
+        }
+
+        //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         ///  
         public virtual S 

@@ -49,7 +49,7 @@ namespace Strata.Domain.Repository
             trade.TradeAmount = new Money(CurrencyManager.GetInstanceByCode("USD"), 1000);
             trade.BrokerCode = "BRKR";
             trade.Cusip = "123456789";
-            trade.DeliveryDate = new DateTime(2012,10,20);
+            trade.DeliveryDate = new Date(2012,10,20);
             trade.ExternalTradeId = 123;
             trade.Price = new Money(CurrencyManager.GetInstanceByCode("USD"), 100);
             trade.SettlementDate = new DateTime(2012, 10, 20);

@@ -20,9 +20,9 @@ namespace Strata.Application.Decoration
         ServiceRequest
     {
         [DataMember]
-        public string Foo { get; set; }
+        public string    Foo { get; set; }
         [DataMember]
-        public bool   Throw { get; set; }
+        public Exception Throw { get; set; }
     }
 }
 

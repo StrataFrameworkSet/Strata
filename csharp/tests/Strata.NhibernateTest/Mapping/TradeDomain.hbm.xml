@@ -35,7 +35,10 @@
         <property name="BrokerCode" column="BrokerCode" not-null="true"/>
         <property name="TradeDate" column="TradeDate" not-null="true"/>
         <property name="SettlementDate" column="SettlementDate" not-null="true"/>
-        <property name="DeliveryDate" column="DeliveryDate" not-null="true"/>
+        <property 
+            name="DeliveryDate" 
+            type="Strata.Nhibernate.Mapping.DateType, Strata.Nhibernate" 
+            column="DeliveryDate"/>
         
         <list 
             name="AccountAllocations"

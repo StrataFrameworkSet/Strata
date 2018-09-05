@@ -3,6 +3,8 @@
 //  # Copyright: 2018, Sapientia Systems, LLC.
 //  ##########################################################################
 
+using System;
+
 namespace Strata.Foundation.Decoration
 {
     //////////////////////////////////////////////////////////////////////////
@@ -18,8 +20,14 @@ namespace Strata.Foundation.Decoration
         ///        
         T
         Create<T>(T target)
-            where T: class;
-    }
+            where T : class;
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        ///        
+        object
+        Create(Type interfaceType,object target);    }
 }
 
 //  ##########################################################################

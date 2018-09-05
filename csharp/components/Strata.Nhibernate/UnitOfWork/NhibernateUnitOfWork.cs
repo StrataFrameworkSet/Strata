@@ -86,9 +86,10 @@ namespace Strata.Nhibernate.UnitOfWork
         public override T 
         DoUpdate<K,T>(T entity)
         {
+            /*
             if (session.Contains(entity))
                 session.Evict(entity);
-
+                */
             return session.Merge(entity);
         }
 

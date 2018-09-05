@@ -19,19 +19,19 @@ namespace Strata.Foundation.Utility
     class MappableDictionary<K,T>:
         IDictionary<K,T>
     {
-        public int            Count { get { return itsImp.Count; } }
-        public bool           IsReadOnly { get { return itsImp.IsReadOnly; } }
-        public ICollection<K> Keys { get { return itsImp.Keys; } }
-        public ICollection<T> Values { get { return itsImp.Values; } }
+        public virtual int Count { get { return itsImp.Count; } }
+        public virtual bool IsReadOnly { get { return itsImp.IsReadOnly; } }
+        public virtual ICollection<K> Keys { get { return itsImp.Keys; } }
+        public virtual ICollection<T> Values { get { return itsImp.Values; } }
 
-        public T
+        public virtual T
         this[K key]
         {
             get { return itsImp[key]; }
             set { itsImp[key] = value; }
         }
 
-        public string
+        public virtual string
         Contents
         {
             get { return itsMapper.ToPayload(itsImp); }
@@ -48,62 +48,62 @@ namespace Strata.Foundation.Utility
             itsMapper = new JsonObjectMapper<IDictionary<K,T>>();
         }
 
-        public bool 
+        public virtual bool
         ContainsKey(K key)
         {
             return itsImp.ContainsKey(key);
         }
 
-        public void 
+        public virtual void
         Add(K key,T value)
         {
             itsImp.Add(key,value);
         }
 
-        public bool 
+        public virtual bool
         Remove(K key)
         {
             return itsImp.Remove(key);
         }
 
-        public bool 
+        public virtual bool
         TryGetValue(K key,out T value)
         {
             return itsImp.TryGetValue(key,out value);
         }
 
 
-        public void 
+        public virtual void
         Add(KeyValuePair<K,T> item)
         {
             itsImp.Add(item);
         }
 
-        public void 
+        public virtual void
         Clear()
         {
             itsImp.Clear();
         }
 
-        public bool 
+        public virtual bool
         Contains(KeyValuePair<K,T> item)
         {
             return itsImp.Contains(item);
         }
 
-        public void 
+        public virtual void
         CopyTo(KeyValuePair<K,T>[] array,int arrayIndex)
         {
             itsImp.CopyTo(array,arrayIndex);
         }
 
-        public bool 
+        public virtual bool
         Remove(KeyValuePair<K,T> item)
         {
             return itsImp.Remove(item);
         }
 
-        public IEnumerator<KeyValuePair<K,T>> 
+        public virtual IEnumerator<KeyValuePair<K,T>> 
         GetEnumerator()
         {
             return itsImp.GetEnumerator();

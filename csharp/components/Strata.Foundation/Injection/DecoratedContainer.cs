@@ -17,8 +17,19 @@ namespace Strata.Foundation.Injection
     class DecoratedContainer:
         IContainer
     {
-        private IContainer    itsTarget;
-        private IDecoratorMap itsDecorators;
+        public IContainer       Target { get; protected set; }
+        protected IDecoratorMap Decorators { get; set; }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        ///
+        protected
+        DecoratedContainer()
+        {
+            Target = null;
+            Decorators = null;
+        }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -27,9 +38,9 @@ namespace Strata.Foundation.Injection
         public
         DecoratedContainer(IContainer target,IDecoratorMap decorators)
         {
-            itsTarget = target;
-            itsDecorators = decorators;
-            itsDecorators.Initialize(this);
+            Target = target;
+            Decorators = decorators;
+            Decorators.Initialize(this);
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -39,7 +50,7 @@ namespace Strata.Foundation.Injection
         GetInstance<T>()
             where T: class
         {
-            return Decorate(itsTarget.GetInstance<T>());
+            return Decorate(Target.GetInstance<T>());
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -49,7 +60,7 @@ namespace Strata.Foundation.Injection
         GetInstance<T>(string key)
             where T: class
         {
-            return Decorate(itsTarget.GetInstance<T>(key));
+            return Decorate(Target.GetInstance<T>(key));
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -60,7 +71,7 @@ namespace Strata.Foundation.Injection
             where T: class
             where K: Attribute
         {
-            return Decorate(itsTarget.GetInstance<T,K>(key));
+            return Decorate(Target.GetInstance<T,K>(key));
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -69,7 +80,7 @@ namespace Strata.Foundation.Injection
         public bool 
         HasBinding<T>()
         {
-            return itsTarget.HasBinding<T>();
+            return Target.HasBinding<T>();
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -78,7 +89,7 @@ namespace Strata.Foundation.Injection
         public bool 
         HasBinding<T>(string key)
         {
-            return itsTarget.HasBinding<T>(key);
+            return Target.HasBinding<T>(key);
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -88,7 +99,7 @@ namespace Strata.Foundation.Injection
         HasBinding<T,K>(K key) 
             where K: Attribute
         {
-            return itsTarget.HasBinding<T,K>(key);
+            return Target.HasBinding<T,K>(key);
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -96,21 +107,54 @@ namespace Strata.Foundation.Injection
         ///
         protected T
         Decorate<T>(T target)
-            where T: class
+            where T : class
         {
             T instance = null;
 
-            if (!itsDecorators.HasDecorators<T>())
+            if (!Decorators.HasDecorators<T>())
                 return target;
 
             instance = target;
 
             foreach (
                 IDecoratorFactory factory in
-                    itsDecorators.GetDecorators<T>())
+                    Decorators.GetDecorators<T>())
                 instance = factory.Create(instance);
 
             return instance;
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <inheritDoc/>
+        ///
+        protected object
+        Decorate(Type type,object target)
+        {
+            object instance = null;
+
+            if (!Decorators.HasDecorators(type))
+                return target;
+
+            instance = target;
+
+            foreach (
+                IDecoratorFactory factory in
+                    Decorators.GetDecorators(type))
+                instance = factory.Create(type,instance);
+
+            return instance;
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        ///
+        protected virtual void
+        Initialize(IContainer target,IDecoratorMap decorators)
+        {
+            Target = target;
+            Decorators = decorators;
+            Decorators.Initialize(this);
         }
     }
 }

@@ -92,7 +92,7 @@ namespace Strata.Nhibernate.Mapping
         public void 
         SetPropertyValue(Object component,int property,Object value)
         {
-            throw new HibernateException("PersonName is immutable");
+            //throw new HibernateException("PersonName is immutable");
         }
 
         //////////////////////////////////////////////////////////////////////

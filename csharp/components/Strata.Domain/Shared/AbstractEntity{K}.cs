@@ -28,8 +28,21 @@ namespace Strata.Domain.Shared
         protected
         AbstractEntity()
         {
-            Created      = DateTime.Now;
+            Created = DateTime.Now;
             LastModified = Created;
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        ///  
+        protected
+        AbstractEntity(AbstractEntity<K> other)
+        {
+            PrimaryId    = other.PrimaryId;
+            Version      = other.Version;
+            Created      = other.Created;
+            LastModified = other.LastModified;
         }
     }
 }

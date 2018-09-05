@@ -42,7 +42,7 @@ namespace Strata.EntityFramework.UnitOfWork
         public override IUnitOfWork
         GetUnitOfWork()
         {
-            if ( !unitOfWork.IsActive() )
+            if ( unitOfWork == null || !unitOfWork.IsActive() )
                 unitOfWork = new EfUnitOfWork(this,new D());
 
             return unitOfWork;

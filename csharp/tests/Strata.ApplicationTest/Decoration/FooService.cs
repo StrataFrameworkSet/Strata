@@ -4,7 +4,11 @@
 //  ##########################################################################
 
 
+using Strata.Application.Service;
+using Strata.Domain.UnitOfWork;
+using Strata.Foundation.Logging;
 using System;
+using SystemEx.Injection;
 
 namespace Strata.Application.Decoration
 {
@@ -15,13 +19,19 @@ namespace Strata.Application.Decoration
     ///  
     public
     class FooService:
+        AbstractService,
         IFooService
     {
+        [Inject]
+        public
+        FooService(IUnitOfWorkProvider provider,ILogger logger):
+            base(provider,logger) {}
+
         public GetFooReply
         GetFoo(GetFooRequest request)
         {
-            if (request.Throw)
-                throw new Exception("Foo Service Exception");
+            if (request.Throw != null)
+                throw request.Throw;
 
             return
                 new GetFooReply()

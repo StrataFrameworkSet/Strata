@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Injection\NinjectBindingBuilderAdapter.cs" />
     <Compile Include="Injection\NinjectContainer.cs" />
+    <Compile Include="Injection\NinjectDecoratedContainer.cs" />
     <Compile Include="Injection\NinjectKeyBindingBuilderAdapter.cs" />
     <Compile Include="Injection\NinjectModuleAdapter.cs" />
     <Compile Include="Injection\NinjectProviderAdapter.cs" />

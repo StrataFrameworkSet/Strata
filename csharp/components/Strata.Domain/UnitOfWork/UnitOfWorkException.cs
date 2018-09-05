@@ -4,6 +4,7 @@
 //  ##########################################################################
 
 using System;
+using System.Text;
 
 namespace Strata.Domain.UnitOfWork
 {
@@ -22,7 +23,24 @@ namespace Strata.Domain.UnitOfWork
 
         protected 
         UnitOfWorkException(String message,Exception cause):
-            base(message,cause) {}
+            base(
+                InitializeMessage(new StringBuilder(message),cause),
+                cause) {}
+
+        private static string
+        InitializeMessage(StringBuilder message,Exception e)
+        {
+            message.Append(
+                string.Format(
+                    " (caused by {0}: {1}",
+                    e.GetType().Name,e.Message));
+
+            if (e.InnerException != null)
+                InitializeMessage(message,e.InnerException);
+
+            message.Append(')');
+            return message.ToString();
+        }
     }
 }
 

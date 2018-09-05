@@ -5,6 +5,7 @@
 
 using NUnit.Framework;
 using Strata.Foundation.Injection;
+using Strata.Foundation.Value;
 using System;
 using System.Diagnostics;
 
@@ -39,8 +40,8 @@ namespace Strata.Foundation.Mapper
         public void
         TestToPayload()
         {
-            IFooBar source = new FooBar(new Foo("test"));
-            string expected = "{\"$type\":\"Strata.Foundation.Injection.FooBar, Strata.FoundationTest\",\"Foo\":{\"$type\":\"Strata.Foundation.Injection.Foo, Strata.FoundationTest\",\"FooName\":\"test\"},\"Bar\":null,\"Baz\":null}";
+            IFooBar source = new FooBar(new Foo("test") { Created = new Date(2018,9,5) });
+            string expected = "{\"$type\":\"Strata.Foundation.Injection.FooBar, Strata.FoundationTest\",\"Foo\":{\"$type\":\"Strata.Foundation.Injection.Foo, Strata.FoundationTest\",\"FooName\":\"test\",\"Created\":\"2018-09-05T00:00:00\"},\"Bar\":null,\"Baz\":null}";
             string actual = target.ToPayload(source);
 
             Debug.WriteLine("Actual: " + actual);

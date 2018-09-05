@@ -19,17 +19,17 @@ namespace Strata.Foundation.Utility
     class MappableList<T>:
         IList<T>
     {
-        public int  Count { get { return itsImp.Count; } }
-        public bool IsReadOnly { get { return itsImp.IsReadOnly; } }
+        public virtual int Count { get { return itsImp.Count; } }
+        public virtual bool IsReadOnly { get { return itsImp.IsReadOnly; } }
 
-        public T    
+        public virtual T
         this[int index]
         {
             get { return itsImp[index]; }
             set { itsImp[index] = value; }
         }
 
-        public string 
+        public virtual string
         Contents
         {
             get { return itsMapper.ToPayload(itsImp); }
@@ -46,56 +46,56 @@ namespace Strata.Foundation.Utility
             itsMapper = new JsonObjectMapper<IList<T>>();
         }
 
-        public int 
+        public virtual int 
         IndexOf(T item)
         {
             return itsImp.IndexOf(item);
         }
 
-        public void 
+        public virtual void
         Insert(int index,T item)
         {
             itsImp.Insert(index,item);
         }
 
-        public void 
+        public virtual void
         RemoveAt(int index)
         {
             itsImp.RemoveAt(index);
         }
 
 
-        public void 
+        public virtual void
         Add(T item)
         {
             itsImp.Add(item);
         }
 
-        public void 
+        public virtual void
         Clear()
         {
             itsImp.Clear();
         }
 
-        public bool 
+        public virtual bool
         Contains(T item)
         {
             return itsImp.Contains(item);
         }
 
-        public void 
+        public virtual void
         CopyTo(T[] array,int arrayIndex)
         {
             itsImp.CopyTo(array,arrayIndex);
         }
 
-        public bool 
+        public virtual bool
         Remove(T item)
         {
             return itsImp.Remove(item);
         }
 
-        public IEnumerator<T> 
+        public virtual IEnumerator<T> 
         GetEnumerator()
         {
             return itsImp.GetEnumerator();

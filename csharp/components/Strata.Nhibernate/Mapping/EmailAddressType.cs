@@ -77,7 +77,7 @@ namespace Strata.Nhibernate.Mapping
         public void 
         SetPropertyValue(Object component,int property,Object value)
         {
-            throw new HibernateException("EmailAddress is immutable");
+            //throw new HibernateException("EmailAddress is immutable");
         }
 
         //////////////////////////////////////////////////////////////////////

@@ -54,13 +54,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\AbstractServiceEvent.cs" />
-    <Compile Include="Core\AbstractServiceEventSource.cs" />
-    <Compile Include="Core\AbstractProcessor.cs" />
-    <Compile Include="Core\AbstractService.cs" />
-    <Compile Include="Core\IServiceEvent.cs" />
-    <Compile Include="Core\IServiceEventObserver.cs" />
-    <Compile Include="Core\IServiceEventSource.cs" />
+    <Compile Include="Service\AbstractService{S,E,O}.cs" />
+    <Compile Include="Service\AbstractServiceEvent.cs" />
+    <Compile Include="Service\AbstractServiceEventSource.cs" />
+    <Compile Include="Service\AbstractService.cs" />
+    <Compile Include="Service\IServiceEvent.cs" />
+    <Compile Include="Service\IServiceEventObserver.cs" />
+    <Compile Include="Service\IServiceEventSource.cs" />
     <Compile Include="Decoration\InvocationExtension.cs" />
     <Compile Include="Decoration\ServiceDecoratorFactory{D}.cs" />
     <Compile Include="Decoration\ServiceDecoratorFactory.cs" />

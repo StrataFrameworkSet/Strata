@@ -79,7 +79,8 @@ namespace Strata.Application.Decoration
 
             try
             {
-                request = invocation.GetRequest<ServiceRequest>();
+                unitOfWork = Provider.GetUnitOfWork();
+                request    = invocation.GetRequest<ServiceRequest>();
 
                 if (request == null)
                     throw 
@@ -105,6 +106,7 @@ namespace Strata.Application.Decoration
                         try
                         {
                             LogReply(SetReplyProperties(reply,request));
+                            return;
                         }
                         catch (Exception e)
                         {
@@ -112,6 +114,7 @@ namespace Strata.Application.Decoration
                             invocation.SetReply(
                                 LogReply(
                                     SetReplyProperties(reply,request,e)));
+                            return;
                         }
                     }
                     catch (OptimisticLockException e)
@@ -120,12 +123,15 @@ namespace Strata.Application.Decoration
                         Rollback(unitOfWork,request);
 
                         if (attempt == MaxRetries)
+                        {
                             invocation.SetReply(
                                 LogReply(
                                     SetReplyProperties(
                                         invocation.CreateReply(),
                                         request,
                                         e)));
+                            return;
+                        }
                     }
                     catch (Exception e)
                     {
@@ -133,7 +139,11 @@ namespace Strata.Application.Decoration
                         Rollback(unitOfWork,request);
                         invocation.SetReply(
                             LogReply(
-                                SetReplyProperties(invocation.CreateReply(),request,e)));
+                                SetReplyProperties(
+                                    invocation.CreateReply(),
+                                    request,
+                                    e)));
+                        return;
                     }
                 }
             }
@@ -231,7 +241,12 @@ namespace Strata.Application.Decoration
         private ServiceRequest
         LogRequest(ServiceRequest request)
         {
-            Logger.Info("Receiving request: " + request.CorrelationId);
+            Logger.Info(
+                string.Format(
+                    "Receiving {0}: {1}...",
+                    request.GetType().Name,
+                    request.CorrelationId));
+
             return request;
         }
 
@@ -242,7 +257,12 @@ namespace Strata.Application.Decoration
         private ServiceReply
         LogReply(ServiceReply reply)
         {
-            Logger.Info("Sending reply: " + reply.CorrelationId);
+            Logger.Info(
+                string.Format(
+                    "Sending {0}: {1}...",
+                    reply.GetType().Name,
+                    reply.CorrelationId));
+
             return reply;
         }
 
@@ -255,10 +275,13 @@ namespace Strata.Application.Decoration
         {
             Logger.Info(
                 string.Format(
-                    "Caught exception while processing request: {0}\n" +
-                    "Message: {1}\n" +
-                    "Stack Trace: {2}",
+                    "Caught exception while processing {0}: {1}\n" +
+                    "ExceptionType: {2}\n" +
+                    "Message: {3}\n" +
+                    "Stack Trace: {4}",
+                    request.GetType().Name,
                     request.CorrelationId,
+                    e.GetType().Name,
                     e.Message,
                     e.StackTrace));
         }

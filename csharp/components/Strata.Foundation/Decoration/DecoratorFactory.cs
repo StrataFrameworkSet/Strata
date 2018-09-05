@@ -32,17 +32,33 @@ namespace Strata.Foundation.Decoration
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         ///
-        public T 
+        public T
         Create<T>(T target)
-            where T: class
+            where T : class
         {
             Type type = typeof(T);
 
             if (!type.IsInterface)
                 throw new ArgumentException("Type T must be an interface");
 
-            return 
+            return
                 itsImp.CreateInterfaceProxyWithTargetInterface(
+                    target,
+                    GetDecorator());
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <inheritDoc/>
+        ///
+        public object 
+        Create(Type interfaceType,object target)
+        {
+            if (!interfaceType.IsInterface)
+                throw new ArgumentException("Type must be an interface");
+
+            return 
+                itsImp.CreateInterfaceProxyWithTarget(
+                    interfaceType,
                     target,
                     GetDecorator());
         }

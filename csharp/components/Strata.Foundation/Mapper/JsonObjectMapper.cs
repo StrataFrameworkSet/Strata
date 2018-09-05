@@ -50,6 +50,7 @@ namespace Strata.Foundation.Mapper
         JsonObjectMapper(JsonSerializer imp)
         {
             itsImp = imp;
+            itsImp.Converters.Add(new IsoDateConverter());
             itsTypeMappings = new ConcurrentDictionary<string,string>();
         }
 

@@ -77,9 +77,7 @@ namespace Strata.EntityFramework.Mapping
             Property( t => t.SettlementDate )
                 .HasColumnName( "SettlementDate" )
                 .IsRequired();
-            Property( t => t.DeliveryDate )
-                .HasColumnName( "DeliveryDate" )
-                .IsRequired();
+            Ignore(t => t.DeliveryDate);
 
             HasMany( t => t.AccountAllocations )
                 .WithRequired()
