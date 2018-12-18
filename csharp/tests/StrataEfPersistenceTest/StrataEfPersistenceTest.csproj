@@ -108,14 +108,6 @@
     <Compile Include="TradeDomain\TradeConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\components\StrataCommon\StrataCommon.csproj">
-      <Project>{DF734F29-4597-4304-B69D-AAB78200EDA8}</Project>
-      <Name>StrataCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\components\StrataEfPersistence\StrataEfPersistence.csproj">
-      <Project>{4C118BB6-13FD-4931-9EF1-0F5A3B2A0FEF}</Project>
-      <Name>StrataEfPersistence</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StrataPersistenceTest\StrataPersistenceTest.csproj">
       <Project>{30dc5deb-ed45-4c6d-9552-98f67069c67d}</Project>
       <Name>StrataPersistenceTest</Name>

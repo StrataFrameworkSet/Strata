@@ -71,3 +71,4 @@ C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTe
 C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp.csproj.CoreCompileInputs.cache
 C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp.exe
 C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp.pdb
+C:\Development\Strata\csharp\applications\StrataWpfTestApp\obj\Debug\StrataWpfTestApp.csprojAssemblyReference.cache

@@ -36,8 +36,9 @@
     <Reference Include="Disruptor, Version=3.3.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Disruptor.3.3.7\lib\net45\Disruptor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
@@ -63,10 +64,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrap\AbstractApplicationFactory{M,C}.cs" />
     <Compile Include="Bootstrap\AbstractApplicationFactory.cs" />
     <Compile Include="Bootstrap\BootstrapModule.cs" />
+    <Compile Include="Bootstrap\Bootstrapper{M,C}.cs" />
     <Compile Include="Bootstrap\Bootstrapper.cs" />
+    <Compile Include="Bootstrap\IApplicationFactory{M,C}.cs" />
     <Compile Include="Bootstrap\IApplicationFactory.cs" />
+    <Compile Include="Bootstrap\IBootstrapper{M,C}.cs" />
     <Compile Include="Bootstrap\IBootstrapper.cs" />
     <Compile Include="Bootstrap\IStartStopController.cs" />
     <Compile Include="Bootstrap\NullStartStopController.cs" />
@@ -106,8 +111,8 @@
     <Compile Include="Logging\NlogLogger.cs" />
     <Compile Include="Logging\NullLogger.cs" />
     <Compile Include="Logging\TextWriterLogger.cs" />
-    <Compile Include="Mapper\DateConverter.cs" />
     <Compile Include="Mapper\IObjectMapper.cs" />
+    <Compile Include="Mapper\IsoDateConverter.cs" />
     <Compile Include="Mapper\JsonObjectMapper.cs" />
     <Compile Include="ProducerConsumer\AbstractActiveProducer.cs" />
     <Compile Include="ProducerConsumer\AbstractConsumer.cs" />

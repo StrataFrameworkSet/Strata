@@ -11,6 +11,7 @@ using Strata.Domain.NamedQuery;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
 namespace Strata.Nhibernate.NamedQuery
 {
@@ -272,9 +273,12 @@ namespace Strata.Nhibernate.NamedQuery
         {
             IQuery                     query  = unitOfWork.DoGetNamedQuery(Name);
     	    IDictionary<String,Object> inputs = keeper.GetNamedInputs();
-    	
-    	    foreach (KeyValuePair<String,Object> input in inputs)
-    	        query.SetParameter( input.Key,input.Value );
+
+            foreach (KeyValuePair<String,Object> input in inputs)
+                if (IsCollectionType(input.Value))
+                    query.SetParameterList(input.Key,(IEnumerable)input.Value);
+                else
+    	            query.SetParameter( input.Key,input.Value );
     	
     	    return 
                 cardinality == ResultCardinality.ZERO_TO_MANY
@@ -301,8 +305,8 @@ namespace Strata.Nhibernate.NamedQuery
             IQuery              query    = unitOfWork.DoGetNamedQuery(Name);
 		    ICollection<Object> inputs   = keeper.GetPositionalInputs();
 		    int                 position = 0;
-		
-		    foreach (Object input in inputs)
+
+            foreach (Object input in inputs)
 		        query.SetParameter( position++,input );
 		
 		    return 
@@ -375,9 +379,12 @@ namespace Strata.Nhibernate.NamedQuery
 
             query.SetMaxResults( 2 );
             query.SetFetchSize( 2 );
-        
+
             foreach (KeyValuePair<String,Object> input in inputs)
-                query.SetParameter( input.Key,input.Value );
+                if (IsCollectionType(input.Value))
+                    query.SetParameterList(input.Key,(IEnumerable)input.Value);
+                else
+                    query.SetParameter( input.Key,input.Value );
         
             return
                 HasIntegerReturnType(query)
@@ -446,16 +453,34 @@ namespace Strata.Nhibernate.NamedQuery
         /// <summary>
         /// </summary>
         /// 
-        private bool 
+        private bool
         HasIntegerReturnType(IQuery query)
         {
             IType[] returnTypes = query.ReturnTypes;
 
-            return 
-                returnTypes.Count() == 1 && ( 
-                returnTypes.First().Equals( NHibernateUtil.Int64 ) ||
-                returnTypes.First().Equals( NHibernateUtil.Int32 ) ||
-                returnTypes.First().Equals( NHibernateUtil.Int16 ) );
+            return
+                returnTypes.Count() == 1 && (
+                returnTypes.First().Equals(NHibernateUtil.Int64) ||
+                returnTypes.First().Equals(NHibernateUtil.Int32) ||
+                returnTypes.First().Equals(NHibernateUtil.Int16));
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        /// 
+        private bool 
+        IsCollectionType(object input)
+        {
+            Type type = input.GetType();
+
+            if (type.IsArray)
+                return true;
+
+            if (type.IsGenericType)
+                type = type.GetGenericTypeDefinition();
+
+            return type.IsAssignableFrom(typeof(ICollection<>));
         }
 
     }

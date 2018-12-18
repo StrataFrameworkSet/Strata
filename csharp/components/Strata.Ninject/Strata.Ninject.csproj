@@ -36,6 +36,12 @@
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject.Extensions.Interception, Version=3.3.3.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.Extensions.Interception.3.3.3\lib\net45\Ninject.Extensions.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Interception.DynamicProxy, Version=3.3.3.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.Extensions.Interception.DynamicProxy.3.3.3\lib\net45\Ninject.Extensions.Interception.DynamicProxy.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject.Web.Common, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Ninject.Web.Common.3.3.0\lib\net45\Ninject.Web.Common.dll</HintPath>
     </Reference>
@@ -53,6 +59,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrap\INinjectApplicationFactory.cs" />
+    <Compile Include="Bootstrap\INinjectBootstrapper.cs" />
+    <Compile Include="Bootstrap\NinjectApplicationFactory.cs" />
+    <Compile Include="Bootstrap\NinjectBootstrapModule.cs" />
+    <Compile Include="Bootstrap\NinjectBootstrapper.cs" />
+    <Compile Include="Injection\AbstractModule.cs" />
+    <Compile Include="Injection\InjectionExtension.cs" />
     <Compile Include="Injection\NinjectBindingBuilderAdapter.cs" />
     <Compile Include="Injection\NinjectContainer.cs" />
     <Compile Include="Injection\NinjectDecoratedContainer.cs" />
@@ -62,6 +75,7 @@
     <Compile Include="Injection\NinjectScopeBindingBuilderAdapter.cs" />
     <Compile Include="Injection\NinjectSetupModule.cs" />
     <Compile Include="Injection\NinjectSourceBindingBuilderAdapter.cs" />
+    <Compile Include="Interception\Interceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

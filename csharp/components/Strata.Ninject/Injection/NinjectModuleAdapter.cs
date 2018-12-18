@@ -6,12 +6,10 @@
 using Ninject.Modules;
 using Strata.Foundation.Injection;
 using System;
-using System.ComponentModel;
 
 namespace Strata.Ninject.Injection
 {
-    using INinjectBinding = global::Ninject.Planning.Bindings.IBinding;
-    using NinjectBinding = global::Ninject.Planning.Bindings.Binding;
+    using StrataAbstactModule = Strata.Foundation.Injection.AbstractModule;
 
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -35,7 +33,7 @@ namespace Strata.Ninject.Injection
         {
             
             itsAdaptee = adaptee;
-            ((AbstractModule)itsAdaptee).Adapter = this;
+            ((StrataAbstactModule)itsAdaptee).Adapter = this;
         }
 
         //////////////////////////////////////////////////////////////////////

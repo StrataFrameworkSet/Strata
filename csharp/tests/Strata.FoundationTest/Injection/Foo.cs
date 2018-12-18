@@ -21,9 +21,11 @@ namespace Strata.Foundation.Injection
         IFoo
     {
         [DataMember]
-        public string FooName { get; protected set; }
+        public string   FooName { get; protected set; }
         [DataMember]
-        public Date   Created { get; set; }
+        public Date     Created { get; set; }
+        [DataMember]
+        public DateTime Modified { get; set; }
 
         [Inject]
         public 
@@ -31,6 +33,7 @@ namespace Strata.Foundation.Injection
         {
             FooName = name;
             Created = Date.Now;
+            Modified = DateTime.Now;
         }
     }
 }

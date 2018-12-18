@@ -81,12 +81,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\components\StrataAdministration\StrataAdministration.csproj">
-      <Project>{2998535F-E27D-4C41-AD61-07525DA37D6D}</Project>
-      <Name>StrataAdministration</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

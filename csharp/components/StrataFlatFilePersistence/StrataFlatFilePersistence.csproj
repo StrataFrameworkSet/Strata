@@ -95,12 +95,6 @@
     <Compile Include="CsvRepository\WriteHeaderStyles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\StrataCommon\StrataCommon.csproj">
-      <Project>{DF734F29-4597-4304-B69D-AAB78200EDA8}</Project>
-      <Name>StrataCommon</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

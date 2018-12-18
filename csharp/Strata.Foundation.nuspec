@@ -2,11 +2,11 @@
 <package >
 	<metadata>
 		<id>Strata.Foundation</id>
-		<version>0.8.2</version>
+		<version>0.9.3</version>
 		<authors>John Liebenau</authors>
 		<owners>John Liebenau</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>Strata Foundation Framework 0.8.2</description>
+		<description>Strata Foundation Framework 0.9.3</description>
 		<releaseNotes>
 		</releaseNotes>
 		<copyright>Copyright 2018</copyright>
@@ -16,7 +16,7 @@
 			<dependency id="Castle.Core" version="4.2.1"/>
 			<dependency id="Disruptor" version="3.3.7.0"/>
 			<dependency id="NLog" version="4.0.0.0"/>
-			<dependency id="Newtonsoft.Json" version="10.0.3"/>
+			<dependency id="Newtonsoft.Json" version="11.0.2"/>
 			<dependency id="SystemEx.Injection" version="1.0.0"/>
  		</dependencies>
 		
