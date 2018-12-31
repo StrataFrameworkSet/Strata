@@ -5,6 +5,8 @@ using Strata.Nhibernate.UnitOfWork;
 using Strata.Domain.Repository;
 using Strata.Domain.UnitOfWork;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Strata.Nhibernate.Repository
 {
@@ -66,6 +68,20 @@ namespace Strata.Nhibernate.Repository
             base.TestGetAllTrades();
         }
 
+        [Test]
+        public void
+        TestIsCollectionType()
+        {
+            IList<string> inputs = new List<string>();
+
+            Assert.IsTrue(IsCollectionType(inputs));
+            Assert.IsFalse(IsCollectionType("foo"));
+            Assert.IsTrue(IsCollectionType(new string[] {}));
+            Assert.IsFalse(IsCollectionType(true));
+            Assert.IsFalse(IsCollectionType(DateTime.Now));
+
+        }
+
         [Ignore("use when needed")]
         [Test]
         public void 
@@ -88,5 +104,23 @@ namespace Strata.Nhibernate.Repository
                 new NhibernateUnitOfWorkProvider(
                     new String[]{ "Strata.NhibernateTest" } );
         }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        /// 
+        private bool
+        IsCollectionType(object input)
+        {
+            return
+                input
+                    .GetType()
+                    .GetInterfaces()
+                    .Where(i => i.IsGenericType)
+                    .Any(
+                        i => i.GetGenericTypeDefinition() == 
+                        typeof(ICollection<>));
+        }
+
     }
 }

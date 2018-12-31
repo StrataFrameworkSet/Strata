@@ -2,18 +2,18 @@
 <package >
 	<metadata>
 		<id>Strata.EntityFramework</id>
-		<version>0.10.2</version>
+		<version>0.11.0</version>
 		<authors>John Liebenau</authors>
 		<owners>John Liebenau</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>Strata EntityFramework 0.10.2</description>
+		<description>Strata EntityFramework 0.11.0</description>
 		<releaseNotes>
 		</releaseNotes>
 		<copyright>Copyright 2017</copyright>
 		<tags></tags>
 
 		<dependencies>
-			<dependency id="Strata.Domain" version="0.10.2"/>
+			<dependency id="Strata.Domain" version="0.11.0"/>
 			<dependency id="EntityFramework" version="6.2.0"/>
  		</dependencies>
 		

@@ -10,6 +10,7 @@ using Strata.Domain.NamedQuery;
 
 namespace Strata.Domain.UnitOfWork
 {
+    public delegate void RollbackAction();
 
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -159,7 +160,7 @@ namespace Strata.Domain.UnitOfWork
         /// <returns>true if active, false otherwise</returns>
         /// 
         void
-        PushRollbackAction(Action rollbackAction);
+        PushRollbackAction(RollbackAction rollbackAction);
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>

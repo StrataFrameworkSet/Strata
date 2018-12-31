@@ -36,6 +36,12 @@
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject.Extensions.Interception, Version=3.3.3.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.Extensions.Interception.3.3.3\lib\net45\Ninject.Extensions.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Interception.DynamicProxy, Version=3.3.3.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.Extensions.Interception.DynamicProxy.3.3.3\lib\net45\Ninject.Extensions.Interception.DynamicProxy.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject.Web.Common, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Ninject.Web.Common.3.3.0\lib\net45\Ninject.Web.Common.dll</HintPath>
     </Reference>
@@ -54,6 +60,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interception\CastleLoggingInterceptor.cs" />
+    <Compile Include="Interception\ConsoleLoggingInterceptor.cs" />
+    <Compile Include="Interception\InvocationExtension.cs" />
+    <Compile Include="Interception\IUnitOfWorkPropertySupplier.cs" />
+    <Compile Include="Interception\LoggingInterceptor.cs" />
+    <Compile Include="Interception\UnitOfWorkInterceptor.cs" />
+    <Compile Include="Messaging\IActionQueue.cs" />
+    <Compile Include="Messaging\IMessageQueue{T,M}.cs" />
+    <Compile Include="Messaging\StandardActionQueue.cs" />
+    <Compile Include="Messaging\StandardMessageQueue{T,M}.cs" />
+    <Compile Include="Service\AbstractProcessor.cs" />
+    <Compile Include="Service\AbstractProcessor{S,E,O}.cs" />
     <Compile Include="Service\AbstractService{S,E,O}.cs" />
     <Compile Include="Service\AbstractServiceEvent.cs" />
     <Compile Include="Service\AbstractServiceEventSource.cs" />
@@ -76,10 +94,15 @@
       <Project>{c3757be9-db8f-4484-bd04-b35050d654a5}</Project>
       <Name>Strata.Foundation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Strata.Ninject\Strata.Ninject.csproj">
+      <Project>{3FA1D281-3579-4ADC-A4DA-FE337C3D31AC}</Project>
+      <Name>Strata.Ninject</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

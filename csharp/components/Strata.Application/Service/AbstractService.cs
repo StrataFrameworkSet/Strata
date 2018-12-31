@@ -5,6 +5,8 @@
 
 using Strata.Foundation.Logging;
 using Strata.Domain.UnitOfWork;
+using Strata.Application.Interception;
+using Strata.Application.Messaging;
 
 namespace Strata.Application.Service
 {
@@ -13,10 +15,12 @@ namespace Strata.Application.Service
     /// </summary>
     ///  
     public abstract
-    class AbstractService
+    class AbstractService:
+        IUnitOfWorkPropertySupplier
     {
-        protected IUnitOfWorkProvider Provider { get; set; }
-        protected ILogger             Logger { get; set; }
+        public IUnitOfWorkProvider Provider { get; set; }
+        public IActionQueue        Queue { get; set; }
+        public ILogger             Logger { get; set; }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -25,9 +29,21 @@ namespace Strata.Application.Service
         protected
         AbstractService(
             IUnitOfWorkProvider provider,
+            ILogger             logger):
+            this(provider,null,logger) {}
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        ///  
+        protected
+        AbstractService(
+            IUnitOfWorkProvider provider,
+            IActionQueue        queue,
             ILogger             logger)
         {
             Provider = provider;
+            Queue    = queue;
             Logger   = logger;
         }
 
@@ -36,7 +52,7 @@ namespace Strata.Application.Service
         /// </summary>
         ///  
         protected void
-        PushRollbackAction(Action rollbackAction)
+        PushRollbackAction(RollbackAction rollbackAction)
         {
             Provider
                 .GetUnitOfWork()

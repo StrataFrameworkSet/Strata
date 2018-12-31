@@ -472,15 +472,14 @@ namespace Strata.Nhibernate.NamedQuery
         private bool 
         IsCollectionType(object input)
         {
-            Type type = input.GetType();
-
-            if (type.IsArray)
-                return true;
-
-            if (type.IsGenericType)
-                type = type.GetGenericTypeDefinition();
-
-            return type.IsAssignableFrom(typeof(ICollection<>));
+            return
+                input
+                    .GetType()
+                    .GetInterfaces()
+                    .Where(i => i.IsGenericType)
+                    .Any(
+                        i => i.GetGenericTypeDefinition() ==
+                        typeof(ICollection<>));
         }
 
     }

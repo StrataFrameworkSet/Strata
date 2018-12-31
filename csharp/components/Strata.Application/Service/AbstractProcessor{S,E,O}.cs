@@ -1,5 +1,5 @@
 ﻿//  ##########################################################################
-//  # File Name: AbstractService.cs
+//  # File Name: AbstractProcessor{S,E,O}.cs
 //  # Copyright: 2018, Sapientia Systems, LLC.
 //  ##########################################################################
 
@@ -15,40 +15,22 @@ namespace Strata.Application.Service
     /// </summary>
     ///  
     public abstract
-    class AbstractService<S,E,O>:
-        AbstractServiceEventSource<S,E,O>,
-        IUnitOfWorkPropertySupplier
+    class AbstractProcessor<S,E,O>:
+        AbstractServiceEventSource<S,E,O>
         where S: IServiceEventSource<S,E,O>
         where E: IServiceEvent<S>
         where O: IServiceEventObserver<E>
     {
-        public IUnitOfWorkProvider Provider { get; set; }
-        public IActionQueue        Queue { get; set; }
-        public ILogger             Logger { get; set; }
+        protected IUnitOfWorkProvider Provider { get; set; }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>
         ///  
         protected
-        AbstractService(
-            IUnitOfWorkProvider provider,
-            ILogger             logger):
-            this(provider,null,logger) {}
-
-        //////////////////////////////////////////////////////////////////////
-        /// <summary>
-        /// </summary>
-        ///  
-        protected
-        AbstractService(
-            IUnitOfWorkProvider provider,
-            IActionQueue        queue,
-            ILogger             logger)
+        AbstractProcessor(IUnitOfWorkProvider provider)
         {
             Provider = provider;
-            Queue    = queue;
-            Logger   = logger;
         }
 
         //////////////////////////////////////////////////////////////////////

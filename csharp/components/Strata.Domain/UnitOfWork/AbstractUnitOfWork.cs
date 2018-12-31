@@ -19,9 +19,9 @@ namespace Strata.Domain.UnitOfWork
     class AbstractUnitOfWork:
         IUnitOfWork
     {
-        public IUnitOfWorkProvider Provider { get; protected set; }
-        internal IUnitOfWorkState  State { get; set; }
-        internal Stack<Action>     RollbackActions { get; set; }
+        public IUnitOfWorkProvider     Provider { get; protected set; }
+        internal IUnitOfWorkState      State { get; set; }
+        internal Stack<RollbackAction> RollbackActions { get; set; }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -31,9 +31,9 @@ namespace Strata.Domain.UnitOfWork
         protected
         AbstractUnitOfWork(IUnitOfWorkProvider provider)
         {
-            Provider = provider;
-            State    = ActiveUnitOfWorkState.GetInstance();
-            RollbackActions = new Stack<Action>();
+            Provider        = provider;
+            State           = ActiveUnitOfWorkState.GetInstance();
+            RollbackActions = new Stack<RollbackAction>();
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -156,7 +156,7 @@ namespace Strata.Domain.UnitOfWork
         /// <inheritDoc/>
         /// 
         public void
-        PushRollbackAction(Action rollbackAction)
+        PushRollbackAction(RollbackAction rollbackAction)
         {
             RollbackActions.Push(rollbackAction);
         }
@@ -358,7 +358,7 @@ namespace Strata.Domain.UnitOfWork
             {
                 try
                 {
-                    Action action = RollbackActions.Pop();
+                    RollbackAction action = RollbackActions.Pop();
 
                     action.Invoke();
                 }
