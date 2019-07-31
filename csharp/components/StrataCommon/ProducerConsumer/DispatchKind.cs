@@ -1,6 +1,6 @@
 ﻿//  ##########################################################################
 //  # File Name: DispatchKind.cs
-//  # Copyright: 2016, Sapientia Systems, LLC.
+//  # Copyright: 2011-2018, Sapientia Systems, LLC.
 //  ##########################################################################
 
 namespace Strata.Common.ProducerConsumer

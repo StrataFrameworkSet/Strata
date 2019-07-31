@@ -20,8 +20,7 @@
 	<classpathentry kind="var" path="REPO_ROOT/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
 	<classpathentry kind="var" path="REPO_ROOT/org/mockito/mockito-all/1.9.0/mockito-all-1.9.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataClient"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataInjector"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataFoundation"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

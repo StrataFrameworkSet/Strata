@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\NUnit3TestAdapter.3.9.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\..\packages\NUnit3TestAdapter.3.9.0\build\net35\NUnit3TestAdapter.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ABC1C8FB-5557-45DF-B07D-4B3C85939CCF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Strata.Foundation</RootNamespace>
+    <AssemblyName>Strata.FoundationTest</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnit.3.9.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="SystemEx.Injection">
+      <HintPath>..\..\packages\SystemEx.Injection.1.0.0\SystemEx.Injection.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Decoration\DecoratorTest.cs" />
+    <Compile Include="Decoration\Foo.cs" />
+    <Compile Include="Decoration\IFoo.cs" />
+    <Compile Include="Decoration\TestDecorator.cs" />
+    <Compile Include="Injection\Bar.cs" />
+    <Compile Include="Injection\ContainerTest.cs" />
+    <Compile Include="Injection\Foo.cs" />
+    <Compile Include="Injection\FooBar.cs" />
+    <Compile Include="Injection\IBar.cs" />
+    <Compile Include="Injection\IFoo.cs" />
+    <Compile Include="Injection\IFooBar.cs" />
+    <Compile Include="Injection\FooBarModule.cs" />
+    <Compile Include="Injection\TestModule.cs" />
+    <Compile Include="Mapper\JsonObjectMapperTest.cs" />
+    <Compile Include="NinjectInjection\NinjectContainerTest.cs" />
+    <Compile Include="ProducerConsumer\CountRequest.cs" />
+    <Compile Include="ProducerConsumer\CountRequestConsumer.cs" />
+    <Compile Include="ProducerConsumer\CountRequestBlockingQueueDispatcher.cs" />
+    <Compile Include="ProducerConsumer\CountRequestDisruptorDispatcher.cs" />
+    <Compile Include="ProducerConsumer\CountRequestProducer.cs" />
+    <Compile Include="ProducerConsumer\CountRequestSelector.cs" />
+    <Compile Include="ProducerConsumer\BlockingQueueDispatcherTest.cs" />
+    <Compile Include="ProducerConsumer\DisruptorRouterTest.cs" />
+    <Compile Include="ProducerConsumer\ICountRequestConsumer.cs" />
+    <Compile Include="ProducerConsumer\ICountRequestDispatcher.cs" />
+    <Compile Include="ProducerConsumer\ICountRequestProducer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\MappableListTest.cs" />
+    <Compile Include="Utility\MappableDictionaryTest.cs" />
+    <Compile Include="Utility\MappableSetTest.cs" />
+    <Compile Include="Value\HashedStringTest.cs" />
+    <Compile Include="Value\EmailAddressTest.cs" />
+    <Compile Include="Value\PhoneNumberTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\components\Strata.Foundation\Strata.Foundation.csproj">
+      <Project>{c3757be9-db8f-4484-bd04-b35050d654a5}</Project>
+      <Name>Strata.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\components\Strata.Ninject\Strata.Ninject.csproj">
+      <Project>{3fa1d281-3579-4adc-a4da-fe337c3d31ac}</Project>
+      <Name>Strata.Ninject</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\NUnit3TestAdapter.3.9.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NUnit3TestAdapter.3.9.0\build\net35\NUnit3TestAdapter.props'))" />
+  </Target>
+</Project>

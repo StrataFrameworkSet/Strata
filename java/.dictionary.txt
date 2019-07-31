@@ -9,3 +9,10 @@ href
 classpath
 src
 resequences
+cloneable
+covariant
+payload
+strata
+designpatterns
+guice
+bootstrapper

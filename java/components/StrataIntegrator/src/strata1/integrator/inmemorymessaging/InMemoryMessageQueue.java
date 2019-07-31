@@ -26,9 +26,10 @@ package strata1.integrator.inmemorymessaging;
 
 import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.ISelector;
-import strata1.common.lockingsynchronizer.ReadWriteLockSynchronizer;
-import strata1.common.synchronizer.ISynchronizer;
 import java.util.LinkedList;
+import strata.foundation.utility.ISynchronizer;
+import strata.foundation.utility.ReadWriteLockSynchronizer;
+import strata.foundation.utility.WriteLock;
 
 /****************************************************************************
  * 
@@ -60,14 +61,9 @@ class InMemoryMessageQueue
     void
     put(IMessage message)
     {
-        try
+        try (WriteLock lock = new WriteLock(itsSynchronizer))
         {
-            itsSynchronizer.lockForWriting();
             itsImp.addLast( message );
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromWriting();
         }
     }
     
@@ -79,10 +75,8 @@ class InMemoryMessageQueue
     IMessage
     take(ISelector selector)
     {
-        try
+        try (WriteLock lock = new WriteLock(itsSynchronizer))
         {
-            itsSynchronizer.lockForWriting();
-            
             for (IMessage message : itsImp)
             {              
                 if ( selector.evaluate(message) )
@@ -93,10 +87,6 @@ class InMemoryMessageQueue
             }
             
             return null;           
-        }
-        finally
-        {
-            itsSynchronizer.unlockFromWriting();
         }
     }
 

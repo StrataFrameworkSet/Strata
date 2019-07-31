@@ -24,9 +24,9 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import strata1.integrator.messaging.IMessagingSession;
 import strata1.integrator.messaging.MessageSenderTest;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 
 /****************************************************************************
  * 

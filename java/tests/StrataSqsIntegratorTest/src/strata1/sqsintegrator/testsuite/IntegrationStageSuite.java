@@ -24,13 +24,13 @@
 
 package strata1.sqsintegrator.testsuite;
 
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 import strata1.sqsintegrator.sqsmessaging.SqsMapMessageTest;
 import strata1.sqsintegrator.sqsmessaging.SqsMessageReceiverTest;
 import strata1.sqsintegrator.sqsmessaging.SqsMessageSenderTest;
 import strata1.sqsintegrator.sqsmessaging.SqsMessagingSessionTest;
 import strata1.sqsintegrator.sqsmessaging.SqsObjectMessageTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 /**
  * 

@@ -24,11 +24,11 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
-import strata1.integrator.messaging.DeliveryMode;
-import strata1.integrator.messaging.IMessage;
+import java.util.Map;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.MessageAttributeValue;
-import java.util.Map;
+import strata1.integrator.messaging.DeliveryMode;
+import strata1.integrator.messaging.IMessage;
 
 /****************************************************************************
  * 

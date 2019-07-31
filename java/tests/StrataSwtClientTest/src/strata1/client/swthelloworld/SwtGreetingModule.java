@@ -26,12 +26,12 @@ package strata1.client.swthelloworld;
 
 import strata1.client.helloworld.GreetingModule;
 import strata1.client.helloworld.IHelloWorldView;
-import strata1.client.shell.IDispatcher;
-import strata1.client.view.ILoginView;
-import strata1.client.view.ISplashView;
 import strata1.swtclient.swtshell.SwtDispatcher;
 import strata1.swtclient.swtview.SwtLoginView;
 import strata1.swtclient.swtview.SwtSplashView;
+import strata.presentation.shell.IDispatcher;
+import strata.presentation.view.ILoginView;
+import strata.presentation.view.ISplashView;
 
 /****************************************************************************
  * 

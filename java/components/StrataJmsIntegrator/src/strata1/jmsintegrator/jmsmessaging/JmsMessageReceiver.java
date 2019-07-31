@@ -24,12 +24,6 @@
 
 package strata1.jmsintegrator.jmsmessaging;
 
-import strata1.integrator.messaging.IMessage;
-import strata1.integrator.messaging.IMessageListener;
-import strata1.integrator.messaging.IMessageReceiver;
-import strata1.integrator.messaging.IMessagingSession;
-import strata1.integrator.messaging.MixedModeException;
-import strata1.integrator.messaging.NoMessageReceivedException;
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
@@ -37,6 +31,12 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
+import strata1.integrator.messaging.IMessage;
+import strata1.integrator.messaging.IMessageListener;
+import strata1.integrator.messaging.IMessageReceiver;
+import strata1.integrator.messaging.IMessagingSession;
+import strata1.integrator.messaging.MixedModeException;
+import strata1.integrator.messaging.NoMessageReceivedException;
 
 /****************************************************************************
  * 

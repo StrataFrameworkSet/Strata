@@ -3,7 +3,7 @@
 	name="StrataCommonTest" 
 	default="run-commit-stage">
 	
-	<import file="../../test-targets.xml"/>
+	<import file="../../component-targets.xml"/>
 	
 	<target name="define-properties">
 		

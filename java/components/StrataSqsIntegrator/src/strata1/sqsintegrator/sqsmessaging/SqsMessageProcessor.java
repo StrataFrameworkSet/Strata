@@ -24,15 +24,15 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.LockSupport;
 import strata1.integrator.messaging.IMapMessage;
 import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.IMessageListener;
 import strata1.integrator.messaging.IObjectMessage;
 import strata1.integrator.messaging.ISelector;
 import strata1.integrator.messaging.IStringMessage;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.LockSupport;
 
 /****************************************************************************
  * 

@@ -24,12 +24,12 @@
 
 package strata1.gwtclient.gwtview;
 
-import strata1.client.controller.IHandler;
-import strata1.client.event.IChangeEvent;
-import strata1.client.view.IView;
 import com.google.gwt.user.client.ui.Composite;
 import java.util.HashMap;
 import java.util.Map;
+import strata.presentation.controller.IHandler;
+import strata.presentation.event.IChangeEvent;
+import strata.presentation.view.IView;
 
 /****************************************************************************
  * 

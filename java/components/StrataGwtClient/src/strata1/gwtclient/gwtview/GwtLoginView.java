@@ -24,15 +24,13 @@
 
 package strata1.gwtclient.gwtview;
 
-import strata1.client.command.ILoginProvider;
-import strata1.client.view.ILoginView;
-import strata1.common.authentication.ICredential;
-import strata1.common.authentication.UserNameAndPasswordCredential;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import strata.presentation.command.ILoginProvider;
+import strata.presentation.view.ILoginView;
 
 /****************************************************************************
  * 
@@ -201,17 +199,6 @@ class GwtLoginView
     getPassword()
     {
         return passwordField.getText();
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public ICredential 
-    getCredential()
-    {
-        return 
-            new UserNameAndPasswordCredential(getUserName(),getPassword());
     }
 
 }

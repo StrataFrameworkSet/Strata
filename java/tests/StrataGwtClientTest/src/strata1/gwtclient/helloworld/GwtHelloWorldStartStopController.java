@@ -24,10 +24,11 @@
 
 package strata1.gwtclient.helloworld;
 
-import strata1.injector.bootstrap.IStartStopController;
-import strata1.injector.container.IContainer;
-import strata1.client.controller.ILoginController;
 import strata1.client.helloworld.IHelloWorldController;
+import javax.inject.Inject;
+import strata.foundation.bootstrap.IStartStopController;
+import strata.foundation.injection.IContainer;
+import strata.presentation.login.ILoginController;
 
 /****************************************************************************
  * 
@@ -40,27 +41,17 @@ public
 class GwtHelloWorldStartStopController
     implements IStartStopController
 {
-    private IContainer itsContainer;
+    private final IContainer itsContainer;
     
     /************************************************************************
      * Creates a new {@code GwtHelloWorldStartStopController}. 
      *
      */
+    @Inject
     public 
-    GwtHelloWorldStartStopController() 
-    {
-        itsContainer = null;
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IStartStopController 
-    setContainer(IContainer container)
+    GwtHelloWorldStartStopController(IContainer container) 
     {
         itsContainer = container;
-        return this;
     }
 
     /************************************************************************

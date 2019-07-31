@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/google/inject/guice/4.1.0/guice-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/javax/inject/javax.inject/1/javax.inject-1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/google/guava/guava/19.0/guava-19.0.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/google/inject/extensions/guice-servlet/4.1.0/guice-servlet-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/lmax/disruptor/3.2.1/disruptor-3.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/javax/mail/mail/1.4.7/mail-1.4.7.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/javax/activation/activation/1.1/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/fasterxml/jackson/core/jackson-databind/2.7.3/jackson-databind-2.7.3.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/fasterxml/jackson/core/jackson-annotations/2.7.0/jackson-annotations-2.7.0.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/com/fasterxml/jackson/core/jackson-core/2.7.3/jackson-core-2.7.3.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/junit/junit/4.9/junit-4.9.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/mockito/mockito-all/1.9.0/mockito-all-1.9.0.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/springframework/spring-orm/3.0.6.RELEASE/spring-orm-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/springframework/spring-beans/3.0.6.RELEASE/spring-beans-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/springframework/spring-core/3.0.6.RELEASE/spring-core-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/springframework/spring-asm/3.0.6.RELEASE/spring-asm-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/springframework/spring-jdbc/3.0.6.RELEASE/spring-jdbc-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/springframework/spring-tx/3.0.6.RELEASE/spring-tx-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/springframework/spring-aop/3.0.6.RELEASE/spring-aop-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/springframework/spring-context/3.0.6.RELEASE/spring-context-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/springframework/spring-expression/3.0.6.RELEASE/spring-expression-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/springframework/spring-context-support/3.0.6.RELEASE/spring-context-support-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/hibernate/hibernate-core/4.1.7.Final/hibernate-core-4.1.7.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/antlr/antlr/2.7.7/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/jboss/logging/jboss-logging/3.1.0.GA/jboss-logging-3.1.0.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/jboss/spec/javax/transaction/jboss-transaction-api_1.1_spec/1.0.0.Final/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.1.Final/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/javassist/javassist/3.17.0-GA/javassist-3.17.0-GA.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/hibernate/common/hibernate-commons-annotations/4.0.1.Final/hibernate-commons-annotations-4.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/hibernate/hibernate-annotations/3.5.6-Final/hibernate-annotations-3.5.6-Final.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/hibernate/hibernate-commons-annotations/3.2.0.Final/hibernate-commons-annotations-3.2.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/slf4j/slf4j-api/1.5.8/slf4j-api-1.5.8.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/hibernate/hibernate-tools/3.6.0.CR1/hibernate-tools-3.6.0.CR1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/hibernate/hibernate-entitymanager/3.6.9.Final/hibernate-entitymanager-3.6.9.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/cglib/cglib/2.2/cglib-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/asm/asm/3.1/asm-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/javassist/javassist/3.12.0.GA/javassist-3.12.0.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/javax/transaction/jta/1.1/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/ant/ant/1.6.5/ant-1.6.5.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/freemarker/freemarker/2.3.8/freemarker-2.3.8.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/hibernate/jtidy/r8-20060801/jtidy-r8-20060801.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/eclipse/tycho/org.eclipse.jdt.core/3.8.0.v_C03/org.eclipse.jdt.core-3.8.0.v_C03.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/eclipse/text/3.2.0-v20060605-1400/text-3.2.0-v20060605-1400.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/eclipse/core/commands/3.3.0-I20070605-0010/commands-3.3.0-I20070605-0010.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/eclipse/equinox/common/3.6.200-v20130402-1505/common-3.6.200-v20130402-1505.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/eclipse/core/runtime/3.2.0-v20060603/runtime-3.2.0-v20060603.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/eclipse/osgi/3.10.0-v20140606-1445/osgi-3.10.0-v20140606-1445.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/eclipse/core/jobs/3.6.0-v20140424-0053/jobs-3.6.0-v20140424-0053.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/eclipse/equinox/registry/3.5.400-v20140428-1507/registry-3.5.400-v20140428-1507.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/eclipse/equinox/preferences/3.5.200-v20140224-1527/preferences-3.5.200-v20140224-1527.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/eclipse/core/contenttype/3.4.200-v20140207-1251/contenttype-3.4.200-v20140207-1251.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/hibernate/hibernate-c3p0/4.1.7.Final/hibernate-c3p0-4.1.7.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/c3p0/c3p0/0.9.1/c3p0-0.9.1.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar"/>
+	<classpathentry kind="lib" path="C:/Development/Strata/java/.repository/org/slf4j/slf4j-simple/1.6.1/slf4j-simple-1.6.1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataDiagnostic"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataDiagnosticTest"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataFoundation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataFoundationTest"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegration"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegrationTest"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataPersistence"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataPersistenceTest"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

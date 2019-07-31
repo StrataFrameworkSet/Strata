@@ -24,18 +24,14 @@
 
 package strata1.client.controller;
 
-import strata1.injector.container.Binder;
-import strata1.injector.container.IContainer;
 import strata1.client.command.ExecutionException;
 import strata1.client.command.ICommand;
 import strata1.client.command.ILoginProvider;
 import strata1.client.model.INullModel;
 import strata1.client.view.ILoginView;
-import strata1.common.authentication.AuthenticationFailureException;
-import strata1.common.authentication.IAuthenticator;
-import strata1.common.authentication.IPrincipal;
-import strata1.common.logger.ILogger;
-import strata1.common.logger.LoggingLevel;
+import strata.foundation.injection.IContainer;
+import strata.foundation.logger.ILogger;
+import strata.foundation.logger.LoggingLevel;
 
 /****************************************************************************
  * 
@@ -52,7 +48,6 @@ class LoginController
     private ILogger            itsLogger;
     private IContainer         itsContainer;
     private IController<?,?,?> itsController;
-    private IAuthenticator     itsAuthenticator;
     
     /************************************************************************
      * Creates a new {@code LoginController}. 
@@ -63,7 +58,6 @@ class LoginController
     {
         itsContainer     = null;
         itsController    = null;
-        itsAuthenticator = null;
     }
 
     /************************************************************************
@@ -166,16 +160,6 @@ class LoginController
     }
 
     /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public void 
-    setAuthenticator(IAuthenticator authenticator)
-    {
-        itsAuthenticator = authenticator;
-    }
-
-    /************************************************************************
      *  
      *
      */
@@ -184,28 +168,6 @@ class LoginController
     {
         itsLogger.log( LoggingLevel.INFO,"Logging in..." );
         
-        try
-        {
-            itsContainer
-                .insertBinding(  
-                    Binder
-                        .bindType( IPrincipal.class )
-                        .toInstance( 
-                            itsAuthenticator.authenticate( 
-                                getView().getCredential() ) ) );
-            
-            getView().stop();
-            itsController.start();
-        }
-        catch (AuthenticationFailureException e)
-        {
-            if ( e.hasInvalidField( "UserName" ) )
-                getView().setInvalidUserName();
-            else if ( e.hasInvalidField( "Password" ) )
-                getView().setInvalidPassword();
-            else
-                getView().setLoginError( e.getMessage() );
-        }
     }
 
     /************************************************************************

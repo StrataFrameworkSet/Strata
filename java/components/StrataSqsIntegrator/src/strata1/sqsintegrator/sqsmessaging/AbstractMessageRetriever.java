@@ -24,16 +24,16 @@
 
 package strata1.sqsintegrator.sqsmessaging;
 
-import strata1.integrator.messaging.IMessage;
-import strata1.integrator.messaging.ISelector;
+import java.util.ArrayList;
+import java.util.List;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.ChangeMessageVisibilityRequest;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.ReceiveMessageResult;
-import java.util.ArrayList;
-import java.util.List;
+import strata1.integrator.messaging.IMessage;
+import strata1.integrator.messaging.ISelector;
 
 /****************************************************************************
  * 

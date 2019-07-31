@@ -24,8 +24,8 @@
 
 package strata1.gwtclient.updateserver;
 
-import strata1.gwtclient.updateclient.UpdateResponse;
 import java.util.concurrent.BlockingQueue;
+import strata1.gwtclient.updateclient.UpdateResponse;
 
 /****************************************************************************
  * 

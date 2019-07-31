@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>Strata.Foundation</id>
+		<version>0.10.0</version>
+		<authors>John Liebenau</authors>
+		<owners>John Liebenau</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Strata Foundation Framework 0.10.0</description>
+		<releaseNotes>
+		</releaseNotes>
+		<copyright>Copyright 2018</copyright>
+		<tags></tags>
+
+		<dependencies>
+			<dependency id="Castle.Core" version="4.2.1"/>
+			<dependency id="Disruptor" version="3.3.7.0"/>
+			<dependency id="NLog" version="4.0.0.0"/>
+			<dependency id="Newtonsoft.Json" version="11.0.2"/>
+			<dependency id="SystemEx.Injection" version="1.0.0"/>
+ 		</dependencies>
+		
+		<frameworkAssemblies>
+			<frameworkAssembly assemblyName="System"/>
+			<frameworkAssembly assemblyName="System.Core"/>
+			<frameworkAssembly assemblyName="System.Runtime.Serialization"/>
+			<frameworkAssembly assemblyName="System.Xml.Linq"/>
+			<frameworkAssembly assemblyName="System.Xml"/>
+			<frameworkAssembly assemblyName="Microsoft.CSharp"/>
+		</frameworkAssemblies>
+	</metadata>
+	<files>
+		<file src="components\Strata.Foundation\bin\Debug\Strata.Foundation.dll" target="lib\net45\Debug" /> 
+		<file src="components\Strata.Foundation\bin\Debug\Strata.Foundation.pdb" target="lib\net45\Debug" /> 
+	</files>
+</package>

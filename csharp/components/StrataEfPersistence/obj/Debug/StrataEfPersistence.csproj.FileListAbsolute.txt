@@ -33,3 +33,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataEfPersistenc
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataEfPersistence\obj\Debug\StrataEfPersistence.csprojResolveAssemblyReference.cache
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataEfPersistence\obj\Debug\StrataEfPersistence.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataEfPersistence\obj\Debug\StrataEfPersistence.pdb
+C:\Development\Strata\csharp\components\StrataEfPersistence\obj\Debug\StrataEfPersistence.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\components\StrataEfPersistence\obj\Debug\StrataEfPersistence.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\components\StrataEfPersistence\obj\Debug\StrataEfPersistence.dll
+C:\Development\Strata\csharp\components\StrataEfPersistence\obj\Debug\StrataEfPersistence.pdb

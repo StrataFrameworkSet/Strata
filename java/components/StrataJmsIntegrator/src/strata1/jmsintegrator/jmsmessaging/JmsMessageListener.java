@@ -24,13 +24,13 @@
 
 package strata1.jmsintegrator.jmsmessaging;
 
-import strata1.integrator.messaging.IMessageListener;
 import javax.jms.BytesMessage;
 import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
+import strata1.integrator.messaging.IMessageListener;
 
 /****************************************************************************
  * 

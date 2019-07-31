@@ -57,3 +57,11 @@ C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataClient\obj\D
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataClient\obj\Debug\StrataClient.g.resources
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataClient\obj\Debug\StrataClient.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataClient\obj\Debug\StrataClient.pdb
+C:\Development\Strata\csharp\components\StrataClient\obj\Debug\StrataClient.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\components\StrataClient\obj\Debug\View\CloseableHeader.baml
+C:\Development\Strata\csharp\components\StrataClient\obj\Debug\View\CloseableHeader.g.cs
+C:\Development\Strata\csharp\components\StrataClient\obj\Debug\StrataClient_MarkupCompile.cache
+C:\Development\Strata\csharp\components\StrataClient\obj\Debug\StrataClient.g.resources
+C:\Development\Strata\csharp\components\StrataClient\obj\Debug\StrataClient.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\components\StrataClient\obj\Debug\StrataClient.dll
+C:\Development\Strata\csharp\components\StrataClient\obj\Debug\StrataClient.pdb

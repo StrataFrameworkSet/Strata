@@ -110,18 +110,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\components\StrataCommon\StrataCommon.csproj">
-      <Project>{DF734F29-4597-4304-B69D-AAB78200EDA8}</Project>
-      <Name>StrataCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\components\StrataNhibernatePersistence\StrataNhibernatePersistence.csproj">
-      <Project>{3E27F25A-4E70-4BCF-B757-26EBF06A0A16}</Project>
-      <Name>StrataNhibernatePersistence</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\components\StrataPersistence\StrataPersistence.csproj">
-      <Project>{3882218A-F917-4AD2-8D77-5AFE3A1ADE31}</Project>
-      <Name>StrataPersistence</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StrataPersistenceTest\StrataPersistenceTest.csproj">
       <Project>{30dc5deb-ed45-4c6d-9552-98f67069c67d}</Project>
       <Name>StrataPersistenceTest</Name>

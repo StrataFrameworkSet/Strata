@@ -24,9 +24,8 @@
 
 package strata1.client.swthelloworld;
 
-import strata1.injector.bootstrap.Bootstrapper;
-import strata1.client.application.ClientApplication;
-import strata1.client.application.DesktopApplication;
+import strata.foundation.bootstrap.Bootstrapper;
+import strata.presentation.application.DesktopApplication;
 
 /****************************************************************************
  * 

@@ -1,0 +1,38 @@
+<project 
+	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+	name="StrataFoundationTest" 
+	default="run-commit-stage">
+	
+	<import file="../../component-targets.xml"/>
+	
+	<target name="define-properties">
+		
+		<property name="copy.sources" value="true"/>
+	    <property name="source.dir" value="src"/>
+	    <property name="output.dir" value="bin"/>
+	    <property name="distribution.dir" value="lib"/>
+	    <property name="artifact.name" value="${ant.project.name}-${version}"/>
+	    <property name="component.artifact" value="${distribution.dir}/${artifact.name}.jar"/>
+		
+		<artifact:pom 
+			name="Strata Application Framework"
+			id="${ant.project.name}" 
+			groupId="strata" 
+			artifactId="${ant.project.name}" 
+			version="${version}">
+		    <dependency groupId="strata" artifactId="StrataFoundation" version="${version}"/>
+	        <dependency groupId="junit" artifactId="junit" version="4.9"/>
+	        <dependency groupId="org.mockito" artifactId="mockito-all" version="1.9.0"/>
+	    </artifact:pom>
+
+	    <artifact:dependencies 
+	    	pathId="dependency.classpath"
+	    	pomRefId="${ant.project.name}">
+	        <localRepository path="${repository.dir}"/>
+	    </artifact:dependencies>
+		
+		<property name="component.classpath" value="dependency.classpath"/>
+		
+	</target>
+    
+</project>	

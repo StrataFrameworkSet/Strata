@@ -25,7 +25,6 @@
 package strata1.client.view;
 
 import strata1.client.command.ILoginProvider;
-import strata1.common.authentication.ICredential;
 
 
 /****************************************************************************
@@ -53,9 +52,6 @@ interface ILoginView
     
     public String
     getPassword();
-    
-    public ICredential
-    getCredential();
 }
 
 // ##########################################################################

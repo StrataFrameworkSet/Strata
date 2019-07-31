@@ -24,7 +24,6 @@
 
 package strata1.classpathgenerator.task;
 
-import static org.junit.Assert.*;
 import java.io.File;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;

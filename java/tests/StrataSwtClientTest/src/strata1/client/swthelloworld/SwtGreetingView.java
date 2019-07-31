@@ -24,14 +24,14 @@
 
 package strata1.client.swthelloworld;
 
-import strata1.client.command.INullProvider;
 import strata1.client.helloworld.IGreetingView;
-import strata1.client.view.AbstractView;
 import strata1.swtclient.swtview.ISwtView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Widget;
+import strata.presentation.command.INullProvider;
+import strata.presentation.view.AbstractView;
 
 /****************************************************************************
  * 

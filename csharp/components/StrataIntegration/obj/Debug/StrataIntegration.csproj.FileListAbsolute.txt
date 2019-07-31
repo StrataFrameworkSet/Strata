@@ -29,3 +29,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataIntegration\
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataIntegration\obj\Debug\StrataIntegration.csprojResolveAssemblyReference.cache
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataIntegration\obj\Debug\StrataIntegration.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataIntegration\obj\Debug\StrataIntegration.pdb
+C:\Development\Strata\csharp\components\StrataIntegration\obj\Debug\StrataIntegration.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\components\StrataIntegration\obj\Debug\StrataIntegration.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\components\StrataIntegration\obj\Debug\StrataIntegration.dll
+C:\Development\Strata\csharp\components\StrataIntegration\obj\Debug\StrataIntegration.pdb

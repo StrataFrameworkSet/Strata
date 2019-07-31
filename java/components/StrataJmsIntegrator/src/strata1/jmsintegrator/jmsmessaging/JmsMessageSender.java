@@ -24,11 +24,11 @@
 
 package strata1.jmsintegrator.jmsmessaging;
 
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
 import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.IMessageSender;
 import strata1.integrator.messaging.IMessagingSession;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
 
 /****************************************************************************
  * 

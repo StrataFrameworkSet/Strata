@@ -24,7 +24,19 @@
 
 package strata1.jmsintegrator.jmsmessaging;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import org.apache.activemq.ActiveMQSslConnectionFactory;
+import org.fusesource.stomp.jms.StompJmsConnectionFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import strata1.integrator.messaging.IMapMessage;
 import strata1.integrator.messaging.IMessage;
 import strata1.integrator.messaging.IMessageReceiver;
@@ -34,16 +46,6 @@ import strata1.integrator.messaging.IObjectMessage;
 import strata1.integrator.messaging.IStringMessage;
 import strata1.integrator.messaging.MixedModeException;
 import strata1.integrator.messaging.NoMessageReceivedException;
-import org.apache.activemq.ActiveMQSslConnectionFactory;
-import org.fusesource.stomp.jms.StompJmsConnectionFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
 
 /****************************************************************************
  * 

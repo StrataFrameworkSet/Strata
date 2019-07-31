@@ -26,8 +26,6 @@ package strata1.client.view;
 
 import strata1.client.command.ExecutionException;
 import strata1.client.command.ILoginProvider;
-import strata1.common.authentication.ICredential;
-import strata1.common.authentication.UserNameAndPasswordCredential;
 
 /****************************************************************************
  * 
@@ -131,16 +129,6 @@ class NullLoginView
     getPassword()
     {
         return "";
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public ICredential 
-    getCredential()
-    {
-        return new UserNameAndPasswordCredential("","");
     }
 }
 

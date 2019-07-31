@@ -40,10 +40,9 @@
 	<classpathentry kind="var" path="REPO_ROOT/org/fusesource/hawtdispatch/hawtdispatch-transport/1.20/hawtdispatch-transport-1.20.jar"/>
 	<classpathentry kind="var" path="REPO_ROOT/org/fusesource/hawtdispatch/hawtdispatch/1.20/hawtdispatch-1.20.jar"/>
 	<classpathentry kind="var" path="REPO_ROOT/org/fusesource/hawtbuf/hawtbuf/1.9/hawtbuf-1.9.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataCommon"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/StrataInjector"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegrator"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataIntegratorTest"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StrataJmsIntegrator"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StrataFoundation"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

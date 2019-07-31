@@ -39,12 +39,11 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Fluent">
       <HintPath>..\..\packages\Fluent.Ribbon.3.4.0\lib\net45\Fluent.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -97,6 +96,7 @@
       <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -155,24 +155,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\..\components\StrataClient\StrataClient.csproj">
-      <Project>{4f31711b-95e8-4c50-9317-2d181a4e963b}</Project>
-      <Name>StrataClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\components\StrataCommon\StrataCommon.csproj">
-      <Project>{df734f29-4597-4304-b69d-aab78200eda8}</Project>
-      <Name>StrataCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\tests\StrataClientTest\StrataClientTest.csproj">
-      <Project>{2f624e26-ffe1-4e68-ab31-1fc5af885a44}</Project>
-      <Name>StrataClientTest</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\tests\StrataWpfClientTest\StrataWpfClientTest.csproj">
-      <Project>{783200bc-3614-4eb0-8ab9-34f642098f0e}</Project>
-      <Name>StrataWpfClientTest</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -24,12 +24,10 @@
 
 package strata1.client.controller;
 
-import strata1.injector.container.IContainer;
 import strata1.client.command.INullProvider;
-import strata1.client.controller.IController;
 import strata1.client.model.INullModel;
 import strata1.client.view.ISplashView;
-import strata1.common.logger.ILogger;
+import strata.foundation.logger.ILogger;
 
 /****************************************************************************
  * 

@@ -24,12 +24,12 @@
 
 package strata1.client.swthelloworld;
 
-import strata1.injector.bootstrap.IStartStopController;
-import strata1.injector.container.Container;
-import strata1.injector.container.IContainer;
-import strata1.client.controller.ILoginController;
 import strata1.client.helloworld.IHelloWorldController;
-import strata1.client.shell.IDispatcher;
+import javax.inject.Inject;
+import strata.foundation.bootstrap.IStartStopController;
+import strata.foundation.injection.IContainer;
+import strata.presentation.login.ILoginController;
+import strata.presentation.shell.IDispatcher;
 
 /****************************************************************************
  * 
@@ -42,27 +42,17 @@ public
 class HelloWorldStartStopController
     implements IStartStopController
 {
-    private IContainer itsContainer;
+    private final IContainer itsContainer;
     
     /************************************************************************
      * Creates a new {@code HelloWorldStartStopController}. 
      *
      */
+    @Inject
     public 
-    HelloWorldStartStopController()
-    {
-        itsContainer = new Container(null);
-    }
-
-    /************************************************************************
-     * {@inheritDoc} 
-     */
-    @Override
-    public IStartStopController 
-    setContainer(IContainer container)
+    HelloWorldStartStopController(IContainer container)
     {
         itsContainer = container;
-        return this;
     }
 
     /************************************************************************

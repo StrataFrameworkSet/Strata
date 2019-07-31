@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<!DOCTYPE 
+    hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class 
+        abstract="true" 
+        name="strata.persistence.testdomain.IParty" 
+        table="Party">
+        <id 
+            column="PartyKey" 
+            name="PartyKey" 
+            type="java.lang.Long">
+            <generator class="native"/>
+        </id>
+        <discriminator 
+            column="PartyType"
+            type="string"/>
+        <version 
+            column="Version" 
+            name="Version" 
+            type="java.lang.Integer"/>
+        <set 
+            name="ContactInformation" 
+            sort="unsorted" 
+            table="ContactInformation">
+            <key column="PartyKey"/>
+            <one-to-many class="strata.persistence.testdomain.IContactInformation"/>
+        </set>
+        <subclass
+            abstract="true" 
+            extends="strata.persistence.testdomain.IParty"
+            name="strata.persistence.testdomain.IPerson"
+            discriminator-value="IPerson">
+            <component 
+                class="strata.persistence.testdomain.PersonName" 
+                name="Name">
+                <property 
+                    column="FirstName" 
+                    name="FirstName"/>
+                <property 
+                    column="MiddleName" 
+                    name="MiddleName"/>
+                <property 
+                    column="LastName" 
+                    name="LastName"/>
+            </component>
+            <component 
+                class="strata.persistence.testdomain.PersonAge" 
+                name="Age">
+                <property 
+                    name="DateOfBirth" 
+                    type="strata.persistence.hibernate.DateTimeType">
+                    <column name="DateOfBirth"/>
+                </property>
+            </component>
+            <property 
+                name="NetWorth" 
+                type="strata.persistence.hibernate.MoneyType">
+                <column name="Currency"/>
+                <column name="NetWorth"/>
+            </property>
+	        <subclass 
+	            extends="strata.persistence.testdomain.IPerson"
+                proxy="strata.persistence.testdomain.IPerson"
+	            name="strata.persistence.testdomain.Person" 
+	            discriminator-value="Person"/>
+	
+            <query 
+                fetch-size="10" 
+                name="GetByName" 
+                read-only="true">
+                select p from IPerson p where p.Name = :name
+            </query>
+	        <query 
+	            fetch-size="2" 
+	            name="HasPersonWithName" 
+	            read-only="true">
+	            select count(p) from IPerson p where p.Name = :name
+	        </query>
+	        <query 
+	            fetch-size="100" 
+	            name="GetAll" 
+	            read-only="true">
+	            select p from IPerson p
+	        </query>
+	    </subclass>
+	    
+        <subclass 
+            abstract="true"
+            extends="strata.persistence.testdomain.IParty"
+            name="strata.persistence.testdomain.IOrganization"
+            discriminator-value="IOrganization">
+            <property 
+                column="Name" 
+                name="Name"
+                unique="true"/>
+            <set 
+                name="MemberIds" 
+                sort="unsorted" 
+                table="OrganizationMember">
+                <key column="PartyKey"/>
+                <element type="java.lang.Long">
+                    <column name="MemberId"/>
+                </element>
+            </set>
+            <subclass 
+                extends="strata.persistence.testdomain.IOrganization"
+                proxy="strata.persistence.testdomain.IOrganization"
+                name="strata.persistence.testdomain.Organization" 
+                discriminator-value="Organization"/>
+            <query
+                name="GetByName"
+                fetch-size="1"
+                read-only="true">
+                select o from IOrganization o where o.Name = :name
+            </query>
+            <query
+                name="GetAll"
+                fetch-size="100"
+                read-only="true">
+                select o from IOrganization o
+            </query>            
+        </subclass>
+    </class>
+</hibernate-mapping>

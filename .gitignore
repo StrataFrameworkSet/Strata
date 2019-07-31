@@ -1,6 +1,12 @@
 .metadata/
 bin/
 lib/
+obj/
 .repository/
 /csharp/TestResults
 /csharp/.vs
+/java/.recommenders
+/cplusplus/.recommenders/snipmatch/repositories.config
+/cplusplus/.recommenders/snipmatch/repositories/http___git_eclipse_org_gitroot_recommenders_org_eclipse_recommenders_snipmatch_snippets_git
+/cplusplus/components/StrataFoundation/.settings/language.settings.xml
+/cplusplus

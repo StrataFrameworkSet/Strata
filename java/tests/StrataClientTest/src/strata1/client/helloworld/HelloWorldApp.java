@@ -24,9 +24,10 @@
 
 package strata1.client.helloworld;
 
-import strata1.client.bootstrap.IClientBootstrapper;
-import strata1.client.bootstrap.IClientFactory;
 import strata1.client.region.RegionInitializationException;
+import strata.foundation.bootstrap.IApplicationFactory;
+import strata.foundation.bootstrap.IBootstrapper;
+
 //import strata1.client.swthelloworld.SwtHelloWorldClientBootstrapper;
 //import strata1.client.swthelloworld.SwtHelloWorldClientFactory;
 
@@ -41,8 +42,8 @@ public abstract
 class HelloWorldApp
     implements Runnable
 {
-    private IClientBootstrapper itsBootstrapper;
-    private IClientFactory      itsFactory;
+    private IBootstrapper       itsBootstrapper;
+    private IApplicationFactory itsFactory;
     
     /************************************************************************
      * Creates a new {@code HelloWorldApp}. 
@@ -52,7 +53,7 @@ class HelloWorldApp
      * @throws RegionInitializationException 
      */
     public 
-    HelloWorldApp(IClientBootstrapper bootstrapper,IClientFactory factory) 
+    HelloWorldApp(IBootstrapper bootstrapper,IApplicationFactory factory) 
     {
         itsBootstrapper = bootstrapper;
         itsFactory      = factory;

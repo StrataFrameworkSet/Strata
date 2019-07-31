@@ -3,71 +3,51 @@
     default="run-commit-stage" 
     basedir=".">
 
-	
     <!-- root directories -->
     <property name="workspace.root" value="${basedir}"/>
     <property name="applications.root" value="${basedir}/applications"/>
     <property name="components.root" value="${basedir}/components"/>
     <property name="tests.root" value="${basedir}/tests"/>
     
-    <property name="common.root" value="${components.root}/StrataCommon"/>
-    <property name="injector.root" value="${components.root}/StrataInjector"/>
-    <property name="inspector.root" value="${components.root}/StrataInspector"/>
-    <property name="client.root" value="${components.root}/StrataClient"/>
+    <property name="foundation.root" value="${components.root}/StrataFoundation"/>
+    <property name="diagnostic.root" value="${components.root}/StrataDiagnostic"/>
+    <property name="integration.root" value="${components.root}/StrataIntegration"/>
+    <property name="persistence.root" value="${components.root}/StrataPersistence"/>
+    <property name="presentation.root" value="${components.root}/StrataPresentation"/>
     <property name="swtclient.root" value="${components.root}/StrataSwtClient"/>
     <property name="androidclient.root" value="${components.root}/StrataAndroidClient"/>
     <property name="gwtclient.root" value="${components.root}/StrataGwtClient"/>
-    <property name="integrator.root" value="${components.root}/StrataIntegrator"/>
-    <property name="jmsintegrator.root" value="${components.root}/StrataJmsIntegrator"/>
-    <property name="persistence.root" value="${components.root}/StrataPersistence"/>
-    <property name="server.root" value="${components.root}/StrataServer"/>
     
-    <property name="commontest.root" value="${tests.root}/StrataCommonTest"/>
-    <property name="injectortest.root" value="${tests.root}/StrataInjectorTest"/>
-    <property name="inspectortest.root" value="${tests.root}/StrataInspectorTest"/>
-    <property name="clienttest.root" value="${tests.root}/StrataClientTest"/>
+    <property name="foundationtest.root" value="${tests.root}/StrataFoundationTest"/>
+    <property name="diagnostictest.root" value="${tests.root}/StrataDiagnosticTest"/>
+    <property name="integrationtest.root" value="${tests.root}/StrataIntegrationTest"/>
+    <property name="persistencetest.root" value="${tests.root}/StrataPersistenceTest"/>
+    <property name="presentationtest.root" value="${tests.root}/StrataPresentationTest"/>
     <property name="swtclienttest.root" value="${tests.root}/StrataSwtClientTest"/>
     <property name="androidclienttest.root" value="${tests.root}/StrataAndroidClientTest"/>
     <property name="gwtclienttest.root" value="${tests.root}/StrataGwtClientTest"/>
-    <property name="integratortest.root" value="${tests.root}/StrataIntegratorTest"/>
-    <property name="jmsintegratortest.root" value="${tests.root}/StrataJmsIntegratorTest"/>
-    <property name="persistencetest.root" value="${tests.root}/StrataPersistenceTest"/>
-    <property name="servertest.root" value="${tests.root}/StrataServerTest"/>
+    <property name="testsuite.root" value="${tests.root}/StrataTestSuite"/>
  
     <filelist id="build.files">
-        <file name="${common.root}/build.xml"/>
-        <file name="${commontest.root}/build.xml"/>
-        
-        <file name="${injector.root}/build.xml"/>
-        <file name="${injectortest.root}/build.xml"/>
-                
-        <file name="${inspector.root}/build.xml"/>
-        <file name="${inspectortest.root}/build.xml"/>
-        
-        <file name="${integrator.root}/build.xml"/>
-        <file name="${integratortest.root}/build.xml"/>
-        
-        <file name="${jmsintegrator.root}/build.xml"/>
-        <file name="${jmsintegratortest.root}/build.xml"/>
-                
-        <file name="${client.root}/build.xml"/>
-        <file name="${clienttest.root}/build.xml"/>
-                
-        <file name="${swtclient.root}/build.xml"/>
-        <file name="${swtclienttest.root}/build.xml"/>
-                
-        <file name="${androidclient.root}/build.xml"/>
-        <file name="${androidclienttest.root}/build.xml"/>
-                
-        <file name="${gwtclient.root}/build.xml"/>
-        <file name="${gwtclienttest.root}/build.xml"/>
-                
+        <file name="${foundation.root}/build.xml"/>
+        <file name="${diagnostic.root}/build.xml"/>
         <file name="${persistence.root}/build.xml"/>
-        <file name="${persistencetest.root}/build.xml"/>
-                
-        <file name="${server.root}/build.xml"/>
-        <file name="${servertest.root}/build.xml"/>
-                       
+        <file name="${integration.root}/build.xml"/>
+        <file name="${presentation.root}/build.xml"/>
+        <file name="${swtclient.root}/build.xml"/>
+        <file name="${androidclient.root}/build.xml"/>
+        <file name="${gwtclient.root}/build.xml"/>
+
+    	<file name="${foundationtest.root}/build.xml"/>                
+        <file name="${diagnostictest.root}/build.xml"/>
+        <file name="${persistencetest.root}/build.xml"/>        
+        <file name="${integrationtest.root}/build.xml"/>               
+        <file name="${presentationtest.root}/build.xml"/>
+        <file name="${swtclienttest.root}/build.xml"/>
+        <file name="${androidclienttest.root}/build.xml"/>
+        <file name="${gwtclienttest.root}/build.xml"/>
+                               
+        <file name="${testsuite.root}/build.xml"/>
     </filelist>
         
  	<macrodef 
@@ -104,254 +84,4 @@
     	<iterate target="update-classpath"/>
     </target>
     
-    <!--  
-    <target name="clean">
-        <ant 
-            dir="${common.root}" 
-            antfile="${common.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${commontest.root}" 
-            antfile="${commontest.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${injector.root}" 
-            antfile="${injector.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${injectortest.root}" 
-            antfile="${injectortest.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${integrator.root}" 
-            antfile="${integrator.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${integratortest.root}" 
-            antfile="${integratortest.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${client.root}" 
-            antfile="${client.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${clienttest.root}" 
-            antfile="${clienttest.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${swtclient.root}" 
-            antfile="${swtclient.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${swtclienttest.root}" 
-            antfile="${swtclienttest.root}/build.xml" 
-            target="clean"/>
-                <ant 
-            dir="${androidclient.root}" 
-            antfile="${androidclient.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${androidclienttest.root}" 
-            antfile="${androidclienttest.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${gwtclient.root}" 
-            antfile="${gwtclient.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${gwtclienttest.root}" 
-            antfile="${gwtclienttest.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${inspector.root}" 
-            antfile="${inspector.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${inspectortest.root}" 
-            antfile="${inspectortest.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${persistence.root}" 
-            antfile="${persistence.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${persistencetest.root}" 
-            antfile="${persistencetest.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${server.root}" 
-            antfile="${server.root}/build.xml" 
-            target="clean"/>
-        <ant 
-            dir="${servertest.root}" 
-            antfile="${servertest.root}/build.xml" 
-            target="clean"/>
-    </target>
-
-    <target name="run-commit-stage">
-        <ant 
-            dir="${common.root}" 
-            antfile="${common.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${commontest.root}" 
-            antfile="${commontest.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${injector.root}" 
-            antfile="${injector.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${injectortest.root}" 
-            antfile="${injectortest.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${integrator.root}" 
-            antfile="${integrator.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${integratortest.root}" 
-            antfile="${integratortest.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${client.root}" 
-            antfile="${client.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${clienttest.root}" 
-            antfile="${clienttest.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${swtclient.root}" 
-            antfile="${swtclient.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${swtclienttest.root}" 
-            antfile="${swtclienttest.root}/build.xml" 
-            target="run-commit-stage"/>
-                <ant 
-            dir="${androidclient.root}" 
-            antfile="${androidclient.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${androidclienttest.root}" 
-            antfile="${androidclienttest.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${gwtclient.root}" 
-            antfile="${gwtclient.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${gwtclienttest.root}" 
-            antfile="${gwtclienttest.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${inspector.root}" 
-            antfile="${inspector.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${inspectortest.root}" 
-            antfile="${inspectortest.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${persistence.root}" 
-            antfile="${persistence.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${persistencetest.root}" 
-            antfile="${persistencetest.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${server.root}" 
-            antfile="${server.root}/build.xml" 
-            target="run-commit-stage"/>
-        <ant 
-            dir="${servertest.root}" 
-            antfile="${servertest.root}/build.xml" 
-            target="run-commit-stage"/>
-    </target>
-	
-    <target name="run-integration-stage">
-        <ant 
-            dir="${common.root}" 
-            antfile="${common.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${commontest.root}" 
-            antfile="${commontest.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${injector.root}" 
-            antfile="${injector.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${injectortest.root}" 
-            antfile="${injectortest.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${integrator.root}" 
-            antfile="${integrator.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${integratortest.root}" 
-            antfile="${integratortest.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${client.root}" 
-            antfile="${client.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${clienttest.root}" 
-            antfile="${clienttest.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${swtclient.root}" 
-            antfile="${swtclient.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${swtclienttest.root}" 
-            antfile="${swtclienttest.root}/build.xml" 
-            target="run-integration-stage"/>
-                <ant 
-            dir="${androidclient.root}" 
-            antfile="${androidclient.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${androidclienttest.root}" 
-            antfile="${androidclienttest.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${gwtclient.root}" 
-            antfile="${gwtclient.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${gwtclienttest.root}" 
-            antfile="${gwtclienttest.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${inspector.root}" 
-            antfile="${inspector.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${inspectortest.root}" 
-            antfile="${inspectortest.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${persistence.root}" 
-            antfile="${persistence.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${persistencetest.root}" 
-            antfile="${persistencetest.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${server.root}" 
-            antfile="${server.root}/build.xml" 
-            target="run-integration-stage"/>
-        <ant 
-            dir="${servertest.root}" 
-            antfile="${servertest.root}/build.xml" 
-            target="run-integration-stage"/>
-    </target>
-	-->
 </project>

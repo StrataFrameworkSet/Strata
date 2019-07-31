@@ -24,10 +24,9 @@
 
 package strata1.client.application;
 
-import strata1.injector.bootstrap.IBootstrapper;
-import strata1.injector.bootstrap.IApplicationFactory;
-import strata1.client.bootstrap.IClientBootstrapper;
-import strata1.client.bootstrap.IClientFactory;
+import strata.foundation.bootstrap.IApplicationFactory;
+import strata.foundation.bootstrap.IBootstrapper;
+import strata.foundation.bootstrap.IStartStopController;
 
 /****************************************************************************
  * 
@@ -40,8 +39,8 @@ public
 class DesktopApplication
     implements IClientApplication
 {
-    private IBootstrapper itsBootstrapper;
-    private IApplicationFactory      itsFactory;
+    private IBootstrapper       itsBootstrapper;
+    private IApplicationFactory itsFactory;
     
     /************************************************************************
      * Creates a new {@code DesktopApplication}. 
@@ -62,10 +61,11 @@ class DesktopApplication
     @Override
     public void 
     run(String[] args)
-    {
+    {        
         itsBootstrapper.run( itsFactory,args );
         itsBootstrapper
-            .getStartStopController()
+            .getContainer()
+            .getInstance( IStartStopController.class )
             .startApplication();
     }
 
