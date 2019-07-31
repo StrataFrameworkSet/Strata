@@ -33,3 +33,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataIntegrationTest\o
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataIntegrationTest\obj\Debug\StrataIntegrationTest.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataIntegrationTest\obj\Debug\StrataIntegrationTest.pdb
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataIntegrationTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Development\Strata\csharp\tests\StrataIntegrationTest\obj\Debug\StrataIntegrationTest.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\tests\StrataIntegrationTest\obj\Debug\StrataIntegrationTest.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\tests\StrataIntegrationTest\obj\Debug\StrataIntegrationTest.dll
+C:\Development\Strata\csharp\tests\StrataIntegrationTest\obj\Debug\StrataIntegrationTest.pdb

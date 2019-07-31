@@ -31,8 +31,8 @@ import strata.foundation.commandline.ICommandLineParser;
 import strata.foundation.injection.AbstractModule;
 import strata.foundation.injection.IBinder;
 import strata.foundation.injection.IContainer;
-import strata.foundation.injection.IKeyBindingBuilder;
 import strata.foundation.injection.IModule;
+import strata.foundation.injection.ISourceBindingBuilder;
 import strata.foundation.injection.ProviderBasedBinder;
 import strata.foundation.logger.ILogger;
 import strata.foundation.logger.JavaLogEntryProcessor;
@@ -73,7 +73,7 @@ class AbstractApplicationFactory
      */
     @Override
     public IBinder<ILogger> 
-    createLoggerBinder(IKeyBindingBuilder<ILogger> builder)
+    createLoggerBinder(ISourceBindingBuilder<ILogger> builder)
     {
         return 
             new ProviderBasedBinder<ILogger>(

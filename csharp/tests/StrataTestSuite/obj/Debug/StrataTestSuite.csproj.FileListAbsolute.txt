@@ -96,3 +96,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataTestSuite\obj\Deb
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataTestSuite\obj\Debug\StrataTestSuite.pdb
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataTestSuite\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataTestSuite\bin\Debug\StrataTestSuite.dll.config
+C:\Development\Strata\csharp\tests\StrataTestSuite\obj\Debug\StrataTestSuite.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\tests\StrataTestSuite\obj\Debug\StrataTestSuite.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\tests\StrataTestSuite\obj\Debug\StrataTestSuite.dll
+C:\Development\Strata\csharp\tests\StrataTestSuite\obj\Debug\StrataTestSuite.pdb

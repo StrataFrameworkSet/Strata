@@ -29,6 +29,7 @@ import com.google.inject.internal.BindingBuilder;
 import strata.foundation.injection.IKeyBindingBuilder;
 import strata.foundation.injection.IModule;
 import strata.foundation.injection.IModuleAdapter;
+import strata.foundation.injection.ISourceBindingBuilder;
 
 /****************************************************************************
  * 
@@ -68,7 +69,7 @@ class GuiceModuleAdapter
      * {@inheritDoc} 
      */
     @Override
-    public <T> IKeyBindingBuilder<T> 
+    public <T> ISourceBindingBuilder<T> 
     bindType(Class<T> type)
     {
         return 

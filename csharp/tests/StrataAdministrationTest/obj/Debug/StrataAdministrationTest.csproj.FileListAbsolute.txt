@@ -30,3 +30,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataAdministrationTes
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataAdministrationTest\obj\Debug\StrataAdministrationTest.pdb
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataAdministrationTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataAdministrationTest\bin\Debug\StrataAdministrationTest.dll.config
+C:\Development\Strata\csharp\tests\StrataAdministrationTest\obj\Debug\StrataAdministrationTest.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\tests\StrataAdministrationTest\obj\Debug\StrataAdministrationTest.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\tests\StrataAdministrationTest\obj\Debug\StrataAdministrationTest.dll
+C:\Development\Strata\csharp\tests\StrataAdministrationTest\obj\Debug\StrataAdministrationTest.pdb

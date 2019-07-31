@@ -30,6 +30,7 @@ import strata.foundation.injection.IBindingBuilder;
 import strata.foundation.injection.IKeyBindingBuilder;
 import strata.foundation.injection.IModule;
 import strata.foundation.injection.IModuleAdapter;
+import strata.foundation.injection.ISourceBindingBuilder;
 
 /****************************************************************************
  * 
@@ -72,7 +73,7 @@ implements IModuleAdapter
      * {@inheritDoc} 
      */
     @Override
-    public <T> IKeyBindingBuilder<T> 
+    public <T> ISourceBindingBuilder<T> 
     bindType(Class<T> type)
     {
         BindingBuilder<T> builder = new BindingBuilder<T>(type,itsModifiers);

@@ -26,3 +26,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataPersistence\
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataPersistence\obj\Debug\StrataPersistence.csprojResolveAssemblyReference.cache
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataPersistence\obj\Debug\StrataPersistence.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataPersistence\obj\Debug\StrataPersistence.pdb
+C:\Development\Strata\csharp\components\StrataPersistence\obj\Debug\StrataPersistence.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\components\StrataPersistence\obj\Debug\StrataPersistence.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\components\StrataPersistence\obj\Debug\StrataPersistence.dll
+C:\Development\Strata\csharp\components\StrataPersistence\obj\Debug\StrataPersistence.pdb

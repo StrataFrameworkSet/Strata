@@ -35,15 +35,15 @@ import java.lang.annotation.Annotation;
  */
 public 
 interface IKeyBindingBuilder<T>
-    extends ISourceBindingBuilder<T>
+    extends IBindingBuilder<T>
 {
-    public ISourceBindingBuilder<T>
+    public IBindingBuilder<T>
     withKey(String key);
     
-    public <A extends Annotation> ISourceBindingBuilder<T>
+    public <A extends Annotation> IBindingBuilder<T>
     withKey(Class<A> key);
     
-    public <A extends Annotation> ISourceBindingBuilder<T>
+    public <A extends Annotation> IBindingBuilder<T>
     withKey(A key);
 }
 

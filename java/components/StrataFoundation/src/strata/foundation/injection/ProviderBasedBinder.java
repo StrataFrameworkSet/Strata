@@ -35,7 +35,8 @@ import javax.inject.Provider;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class ProviderBasedBinder<T>extends AbstractBinder<T>
+class ProviderBasedBinder<T>
+    extends AbstractBinder<T>
 {
     private final Provider<? extends T> itsProvider;
     
@@ -48,7 +49,7 @@ class ProviderBasedBinder<T>extends AbstractBinder<T>
      */
     public 
     ProviderBasedBinder(
-        IKeyBindingBuilder<T>       builder,
+        ISourceBindingBuilder<T>       builder,
         Provider<? extends T>       provider,
         Class<? extends Annotation> scope)
     {

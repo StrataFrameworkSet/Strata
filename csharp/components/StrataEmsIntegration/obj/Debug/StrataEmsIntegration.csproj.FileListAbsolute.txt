@@ -33,3 +33,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataEmsIntegrati
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataEmsIntegration\obj\Debug\StrataEmsIntegration.csprojResolveAssemblyReference.cache
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataEmsIntegration\obj\Debug\StrataEmsIntegration.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataEmsIntegration\obj\Debug\StrataEmsIntegration.pdb
+C:\Development\Strata\csharp\components\StrataEmsIntegration\obj\Debug\StrataEmsIntegration.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\components\StrataEmsIntegration\obj\Debug\StrataEmsIntegration.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\components\StrataEmsIntegration\obj\Debug\StrataEmsIntegration.dll
+C:\Development\Strata\csharp\components\StrataEmsIntegration\obj\Debug\StrataEmsIntegration.pdb

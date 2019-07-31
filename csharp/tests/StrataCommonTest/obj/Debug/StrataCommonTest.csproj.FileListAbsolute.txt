@@ -29,3 +29,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataCommonTest\bin\De
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataCommonTest\obj\Debug\StrataCommonTest.csprojResolveAssemblyReference.cache
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataCommonTest\obj\Debug\StrataCommonTest.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataCommonTest\obj\Debug\StrataCommonTest.pdb
+C:\Development\Strata\csharp\tests\StrataCommonTest\obj\Debug\StrataCommonTest.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\tests\StrataCommonTest\obj\Debug\StrataCommonTest.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\tests\StrataCommonTest\obj\Debug\StrataCommonTest.dll
+C:\Development\Strata\csharp\tests\StrataCommonTest\obj\Debug\StrataCommonTest.pdb

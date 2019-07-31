@@ -11,24 +11,30 @@
 		package: nuget pack Strata.nuspec
 		install: nuget install Strata -Version 1.0.0 -Source {full path to directory containing Strata.1.0.0.nupkg} -OutputDirectory {full path to install directory}
 		</releaseNotes>
-		<copyright>Copyright 2015</copyright>
+		<copyright>Copyright 2017</copyright>
 		<tags></tags>
 
 		<dependencies>
-			<dependency id="Disruptor" version="2.0"/>
+			<dependency id="Disruptor" version="3.3.7.0"/>
+			<dependency id="Ninject" version="3.3.4.0"/>
+			<dependency id="Ninject.Web.Common" version="3.3.0.0"/>
+			<dependency id="NLog" version="4.0.0.0"/>
+			<dependency id="SystemEx.Injection" version="1.0.0"/>
 			<dependency id="Unity" version="3.5.1404"/>
 			<dependency id="Unity.Interception" version="3.5.1404"/>
 			<dependency id="EntityFramework" version="6.1.3"/>
-			<dependency id="EnterpriseLibrary.Logging" version="6.0.1304"/>
 			<dependency id="Iesi.Collections" version="4.0.1.4000"/>
 			<dependency id="NHibernate" version="4.0.4.4000"/>
 			<dependency id="NHibernate.Caches.SysCache2" version="4.0.0.4000"/>
+            
+            <!--
 			<dependency id="Prism.Mvvm" version="1.1.1"/>
 			<dependency id="Prism.PubSubEvents" version="1.1.2"/>
 			<dependency id="Prism.Interactivity" version="5.0.0"/>
 			<dependency id="Prism.Composition" version="5.0.0"/>
 			<dependency id="Prism.UnityExtensions" version="5.0.1"/>
 			<dependency id="CommonServiceLocator" version="1.3.0"/>
+            -->
 		</dependencies>
 		
 		<frameworkAssemblies>
@@ -46,8 +52,10 @@
 		</frameworkAssemblies>
 	</metadata>
 	<files>
-		<file src="components\StrataCommon\bin\Debug\StrataCommon.dll" target="lib\net45\Debug" /> 
-		<file src="components\StrataCommon\bin\Debug\StrataCommon.pdb" target="lib\net45\Debug" /> 
+		<file src="components\Strata.Foundation\bin\Debug\Strata.Foundation.dll" target="lib\net45\Debug" /> 
+		<file src="components\Strata.Foundation\bin\Debug\Strata.Foundation.pdb" target="lib\net45\Debug" /> 
+        
+        <!--
 		<file src="components\StrataAdministration\bin\Debug\StrataAdministration.dll" target="lib\net45\Debug" /> 
 		<file src="components\StrataAdministration\bin\Debug\StrataAdministration.pdb" target="lib\net45\Debug" /> 
 		<file src="components\StrataIntegration\bin\Debug\StrataIntegration.dll" target="lib\net45\Debug" /> 
@@ -68,8 +76,11 @@
 		<file src="components\StrataClient\bin\Debug\StrataClient.pdb" target="lib\net45\Debug" /> 
 		<file src="components\StrataServer\bin\Debug\StrataServer.dll" target="lib\net45\Debug" /> 
 		<file src="components\StrataServer\bin\Debug\StrataServer.pdb" target="lib\net45\Debug" /> 
-
-		<file src="components\StrataCommon\bin\Release\StrataCommon.dll" target="lib\net45\Release" /> 
+        -->
+        
+		<file src="components\Strata.Foundation\bin\Release\Strata.Foundation.dll" target="lib\net45\Release" /> 
+        
+        <!--
 		<file src="components\StrataAdministration\bin\Release\StrataAdministration.dll" target="lib\net45\Release" /> 
 		<file src="components\StrataIntegration\bin\Release\StrataIntegration.dll" target="lib\net45\Release" /> 
 		<file src="components\StrataEmsIntegration\bin\Release\StrataEmsIntegration.dll" target="lib\net45\Release" /> 
@@ -80,6 +91,7 @@
 		<file src="components\StrataFlatFilePersistence\bin\Release\StrataFlatFilePersistence.dll" target="lib\net45\Release" /> 
 		<file src="components\StrataClient\bin\Release\StrataClient.dll" target="lib\net45\Release" /> 
 		<file src="components\StrataServer\bin\Release\StrataServer.dll" target="lib\net45\Release" /> 
+        -->
 		
 	</files>
 </package>

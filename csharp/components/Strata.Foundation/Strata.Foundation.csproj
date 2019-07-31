@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C3757BE9-DB8F-4484-BD04-B35050D654A5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Strata.Foundation</RootNamespace>
+    <AssemblyName>Strata.Foundation</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Disruptor, Version=3.3.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Disruptor.3.3.7\lib\net45\Disruptor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.Web.Common.3.3.0\lib\net45\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="SystemEx.Injection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SystemEx.Injection.1.0.0\lib\net45\Debug\SystemEx.Injection.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bootstrap\AbstractApplicationFactory{M,C}.cs" />
+    <Compile Include="Bootstrap\AbstractApplicationFactory.cs" />
+    <Compile Include="Bootstrap\BootstrapModule.cs" />
+    <Compile Include="Bootstrap\Bootstrapper{M,C}.cs" />
+    <Compile Include="Bootstrap\Bootstrapper.cs" />
+    <Compile Include="Bootstrap\IApplicationFactory{M,C}.cs" />
+    <Compile Include="Bootstrap\IApplicationFactory.cs" />
+    <Compile Include="Bootstrap\IBootstrapper{M,C}.cs" />
+    <Compile Include="Bootstrap\IBootstrapper.cs" />
+    <Compile Include="Bootstrap\IStartStopController.cs" />
+    <Compile Include="Bootstrap\NullStartStopController.cs" />
+    <Compile Include="Decoration\Decorator.cs" />
+    <Compile Include="Decoration\DecoratorFactory.cs" />
+    <Compile Include="Decoration\IDecoratorFactory.cs" />
+    <Compile Include="Email\EmailAttachment.cs" />
+    <Compile Include="Email\EmailMessage.cs" />
+    <Compile Include="Email\IEmailAttachment.cs" />
+    <Compile Include="Email\IEmailMessage.cs" />
+    <Compile Include="Email\IEmailSession.cs" />
+    <Compile Include="Email\SmtpEmailSession.cs" />
+    <Compile Include="Injection\AbstractBinder.cs" />
+    <Compile Include="Injection\AbstractModule.cs" />
+    <Compile Include="Injection\DecoratedContainer.cs" />
+    <Compile Include="Injection\DecoratorMap.cs" />
+    <Compile Include="Injection\IBinder.cs" />
+    <Compile Include="Injection\IBinding.cs" />
+    <Compile Include="Injection\IBindingBuilder.cs" />
+    <Compile Include="Injection\IContainer.cs" />
+    <Compile Include="Injection\IContainerHolder.cs" />
+    <Compile Include="Injection\IDecoratorMap.cs" />
+    <Compile Include="Injection\IKeyBindingBuilder.cs" />
+    <Compile Include="Injection\IModule.cs" />
+    <Compile Include="Injection\IModuleAdapter.cs" />
+    <Compile Include="Injection\IScopeBindingBuilder.cs" />
+    <Compile Include="Injection\ISourceBindingBuilder.cs" />
+    <Compile Include="Injection\FuncBasedProvider.cs" />
+    <Compile Include="Injection\ProviderBasedBinder.cs" />
+    <Compile Include="Injection\SingletonScope.cs" />
+    <Compile Include="Injection\RequestScope.cs" />
+    <Compile Include="Injection\NullScope.cs" />
+    <Compile Include="Injection\TargetBasedBinder.cs" />
+    <Compile Include="Injection\ThreadScope.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\NlogLogger.cs" />
+    <Compile Include="Logging\NullLogger.cs" />
+    <Compile Include="Logging\TextWriterLogger.cs" />
+    <Compile Include="Mapper\IObjectMapper.cs" />
+    <Compile Include="Mapper\IsoDateConverter.cs" />
+    <Compile Include="Mapper\JsonObjectMapper.cs" />
+    <Compile Include="ProducerConsumer\AbstractActiveProducer.cs" />
+    <Compile Include="ProducerConsumer\AbstractConsumer.cs" />
+    <Compile Include="ProducerConsumer\AbstractDispatcher.cs" />
+    <Compile Include="ProducerConsumer\AbstractProducer.cs" />
+    <Compile Include="ProducerConsumer\BlockingQueueDispatcher.cs" />
+    <Compile Include="ProducerConsumer\BlockingQueueProcessor.cs" />
+    <Compile Include="ProducerConsumer\DispatchKind.cs" />
+    <Compile Include="ProducerConsumer\DisruptorDispatcher.cs" />
+    <Compile Include="ProducerConsumer\DisruptorEventHandler.cs" />
+    <Compile Include="ProducerConsumer\DisruptorExceptionHandler.cs" />
+    <Compile Include="ProducerConsumer\Event.cs" />
+    <Compile Include="ProducerConsumer\IConsumer.cs" />
+    <Compile Include="ProducerConsumer\IDispatcher.cs" />
+    <Compile Include="ProducerConsumer\IExceptionHandler.cs" />
+    <Compile Include="ProducerConsumer\IProducer.cs" />
+    <Compile Include="ProducerConsumer\ISelector.cs" />
+    <Compile Include="ProducerConsumer\NullExceptionHandler.cs" />
+    <Compile Include="ProducerConsumer\PrintStackTraceExceptionHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\IObjectReader.cs" />
+    <Compile Include="Serialization\IObjectWriter.cs" />
+    <Compile Include="Serialization\ISerializable.cs" />
+    <Compile Include="Serialization\SerializationException.cs" />
+    <Compile Include="Task\AbstractActiveTaskProducer.cs" />
+    <Compile Include="Task\AbstractTask.cs" />
+    <Compile Include="Task\AbstractTaskProducer.cs" />
+    <Compile Include="Task\IExceptionHandler.cs" />
+    <Compile Include="Task\ITask.cs" />
+    <Compile Include="Task\ITaskConsumer.cs" />
+    <Compile Include="Task\ITaskDispatcher.cs" />
+    <Compile Include="Task\ITaskProducer.cs" />
+    <Compile Include="Task\ITaskSelector.cs" />
+    <Compile Include="Task\TaskBlockingQueueDispatcher.cs" />
+    <Compile Include="Task\TaskConsumer.cs" />
+    <Compile Include="Task\TaskDisruptorDispatcher.cs" />
+    <Compile Include="Transfer\ServiceReply.cs" />
+    <Compile Include="Transfer\ServiceRequest.cs" />
+    <Compile Include="Utility\AtomicBoolean.cs" />
+    <Compile Include="Utility\AtomicLong.cs" />
+    <Compile Include="Utility\CopyExtension.cs" />
+    <Compile Include="Utility\DateTimeExtension.cs" />
+    <Compile Include="Utility\DictionaryExtension.cs" />
+    <Compile Include="Utility\HashCodeBuilder.cs" />
+    <Compile Include="Utility\ICopyable.cs" />
+    <Compile Include="Utility\IMultiMap.cs" />
+    <Compile Include="Utility\ListExtension.cs" />
+    <Compile Include="Utility\MappableDictionary.cs" />
+    <Compile Include="Utility\MappableList.cs" />
+    <Compile Include="Utility\MappableSet.cs" />
+    <Compile Include="Utility\MultiMap.cs" />
+    <Compile Include="Utility\SetExtension.cs" />
+    <Compile Include="Value\AbstractCurrencyExchanger.cs" />
+    <Compile Include="Value\Currency.cs" />
+    <Compile Include="Value\CurrencyManager.cs" />
+    <Compile Include="Value\Date.cs" />
+    <Compile Include="Value\DefaultCurrencyProvider.cs" />
+    <Compile Include="Value\HashedString.cs" />
+    <Compile Include="Value\PhoneNumber.cs" />
+    <Compile Include="Value\EmailAddress.cs" />
+    <Compile Include="Value\ICurrencyExchanger.cs" />
+    <Compile Include="Value\ICurrencyProvider.cs" />
+    <Compile Include="Value\Money.cs" />
+    <Compile Include="Value\MoneyCalculator.cs" />
+    <Compile Include="Value\PersonName.cs" />
+    <Compile Include="Value\PostalAddress.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

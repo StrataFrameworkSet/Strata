@@ -35,9 +35,9 @@ import java.lang.annotation.Annotation;
  */
 public 
 interface IScopeBindingBuilder<T>
-    extends IBindingBuilder<T>
+    extends IKeyBindingBuilder<T>
 {
-    public IBindingBuilder<T>
+    public IKeyBindingBuilder<T>
     withScope(Class<? extends Annotation> scope);
 }
 

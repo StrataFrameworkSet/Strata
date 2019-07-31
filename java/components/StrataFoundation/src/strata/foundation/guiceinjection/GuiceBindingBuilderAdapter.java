@@ -43,7 +43,7 @@ import strata.foundation.injection.ISourceBindingBuilder;
  */
 public 
 class GuiceBindingBuilderAdapter<T>
-    implements IKeyBindingBuilder<T>
+    implements ISourceBindingBuilder<T>
 {
     private final BindingBuilder<T>   itsAdaptee;
     private final GuiceScopeConverter itsConverter;
@@ -100,7 +100,7 @@ class GuiceBindingBuilderAdapter<T>
      * {@inheritDoc} 
      */
     @Override
-    public IBindingBuilder<T> 
+    public IScopeBindingBuilder<T> 
     toInstance(T instance)
     {
         itsAdaptee.toInstance( instance );
@@ -111,7 +111,7 @@ class GuiceBindingBuilderAdapter<T>
      * {@inheritDoc} 
      */
     @Override
-    public IBindingBuilder<T> 
+    public IKeyBindingBuilder<T> 
     withScope(Class<? extends Annotation> scope)
     {
         itsAdaptee.in( itsConverter.convert( scope ) );
@@ -132,7 +132,7 @@ class GuiceBindingBuilderAdapter<T>
      * {@inheritDoc} 
      */
     @Override
-    public ISourceBindingBuilder<T> 
+    public IBindingBuilder<T> 
     withKey(String key)
     {
         return 
@@ -144,7 +144,7 @@ class GuiceBindingBuilderAdapter<T>
      * {@inheritDoc} 
      */
     @Override
-    public <A extends Annotation> ISourceBindingBuilder<T> 
+    public <A extends Annotation> IBindingBuilder<T> 
     withKey(Class<A> key)
     {
         return 
@@ -156,7 +156,7 @@ class GuiceBindingBuilderAdapter<T>
      * {@inheritDoc} 
      */
     @Override
-    public <A extends Annotation> ISourceBindingBuilder<T> 
+    public <A extends Annotation> IBindingBuilder<T> 
     withKey(A key)
     {
         return 

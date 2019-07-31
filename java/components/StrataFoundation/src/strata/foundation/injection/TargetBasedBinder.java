@@ -46,7 +46,7 @@ class TargetBasedBinder<T>extends AbstractBinder<T>
      */
     public 
     TargetBasedBinder(
-        IKeyBindingBuilder<T>       builder,
+        ISourceBindingBuilder<T>       builder,
         Class<? extends T>          target,
         Class<? extends Annotation> scope)
     {

@@ -28,7 +28,7 @@ import strata1.client.helloworld.IHelloWorldController;
 import javax.inject.Inject;
 import strata.foundation.bootstrap.IStartStopController;
 import strata.foundation.injection.IContainer;
-import strata.presentation.controller.ILoginController;
+import strata.presentation.login.ILoginController;
 import strata.presentation.shell.IDispatcher;
 
 /****************************************************************************

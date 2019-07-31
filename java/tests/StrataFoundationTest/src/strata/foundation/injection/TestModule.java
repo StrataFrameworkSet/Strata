@@ -55,12 +55,12 @@ class TestModule
     initialize()
     {
         bindType( String.class )
-            .withKey( "test1" )
-            .toInstance( "XXXXXXX" );
+            .toInstance( "XXXXXXX" )
+            .withKey( "test1" );
         
         bindType( String.class )
-            .withKey( "test2" )
-            .toInstance( "YYYYYYY" );
+            .toInstance( "YYYYYYY" )
+            .withKey( "test2" );
         
         bindType( Integer.class ).toInstance( new Integer(12345) );
         

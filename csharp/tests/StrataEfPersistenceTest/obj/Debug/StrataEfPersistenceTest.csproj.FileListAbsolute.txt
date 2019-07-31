@@ -46,3 +46,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEfPersistenceTest
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEfPersistenceTest\obj\Debug\StrataEfPersistenceTest.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEfPersistenceTest\obj\Debug\StrataEfPersistenceTest.pdb
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataEfPersistenceTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Development\Strata\csharp\tests\StrataEfPersistenceTest\obj\Debug\StrataEfPersistenceTest.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\tests\StrataEfPersistenceTest\obj\Debug\StrataEfPersistenceTest.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\tests\StrataEfPersistenceTest\obj\Debug\StrataEfPersistenceTest.dll
+C:\Development\Strata\csharp\tests\StrataEfPersistenceTest\obj\Debug\StrataEfPersistenceTest.pdb

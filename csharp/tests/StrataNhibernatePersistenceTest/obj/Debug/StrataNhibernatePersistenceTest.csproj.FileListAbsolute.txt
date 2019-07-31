@@ -44,3 +44,7 @@ C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataNhibernatePersist
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataNhibernatePersistenceTest\bin\Debug\StrataNhibernatePersistenceTest.dll
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataNhibernatePersistenceTest\bin\Debug\StrataNhibernatePersistenceTest.pdb
 C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataNhibernatePersistenceTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Development\Strata\csharp\tests\StrataNhibernatePersistenceTest\obj\Debug\StrataNhibernatePersistenceTest.csprojResolveAssemblyReference.cache
+C:\Development\Strata\csharp\tests\StrataNhibernatePersistenceTest\obj\Debug\StrataNhibernatePersistenceTest.csproj.CoreCompileInputs.cache
+C:\Development\Strata\csharp\tests\StrataNhibernatePersistenceTest\obj\Debug\StrataNhibernatePersistenceTest.dll
+C:\Development\Strata\csharp\tests\StrataNhibernatePersistenceTest\obj\Debug\StrataNhibernatePersistenceTest.pdb

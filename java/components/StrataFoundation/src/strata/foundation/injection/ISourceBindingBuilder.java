@@ -46,7 +46,7 @@ interface ISourceBindingBuilder<T>
     public <P extends Provider<? extends T>> IScopeBindingBuilder<T>
     toProvider(Class<P> provider);
         
-    public IBindingBuilder<T>
+    public IScopeBindingBuilder<T>
     toInstance(T instance);
 
 }

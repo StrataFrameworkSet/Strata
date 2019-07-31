@@ -1,6 +1,6 @@
 //  ##########################################################################
 //  # File Name: EmsMessageListener.cs
-//  # Copyright: 2012, Sapientia Systems, LLC.
+//  # Copyright: 2011-2018, Sapientia Systems, LLC.
 //  ##########################################################################
 
 using Strata.Integration.Messaging;
