@@ -1,4 +1,0 @@
-C:\Development\Workspaces\Xwing\csharp\tests\XwingEmsIntegrationTest\bin\Release\XwingEmsIntegrationTest.dll
-C:\Development\Workspaces\Xwing\csharp\tests\XwingEmsIntegrationTest\bin\Release\XwingEmsIntegrationTest.pdb
-C:\Development\Workspaces\Xwing\csharp\tests\XwingEmsIntegrationTest\obj\Release\XwingEmsIntegrationTest.dll
-C:\Development\Workspaces\Xwing\csharp\tests\XwingEmsIntegrationTest\obj\Release\XwingEmsIntegrationTest.pdb

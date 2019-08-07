@@ -1,5 +1,0 @@
-C:\Users\John\Workspaces\Xwing\csharp\tests\XwingServerTest\bin\Debug\XwingServerTest.dll
-C:\Users\John\Workspaces\Xwing\csharp\tests\XwingServerTest\bin\Debug\XwingServerTest.pdb
-C:\Users\John\Workspaces\Xwing\csharp\tests\XwingServerTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
-C:\Users\John\Workspaces\Xwing\csharp\tests\XwingServerTest\obj\Debug\XwingServerTest.dll
-C:\Users\John\Workspaces\Xwing\csharp\tests\XwingServerTest\obj\Debug\XwingServerTest.pdb

@@ -1,5 +1,0 @@
-C:\Users\John\Workspaces\Xwing\csharp\tests\XwingEmsIntegrationTest\bin\Debug\XwingEmsIntegrationTest.dll
-C:\Users\John\Workspaces\Xwing\csharp\tests\XwingEmsIntegrationTest\bin\Debug\XwingEmsIntegrationTest.pdb
-C:\Users\John\Workspaces\Xwing\csharp\tests\XwingEmsIntegrationTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
-C:\Users\John\Workspaces\Xwing\csharp\tests\XwingEmsIntegrationTest\obj\Debug\XwingEmsIntegrationTest.dll
-C:\Users\John\Workspaces\Xwing\csharp\tests\XwingEmsIntegrationTest\obj\Debug\XwingEmsIntegrationTest.pdb

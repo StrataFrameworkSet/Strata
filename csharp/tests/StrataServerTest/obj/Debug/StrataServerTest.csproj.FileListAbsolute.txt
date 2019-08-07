@@ -1,4 +1,0 @@
-C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataServerTest\bin\Debug\StrataServerTest.dll
-C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataServerTest\bin\Debug\StrataServerTest.pdb
-C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataServerTest\obj\Debug\StrataServerTest.dll
-C:\Users\John\Development\Workspaces\Strata\csharp\tests\StrataServerTest\obj\Debug\StrataServerTest.pdb

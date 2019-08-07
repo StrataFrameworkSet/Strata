@@ -1,3 +1,0 @@
-C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataServer\obj\Debug\StrataServer.csprojResolveAssemblyReference.cache
-C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataServer\obj\Debug\Strata.Server.Properties.Resources.resources
-C:\Users\John\Development\Workspaces\Strata\csharp\components\StrataServer\obj\Debug\StrataServer.csproj.GenerateResource.Cache
