@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Strata.Domain.HibernateTest" />
+        <module name="Strata.Client.KafkaTest" />
+        <module name="Strata.Domain.CoreTest" />
+        <module name="Strata.Application.Core" />
+        <module name="Strata.Domain.NettyTest" />
+        <module name="Strata.Foundation.Core" />
+        <module name="Strata.Domain.InMemory" />
+        <module name="Strata.Foundation.KafkaTest" />
+        <module name="Strata.Application.NettyTest" />
+        <module name="Strata.Application.VertxTest" />
+        <module name="Strata.CodeGen.Plugin" />
+        <module name="Strata.Client.CoreTest" />
+        <module name="Strata.Client.RestEasy" />
+        <module name="Strata.Domain.Hibernate" />
+        <module name="Strata.Client.RestEasyTest" />
+        <module name="Strata.Domain.VertxTest" />
+        <module name="Strata.Foundation.CoreTest" />
+        <module name="Strata.Client.Kafka" />
+        <module name="Strata.Application.Vertx" />
+        <module name="Strata.Domain.Vertx" />
+        <module name="Strata.Application.CoreTest" />
+        <module name="Strata.Domain.Core" />
+        <module name="Strata.Domain.InMemoryTest" />
+        <module name="Strata.Client.Core" />
+        <module name="Strata.Application.Netty" />
+        <module name="Strata.Domain.Netty" />
+        <module name="Strata.Foundation.Kafka" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Strata" target="12" />
+      <module name="Strata.Application.Core" target="12" />
+      <module name="Strata.Application.CoreTest" target="12" />
+      <module name="Strata.Application.Netty" target="12" />
+      <module name="Strata.Application.NettyTest" target="12" />
+      <module name="Strata.Application.Vertx" target="12" />
+      <module name="Strata.Application.VertxTest" target="12" />
+      <module name="Strata.Client.Core" target="12" />
+      <module name="Strata.Client.CoreTest" target="12" />
+      <module name="Strata.Client.Kafka" target="12" />
+      <module name="Strata.Client.KafkaTest" target="12" />
+      <module name="Strata.Client.RestEasy" target="12" />
+      <module name="Strata.Client.RestEasyTest" target="12" />
+      <module name="Strata.CodeGen.Plugin" target="12" />
+      <module name="Strata.Domain.Core" target="12" />
+      <module name="Strata.Domain.CoreTest" target="12" />
+      <module name="Strata.Domain.Hibernate" target="12" />
+      <module name="Strata.Domain.HibernateTest" target="12" />
+      <module name="Strata.Domain.InMemory" target="12" />
+      <module name="Strata.Domain.InMemoryTest" target="12" />
+      <module name="Strata.Domain.Netty" target="12" />
+      <module name="Strata.Domain.NettyTest" target="12" />
+      <module name="Strata.Domain.Vertx" target="12" />
+      <module name="Strata.Domain.VertxTest" target="12" />
+      <module name="Strata.Foundation.Core" target="12" />
+      <module name="Strata.Foundation.CoreTest" target="12" />
+      <module name="Strata.Foundation.Kafka" target="12" />
+      <module name="Strata.Foundation.KafkaTest" target="12" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
