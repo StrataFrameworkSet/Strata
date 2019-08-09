@@ -1,0 +1,23 @@
+//////////////////////////////////////////////////////////////////////////////
+// KafkaAvroEventPublisher.java
+//////////////////////////////////////////////////////////////////////////////
+
+package strata.foundation.kafka.event;
+
+import strata.foundation.core.event.IEventPublisher;
+
+import java.util.concurrent.Flow.Subscriber;
+
+public
+class KafkaAvroEventPublisher<E>
+    implements IEventPublisher<E>
+{
+    @Override
+    public void
+    subscribe(Subscriber<? super E> s)
+    {
+
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////
