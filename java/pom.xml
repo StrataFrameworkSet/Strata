@@ -43,6 +43,8 @@
         <module>Tests/Strata.Client.KafkaTest</module>
         <module>Tests/Strata.Client.RestEasyTest</module>
 
+        <module>Tests/Strata.TestsSuite.CommitStage</module>
+
         <module>Applications/Strata.CodeGen.Plugin</module>
     </modules>
 </project>
