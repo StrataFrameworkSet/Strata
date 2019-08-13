@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Foundation.Core/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Domain.Core/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Application.Core/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Client.Core/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Foundation.Kafka/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Domain.Hibernate/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Domain.InMemory/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Application.Vertx/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Application.Netty/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Domain.Vertx/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Domain.Netty/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Client.Kafka/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Client.RestEasy/pom.xml" />
+        <option value="$PROJECT_DIR$/Applications/Strata.CodeGen.Plugin/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Application.CoreTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Application.NettyTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Application.VertxTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Client.CoreTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Client.KafkaTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Client.RestEasyTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Domain.CoreTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Domain.HibernateTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Domain.InMemoryTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Domain.NettyTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Domain.VertxTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Foundation.CoreTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Foundation.KafkaTest/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" default="true" project-jdk-name="12" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
