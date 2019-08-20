@@ -29,6 +29,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -93,6 +96,18 @@ class SynchronizerTest
     @Test
     public void testUnlockFromWriting()
     {
+    }
+
+    @Test
+    public void
+    testJoin()
+        throws Exception
+    {
+        CompletionStage<String> stage =
+            CompletableFuture.supplyAsync(() -> "Hello");
+
+        assertEquals("Hello",stage.toCompletableFuture().join());
+        assertEquals("Hello",stage.toCompletableFuture().join());
     }
 
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class abstract="true" name="strata.domain.core.testdomain.IParty" table="Party">
+  <id column="PartyKey" name="PartyKey" type="java.lang.Long">
+   <generator class="native"/>
+  </id>
+  <version column="Version" generated="never" name="Version" type="java.lang.Integer"/>
+  <set name="ContactInformation" sort="unsorted" table="ContactInformation">
+   <key column="PartyKey"/>
+   <one-to-many class="strata.domain.core.testdomain.IContactInformation"/>
+  </set>
+  <joined-subclass
+   name="strata.domain.core.testdomain.IPerson" table="IPerson">
+   <key column="PartyKey"/>
+   <component class="strata.domain.core.testdomain.PersonName" name="Name">
+    <property column="FirstName" generated="never" lazy="false" name="FirstName"/>
+    <property column="MiddleName" generated="never" lazy="false" name="MiddleName"/>
+    <property column="LastName" generated="never" lazy="false" name="LastName"/>
+   </component>
+   <component class="strata.domain.core.testdomain.PersonAge" name="Age">
+    <property generated="never" lazy="false" name="DateOfBirth" column="DateOfBirth"/>
+   </component>
+   <joined-subclass
+    name="strata.domain.core.testdomain.Person" table="Person">
+    <key column="PartyKey"/>
+   </joined-subclass>
+   <query fetch-size="10" name="GetByName" read-only="true">select p from IPerson p where p.Name = :name</query>
+   <query fetch-size="100" name="GetAll" read-only="true">select p from IPerson p</query>
+  </joined-subclass>
+  <joined-subclass
+   name="strata.domain.core.testdomain.IOrganization" table="IOrganization">
+   <key column="PartyKey"/>
+   <property column="Name" generated="never" lazy="false" name="Name"/>
+   <set name="MemberIds" sort="unsorted" table="OrganizationMember">
+    <key column="PartyKey"/>
+    <element type="java.lang.Long">
+     <column name="MemberId"/>
+    </element>
+   </set>
+   <joined-subclass
+    name="strata.domain.core.testdomain.Organization" table="Organization">
+    <key column="PartyKey"/>
+   </joined-subclass>
+  </joined-subclass>
+ </class>
+</hibernate-mapping>

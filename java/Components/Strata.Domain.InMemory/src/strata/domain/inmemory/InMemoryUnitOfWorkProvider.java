@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Contains the shared lock and in-memory transactions used by related
@@ -49,12 +51,13 @@ public
 class InMemoryUnitOfWorkProvider 
 	implements IUnitOfWorkProvider
 {
-    private Map<EntityIdentifier,Object> itsEntities;
-	private InMemoryUnitOfWork                    itsUnitOfWork;
-	private INamedQueryMap                        itsNamedQueries;
+    private Map<EntityIdentifier,Object>         itsEntities;
+	private INamedQueryMap                       itsNamedQueries;
     private Map<Class<?>,IEntityReplicator<?,?>> itsReplicators;
-	private Map<Class<?>,IKeyRetriever<?,?>> itsRetrievers;
-	
+	private Map<Class<?>,IKeyRetriever<?,?>>     itsRetrievers;
+	private ExecutorService                      itsExecutor;
+    private InMemoryUnitOfWork                   itsUnitOfWork;
+
 	/************************************************************************
 	 * Creates a new InMemoryUnitOfWorkProvider. 
 	 *
@@ -64,10 +67,11 @@ class InMemoryUnitOfWorkProvider
 	{
 		super();
         itsEntities     = new HashMap<>();
-		itsUnitOfWork   = new InMemoryUnitOfWork(this,itsEntities);
 		itsNamedQueries = new NamedQueryMap();
 		itsReplicators  = new HashMap<>();
 		itsRetrievers   = new HashMap<>();
+		itsExecutor     = Executors.newSingleThreadExecutor();
+        itsUnitOfWork   = new InMemoryUnitOfWork(this,itsEntities);
 	}
 
 	/************************************************************************
@@ -77,10 +81,17 @@ class InMemoryUnitOfWorkProvider
     public CompletionStage<? extends IUnitOfWork>
     getUnitOfWork()
     {
-        if ( itsUnitOfWork == null || !itsUnitOfWork.isActive() )
-            itsUnitOfWork = new InMemoryUnitOfWork(this,itsEntities);
-        
-        return CompletableFuture.completedFuture(itsUnitOfWork);
+        return
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    if ( itsUnitOfWork == null || !itsUnitOfWork.isActive() )
+                        itsUnitOfWork = new InMemoryUnitOfWork(this,itsEntities);
+
+                    return itsUnitOfWork;
+                },
+                itsExecutor);
+
     }
 
     /************************************************************************
@@ -90,8 +101,14 @@ class InMemoryUnitOfWorkProvider
     public CompletableFuture<Void>
     clearUnitOfWork()
     {
-        itsUnitOfWork = null;
-        return CompletableFuture.completedFuture(null);
+        return
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    itsUnitOfWork = null;
+                    return null;
+                },
+                itsExecutor);
     }
 
     /************************************************************************
@@ -202,6 +219,19 @@ class InMemoryUnitOfWorkProvider
     getRetriever(Class<K> keyType,Class<T> entityType)
     {
         return (IKeyRetriever<K,T>)itsRetrievers.get( entityType );
+    }
+
+    /************************************************************************
+     *
+     * @return
+     */
+    public ExecutorService
+    getExecutor()
+    {
+        if (itsExecutor == null)
+            throw new IllegalStateException("executor must be non-null");
+
+        return itsExecutor;
     }
 }
 

@@ -39,6 +39,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutorService;
 
 
 /****************************************************************************
@@ -56,6 +57,7 @@ class InMemoryUnitOfWork
     private Map<EntityIdentifier,Object> itsUpdated;
     private Map<EntityIdentifier,Object> itsRemoved;
     private Map<EntityIdentifier,Object> itsEntities;
+    private final ExecutorService        itsExecutor;
     
     /************************************************************************
      * Creates a new {@code InMemoryUnitOfWork}. 
@@ -67,10 +69,11 @@ class InMemoryUnitOfWork
         Map<EntityIdentifier,Object> entities)
     {
         super( provider );
-        itsInserted  = new HashMap<>();
-        itsUpdated   = new HashMap<>();
-        itsRemoved   = new HashMap<>();
-        itsEntities  = entities;
+        itsInserted = new HashMap<>();
+        itsUpdated  = new HashMap<>();
+        itsRemoved  = new HashMap<>();
+        itsEntities = entities;
+        itsExecutor = provider.getExecutor();
     }
 
     /************************************************************************
@@ -89,38 +92,47 @@ class InMemoryUnitOfWork
     protected <K extends Serializable,E> CompletionStage<E>
     doInsertNew(Class<K> keyType,Class<E> entityType,E newEntity)
     {
-        E                insertedEntity = null;
-        K                key            = null;
-        EntityIdentifier id             = null;
+        return
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    System.out.println("InMemoryUnitOfWork.doInsertNew: " + Thread.currentThread().getName());
+                    E                insertedEntity = null;
+                    K                key            = null;
+                    EntityIdentifier id             = null;
 
-        try
-        {
-            insertedEntity =
-                getReplicator(keyType,entityType).replicate(newEntity);
-            key =
-                getRetriever(keyType,entityType).getKey(insertedEntity);
-            id = new EntityIdentifier(entityType,key);
+                    try
+                    {
+                        insertedEntity =
+                            getReplicator(keyType,entityType).replicate(newEntity);
+                        key =
+                            getRetriever(keyType,entityType).getKey(insertedEntity);
+                        id = new EntityIdentifier(entityType,key);
 
-            if (itsUpdated.containsKey(id))
-                throw new IllegalArgumentException("entity is already updated");
+                        if (itsUpdated.containsKey(id))
+                            throw new IllegalArgumentException("entity is already updated");
 
-            if (itsRemoved.containsKey(id))
-                throw new IllegalArgumentException("entity is already removed");
+                        if (itsRemoved.containsKey(id))
+                            throw new IllegalArgumentException("entity is already removed");
 
-            if (
-                itsInserted.containsKey(id) ||
-                    doHasExisting(entityType,key).toCompletableFuture().join())
-                throw new IllegalArgumentException("entity is already inserted");
+                        if (
+                            itsInserted.containsKey(id) ||
+                                doHasExistingInternal(entityType,key))
+                            throw new IllegalArgumentException("entity is already inserted");
 
-            itsInserted.put(id,insertedEntity);
-            return CompletableFuture.completedFuture(insertedEntity);
-        }
-        catch (Exception e)
-        {
-            return
-                CompletableFuture.failedFuture(
-                    new InsertFailedException(e));
-        }
+                        itsInserted.put(id,insertedEntity);
+                        return insertedEntity;
+                    }
+                    catch (Exception e)
+                    {
+                        throw
+                            new CompletionException(
+                                new InsertFailedException(e));
+                    }
+
+                },
+                itsExecutor);
+
     }
 
     /************************************************************************
@@ -130,35 +142,42 @@ class InMemoryUnitOfWork
     protected <K extends Serializable,E> CompletionStage<E>
     doUpdateExisting(Class<K> keyType,Class<E> entityType,E existingEntity)
     {
-        E                updatedEntity = null;
-        K                key           = null;
-        EntityIdentifier id            = null;
+        return
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    System.out.println("InMemoryUnitOfWork.doUpdateExisting: " + Thread.currentThread().getName());
+                    E                updatedEntity = null;
+                    K                key           = null;
+                    EntityIdentifier id            = null;
 
-        try
-        {
-            updatedEntity =
-                getReplicator(keyType,entityType).replicate(existingEntity);
-            key =
-                getRetriever(keyType,entityType).getKey(updatedEntity);
-            id = new EntityIdentifier(entityType,key);
+                    try
+                    {
+                        updatedEntity =
+                            getReplicator(keyType,entityType).replicate(existingEntity);
+                        key =
+                            getRetriever(keyType,entityType).getKey(updatedEntity);
+                        id = new EntityIdentifier(entityType,key);
 
-            if (itsRemoved.containsKey(id))
-                throw new IllegalArgumentException("entity is already removed");
+                        if (itsRemoved.containsKey(id))
+                            throw new IllegalArgumentException("entity is already removed");
 
-            if (
-                !itsInserted.containsKey(id) &&
-                    !doHasExisting(entityType,key).toCompletableFuture().join())
-                throw new IllegalArgumentException("entity does not exist");
+                        if (
+                            !itsInserted.containsKey(id) &&
+                                !doHasExistingInternal(entityType,key))
+                            throw new IllegalArgumentException("entity does not exist");
 
-            itsUpdated.put(new EntityIdentifier(entityType,key),updatedEntity);
-            return CompletableFuture.completedFuture(updatedEntity);
-        }
-        catch (Exception e)
-        {
-            return
-                CompletableFuture.failedFuture(
-                    new UpdateFailedException(e));
-        }
+                        itsUpdated.put(new EntityIdentifier(entityType,key),updatedEntity);
+                        return updatedEntity;
+                    }
+                    catch (Exception e)
+                    {
+                        throw
+                            new CompletionException(
+                                new UpdateFailedException(e));
+                    }
+                },
+                itsExecutor);
     }
 
     /************************************************************************
@@ -168,29 +187,37 @@ class InMemoryUnitOfWork
     protected <K extends Serializable,E> CompletionStage<Void>
     doRemoveExisting(Class<K> keyType,Class<E> entityType,E existingEntity)
     {
-        K                key = null;
-        EntityIdentifier id  = null;
+        return
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    System.out.println("InMemoryUnitOfWork.doRemoveExisting: " + Thread.currentThread().getName());
+                    K                key = null;
+                    EntityIdentifier id  = null;
 
-        try
-        {
-            key =
-                getRetriever(keyType,entityType).getKey(existingEntity);
-            id = new EntityIdentifier(entityType,key);
+                    try
+                    {
+                        key =
+                            getRetriever(keyType,entityType).getKey(existingEntity);
+                        id = new EntityIdentifier(entityType,key);
 
-            if (
-                !itsInserted.containsKey(id) &&
-                    !doHasExisting(entityType,key).toCompletableFuture().join())
-                throw new IllegalArgumentException("entity does not exist");
+                        if (
+                            !itsInserted.containsKey(id) &&
+                                !doHasExistingInternal(entityType,key))
+                            throw new IllegalArgumentException("entity does not exist");
 
-            itsRemoved.put(id,existingEntity);
-            return CompletableFuture.completedFuture(null);
-        }
-        catch (Exception e)
-        {
-            return
-                CompletableFuture.failedFuture(
-                    new RemoveFailedException(e));
-        }
+                        itsRemoved.put(id,existingEntity);
+                        return null;
+                    }
+                    catch (Exception e)
+                    {
+                        throw
+                            new CompletionException(
+                                new RemoveFailedException(e));
+                    }
+
+                },
+                itsExecutor);
     }
 
     /************************************************************************
@@ -200,31 +227,38 @@ class InMemoryUnitOfWork
     protected <K extends Serializable,E> CompletionStage<Optional<E>>
     doGetExisting(Class<E> type,K key)
     {
-        EntityIdentifier id = new EntityIdentifier(type,key);
-        
-        if ( itsRemoved.containsKey( id ) )
-            return
-                CompletableFuture.completedFuture(Optional.empty());
-        
-        if ( itsUpdated.containsKey( id ) )
-            return
-                CompletableFuture.completedFuture(
-                    Optional.ofNullable(type.cast(itsUpdated.get(id))));
-        
-        if ( itsInserted.containsKey( id ) )
-            return
-                CompletableFuture.completedFuture(
-                    Optional.ofNullable(type.cast(itsInserted.get(id))));
-        
-        if ( itsEntities.containsKey( id ) )
-            return
-                CompletableFuture.completedFuture(
-                    Optional.ofNullable(type.cast(itsEntities.get(id))));
-        
         return
-            CompletableFuture.completedFuture(
-                Optional.ofNullable(
-                    getCandidates(key.getClass(),type).get(key)));
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    System.out.println("InMemoryUnitOfWork.doGetExisting: " + Thread.currentThread().getName());
+                    EntityIdentifier id = new EntityIdentifier(type,key);
+
+                    if ( itsRemoved.containsKey( id ) )
+                        return Optional.empty();
+
+                    if ( itsUpdated.containsKey( id ) )
+                        return
+                            Optional.ofNullable(
+                                type.cast(itsUpdated.get(id)));
+
+                    if ( itsInserted.containsKey( id ) )
+                        return
+                            Optional.ofNullable(
+                                type.cast(itsInserted.get(id)));
+
+                    if ( itsEntities.containsKey( id ) )
+                        return
+                            Optional.ofNullable(
+                                type.cast(itsEntities.get(id)));
+
+                    return
+                        Optional.ofNullable(
+                            getCandidates(key.getClass(),type).get(key));
+
+                },
+                itsExecutor);
+
     }
 
     /************************************************************************
@@ -235,10 +269,17 @@ class InMemoryUnitOfWork
     doGetNamedQuery(Class<E> type,String queryName)
     {
         return
-            CompletableFuture.completedFuture(
-                Optional.ofNullable(
-                    ((InMemoryUnitOfWorkProvider)getProvider())
-                        .getNamedQuery(type,queryName)));
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    System.out.println("InMemoryUnitOfWork.doGetNamedQuery: " + Thread.currentThread().getName());
+
+                    return
+                        Optional.ofNullable(
+                            ((InMemoryUnitOfWorkProvider)getProvider())
+                                .getNamedQuery(type,queryName));
+                },
+                itsExecutor);
     }
 
     /************************************************************************
@@ -248,23 +289,31 @@ class InMemoryUnitOfWork
     protected <K extends Serializable,E> CompletionStage<Boolean>
     doHasExisting(Class<E> type,K key)
     {
-        EntityIdentifier id = new EntityIdentifier(type,key);
-        
-        if ( itsRemoved.containsKey( id ) )
-            return CompletableFuture.completedFuture(false);
-        
-        if ( itsUpdated.containsKey( id ) )
-            return CompletableFuture.completedFuture(true);
-        
-        if ( itsInserted.containsKey( id ) )
-            return CompletableFuture.completedFuture(true);
-        
-        if ( itsEntities.containsKey( id ) )
-            return CompletableFuture.completedFuture(true);
-        
         return
             CompletableFuture.supplyAsync(
-                () -> getCandidates(key.getClass(),type).containsKey(key) );
+                () ->
+                {
+                    System.out.println("InMemoryUnitOfWork.doHasExisting: " + Thread.currentThread().getName());
+                    EntityIdentifier id = new EntityIdentifier(type,key);
+
+                    if ( itsRemoved.containsKey( id ) )
+                        return false;
+
+                    if ( itsUpdated.containsKey( id ) )
+                        return true;
+
+                    if ( itsInserted.containsKey( id ) )
+                        return true;
+
+                    if ( itsEntities.containsKey( id ) )
+                        return true;
+
+                    return
+                        getCandidates(key.getClass(),type)
+                            .containsKey(key);
+
+                },
+                itsExecutor);
     }
 
     /************************************************************************
@@ -276,7 +325,12 @@ class InMemoryUnitOfWork
     {
         return
             CompletableFuture.supplyAsync(
-                () -> doGetNamedQuery(type,queryName) != null);
+                () ->
+                {
+                    System.out.println("InMemoryUnitOfWork.doHasNamedQuery: " + Thread.currentThread().getName());
+                    return doGetNamedQuery(type,queryName) != null;
+                },
+                itsExecutor);
     }
 
     /************************************************************************
@@ -290,6 +344,7 @@ class InMemoryUnitOfWork
             CompletableFuture.supplyAsync(
                 () ->
                 {
+                    System.out.println("InMemoryUnitOfWork.doCommit: " + Thread.currentThread().getName());
                     try
                     {
                         commitInserted();
@@ -303,7 +358,8 @@ class InMemoryUnitOfWork
                             new CompletionException(
                                 new CommitFailedException(cause));
                     }
-                });
+                },
+                itsExecutor);
     }
 
     /************************************************************************
@@ -317,11 +373,13 @@ class InMemoryUnitOfWork
             CompletableFuture.supplyAsync(
                 () ->
                 {
+                    System.out.println("InMemoryUnitOfWork.doRollback: " + Thread.currentThread().getName());
                     itsInserted.clear();
                     itsUpdated.clear();
                     itsRemoved.clear();
                     return null;
-                });
+                },
+                itsExecutor);
     }
 
 
@@ -427,6 +485,33 @@ class InMemoryUnitOfWork
         
         return candidates;
     }
+
+
+    /************************************************************************
+     * {@inheritDoc}
+     */
+    protected <E,K> boolean
+    doHasExistingInternal(Class<E> type,K key)
+    {
+        EntityIdentifier id = new EntityIdentifier(type,key);
+
+        if ( itsRemoved.containsKey( id ) )
+            return false;
+
+        if ( itsUpdated.containsKey( id ) )
+            return true;
+
+        if ( itsInserted.containsKey( id ) )
+            return true;
+
+        if ( itsEntities.containsKey( id ) )
+            return true;
+
+        return
+            getCandidates(key.getClass(),type)
+                .containsKey(key);
+    }
+
 }
 
 // ##########################################################################
