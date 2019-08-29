@@ -6,6 +6,8 @@ package strata.foundation.core.utility;
 
 import strata.foundation.core.exception.MultiCauseException;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Optional;
 import java.util.concurrent.CompletionException;
 import java.util.function.Consumer;
@@ -15,12 +17,16 @@ class CompletionContext<T>
 {
     private Optional<T>         itsResult;
     private Optional<Throwable> itsException;
+    private Instant             itsStart;
+    private Instant             itsStop;
 
     public
     CompletionContext(T result,Throwable exception)
     {
         itsResult    = Optional.ofNullable(result);
         itsException = Optional.ofNullable(exception);
+        itsStart     = Instant.now();
+        itsStop      = null;
     }
 
     public
@@ -78,6 +84,12 @@ class CompletionContext<T>
         return hasException() ? itsException.get() : null;
     }
 
+    public Duration
+    getCompletionTime()
+    {
+        return Duration.between(itsStart,itsStop);
+    }
+
     public boolean
     hasResult()
     {
@@ -88,6 +100,20 @@ class CompletionContext<T>
     hasException()
     {
         return itsException.isPresent();
+    }
+
+    public CompletionContext<T>
+    start()
+    {
+        itsStart = Instant.now();
+        return this;
+    }
+
+    public CompletionContext<T>
+    stop()
+    {
+        itsStop = Instant.now();
+        return this;
     }
 
     public CompletionContext<T>

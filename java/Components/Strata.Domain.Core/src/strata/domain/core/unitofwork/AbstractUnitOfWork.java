@@ -89,7 +89,6 @@ class AbstractUnitOfWork
     public <K extends Serializable,E> CompletionStage<Void>
     removeExisting(Class<K> keyType,Class<E> entityType,E existingEntity)
     {
-        System.out.println("AbstractUnitOfWOrk.removeExisting: " + Thread.currentThread().getName());
         return
             itsCurrent.removeExisting( this,keyType,entityType,existingEntity );
     }
@@ -111,7 +110,6 @@ class AbstractUnitOfWork
     public <K extends Serializable,E> CompletionStage<Optional<E>>
     getExisting(Class<E> type,K key)
     {
-        System.out.println("AbstractUnitOfWOrk.getExisting: " + Thread.currentThread().getName());
         return itsCurrent.getExisting( this,type,key );
     }
 
@@ -122,7 +120,6 @@ class AbstractUnitOfWork
     public <E> CompletionStage<Optional<INamedQuery<E>>>
     getNamedQuery(Class<E> type,String queryName)
     {
-        System.out.println("AbstractUnitOfWOrk.getNamedQuery: " + Thread.currentThread().getName());
         return itsCurrent.getNamedQuery( this,type,queryName );
     }
 
@@ -133,7 +130,6 @@ class AbstractUnitOfWork
     public <K extends Serializable,E> CompletionStage<Boolean>
     hasExisting(Class<E> type,K key)
     {
-        System.out.println("AbstractUnitOfWOrk.hasExisting: " + Thread.currentThread().getName());
         return itsCurrent.hasExisting( this,type,key );
     }
 
@@ -144,7 +140,6 @@ class AbstractUnitOfWork
     public <E> CompletionStage<Boolean>
     hasNamedQuery(Class<E> type,String queryName)
     {
-        System.out.println("AbstractUnitOfWOrk.hasNamedQuery: " + Thread.currentThread().getName());
         return itsCurrent.hasNamedQuery( this,type,queryName );
     }
 
@@ -205,7 +200,6 @@ class AbstractUnitOfWork
     public CompletionStage<Void>
     commit() 
     {
-        System.out.println("AbstractUnitOfWOrk.commit: " + Thread.currentThread().getName());
         return itsCurrent.commit( this );
     }
 
@@ -216,7 +210,6 @@ class AbstractUnitOfWork
     public CompletionStage<Void>
     rollback()
     {
-        System.out.println("AbstractUnitOfWOrk.rollback: " + Thread.currentThread().getName());
         return itsCurrent.rollback( this );
     }
     

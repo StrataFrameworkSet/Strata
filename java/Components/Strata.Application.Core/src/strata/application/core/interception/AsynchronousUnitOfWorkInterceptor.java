@@ -94,7 +94,10 @@ class AsynchronousUnitOfWorkInterceptor
             CompletableFuture.supplyAsync(
                 () ->
                 {
-                    doBefore(context.getInvocation());
+                    doBefore(
+                        context
+                            .start()
+                            .getInvocation());
                     return context;
                 });
     }
@@ -134,7 +137,10 @@ class AsynchronousUnitOfWorkInterceptor
                 () ->
                 {
                     doAfter(context.getInvocation());
-                    return context.getResultIfPresent();
+                    return
+                        context
+                            .stop()
+                            .getResultIfPresent();
                 });
     }
 

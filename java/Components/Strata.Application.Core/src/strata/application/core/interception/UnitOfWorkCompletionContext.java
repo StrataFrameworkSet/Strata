@@ -160,6 +160,19 @@ class UnitOfWorkCompletionContext
         return itsAttempt == (itsMaxAttempt - 1);
     }
 
+    @Override
+    public UnitOfWorkCompletionContext
+    start()
+    {
+        return (UnitOfWorkCompletionContext)super.start();
+    }
+
+    @Override
+    public UnitOfWorkCompletionContext
+    stop()
+    {
+        return (UnitOfWorkCompletionContext)super.stop();
+    }
 
     public UnitOfWorkCompletionContext
     incrementAttempt()

@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="StageRunner - CommitStage" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="strata.foundation.core.testsuite.StageRunner" />
-    <module name="Strata.TestsSuite.CommitStage" />
-    <option name="PROGRAM_PARAMETERS" value="strata.testsuite.commitstage.CommitStageSuite C:\tmp\test-results" />
+    <module name="Strata.TestSuite.Stage" />
+    <option name="PROGRAM_PARAMETERS" value="strata.testsuite.stage.commit.CommitSuite C:\tmp\test-results" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="strata.foundation.core.testsuite.*" />
