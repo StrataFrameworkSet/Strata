@@ -1,9 +1,6 @@
 package strata.domain.core.testdomain;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import strata.domain.core.namedquery.INamedQuery;
 import strata.domain.core.unitofwork.IUnitOfWork;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
@@ -248,7 +245,7 @@ class PersonRepositoryTest
         Assert.assertTrue( await(itsTarget.hasPersonWithPartyKey( expected.getPartyKey() )) );
     }
 
-    //@Ignore
+    @Ignore
     @Test
     public void 
     testHasPersonWithName() 

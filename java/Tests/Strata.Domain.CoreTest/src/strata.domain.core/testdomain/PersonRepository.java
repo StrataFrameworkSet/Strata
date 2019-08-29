@@ -28,6 +28,7 @@ import strata.domain.core.namedquery.InvalidInputException;
 import strata.domain.core.repository.AbstractRepository;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +53,8 @@ class PersonRepository
      * Creates a new {@code PersonRepository}. 
      *
      */
-    public 
+    @Inject
+    public
     PersonRepository(IUnitOfWorkProvider provider)
     {
         super( Long.class,IPerson.class,provider );

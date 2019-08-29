@@ -67,7 +67,6 @@ class AbstractUnitOfWork
     public <K extends Serializable,E> CompletionStage<E>
     insertNew(Class<K> keyType,Class<E> entityType,E newEntity)
     {
-        System.out.println("AbstractUnitOfWOrk.insertNew: " + Thread.currentThread().getName());
         return itsCurrent.insertNew( this,keyType,entityType,newEntity );
     }
 
@@ -78,7 +77,6 @@ class AbstractUnitOfWork
     public <K extends Serializable,E> CompletionStage<E>
     updateExisting(Class<K> keyType,Class<E> entityType,E existingEntity)
     {
-        System.out.println("AbstractUnitOfWOrk.updateExisting: " + Thread.currentThread().getName());
         return
             itsCurrent
                 .updateExisting( this,keyType,entityType,existingEntity );

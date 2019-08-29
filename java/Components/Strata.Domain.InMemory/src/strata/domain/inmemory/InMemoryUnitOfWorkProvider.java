@@ -78,7 +78,7 @@ class InMemoryUnitOfWorkProvider
      * {@inheritDoc} 
      */
     @Override
-    public CompletionStage<? extends IUnitOfWork>
+    public CompletionStage<IUnitOfWork>
     getUnitOfWork()
     {
         return
@@ -109,6 +109,16 @@ class InMemoryUnitOfWorkProvider
                     return null;
                 },
                 itsExecutor);
+    }
+
+    /************************************************************************
+     * {@inheritDoc}
+     */
+    @Override
+    public ExecutorService
+    getExecutor()
+    {
+        return itsExecutor;
     }
 
     /************************************************************************
@@ -219,19 +229,6 @@ class InMemoryUnitOfWorkProvider
     getRetriever(Class<K> keyType,Class<T> entityType)
     {
         return (IKeyRetriever<K,T>)itsRetrievers.get( entityType );
-    }
-
-    /************************************************************************
-     *
-     * @return
-     */
-    public ExecutorService
-    getExecutor()
-    {
-        if (itsExecutor == null)
-            throw new IllegalStateException("executor must be non-null");
-
-        return itsExecutor;
     }
 }
 

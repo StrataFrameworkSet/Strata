@@ -56,15 +56,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: jaxen:jaxen:1.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.ant:ant:1.10.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.ant:ant-launcher:1.10.6" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: com.sun:tools:1.8.0">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/com/sun/tools/1.8.0/tools-1.8.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" name="Maven: org.eclipse.jdt:org.eclipse.jdt.core:3.18.0" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.platform:org.eclipse.core.resources:3.13.400" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.platform:org.eclipse.core.expressions:3.6.400" level="project" />

@@ -25,6 +25,7 @@
 package strata.domain.hibernate.unitofwork;
 
 import org.hibernate.SessionFactory;
+import strata.domain.core.unitofwork.IUnitOfWork;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
 
 import java.util.concurrent.CompletableFuture;
@@ -65,7 +66,7 @@ class HibernateUnitOfWorkProvider
      * {@inheritDoc} 
      */
     @Override
-    public CompletionStage<HibernateUnitOfWork>
+    public CompletionStage<IUnitOfWork>
     getUnitOfWork()
     {
     	return
@@ -99,6 +100,16 @@ class HibernateUnitOfWorkProvider
 				itsExecutor);
     }
 
+	/************************************************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ExecutorService
+	getExecutor()
+	{
+		return itsExecutor;
+	}
+
     /************************************************************************
 	 *  
 	 *
@@ -108,12 +119,6 @@ class HibernateUnitOfWorkProvider
 	getSessionFactory()
 	{
 	    return itsSessionFactory;
-	}
-
-	public ExecutorService
-	getExecutor()
-	{
-		return itsExecutor;
 	}
 }
 
