@@ -30,6 +30,7 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.Stack;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.CompletionStage;
 
 /****************************************************************************
@@ -76,7 +77,7 @@ class AbstractUnitOfWork
     public <K extends Serializable,E> CompletionStage<E>
     updateExisting(Class<K> keyType,Class<E> entityType,E existingEntity)
     {
-        return 
+        return
             itsCurrent
                 .updateExisting( this,keyType,entityType,existingEntity );
     }
@@ -309,34 +310,37 @@ class AbstractUnitOfWork
     protected CompletionStage<Void>
     doRollback()
     {
-        CompletableFuture<Void> result = new CompletableFuture<>();
-        RollbackFailedException failed = null;
+        return
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    System.out.println("AbstractUnitOfWork.doRollback");
+                    RollbackFailedException failed = null;
 
-        while (!itsRollbackActions.isEmpty())
-        {
-            try
-            {
-                Runnable action = itsRollbackActions.pop();
+                    while (!itsRollbackActions.isEmpty())
+                    {
+                        try
+                        {
+                            Runnable action = itsRollbackActions.pop();
 
-                action.run();
-            }
-            catch (Exception e)
-            {
-                if (failed == null)
-                    failed =
-                        new RollbackFailedException(
-                            "Rollback failed. See causes.");
+                            action.run();
+                        }
+                        catch (Exception e)
+                        {
+                            if (failed == null)
+                                failed =
+                                    new RollbackFailedException(
+                                        "Rollback failed. See causes.");
 
-                failed.addCause(e);
-            }
-        }
+                            failed.addCause(e);
+                        }
+                    }
 
-        if (failed != null)
-            result.completeExceptionally(failed);
-        else
-            result.complete(null);
+                    if (failed != null)
+                        throw new CompletionException(failed);
 
-        return result;
+                    return null;
+                });
     }
 }
 

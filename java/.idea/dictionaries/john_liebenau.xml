@@ -2,6 +2,9 @@
   <dictionary name="john.liebenau">
     <words>
       <w>avro</w>
+      <w>denimtestdomain</w>
+      <w>memb</w>
+      <w>testdomain</w>
     </words>
   </dictionary>
 </component>

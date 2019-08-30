@@ -25,6 +25,7 @@
 package strata.domain.core.unitofwork;
 
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutorService;
 
 /****************************************************************************
  * The interface supported by all unit of work providers. 
@@ -46,7 +47,7 @@ interface IUnitOfWorkProvider
      * @see     IUnitOfWork
      * @return  current unit of work
      */
-    CompletionStage<? extends IUnitOfWork>
+    CompletionStage<IUnitOfWork>
     getUnitOfWork();  
     
     /************************************************************************
@@ -55,6 +56,13 @@ interface IUnitOfWorkProvider
      */
     CompletionStage<Void>
     clearUnitOfWork();
+
+    /************************************************************************
+     *
+     *
+     */
+    ExecutorService
+    getExecutor();
 }
 
 

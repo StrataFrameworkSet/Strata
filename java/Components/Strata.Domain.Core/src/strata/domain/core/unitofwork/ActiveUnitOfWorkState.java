@@ -28,7 +28,6 @@ import strata.domain.core.namedquery.INamedQuery;
 
 import java.io.Serializable;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 /****************************************************************************
@@ -160,21 +159,21 @@ class ActiveUnitOfWorkState
     public CompletionStage<Void>
     commit(AbstractUnitOfWork context) 
     {
-        CompletableFuture<Void> result = new CompletableFuture<>();
-
-        try
-        {
-            context.doCommit();
-            context.changeState( CommittedUnitOfWorkState.getInstance() );
-            result.complete(null);
-        }
-        catch (Exception e)
-        {
-            context.changeState( FailedUnitOfWorkState.getInstance() );
-            result.completeExceptionally(new CommitFailedException( e ));
-        }
-
-        return result;
+        return
+            context
+                .doCommit()
+                .thenApply(
+                    v ->
+                    {
+                        context.changeState(CommittedUnitOfWorkState.getInstance());
+                        return (Void)null;
+                    })
+                .exceptionally(
+                    e ->
+                    {
+                        context.changeState( FailedUnitOfWorkState.getInstance() );
+                        return null;
+                    });
     }
 
     /************************************************************************
@@ -184,21 +183,22 @@ class ActiveUnitOfWorkState
     public CompletionStage<Void>
     rollback(AbstractUnitOfWork context)
     {
-        CompletableFuture<Void> result = new CompletableFuture<>();
-
-        try
-        {
-            context.doRollback();
-            context.changeState( RolledBackUnitOfWorkState.getInstance() );
-            result.complete(null);
-        }
-        catch (Exception e)
-        {
-            context.changeState( FailedUnitOfWorkState.getInstance() );
-            result.completeExceptionally(new RollbackFailedException( e ));
-        }
-
-        return result;
+        return
+            context
+                .doRollback()
+                .thenApply(
+                    v ->
+                    {
+                        context.changeState(
+                            RolledBackUnitOfWorkState.getInstance());
+                        return (Void)null;
+                    })
+                .exceptionally(
+                    e ->
+                    {
+                        context.changeState(FailedUnitOfWorkState.getInstance());
+                        return null;
+                    });
     }
     
     /************************************************************************
