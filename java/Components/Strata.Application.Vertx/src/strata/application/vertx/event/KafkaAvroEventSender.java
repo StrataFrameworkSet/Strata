@@ -2,7 +2,7 @@
 // KafkaAvroEventSender.java
 //////////////////////////////////////////////////////////////////////////////
 
-package strata.application.core.event;
+package strata.application.vertx.event;
 
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import io.vertx.core.Vertx;
