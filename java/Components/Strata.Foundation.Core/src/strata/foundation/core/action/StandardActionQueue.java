@@ -2,7 +2,7 @@
 // StandardMessageQueue.java
 //////////////////////////////////////////////////////////////////////////////
 
-package strata.application.core.action;
+package strata.foundation.core.action;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;

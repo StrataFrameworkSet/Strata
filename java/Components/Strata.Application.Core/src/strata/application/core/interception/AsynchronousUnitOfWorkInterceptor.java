@@ -5,12 +5,11 @@
 package strata.application.core.interception;
 
 import org.aopalliance.intercept.MethodInvocation;
-import strata.application.core.action.IActionQueue;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
 import strata.domain.core.unitofwork.OptimisticLockException;
+import strata.foundation.core.action.IActionQueue;
 import strata.foundation.core.transfer.ServiceRequest;
 
-import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.CompletionStage;
@@ -291,26 +290,6 @@ class AsynchronousUnitOfWorkInterceptor
             return
                 ((IUnitOfWorkPropertySupplier)
                      invocation.getThis()).getQueue();
-
-        throw
-            new IllegalStateException(
-                "Must implement IUnitOfWorkPropertySupplier");
-    }
-
-    /*************************************************************************
-     * Gets the producer {@code Properties} associated with
-     * the target object.
-     *
-     * @param  invocation the method invocation on the target object
-     * @return associated producer {@code Properties}
-     */
-    protected Properties
-    getConfiguration(MethodInvocation invocation)
-    {
-        if (invocation.getThis() instanceof IUnitOfWorkPropertySupplier)
-            return
-                ((IUnitOfWorkPropertySupplier)
-                     invocation.getThis()).getConfiguration();
 
         throw
             new IllegalStateException(

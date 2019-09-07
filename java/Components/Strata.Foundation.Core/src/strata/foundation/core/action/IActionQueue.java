@@ -2,7 +2,7 @@
 // IActionQueue.java
 //////////////////////////////////////////////////////////////////////////////
 
-package strata.application.core.action;
+package strata.foundation.core.action;
 
 public
 interface IActionQueue

@@ -2,7 +2,7 @@
 // KafkaAvroEventSender.java
 //////////////////////////////////////////////////////////////////////////////
 
-package strata.application.vertx.event;
+package strata.foundation.kafka.event;
 
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import io.vertx.core.Vertx;
@@ -13,7 +13,7 @@ import io.vertx.kafka.client.producer.impl.KafkaProducerImpl;
 import io.vertx.kafka.client.producer.impl.KafkaWriteStreamImpl;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serializer;
-import strata.application.core.action.IActionQueue;
+import strata.foundation.core.action.IActionQueue;
 import strata.foundation.core.event.AbstractEventSender;
 import strata.foundation.core.utility.NullMapper;
 

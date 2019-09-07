@@ -2,12 +2,12 @@
 // KafkaEventSender.java
 //////////////////////////////////////////////////////////////////////////////
 
-package strata.application.vertx.event;
+package strata.foundation.kafka.event;
 
 import io.vertx.core.Vertx;
 import io.vertx.kafka.client.producer.KafkaProducer;
 import io.vertx.kafka.client.producer.KafkaProducerRecord;
-import strata.application.core.action.IActionQueue;
+import strata.foundation.core.action.IActionQueue;
 import strata.foundation.core.event.AbstractEventSender;
 import strata.foundation.core.utility.IObjectMapper;
 
