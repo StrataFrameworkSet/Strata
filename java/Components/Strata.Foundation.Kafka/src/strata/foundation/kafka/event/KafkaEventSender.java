@@ -4,9 +4,10 @@
 
 package strata.foundation.kafka.event;
 
-import io.vertx.core.Vertx;
-import io.vertx.kafka.client.producer.KafkaProducer;
-import io.vertx.kafka.client.producer.KafkaProducerRecord;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringSerializer;
 import strata.foundation.core.action.IActionQueue;
 import strata.foundation.core.event.AbstractEventSender;
 import strata.foundation.core.utility.IObjectMapper;
@@ -17,28 +18,25 @@ public
 class KafkaEventSender<E>
     extends AbstractEventSender<E,String>
 {
-    private final Vertx                  itsVertx;
-    private final Map<String,String> itsProperties;
-    private final IActionQueue           itsQueue;
-    private final String itsTopic;
-    private KafkaProducer<String,String> itsProducer;
+    private final Map<String,Object> itsProperties;
+    private final IActionQueue       itsQueue;
+    private final String             itsTopic;
+    private Producer<String,String>  itsProducer;
+
 
     public
     KafkaEventSender(
-        Vertx                        v,
-        Map<String,String> p,
-        IObjectMapper<E,String>      m,
-        IActionQueue                 q,
-        String topic)
+        Map<String,Object>       p,
+        IObjectMapper<E,String>  m,
+        IActionQueue             q,
+        String                   topic)
     {
         super(m);
-        itsVertx = v;
         itsProperties = p;
         itsQueue = q;
         itsTopic = topic;
         itsQueue.register(() -> open(),() -> close());
         itsProducer = null;
-
     }
 
     @Override
@@ -47,11 +45,10 @@ class KafkaEventSender<E>
     {
         if (!isOpen())
             itsProducer =
-                KafkaProducer.create(
-                    itsVertx,
-                    itsProperties,
-                    String.class,
-                    String.class);
+                new KafkaProducer<>(
+                        itsProperties,
+                        new StringSerializer(),
+                        new StringSerializer());
 
         return this;
     }
@@ -62,6 +59,7 @@ class KafkaEventSender<E>
     {
         if (isOpen())
         {
+            itsProducer.flush();
             itsProducer.close();
             itsProducer = null;
         }
@@ -82,11 +80,18 @@ class KafkaEventSender<E>
     {
         itsQueue.insert(
             () ->
-                getProducer().write(
-                    KafkaProducerRecord.create(itsTopic,payload)));
+                getProducer()
+                    .send(
+                        new ProducerRecord<>(itsTopic,payload),
+                        (result,exception) ->
+                        {
+                            if (result == null)
+                                exception.printStackTrace();
+                        }));
+
     }
 
-    protected KafkaProducer<String,String>
+    protected Producer<String,String>
     getProducer()
     {
         if (!isOpen())
@@ -94,6 +99,7 @@ class KafkaEventSender<E>
 
         return itsProducer;
     }
+
 }
 
 //////////////////////////////////////////////////////////////////////////////

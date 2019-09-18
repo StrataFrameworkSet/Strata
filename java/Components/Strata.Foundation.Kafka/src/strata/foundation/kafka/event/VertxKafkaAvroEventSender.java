@@ -6,36 +6,38 @@ package strata.foundation.kafka.event;
 
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
+import io.vertx.core.Vertx;
+import io.vertx.kafka.client.producer.KafkaProducer;
+import io.vertx.kafka.client.producer.KafkaProducerRecord;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import strata.foundation.core.action.IActionQueue;
 import strata.foundation.core.event.AbstractEventSender;
 import strata.foundation.core.utility.NullMapper;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public
-class KafkaAvroEventSender<E>
+class VertxKafkaAvroEventSender<E>
     extends AbstractEventSender<E,E>
 {
-    private final Map<String,Object> itsProperties;
+    private final Vertx              itsVertx;
+    private final Properties         itsProperties;
     private final IActionQueue       itsQueue;
     private final String             itsTopic;
     private final Class<E>           itsType;
-    private Producer<String,E>       itsProducer;
+    private KafkaProducer<String,E>  itsProducer;
 
-    public
-    KafkaAvroEventSender(
-        Map<String,Object> p,
+    public VertxKafkaAvroEventSender(
+        Vertx              v,
+        Map<String,String> p,
         IActionQueue       q,
-        Class<E>           t,
-        String             topic)
+        Class<E> t,
+        String topic)
     {
         super(new NullMapper<>());
+        itsVertx = v;
         itsProperties = initializeProperties(p);
         itsQueue = q;
         itsTopic = topic;
@@ -45,7 +47,7 @@ class KafkaAvroEventSender<E>
     }
 
     @Override
-    public KafkaAvroEventSender<E>
+    public VertxKafkaAvroEventSender<E>
     open()
     {
         if (!isOpen())
@@ -57,12 +59,12 @@ class KafkaAvroEventSender<E>
     }
 
     @Override
-    public KafkaAvroEventSender<E>
+    public VertxKafkaAvroEventSender<E>
     close()
     {
         if (isOpen())
         {
-            itsProducer.flush();
+            itsProducer.flush(result -> {});
             itsProducer.close();
             itsProducer = null;
         }
@@ -84,16 +86,18 @@ class KafkaAvroEventSender<E>
         itsQueue.insert(
             () ->
                 getProducer()
-                    .send(
+                    .write(
                         createRecord(itsTopic,payload),
-                        (result,exception) ->
+                        result ->
                         {
-                            if (result == null)
-                                exception.printStackTrace();
+                            if (result.succeeded())
+                                System.out.println("sendPayload succeeded");
+                            if (result.failed())
+                                System.out.println("sendPayload failed: " + result.cause());
                         }));
     }
 
-    protected Producer<String,E>
+    protected KafkaProducer<String,E>
     getProducer()
     {
         if (!isOpen())
@@ -102,16 +106,16 @@ class KafkaAvroEventSender<E>
         return itsProducer;
     }
 
-    protected ProducerRecord<String,E>
+    protected KafkaProducerRecord<String,E>
     createRecord(String topic,E payload)
     {
-        return new ProducerRecord<>(itsTopic,payload);
+        return KafkaProducerRecord.create(itsTopic,null,payload);
     }
 
-    protected Map<String,Object>
-    initializeProperties(Map<String,Object> config)
+    protected Properties
+    initializeProperties(Map<String,String> config)
     {
-        Map<String,Object> properties = new HashMap<>();
+        Properties properties = new Properties();
 
         properties.putAll(config);
         properties.put(
@@ -130,10 +134,24 @@ class KafkaAvroEventSender<E>
         return properties;
     }
 
-    protected Producer<String,E>
+    protected KafkaProducer<String,E>
     createKafkaProducer()
     {
-        return new KafkaProducer<>(itsProperties);
+        return
+            KafkaProducer.create(
+                itsVertx,
+                itsProperties);
+        /*
+        KafkaWriteStream<String,E> stream =
+            new KafkaWriteStreamImpl(
+                itsVertx.getOrCreateContext(),
+                new org.apache.kafka.clients.producer.KafkaProducer(itsProperties));
+        KafkaProducer<String,E> producer =
+            (new KafkaProducerImpl(stream)).registerCloseHook();
+
+        return producer;
+
+         */
     }
 }
 
