@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////
-// KafkaAvroEventSenderTest.java
+// KafkaJsonEventSenderTest.java
 //////////////////////////////////////////////////////////////////////////////
 
 package strata.foundation.kafka.event;
@@ -8,14 +8,14 @@ import com.google.inject.Module;
 import strata.foundation.core.event.EventSenderTest;
 
 public
-class KafkaAvroEventSenderTest
+class KafkaJsonEventSenderTest
     extends EventSenderTest
 {
     @Override
     protected Module
     getModule()
     {
-        return new AvroTestModule();
+        return new JsonTestModule();
     }
 }
 

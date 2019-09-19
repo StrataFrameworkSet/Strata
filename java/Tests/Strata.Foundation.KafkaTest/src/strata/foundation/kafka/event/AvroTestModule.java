@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////
-// TestModule.java
+// AvroTestModule.java
 //////////////////////////////////////////////////////////////////////////////
 
 package strata.foundation.kafka.event;
@@ -13,11 +13,10 @@ import strata.foundation.core.inject.AbstractModule;
 import strata.foundation.core.inject.GuiceThreadScope;
 
 public
-class TestModule
+class AvroTestModule
     extends AbstractModule
 {
-    public
-    TestModule()
+    public AvroTestModule()
     {
         setDefaultScope(new GuiceThreadScope());
     }

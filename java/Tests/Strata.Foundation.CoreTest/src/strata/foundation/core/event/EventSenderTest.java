@@ -66,12 +66,63 @@ class EventSenderTest
                 .build();
         FooEventListener listener =
             new FooEventListener(itsReceiver)
-                .setExpected(expected);
+                .insertExpected(expected);
 
         itsReceiver.startListening(listener);
         assertTrue(itsReceiver.isListening());
 
         itsTarget.send(expected);
+        itsActionQueue.execute();
+        sleep(5);
+        assertFalse("Should have stopped listening at this point",itsReceiver.isListening());
+        listener.checkAssertions();
+    }
+
+    @Test
+    public void
+    testSendMany()
+        throws Exception
+    {
+        FooEvent expected1 =
+            FooEvent.newBuilder()
+                .setIdentifiers(
+                    EventIdentifiersData.newBuilder()
+                        .setEventId(UUID.randomUUID().toString())
+                        .setCorrelationId("1")
+                        .setTimestamp(Instant.now())
+                        .build())
+                .setEventType(StandardEventType.CREATED)
+                .setSource(
+                    FooData.newBuilder()
+                        .setId("ABCDEFGHIJK")
+                        .setX("!@#$%^&*")
+                        .setY(23).build())
+                .build();
+        FooEvent expected2 =
+            FooEvent.newBuilder()
+                .setIdentifiers(
+                    EventIdentifiersData.newBuilder()
+                        .setEventId(UUID.randomUUID().toString())
+                        .setCorrelationId("2")
+                        .setTimestamp(Instant.now())
+                        .build())
+                .setEventType(StandardEventType.CREATED)
+                .setSource(
+                    FooData.newBuilder()
+                        .setId("ABCDEFGHIJK")
+                        .setX("!@#$%^&*")
+                        .setY(23).build())
+                .build();
+        FooEventListener listener =
+            new FooEventListener(itsReceiver)
+                .insertExpected(expected1)
+                .insertExpected(expected2);
+
+        itsReceiver.startListening(listener);
+        assertTrue(itsReceiver.isListening());
+
+        itsTarget.send(expected1);
+        itsTarget.send(expected2);
         itsActionQueue.execute();
         sleep(5);
         assertFalse("Should have stopped listening at this point",itsReceiver.isListening());

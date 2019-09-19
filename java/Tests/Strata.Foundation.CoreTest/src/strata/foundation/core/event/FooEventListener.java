@@ -4,21 +4,26 @@
 
 package strata.foundation.core.event;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertFalse;
 
 public
 class FooEventListener
     implements IFooEventListener
 {
     private final IFooEventReceiver itsReceiver;
-    private FooEvent                itsExpected;
-    private FooEvent                itsActual;
+    private Queue<FooEvent>         itsExpected;
+    private Queue<FooEvent>         itsActual;
 
     public
     FooEventListener(IFooEventReceiver receiver)
     {
         itsReceiver = receiver;
+        itsExpected = new ConcurrentLinkedQueue<>();
+        itsActual   = new ConcurrentLinkedQueue<>();
     }
 
     @Override
@@ -26,7 +31,7 @@ class FooEventListener
     onEvent(FooEvent actual)
     {
         System.out.println("onEvent");
-        itsActual = actual;
+        itsActual.add(actual);
         itsReceiver.stopListening();
     }
 
@@ -38,13 +43,13 @@ class FooEventListener
     }
 
     public FooEventListener
-    setExpected(FooEvent expected)
+    insertExpected(FooEvent expected)
     {
-        itsExpected = expected;
+        itsExpected.add(expected);
         return this;
     }
 
-    public FooEvent
+    public Queue<FooEvent>
     getExpected()
     {
         return itsExpected;
@@ -53,26 +58,33 @@ class FooEventListener
     public boolean
     receivedActual()
     {
-        return itsActual != null;
+        return !itsActual.isEmpty();
     }
 
     public void
     checkAssertions()
     {
-        assertNotNull("Expected is null",itsExpected);
-        assertNotNull("Actual is null",itsActual);
+        assertFalse("Expected is empty",itsExpected.isEmpty());
+        assertFalse("Actual is empty",itsActual.isEmpty());
+        assertEquals("Expected.size != Actual.size",itsExpected.size(),itsActual.size());
 
-        EventIdentifiersData expectedIds = itsExpected.getIdentifiers();
-        FooData              expectedSource = itsExpected.getSource();
-        EventIdentifiersData actualIds = itsActual.getIdentifiers();
-        FooData              actualSource = itsActual.getSource();
+        while (!itsExpected.isEmpty())
+        {
+            FooEvent expected = itsExpected.remove();
+            FooEvent actual = itsActual.remove();
 
-        assertEquals("EventIds !=",expectedIds.getEventId(),actualIds.getEventId());
-        assertEquals("CorrelationIds !=",expectedIds.getCorrelationId(),actualIds.getCorrelationId());
-        assertEquals("Timestamps !=",expectedIds.getTimestamp(),actualIds.getTimestamp());
-        assertEquals("Ids !=",expectedSource.getId(),actualSource.getId());
-        assertEquals("Xs !=",expectedSource.getX(),actualSource.getX());
-        assertEquals("Ys !=",expectedSource.getY(),actualSource.getY());
+            EventIdentifiersData expectedIds = expected.getIdentifiers();
+            FooData              expectedSource = expected.getSource();
+            EventIdentifiersData actualIds = actual.getIdentifiers();
+            FooData              actualSource = actual.getSource();
+
+            assertEquals("EventIds !=",expectedIds.getEventId(),actualIds.getEventId());
+            assertEquals("CorrelationIds !=",expectedIds.getCorrelationId(),actualIds.getCorrelationId());
+            assertEquals("Timestamps !=",expectedIds.getTimestamp(),actualIds.getTimestamp());
+            assertEquals("Ids !=",expectedSource.getId(),actualSource.getId());
+            assertEquals("Xs !=",expectedSource.getX(),actualSource.getX());
+            assertEquals("Ys !=",expectedSource.getY(),actualSource.getY());
+        }
     }
 }
 
