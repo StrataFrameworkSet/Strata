@@ -8,14 +8,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import strata.foundation.core.mapper.CompletableFutureDeserializer;
-import strata.foundation.core.mapper.CompletableFutureSerializer;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.CompletableFuture;
 
 
 /****************************************************************************
@@ -49,13 +46,7 @@ class JsonObjectByteArrayMapper<T>
             .enable( MapperFeature.SORT_PROPERTIES_ALPHABETICALLY )
             .enable( DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES )
             .enable( SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS )
-            .registerModule(
-                new SimpleModule()
-                    .addSerializer(
-                        new CompletableFutureSerializer())
-                    .addDeserializer(
-                        CompletableFuture.class,
-                        new CompletableFutureDeserializer()))
+            .registerModule(new SimpleModule())
             .registerModule( new JavaTimeModule() );
         itsTypeMappings = new HashMap<>();
     }

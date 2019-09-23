@@ -5,6 +5,7 @@
 package strata.application.core.service;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,28 +16,28 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 @Path("")
+@Tag(name = "OpenApi",description = "Provides openapi documentation.")
 public
-class SwaggerEndpoint
+class OpenApiEndpoint
 {
-    private final String itsSwaggerJsonUrl;
-    private final static String TEMPLATE_PARAMETER = "{swagger.json.url}";
+    private final String itsOpenApiJsonUrl;
+    private final static String TEMPLATE_PARAMETER = "{openapi.json.url}";
 
-    public
-    SwaggerEndpoint(String swaggerJsonUrl)
+    public OpenApiEndpoint(String openapiJsonUrl)
     {
-        itsSwaggerJsonUrl = swaggerJsonUrl;
+        itsOpenApiJsonUrl = openapiJsonUrl;
     }
 
-    @Path("swagger")
+    @Path("openapi")
     @GET
     @Produces(MediaType.TEXT_HTML)
-    @Operation(summary = "provide swagger documentation")
+    @Operation(summary = "provide open api documentation")
     public String
-    getSwagger()
+    getOpenApi()
     {
         return
             getFile("index.html")
-                .replace(TEMPLATE_PARAMETER,itsSwaggerJsonUrl);
+                .replace(TEMPLATE_PARAMETER,itsOpenApiJsonUrl);
     }
 
     @Path("element/{elementName}")

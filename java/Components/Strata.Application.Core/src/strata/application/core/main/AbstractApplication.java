@@ -1,0 +1,81 @@
+//////////////////////////////////////////////////////////////////////////////
+// AbstractApplication.java
+//////////////////////////////////////////////////////////////////////////////
+
+package strata.application.core.main;
+
+import io.swagger.v3.jaxrs2.SwaggerSerializers;
+import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
+import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
+import io.swagger.v3.oas.integration.OpenApiConfigurationException;
+import io.swagger.v3.oas.integration.SwaggerConfiguration;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import strata.application.core.filter.ServiceReplyFilter;
+import strata.foundation.core.mapper.ObjectMapperContextResolver;
+
+import javax.ws.rs.core.Application;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public abstract
+class AbstractApplication
+    extends Application
+{
+    protected final List<Class<?>> itsEndpointClasses;
+    protected final Info           itsInfo;
+
+    protected
+    AbstractApplication(
+        List<Class<?>> endpointClasses,
+        Info           info)
+    {
+        itsEndpointClasses = endpointClasses;
+        itsInfo = info;
+        configureSwagger();
+    }
+
+    @Override
+    public Set<Class<?>>
+    getClasses()
+    {
+        Set<Class<?>> classes =
+            new HashSet<>(
+                Arrays.asList(
+                    OpenApiResource.class,
+                    SwaggerSerializers.class,
+                    ServiceReplyFilter.class,
+                    ObjectMapperContextResolver.class));
+
+        classes.addAll(itsEndpointClasses);
+
+        return classes;
+    }
+
+    protected void
+    configureSwagger()
+    {
+        SwaggerConfiguration swagger =
+            new SwaggerConfiguration()
+                .openAPI(new OpenAPI().info(itsInfo))
+                .prettyPrint(true)
+                .readAllResources(false);
+
+        try
+        {
+            new JaxrsOpenApiContextBuilder<>()
+                .application(this)
+                .openApiConfiguration(swagger)
+                .buildContext(true);
+        }
+        catch (OpenApiConfigurationException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+}
+
+//////////////////////////////////////////////////////////////////////////////

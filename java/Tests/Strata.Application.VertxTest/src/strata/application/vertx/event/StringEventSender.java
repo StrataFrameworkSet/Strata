@@ -4,7 +4,6 @@
 
 package strata.application.vertx.event;
 
-import io.vertx.core.Vertx;
 import strata.foundation.core.action.IActionQueue;
 import strata.foundation.kafka.event.KafkaAvroEventSender;
 
@@ -17,12 +16,11 @@ class StringEventSender
 
     public
     StringEventSender(
-        Vertx v,
-        Map<String,String> p,
+        Map<String,Object> p,
         IActionQueue q,
         String topic)
     {
-        super(v,p,q,String.class,topic);
+        super(p,q,String.class,topic);
     }
 }
 
