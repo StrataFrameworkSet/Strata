@@ -108,9 +108,12 @@
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-netty4:4.3.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_4.0_spec:1.0.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-undertow:4.3.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.undertow:undertow-servlet:2.0.23.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.undertow:undertow-core:2.0.23.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-api:3.3.8.Final" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.xnio:xnio-nio:3.3.8.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_4.0_spec:1.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:4.0.1" level="project" />
   </component>
 </module>

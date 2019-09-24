@@ -2,29 +2,30 @@
 // VertxApplication.java
 //////////////////////////////////////////////////////////////////////////////
 
-package strata.application.vertx.main;
+package strata.application.netty.main;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import io.swagger.v3.oas.models.info.Info;
+import org.jboss.resteasy.core.ResteasyDeploymentImpl;
 import org.jboss.resteasy.plugins.guice.ModuleProcessor;
-import org.jboss.resteasy.plugins.server.vertx.VertxJaxrsServer;
-import org.jboss.resteasy.plugins.server.vertx.VertxResteasyDeployment;
+import org.jboss.resteasy.plugins.server.netty.NettyJaxrsServer;
+import org.jboss.resteasy.spi.ResteasyDeployment;
 import strata.application.core.main.AbstractApplication;
 
 import java.util.List;
 
 public abstract
-class VertxApplication
+class NettyApplication
     extends AbstractApplication
 {
-    private final Injector                itsInjector;
-    private final VertxResteasyDeployment itsDeployment;
-    private final VertxJaxrsServer        itsServer;
+    private final Injector           itsInjector;
+    private final ResteasyDeployment itsDeployment;
+    private final NettyJaxrsServer   itsServer;
 
     protected
-    VertxApplication(
+    NettyApplication(
         List<Class<?>> endpointClasses,
         Info           info,
         List<Module>   modules,
@@ -34,8 +35,8 @@ class VertxApplication
         super(endpointClasses,info);
 
         itsInjector = Guice.createInjector(modules);
-        itsDeployment = new VertxResteasyDeployment();
-        itsServer = new VertxJaxrsServer();
+        itsDeployment = new ResteasyDeploymentImpl();
+        itsServer = new NettyJaxrsServer();
 
         itsDeployment.start();
         itsDeployment.setApplication(this);

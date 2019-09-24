@@ -2,7 +2,7 @@
 // HelloVertxApplication.java
 //////////////////////////////////////////////////////////////////////////////
 
-package strata.application.vertx.main;
+package strata.application.netty.main;
 
 import io.swagger.v3.oas.models.info.Info;
 import strata.application.core.platform.HelloModule;
@@ -12,12 +12,11 @@ import strata.application.core.platform.HelloServiceEndpoint;
 import java.util.Arrays;
 
 public
-class HelloVertxApplication
-    extends VertxApplication
+class HelloNettyApplication
+    extends NettyApplication
 {
 
-    public
-    HelloVertxApplication()
+    public HelloNettyApplication()
     {
         super(
             Arrays.asList(
@@ -35,7 +34,7 @@ class HelloVertxApplication
     public static void
     main(String[] args)
     {
-        new HelloVertxApplication().start();
+        new HelloNettyApplication().start();
     }
 }
 

@@ -7,6 +7,8 @@
       <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Application.CoreTest/Strata.Application.CoreTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Application.CoreTest/Strata.Application.CoreTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/Components/Strata.Application.Netty/Strata.Application.Netty.iml" filepath="$PROJECT_DIR$/Components/Strata.Application.Netty/Strata.Application.Netty.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Application.NettyTest/Strata.Application.NettyTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Application.NettyTest/Strata.Application.NettyTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Components/Strata.Application.Undertow/Strata.Application.Undertow.iml" filepath="$PROJECT_DIR$/Components/Strata.Application.Undertow/Strata.Application.Undertow.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Application.UndertowTest/Strata.Application.UndertowTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Application.UndertowTest/Strata.Application.UndertowTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/Components/Strata.Application.Vertx/Strata.Application.Vertx.iml" filepath="$PROJECT_DIR$/Components/Strata.Application.Vertx/Strata.Application.Vertx.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Application.VertxTest/Strata.Application.VertxTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Application.VertxTest/Strata.Application.VertxTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/Components/Strata.Client.Core/Strata.Client.Core.iml" filepath="$PROJECT_DIR$/Components/Strata.Client.Core/Strata.Client.Core.iml" />

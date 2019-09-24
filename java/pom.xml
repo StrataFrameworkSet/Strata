@@ -25,6 +25,7 @@
         <module>Components/Strata.Application.Core</module>
         <module>Components/Strata.Application.Vertx</module>
         <module>Components/Strata.Application.Netty</module>
+        <module>Components/Strata.Application.Undertow</module>
         <module>Components/Strata.Client.Core</module>
         <module>Components/Strata.Client.Kafka</module>
         <module>Components/Strata.Client.RestEasy</module>
@@ -39,6 +40,7 @@
         <module>Tests/Strata.Application.CoreTest</module>
         <module>Tests/Strata.Application.VertxTest</module>
         <module>Tests/Strata.Application.NettyTest</module>
+        <module>Tests/Strata.Application.UndertowTest</module>
         <module>Tests/Strata.Client.CoreTest</module>
         <module>Tests/Strata.Client.KafkaTest</module>
         <module>Tests/Strata.Client.RestEasyTest</module>
