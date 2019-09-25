@@ -21,6 +21,24 @@ class AbstractRestClient
     AbstractRestClient(
         ClientBuilder      builder,
         String             baseUrl,
+        String             endpointPath)
+    {
+        this(builder,baseUrl,endpointPath,new StandardResponseProcessor());
+    }
+
+    protected
+    AbstractRestClient(
+        Client             client,
+        String             baseUrl,
+        String             endpointPath)
+    {
+        this(client,baseUrl,endpointPath,new StandardResponseProcessor());
+    }
+
+    protected
+    AbstractRestClient(
+        ClientBuilder      builder,
+        String             baseUrl,
         String             endpointPath,
         IResponseProcessor processor)
     {
@@ -37,10 +55,11 @@ class AbstractRestClient
     AbstractRestClient(
         Client             client,
         String             baseUrl,
+        String             endpointPath,
         IResponseProcessor processor)
     {
         itsClient = client;
-        itsBaseTarget = itsClient.target(baseUrl);
+        itsBaseTarget = itsClient.target(initialize(baseUrl,endpointPath));
         itsResponseProcessor = processor;
     }
 
@@ -59,23 +78,6 @@ class AbstractRestClient
                                 MediaType.APPLICATION_JSON))));
     }
 
-    protected <Request,Reply> CompletionStage<Reply>
-    doPostAsync(String methodPath,Class<Reply> replyType,Request request)
-    {
-        return
-            buildRequest(methodPath)
-                .rx()
-                .post(
-                    Entity.entity(
-                        request,
-                        MediaType.APPLICATION_JSON))
-                    .thenApply(
-                        response ->
-                            itsResponseProcessor.process(
-                                replyType,
-                                toResponse(methodPath,response)));
-    }
-
     protected <Request,Reply> Reply
     doPut(String methodPath,Class<Reply> replyType,Request request)
     {
@@ -92,17 +94,21 @@ class AbstractRestClient
     }
 
     protected <Request,Reply> Reply
-    doDelete(String methodPath,Class<Reply> replyType,Request request)
+    doDelete(String methodPath,Class<Reply> replyType,Map<String,Object> params)
     {
+        WebTarget target = itsBaseTarget.path(methodPath);
+
+        for (Map.Entry<String,Object> param:params.entrySet())
+            target.queryParam(param.getKey(),param.getValue());
+
         return
             itsResponseProcessor.process(
                 replyType,
                 toResponse(
                     methodPath,
-                    buildRequest(methodPath)
-                        .build(
-                        "DELETE",
-                            Entity.entity(request,MediaType.APPLICATION_JSON))
+                    target
+                        .request(MediaType.APPLICATION_JSON)
+                        .buildDelete()
                         .invoke()));
     }
 
@@ -123,6 +129,80 @@ class AbstractRestClient
                         .request(MediaType.APPLICATION_JSON)
                         .buildGet()
                         .invoke()));
+    }
+
+    protected <Request,Reply> CompletionStage<Reply>
+    doPostAsync(String methodPath,Class<Reply> replyType,Request request)
+    {
+        return
+            buildRequest(methodPath)
+                .rx()
+                .post(
+                    Entity.entity(
+                        request,
+                        MediaType.APPLICATION_JSON))
+                .thenApply(
+                    response ->
+                        itsResponseProcessor.process(
+                            replyType,
+                            toResponse(methodPath,response)));
+    }
+
+    protected <Request,Reply> CompletionStage<Reply>
+    doPutAsync(String methodPath,Class<Reply> replyType,Request request)
+    {
+        return
+            buildRequest(methodPath)
+                .rx()
+                .put(
+                    Entity.entity(
+                        request,
+                        MediaType.APPLICATION_JSON))
+                .thenApply(
+                    response ->
+                        itsResponseProcessor.process(
+                            replyType,
+                            toResponse(methodPath,response)));
+    }
+
+    protected <Request,Reply> CompletionStage<Reply>
+    doDeleteAsync(String methodPath,Class<Reply> replyType,Map<String,Object> params)
+    {
+        WebTarget target = itsBaseTarget.path(methodPath);
+
+        for (Map.Entry<String,Object> param:params.entrySet())
+            target.queryParam(param.getKey(),param.getValue());
+
+        return
+            target
+                .request(MediaType.APPLICATION_JSON)
+                .rx()
+                .delete()
+                .thenApply(
+                    response ->
+                        itsResponseProcessor.process(
+                            replyType,
+                            toResponse(methodPath,response)));
+    }
+
+    protected <Request,Reply> CompletionStage<Reply>
+    doGetAsync(String methodPath,Class<Reply> replyType,Map<String,Object> params)
+    {
+        WebTarget target = itsBaseTarget.path(methodPath);
+
+        for (Map.Entry<String,Object> param:params.entrySet())
+            target.queryParam(param.getKey(),param.getValue());
+
+        return
+            target
+                .request(MediaType.APPLICATION_JSON)
+                .rx()
+                .get()
+                .thenApply(
+                    response ->
+                        itsResponseProcessor.process(
+                            replyType,
+                            toResponse(methodPath,response)));
     }
 
     private Invocation.Builder
@@ -149,7 +229,7 @@ class AbstractRestClient
     {
         return
             new StandardResponse(
-                itsBaseTarget.getUri().getPath(),
+                itsBaseTarget.getUri().toString(),
                 methodPath,
                 response);
     }

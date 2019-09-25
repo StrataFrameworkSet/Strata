@@ -7,7 +7,6 @@ package strata.client.resteasy.service;
 import strata.application.core.platform.SayHelloReply;
 import strata.application.core.platform.SayHelloRequest;
 import strata.client.core.service.IHelloService;
-import strata.client.core.service.StandardResponseProcessor;
 
 import java.util.concurrent.CompletionStage;
 
@@ -20,7 +19,7 @@ class HelloServiceRestEasyClient
     public
     HelloServiceRestEasyClient(String baseUrl)
     {
-        super(baseUrl,"hello1",new StandardResponseProcessor());
+        super(baseUrl,"hello");
     }
 
     @Override

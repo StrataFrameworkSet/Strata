@@ -15,6 +15,17 @@ class RestEasyRestClient
     protected
     RestEasyRestClient(
         String             baseUrl,
+        String             endpointPath)
+    {
+        super(
+            ResteasyClientBuilder.newBuilder(),
+            baseUrl,
+            endpointPath);
+    }
+
+    protected
+    RestEasyRestClient(
+        String             baseUrl,
         String             endpointPath,
         IResponseProcessor processor)
     {
