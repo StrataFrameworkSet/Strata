@@ -9,22 +9,43 @@ class ServiceException
     extends RuntimeException
 {
     private final String itsRequestPath;
-    private final int    itsResponseCode;
+    private final int itsResponseStatus;
+    private final String itsStatusReason;
 
     public
     ServiceException(IResponse response)
     {
         super(initializeMessage(response));
-        itsRequestPath = "<request-path>";
-        itsResponseCode = response.getStatusAsInt();
+        itsRequestPath = response.getRequestPath();
+        itsResponseStatus = response.getStatusAsInt();
+        itsStatusReason = response.getStatusReason();
     }
 
     public
     ServiceException(IResponse response,Throwable cause)
     {
         super(initializeMessage(response),cause);
-        itsRequestPath = "<request-path>";
-        itsResponseCode = response.getStatusAsInt();
+        itsRequestPath = response.getRequestPath();
+        itsResponseStatus = response.getStatusAsInt();
+        itsStatusReason = response.getStatusReason();
+    }
+
+    public String
+    getRequestPath()
+    {
+        return itsRequestPath;
+    }
+
+    public int
+    getResponseStatus()
+    {
+        return itsResponseStatus;
+    }
+
+    public String
+    getStatusReason()
+    {
+        return itsStatusReason;
     }
 
     private static String

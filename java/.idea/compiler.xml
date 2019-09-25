@@ -7,13 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Strata.Domain.Vertx" />
-        <module name="Strata.Client.KafkaTest" />
         <module name="Strata.Client.Core" />
         <module name="Strata.Application.Core" />
         <module name="Strata.Foundation.Core" />
         <module name="Strata.Application.NettyTest" />
         <module name="Strata.Client.RestEasyTest" />
-        <module name="Strata.Client.Kafka" />
         <module name="Strata.Foundation.KafkaTest" />
         <module name="Strata.Application.VertxTest" />
         <module name="Strata.Client.RestEasy" />

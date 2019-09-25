@@ -11,8 +11,6 @@
       <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Application.VertxTest/Strata.Application.VertxTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Application.VertxTest/Strata.Application.VertxTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/Components/Strata.Client.Core/Strata.Client.Core.iml" filepath="$PROJECT_DIR$/Components/Strata.Client.Core/Strata.Client.Core.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Client.CoreTest/Strata.Client.CoreTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Client.CoreTest/Strata.Client.CoreTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Components/Strata.Client.Kafka/Strata.Client.Kafka.iml" filepath="$PROJECT_DIR$/Components/Strata.Client.Kafka/Strata.Client.Kafka.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Client.KafkaTest/Strata.Client.KafkaTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Client.KafkaTest/Strata.Client.KafkaTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/Components/Strata.Client.RestEasy/Strata.Client.RestEasy.iml" filepath="$PROJECT_DIR$/Components/Strata.Client.RestEasy/Strata.Client.RestEasy.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Client.RestEasyTest/Strata.Client.RestEasyTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Client.RestEasyTest/Strata.Client.RestEasyTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/Applications/Strata.CodeGen.Plugin/Strata.CodeGen.Plugin.iml" filepath="$PROJECT_DIR$/Applications/Strata.CodeGen.Plugin/Strata.CodeGen.Plugin.iml" />

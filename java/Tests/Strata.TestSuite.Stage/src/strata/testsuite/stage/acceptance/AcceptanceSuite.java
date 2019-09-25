@@ -1,0 +1,18 @@
+//////////////////////////////////////////////////////////////////////////////
+// IntegrationSuite.java
+//////////////////////////////////////////////////////////////////////////////
+
+package strata.testsuite.stage.acceptance;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import strata.client.resteasy.service.HelloServiceRestEasyClientTest;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+    HelloServiceRestEasyClientTest.class})
+public
+class AcceptanceSuite
+{}
+
+//////////////////////////////////////////////////////////////////////////////
