@@ -17,9 +17,7 @@
         <module name="Strata.Foundation.KafkaTest" />
         <module name="Strata.Application.VertxTest" />
         <module name="Strata.Client.RestEasy" />
-        <module name="Strata.Application.UndertowTest" />
         <module name="Strata.Foundation.Kafka" />
-        <module name="Strata.Application.Undertow" />
         <module name="Strata.Domain.Hibernate" />
         <module name="Strata.Application.CoreTest" />
         <module name="Strata.CodeGen.Plugin" />

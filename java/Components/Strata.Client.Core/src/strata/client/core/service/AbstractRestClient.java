@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
 
@@ -32,10 +33,20 @@ class AbstractRestClient
     protected <Request,Reply> Reply
     doPost(String path,Class<Reply> replyType,Request request)
     {
-        return
+        Response response =
             buildRequest(path)
-                .post(Entity.entity(request,MediaType.APPLICATION_JSON))
-                .readEntity(replyType);
+                .post(Entity.entity(request,MediaType.APPLICATION_JSON));
+
+        switch (response.getStatusInfo().toEnum())
+        {
+            case OK:
+            case INTERNAL_SERVER_ERROR:
+                return
+                    response
+                        .readEntity(replyType);
+            default:
+                throw new RuntimeException(response.getStatusInfo().getReasonPhrase());
+        }
     }
 
     protected <Request,Reply> CompletionStage<Reply>
@@ -49,7 +60,8 @@ class AbstractRestClient
                         request,
                         MediaType.APPLICATION_JSON))
                     .thenApply(
-                        response -> response.readEntity(replyType));
+                        response ->
+                            response.readEntity(replyType));
     }
 
     protected <Request,Reply> Reply
@@ -87,7 +99,7 @@ class AbstractRestClient
                 .get(replyType);
     }
 
-    protected Invocation.Builder
+    private Invocation.Builder
     buildRequest(String path)
     {
         return

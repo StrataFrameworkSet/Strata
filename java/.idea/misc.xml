@@ -5,8 +5,6 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/Tests/Strata.TestSuite.Stage/pom.xml" />
-        <option value="$PROJECT_DIR$/Components/Strata.Application.Undertow/pom.xml" />
-        <option value="$PROJECT_DIR$/Tests/Strata.Application.UndertowTest/pom.xml" />
       </list>
     </option>
   </component>
