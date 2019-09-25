@@ -19,7 +19,7 @@ class HelloServiceClient
     public
     HelloServiceClient(ClientBuilder builder,String baseUrl)
     {
-        super(builder,baseUrl);
+        super(builder,baseUrl,"hello",new StandardResponseProcessor());
     }
 
     @Override
