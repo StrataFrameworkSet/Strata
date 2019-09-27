@@ -83,10 +83,11 @@ class ActiveUnitOfWorkState
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public <K extends Serializable,E> CompletionStage<Void>
+    public <K extends Serializable,E> CompletionStage<E>
     removeExisting(
         AbstractUnitOfWork context,
         Class<K> keyType,

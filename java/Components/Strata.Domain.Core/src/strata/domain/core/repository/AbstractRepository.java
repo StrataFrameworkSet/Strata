@@ -97,10 +97,11 @@ class AbstractRepository<K extends Serializable,E>
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public CompletionStage<Void>
+    public CompletionStage<E>
     remove(E existingEntity)
     {
         return

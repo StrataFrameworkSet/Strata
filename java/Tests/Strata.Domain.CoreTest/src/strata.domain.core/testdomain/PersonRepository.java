@@ -82,10 +82,11 @@ class PersonRepository
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public CompletionStage<Void>
+    public CompletionStage<IPerson>
     removePerson(IPerson person)
     {
         return remove( person );

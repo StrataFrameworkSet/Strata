@@ -181,17 +181,17 @@ class InMemoryUnitOfWork
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    protected <K extends Serializable,E> CompletionStage<Void>
+    protected <K extends Serializable,E> CompletionStage<E>
     doRemoveExisting(Class<K> keyType,Class<E> entityType,E existingEntity)
     {
         return
             CompletableFuture.supplyAsync(
                 () ->
                 {
-                    System.out.println("InMemoryUnitOfWork.doRemoveExisting: " + Thread.currentThread().getName());
                     K                key = null;
                     EntityIdentifier id  = null;
 
@@ -207,7 +207,7 @@ class InMemoryUnitOfWork
                             throw new IllegalArgumentException("entity does not exist");
 
                         itsRemoved.put(id,existingEntity);
-                        return null;
+                        return existingEntity;
                     }
                     catch (Exception e)
                     {

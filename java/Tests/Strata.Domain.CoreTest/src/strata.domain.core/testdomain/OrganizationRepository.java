@@ -76,10 +76,11 @@ class OrganizationRepository
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public CompletionStage<Void>
+    public CompletionStage<IOrganization>
     removeOrganization(IOrganization organization)
     {
         return remove( organization );

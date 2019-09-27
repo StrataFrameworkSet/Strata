@@ -80,12 +80,12 @@ interface IUnitOfWorkState
     
     /************************************************************************
      *  
-     *
-     * @param keyType TODO
+     *  @param keyType TODO
      * @param entityType TODO
      * @param existingEntity
+     * @return
      */
-    <K extends Serializable,E> CompletionStage<Void>
+    <K extends Serializable,E> CompletionStage<E>
     removeExisting(
         AbstractUnitOfWork context,
         Class<K> keyType,

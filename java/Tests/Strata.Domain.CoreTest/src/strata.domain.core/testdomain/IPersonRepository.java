@@ -48,7 +48,7 @@ interface IPersonRepository
     CompletionStage<IPerson>
     updatePerson(IPerson person);
     
-    CompletionStage<Void>
+    CompletionStage<IPerson>
     removePerson(IPerson person);
     
     CompletionStage<Optional<IPerson>>

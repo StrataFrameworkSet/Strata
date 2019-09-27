@@ -117,10 +117,11 @@ class HibernateUnitOfWork
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    protected <K extends Serializable,E> CompletionStage<Void>
+    protected <K extends Serializable,E> CompletionStage<E>
     doRemoveExisting(Class<K> keyType,Class<E> entityType,E existingEntity)
     {
         return
@@ -128,7 +129,7 @@ class HibernateUnitOfWork
                 () ->
                 {
                     itsSession.delete(itsSession.merge(existingEntity));
-                    return null;
+                    return existingEntity;
                 },
                 itsExecutor);
     }

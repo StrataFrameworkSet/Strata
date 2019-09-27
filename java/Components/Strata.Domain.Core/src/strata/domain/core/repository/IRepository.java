@@ -63,8 +63,9 @@ interface IRepository<K extends Serializable,E>
      *  
      *
      * @param existingEntity
+     * @return
      */
-    CompletionStage<Void>
+    CompletionStage<E>
     remove(E existingEntity);
     
     /************************************************************************

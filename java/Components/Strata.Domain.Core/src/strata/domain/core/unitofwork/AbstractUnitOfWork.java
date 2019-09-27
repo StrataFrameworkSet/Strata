@@ -83,10 +83,11 @@ class AbstractUnitOfWork
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public <K extends Serializable,E> CompletionStage<Void>
+    public <K extends Serializable,E> CompletionStage<E>
     removeExisting(Class<K> keyType,Class<E> entityType,E existingEntity)
     {
         return
@@ -249,12 +250,12 @@ class AbstractUnitOfWork
 
     /************************************************************************
      *  
-     *
-     * @param keyType TODO
+     *  @param keyType TODO
      * @param entityType TODO
      * @param existingEntity
+     * @return
      */
-    protected abstract <K extends Serializable,E> CompletionStage<Void>
+    protected abstract <K extends Serializable,E> CompletionStage<E>
     doRemoveExisting(Class<K> keyType,Class<E> entityType,E existingEntity);
 
     /************************************************************************
