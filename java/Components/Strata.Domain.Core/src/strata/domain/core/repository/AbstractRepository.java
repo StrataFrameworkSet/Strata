@@ -158,10 +158,11 @@ class AbstractRepository<K extends Serializable,E>
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public CompletionStage<Optional<INamedQuery<E>>>
+    public CompletionStage<INamedQuery<E>>
     getNamedQuery(String queryName)
     {
         return

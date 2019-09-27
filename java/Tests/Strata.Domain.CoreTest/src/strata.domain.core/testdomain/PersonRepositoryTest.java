@@ -33,7 +33,7 @@ class PersonRepositoryTest
     public void 
     tearDown() throws Exception
     {
-        INamedQuery<IPerson> finder     = await(itsTarget.getNamedQuery( "GetAll" )).get();
+        INamedQuery<IPerson> finder     = await(itsTarget.getNamedQuery( "GetAll" ));
         IUnitOfWork unitOfWork = await(itsProvider.getUnitOfWork());
         
         for (IPerson p : await(finder.getAll()))
@@ -221,7 +221,7 @@ class PersonRepositoryTest
     public void 
     testGetFinder()
     {
-        INamedQuery<IPerson> query = await(itsTarget.getNamedQuery( "GetByName" )).get();
+        INamedQuery<IPerson> query = await(itsTarget.getNamedQuery( "GetByName" ));
         
         Assert.assertNotNull( query );
         Assert.assertEquals( "strata.domain.core.testdomain.IPerson.GetByName",query.getName() );

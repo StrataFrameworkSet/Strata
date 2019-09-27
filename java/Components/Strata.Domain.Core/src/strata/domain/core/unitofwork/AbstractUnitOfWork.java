@@ -114,10 +114,11 @@ class AbstractUnitOfWork
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public <E> CompletionStage<Optional<INamedQuery<E>>>
+    public <E> CompletionStage<INamedQuery<E>>
     getNamedQuery(Class<E> type,String queryName)
     {
         return itsCurrent.getNamedQuery( this,type,queryName );
@@ -273,7 +274,7 @@ class AbstractUnitOfWork
      * @param queryName
      * @return
      */
-    protected abstract <E> CompletionStage<Optional<INamedQuery<E>>>
+    protected abstract <E> CompletionStage<INamedQuery<E>>
     doGetNamedQuery(Class<E> type,String queryName);
 
     /************************************************************************

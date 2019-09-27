@@ -100,7 +100,7 @@ interface IUnitOfWork
      * @param queryName
      * @return
      */
-    <E> CompletionStage<Optional<INamedQuery<E>>>
+    <E> CompletionStage<INamedQuery<E>>
     getNamedQuery(Class<E> type,String queryName);
     
     /************************************************************************

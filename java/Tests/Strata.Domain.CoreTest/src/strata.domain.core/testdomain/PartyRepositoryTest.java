@@ -60,8 +60,8 @@ class PartyRepositoryTest
     public void 
     tearDown() throws Exception
     {
-        INamedQuery<IOrganization> orgFinder    = await(itsOrgRepository.getNamedQuery( "GetAll" )).get();
-        INamedQuery<IPerson> personFinder = await(itsPersonRepository.getNamedQuery( "GetAll" )).get();
+        INamedQuery<IOrganization> orgFinder    = await(itsOrgRepository.getNamedQuery( "GetAll" ));
+        INamedQuery<IPerson> personFinder = await(itsPersonRepository.getNamedQuery( "GetAll" ));
         IUnitOfWork unitOfWork   = await(itsProvider.getUnitOfWork());
         
         for (IOrganization o : await(orgFinder.getAll()))

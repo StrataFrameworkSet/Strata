@@ -132,10 +132,11 @@ class AbstractUnitOfWorkState
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public <E> CompletionStage<Optional<INamedQuery<E>>>
+    public <E> CompletionStage<INamedQuery<E>>
     getNamedQuery(
         AbstractUnitOfWork context,
         Class<E> type,

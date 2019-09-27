@@ -25,7 +25,6 @@
 package strata.domain.core.testdomain;
 
 
-import strata.domain.core.namedquery.INamedQuery;
 import strata.domain.core.repository.AbstractRepository;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
 
@@ -103,26 +102,18 @@ class OrganizationRepository
     public CompletionStage<Optional<IOrganization>>
     getOrganizationByName(String name)
     {
-        CompletionStage<Optional<INamedQuery<IOrganization>>> result =
-            getNamedQuery("GetByName");
-
         return
-            result
+            getNamedQuery("GetByName")
                 .thenCompose(
                     query ->
                     {
                         try
                         {
-                            if (query.isPresent())
-                                return
-                                    query
-                                        .get()
-                                        .setInput( "name",name )
-                                        .getUnique();
+                            return
+                                query
+                                    .setInput( "name",name )
+                                    .getUnique();
 
-                            throw
-                                new NullPointerException(
-                                    "no such query: 'GetByName'");
                         }
                         catch (Exception e)
                         {
@@ -149,26 +140,18 @@ class OrganizationRepository
     public CompletionStage<Boolean>
     hasOrganizationWithName(String name)
     {
-        CompletionStage<Optional<INamedQuery<IOrganization>>> result =
-            getNamedQuery("GetByName");
-
         return
-            result
+            getNamedQuery("GetByName")
                 .thenCompose(
                     query ->
                     {
                         try
                         {
-                            if (query.isPresent())
-                                return
-                                    query
-                                        .get()
-                                        .setInput( "name",name )
-                                        .hasUnique();
+                            return
+                                query
+                                    .setInput( "name",name )
+                                    .hasUnique();
 
-                            throw
-                                new NullPointerException(
-                                    "no such query: 'GetByName'");
                         }
                         catch (Exception e)
                         {

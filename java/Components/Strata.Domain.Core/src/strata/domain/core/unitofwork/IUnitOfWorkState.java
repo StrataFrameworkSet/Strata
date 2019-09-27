@@ -109,7 +109,7 @@ interface IUnitOfWorkState
      * @param queryName
      * @return
      */
-    <E> CompletionStage<Optional<INamedQuery<E>>>
+    <E> CompletionStage<INamedQuery<E>>
     getNamedQuery(
         AbstractUnitOfWork context,
         Class<E> type,

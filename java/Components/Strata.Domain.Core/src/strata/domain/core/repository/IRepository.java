@@ -106,7 +106,7 @@ interface IRepository<K extends Serializable,E>
      * @param queryName
      * @return
      */
-    CompletionStage<Optional<INamedQuery<E>>>
+    CompletionStage<INamedQuery<E>>
     getNamedQuery(String queryName);
     
     /************************************************************************
