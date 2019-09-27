@@ -24,6 +24,33 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>strataframework.org</groupId>
+                                    <artifactId>Strata.Foundation.Core</artifactId>
+                                    <version>1.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${basedir}/schema/imported</outputDirectory>
+                                    <includes>**\/*.avsc</includes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro-maven-plugin</artifactId>
                 <version>1.9.1</version>
@@ -36,16 +63,16 @@
                         <configuration>
                             <stringType>String</stringType>
                             <dateTimeLogicalTypeImplementation>jsr310</dateTimeLogicalTypeImplementation>
-                            <sourceDirectory>${parent}/../Components/Strata.Foundation.Core/schema</sourceDirectory>
-                            <sourceDirectory>${basedir}/schema/</sourceDirectory>
+                            <sourceDirectory>${basedir}/schema/subjects</sourceDirectory>
+                            <sourceDirectory>${basedir}/schema/imported</sourceDirectory>
                             <outputDirectory>${basedir}/generated/</outputDirectory>
                             <fieldVisibility>PRIVATE</fieldVisibility>
                             <imports>
-                                <import>${parent}/../Components/Strata.Foundation.Core/schema/EventIdentifiersData.avsc</import>
-                                <import>${parent}/../Components/Strata.Foundation.Core/schema/StandardEventType.avsc</import>
-                                <import>${parent}/../Components/Strata.Foundation.Core/schema/ExceptionData.avsc</import>
-                                <import>${basedir}/schema/FooData.avsc</import>
-                                <import>${basedir}/schema/FooEvent.avsc</import>
+                                <import>${basedir}/schema/imported/EventIdentifiersData.avsc</import>
+                                <import>${basedir}/schema/imported/StandardEventType.avsc</import>
+                                <import>${basedir}/schema/imported/ExceptionData.avsc</import>
+                                <import>${basedir}/schema/subjects/FooData.avsc</import>
+                                <import>${basedir}/schema/subjects/FooEvent.avsc</import>
                            </imports>
                         </configuration>
                     </execution>
@@ -75,7 +102,7 @@
                 <version>3.1.2</version>
                 <configuration>
                     <excludes>
-                        <exclude>${basedir}/target/classes/strata/foundation/core/event/EventIdentifiers.class</exclude>
+                        <exclude>${basedir}/target/classes/strata/foundation/core/event/EventIdentifiersData.class</exclude>
                         <exclude>${basedir}/target/classes/strata/foundation/core/event/StandardEventType.class</exclude>
                         <exclude>${basedir}/target/classes/strata/foundation/core/event/ExceptionData.class</exclude>
                     </excludes>
@@ -90,17 +117,24 @@
                         <param>https://dev-kafka-schema.aws.hautelook.net:8081</param>
                     </schemaRegistryUrls>
                     <subjects>
-                        <FooEvent>${basedir}/schema/FooEvent.avsc</FooEvent>
+                        <FooEvent>${basedir}/schema/subjects/FooEvent.avsc</FooEvent>
                     </subjects>
+                    <subjectPatterns>
+                        <subjectPattern>EventIdentifiersData</subjectPattern>
+                        <subjectPattern>StandardEventType</subjectPattern>
+                        <subjectPattern>ExceptionData</subjectPattern>
+                    </subjectPatterns>
                     <imports>
-                        <import>${basedir}/../../Components/Strata.Foundation.Core/schema/EventIdentifiersData.avsc</import>
-                        <import>${basedir}/../../Components/Strata.Foundation.Core/schema/StandardEventType.avsc</import>
-                        <import>${basedir}/../../Components/Strata.Foundation.Core/schema/ExceptionData.avsc</import>
-                        <import>${basedir}/schema/FooData.avsc</import>
+                        <import>${basedir}/schema/imported/EventIdentifiersData.avsc</import>
+                        <import>${basedir}/schema/imported/StandardEventType.avsc</import>
+                        <import>${basedir}/schema/imported/ExceptionData.avsc</import>
+                        <import>${basedir}/schema/subjects/FooData.avsc</import>
                     </imports>
+                    <outputDirectory>${basedir}/schema/imported</outputDirectory>
                 </configuration>
                 <goals>
                     <goal>register</goal>
+                    <goal>download</goal>
                 </goals>
             </plugin>
         </plugins>

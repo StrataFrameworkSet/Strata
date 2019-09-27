@@ -8,12 +8,28 @@
     <artifactId>Strata.Foundation.Core</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>confluent</id>
+            <name>Confluent</name>
+            <url>http://packages.confluent.io/maven/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <properties>
         <maven.compiler.source>12</maven.compiler.source>
         <maven.compiler.target>12</maven.compiler.target>
     </properties>
 
     <build>
+        <resources>
+            <resource>
+                <directory>${basedir}/schema</directory>
+                <includes>
+                    <include>*.avsc</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.avro</groupId>
@@ -33,6 +49,7 @@
                             <fieldVisibility>PRIVATE</fieldVisibility>
                             <imports>
                                 <import>${basedir}/schema/EventIdentifiersData.avsc</import>
+                                <import>${basedir}/schema/StandardEventType.avsc</import>
                                 <import>${basedir}/schema/ExceptionData.avsc</import>
                             </imports>
                         </configuration>
@@ -56,6 +73,30 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.confluent</groupId>
+                <artifactId>kafka-schema-registry-maven-plugin</artifactId>
+                <version>5.3.1</version>
+                <configuration>
+                    <schemaRegistryUrls>
+                        <param>https://dev-kafka-schema.aws.hautelook.net:8081</param>
+                    </schemaRegistryUrls>
+                    <subjects>
+                        <strata.foundation.core.event.EventIdentifiersData>${basedir}/schema/EventIdentifiersData.avsc</strata.foundation.core.event.EventIdentifiersData>
+                        <strata.foundation.core.event.StandardEventType>${basedir}/schema/StandardEventType.avsc</strata.foundation.core.event.StandardEventType>
+                        <strata.foundation.core.event.ExceptionData>${basedir}/schema/ExceptionData.avsc</strata.foundation.core.event.ExceptionData>
+                    </subjects>
+                    <imports>
+                        <import>${basedir}/schema/EventIdentifiersData.avsc</import>
+                        <import>${basedir}/schema/StandardEventType.avsc</import>
+                        <import>${basedir}/schema/ExceptionData.avsc</import>
+                    </imports>
+                    <outputDirectory/>
+                </configuration>
+                <goals>
+                    <goal>register</goal>
+                </goals>
             </plugin>
         </plugins>
     </build>
