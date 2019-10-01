@@ -80,7 +80,7 @@ class ExceptionData
     hasCause() { return itsCause != null; }
 
     public static ExceptionData
-    create(Throwable source)
+    of(Throwable source)
     {
         if (source != null)
         {
@@ -93,7 +93,7 @@ class ExceptionData
                 .setExceptionType(source.getClass().getCanonicalName())
                 .setExceptionMessage(source.getMessage())
                 .setStackTrace(writer.toString())
-                .setCause(create(source.getCause()));
+                .setCause(of(source.getCause()));
 
             return dest;
         }

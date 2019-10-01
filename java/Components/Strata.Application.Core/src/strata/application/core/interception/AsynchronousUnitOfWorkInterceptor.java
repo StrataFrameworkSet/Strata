@@ -149,7 +149,9 @@ class AsynchronousUnitOfWorkInterceptor
         if (context.hasMoreAttempts())
         {
             System.out.println("Attempt=" + (context.getAttempt()+1));
-            context.setRequest(getRequest(context.getInvocation()));
+            context
+                .setRequest(getRequest(context.getInvocation()))
+                .clearException();
 
             return
                 CompletableFuture

@@ -49,6 +49,13 @@ class CompletionContext<T>
     }
 
     public CompletionContext<T>
+    clearResult()
+    {
+        itsResult = Optional.empty();
+        return this;
+    }
+
+    public CompletionContext<T>
     setException(Throwable exception)
     {
         Throwable cause = exception;
@@ -57,6 +64,13 @@ class CompletionContext<T>
             cause = cause.getCause();
 
         itsException = Optional.of(cause);
+        return this;
+    }
+
+    public CompletionContext<T>
+    clearException()
+    {
+        itsException = Optional.empty();
         return this;
     }
 
