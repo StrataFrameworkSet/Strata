@@ -76,9 +76,13 @@ class AbstractUnitOfWorkState
         E                  newEntity)
     {
         return
-            CompletableFuture.failedFuture(
-                new IllegalStateException(
-                    "Cannot call insert(E) from state: " + getName() + "." ));
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    throw
+                        new IllegalStateException(
+                            "Cannot call insert(E) from state: " + getName() + ".");
+                });
     }
 
     /************************************************************************
@@ -93,10 +97,13 @@ class AbstractUnitOfWorkState
         E                  existingEntity)
     {
         return
-            CompletableFuture.failedFuture(
-                new IllegalStateException(
-                    "Cannot call update(E) from state: " +
-                    getName() + "." ));
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    throw
+                        new IllegalStateException(
+                            "Cannot call update(E) from state: " + getName() + ".");
+                });
     }
 
     /************************************************************************
@@ -112,10 +119,13 @@ class AbstractUnitOfWorkState
         E                  existingEntity)
     {
         return
-            CompletableFuture.failedFuture(
-                new IllegalStateException(
-                    "Cannot call remove(E) from state: " +
-                    getName() + "." ));
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    throw
+                        new IllegalStateException(
+                            "Cannot call remove(K,E) from state: " + getName() + ".");
+                });
     }
 
     /************************************************************************
@@ -126,10 +136,13 @@ class AbstractUnitOfWorkState
     getExisting(AbstractUnitOfWork context,Class<E> type,K key)
     {
         return
-            CompletableFuture.failedFuture(
-                new IllegalStateException(
-                    "Cannot call getUnique(Class<E>,K) from " +
-                    "state: " + getName() + "." ));
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    throw
+                        new IllegalStateException(
+                            "Cannot call getUnique(E,K) from state: " + getName() + ".");
+                });
     }
 
     /************************************************************************
@@ -144,10 +157,13 @@ class AbstractUnitOfWorkState
         String queryName)
     {
         return
-            CompletableFuture.failedFuture(
-                new IllegalStateException(
-                    "Cannot call getNamedQuery(Class<E>,String) " +
-                    "from state: " + getName() + "." ));
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    throw
+                        new IllegalStateException(
+                            "Cannot call getNamedQuery(E,N) from state: " + getName() + ".");
+                });
     }
 
     /************************************************************************
@@ -158,10 +174,13 @@ class AbstractUnitOfWorkState
     hasExisting(AbstractUnitOfWork context,Class<E> type,K key)
     {
         return
-            CompletableFuture.failedFuture(
-                new IllegalStateException(
-                    "Cannot call hasExisting(Class<E>,K) from " +
-                    "state: " + getName() + "." ));
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    throw
+                        new IllegalStateException(
+                            "Cannot call hasUnique(E,K) from state: " + getName() + ".");
+                });
     }
 
     /************************************************************************
@@ -175,10 +194,13 @@ class AbstractUnitOfWorkState
         String queryName)
     {
         return
-            CompletableFuture.failedFuture(
-                new IllegalStateException(
-                    "Cannot call hasNamedQuery(Class<E>,String) " +
-                    "from state: " + getName() + "." ));
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    throw
+                        new IllegalStateException(
+                            "Cannot call hasNamedQuery(E,N) from state: " + getName() + ".");
+                });
     }
 
     /************************************************************************
@@ -229,9 +251,13 @@ class AbstractUnitOfWorkState
     commit(AbstractUnitOfWork context) 
     {
         return
-            CompletableFuture.failedFuture(
-                new IllegalStateException(
-                    "Cannot call commit() from state: " + getName() + "." ));
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    throw
+                        new IllegalStateException(
+                            "Cannot call commit() from state: " + getName() + ".");
+                });
     }
 
     /************************************************************************
@@ -242,9 +268,13 @@ class AbstractUnitOfWorkState
     rollback(AbstractUnitOfWork context)
     {
         return
-            CompletableFuture.failedFuture(
-                new IllegalStateException(
-                    "Cannot call rollback() from state: " + getName() + "." ));
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    throw
+                        new IllegalStateException(
+                            "Cannot call rollback() from state: " + getName() + ".");
+                });
     }
 
 }

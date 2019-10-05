@@ -77,7 +77,6 @@ class HibernateUnitOfWork
     @Override
     public void 
     close() 
-        throws Exception
     {
         if ( itsSession != null && itsSession.isOpen() )
         {

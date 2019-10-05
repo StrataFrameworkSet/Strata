@@ -31,7 +31,7 @@ class KafkaJsonFooEventReceiver
     getProperties()
     {
         return
-            new HashMap<>()
+            new HashMap<String,Object>()
             {{
                 put(
                     ConsumerConfig.GROUP_ID_CONFIG,
