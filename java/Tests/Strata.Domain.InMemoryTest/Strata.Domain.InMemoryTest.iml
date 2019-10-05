@@ -9,6 +9,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.reactivestreams:reactive-streams:1.0.3" level="project" />
     <orderEntry type="module" module-name="Strata.Domain.InMemory" />
     <orderEntry type="module" module-name="Strata.Domain.Core" />
     <orderEntry type="module" module-name="Strata.Foundation.Core" />

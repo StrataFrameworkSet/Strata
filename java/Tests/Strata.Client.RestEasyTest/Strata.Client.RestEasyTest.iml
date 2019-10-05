@@ -9,6 +9,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.reactivestreams:reactive-streams:1.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:5.4.5.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-tools:5.4.5.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.freemarker:freemarker:2.3.29" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-c3p0:5.4.5.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.mchange:c3p0:0.9.5.3" level="project" />
+    <orderEntry type="library" name="Maven: com.mchange:mchange-commons-java:0.2.15" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.17" level="project" />
     <orderEntry type="module" module-name="Strata.Client.RestEasy" />
     <orderEntry type="module" module-name="Strata.Client.Core" />
     <orderEntry type="module" module-name="Strata.Foundation.Core" />
