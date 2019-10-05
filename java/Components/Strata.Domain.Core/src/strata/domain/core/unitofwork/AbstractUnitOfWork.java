@@ -83,10 +83,11 @@ class AbstractUnitOfWork
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public <K extends Serializable,E> CompletionStage<Void>
+    public <K extends Serializable,E> CompletionStage<E>
     removeExisting(Class<K> keyType,Class<E> entityType,E existingEntity)
     {
         return
@@ -114,10 +115,11 @@ class AbstractUnitOfWork
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public <E> CompletionStage<Optional<INamedQuery<E>>>
+    public <E> CompletionStage<INamedQuery<E>>
     getNamedQuery(Class<E> type,String queryName)
     {
         return itsCurrent.getNamedQuery( this,type,queryName );
@@ -248,12 +250,12 @@ class AbstractUnitOfWork
 
     /************************************************************************
      *  
-     *
-     * @param keyType TODO
+     *  @param keyType TODO
      * @param entityType TODO
      * @param existingEntity
+     * @return
      */
-    protected abstract <K extends Serializable,E> CompletionStage<Void>
+    protected abstract <K extends Serializable,E> CompletionStage<E>
     doRemoveExisting(Class<K> keyType,Class<E> entityType,E existingEntity);
 
     /************************************************************************
@@ -273,7 +275,7 @@ class AbstractUnitOfWork
      * @param queryName
      * @return
      */
-    protected abstract <E> CompletionStage<Optional<INamedQuery<E>>>
+    protected abstract <E> CompletionStage<INamedQuery<E>>
     doGetNamedQuery(Class<E> type,String queryName);
 
     /************************************************************************

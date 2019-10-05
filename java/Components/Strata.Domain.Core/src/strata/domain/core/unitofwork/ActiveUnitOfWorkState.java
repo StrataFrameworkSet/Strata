@@ -83,10 +83,11 @@ class ActiveUnitOfWorkState
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public <K extends Serializable,E> CompletionStage<Void>
+    public <K extends Serializable,E> CompletionStage<E>
     removeExisting(
         AbstractUnitOfWork context,
         Class<K> keyType,
@@ -107,10 +108,11 @@ class ActiveUnitOfWorkState
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public <E> CompletionStage<Optional<INamedQuery<E>>>
+    public <E> CompletionStage<INamedQuery<E>>
     getNamedQuery(
         AbstractUnitOfWork context,
         Class<E> type,

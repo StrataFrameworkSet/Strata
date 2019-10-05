@@ -6,12 +6,12 @@ package strata.application.core.interception;
 
 import com.google.inject.matcher.Matchers;
 import org.hibernate.cfg.Configuration;
-import strata.application.core.action.IActionQueue;
-import strata.application.core.action.StandardActionQueue;
 import strata.domain.core.testdomain.IPersonRepository;
 import strata.domain.core.testdomain.PersonRepository;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
 import strata.domain.hibernate.unitofwork.HibernateUnitOfWorkProvider;
+import strata.foundation.core.action.IActionQueue;
+import strata.foundation.core.action.StandardActionQueue;
 import strata.foundation.core.inject.AbstractModule;
 import strata.foundation.core.inject.GuiceThreadScope;
 

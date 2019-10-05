@@ -82,10 +82,11 @@ class PersonRepository
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    public CompletionStage<Void>
+    public CompletionStage<IPerson>
     removePerson(IPerson person)
     {
         return remove( person );
@@ -116,19 +117,13 @@ class PersonRepository
                     {
                         try
                         {
-                            if (query.isPresent())
-                                return
-                                    query
-                                        .get()
-                                        .setInput( "name",name )
-                                        .getAll()
-                                        .thenApply(
-                                            persons -> new ArrayList<>(persons)
-                                        );
+                            return
+                                query
+                                    .setInput( "name",name )
+                                    .getAll()
+                                    .thenApply(
+                                        persons -> new ArrayList<>(persons));
 
-                            throw
-                                new NullPointerException(
-                                    "no such query: 'GetByName'");
                         }
                         catch (Exception e)
                         {
@@ -162,16 +157,10 @@ class PersonRepository
                     {
                         try
                         {
-                            if (query.isPresent())
-                                return
-                                    query
-                                        .get()
-                                        .setInput( "name",name )
-                                        .hasAny();
-
-                            throw
-                                new NullPointerException(
-                                    "no such query: 'HasPersonWithName'");
+                            return
+                                query
+                                    .setInput( "name",name )
+                                    .hasAny();
                         }
                         catch (Exception e)
                         {

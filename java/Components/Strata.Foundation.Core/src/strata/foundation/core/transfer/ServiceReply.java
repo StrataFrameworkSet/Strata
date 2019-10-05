@@ -10,11 +10,12 @@ import java.util.UUID;
 public abstract
 class ServiceReply
 {
-    private UUID itsCorrelationId;
-    private Instant itsTimestamp;
-    private boolean itsSuccessIndicator;
-    private String itsSuccessMessage;
-    private String itsFailureMessage;
+    private UUID          itsCorrelationId;
+    private Instant       itsTimestamp;
+    private boolean       itsSuccessIndicator;
+    private String        itsSuccessMessage;
+    private String        itsFailureMessage;
+    private ExceptionData itsException;
 
     protected
     ServiceReply()
@@ -24,6 +25,7 @@ class ServiceReply
         itsSuccessIndicator = false;
         itsSuccessMessage = null;
         itsFailureMessage = null;
+        itsException = null;
     }
 
     public ServiceReply
@@ -61,6 +63,13 @@ class ServiceReply
         return this;
     }
 
+    public ServiceReply
+    setException(ExceptionData exception)
+    {
+        itsException = exception;
+        return this;
+    }
+
     public UUID
     getCorrelationId() { return itsCorrelationId; }
 
@@ -87,6 +96,13 @@ class ServiceReply
     {
         return itsFailureMessage;
     }
+
+    public ExceptionData
+    getException() { return itsException; }
+
+    public boolean
+    hasException() { return itsException != null; }
+
 }
 
 //////////////////////////////////////////////////////////////////////////////

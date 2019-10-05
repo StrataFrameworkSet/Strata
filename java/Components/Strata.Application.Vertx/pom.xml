@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>st</groupId>
+    <groupId>strataframework.org</groupId>
     <artifactId>Strata.Application.Vertx</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -13,8 +13,47 @@
         <maven.compiler.target>12</maven.compiler.target>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <url>http://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
     <build>
         <sourceDirectory>${basedir}/src</sourceDirectory>
     </build>
 
+    <dependencies>
+        <dependency>
+            <groupId>strataframework.org</groupId>
+            <artifactId>Strata.Application.Core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-core</artifactId>
+            <version>4.1.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-guice</artifactId>
+            <version>4.1.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-vertx</artifactId>
+            <version>4.1.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-core</artifactId>
+            <version>3.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -13,6 +13,13 @@
         <maven.compiler.target>12</maven.compiler.target>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <url>http://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
     <build>
         <sourceDirectory>${basedir}/src</sourceDirectory>
         <plugins>
@@ -63,6 +70,18 @@
             <groupId>strataframework.org</groupId>
             <artifactId>Strata.Application.CoreTest</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>strataframework.org</groupId>
+            <artifactId>Strata.Foundation.KafkaTest</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>strataframework.org</groupId>
+            <artifactId>Strata.Client.RestEasyTest</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

@@ -4,7 +4,7 @@
 
 package strata.domain.core.domainevent;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public
 interface IDomainEvent<S>
@@ -12,7 +12,7 @@ interface IDomainEvent<S>
     String
     getName();
 
-    LocalDateTime
+    Instant
     getTimestamp();
 
     S

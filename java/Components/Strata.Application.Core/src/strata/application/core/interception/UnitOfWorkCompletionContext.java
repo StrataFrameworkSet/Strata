@@ -7,6 +7,7 @@ package strata.application.core.interception;
 import org.aopalliance.intercept.MethodInvocation;
 import strata.domain.core.unitofwork.IUnitOfWork;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
+import strata.foundation.core.transfer.ExceptionData;
 import strata.foundation.core.transfer.ServiceReply;
 import strata.foundation.core.transfer.ServiceRequest;
 import strata.foundation.core.utility.CompletionContext;
@@ -56,9 +57,23 @@ class UnitOfWorkCompletionContext
 
     @Override
     public UnitOfWorkCompletionContext
+    clearResult()
+    {
+        return (UnitOfWorkCompletionContext)super.clearResult();
+    }
+
+    @Override
+    public UnitOfWorkCompletionContext
     setException(Throwable exception)
     {
         return (UnitOfWorkCompletionContext)super.setException(exception);
+    }
+
+    @Override
+    public UnitOfWorkCompletionContext
+    clearException()
+    {
+        return (UnitOfWorkCompletionContext)super.clearException();
     }
 
     public UnitOfWorkCompletionContext
@@ -80,6 +95,28 @@ class UnitOfWorkCompletionContext
     {
         itsRequest = Optional.of(request);
         return this;
+    }
+
+    @Override
+    public Object
+    getResultIfPresent()
+    {
+        Object result = super.getResultIfPresent();
+
+        if (result instanceof ServiceReply)
+        {
+            ServiceReply reply = (ServiceReply)result;
+
+            if (hasException() && !reply.hasException())
+            {
+                reply.setException(ExceptionData.of(getExceptionIfPresent()));
+
+                if (reply.isSuccess())
+                    reply.setSuccess(false);
+            }
+        }
+
+        return result;
     }
 
     public MethodInvocation
@@ -185,7 +222,7 @@ class UnitOfWorkCompletionContext
     initializeReply()
     {
         ServiceRequest request = getRequestIfPresent();
-        Object         result = getResultIfPresent();
+        Object         result  = super.getResultIfPresent();
 
         if (request != null && result instanceof ServiceReply)
         {

@@ -4,10 +4,8 @@
 
 package strata.application.core.interception;
 
-import strata.application.core.action.IActionQueue;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
-
-import java.util.Properties;
+import strata.foundation.core.action.IActionQueue;
 
 public
 interface IUnitOfWorkPropertySupplier
@@ -17,9 +15,6 @@ interface IUnitOfWorkPropertySupplier
 
     IActionQueue
     getQueue();
-
-    Properties
-    getConfiguration();
 }
 
 //////////////////////////////////////////////////////////////////////////////

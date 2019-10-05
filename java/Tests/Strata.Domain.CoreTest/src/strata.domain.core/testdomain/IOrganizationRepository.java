@@ -47,7 +47,7 @@ interface IOrganizationRepository
     CompletionStage<IOrganization>
     updateOrganization(IOrganization organization);
     
-    CompletionStage<Void>
+    CompletionStage<IOrganization>
     removeOrganization(IOrganization organization);
     
     CompletionStage<Optional<IOrganization>>

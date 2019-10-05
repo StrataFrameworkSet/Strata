@@ -90,6 +90,7 @@ class KafkaEventReceiver<E,L extends IEventListener<E>>
                             getListener().onException(e);
                         }
                     })
+                .exceptionHandler(exception -> exception.printStackTrace())
                 .subscribe(itsTopic);
     }
 }

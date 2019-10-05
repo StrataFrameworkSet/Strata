@@ -117,10 +117,11 @@ class HibernateUnitOfWork
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    protected <K extends Serializable,E> CompletionStage<Void>
+    protected <K extends Serializable,E> CompletionStage<E>
     doRemoveExisting(Class<K> keyType,Class<E> entityType,E existingEntity)
     {
         return
@@ -128,7 +129,7 @@ class HibernateUnitOfWork
                 () ->
                 {
                     itsSession.delete(itsSession.merge(existingEntity));
-                    return null;
+                    return existingEntity;
                 },
                 itsExecutor);
     }
@@ -161,10 +162,11 @@ class HibernateUnitOfWork
     }
 
     /************************************************************************
-     * {@inheritDoc} 
+     * {@inheritDoc}
+     * @return
      */
     @Override
-    protected <E> CompletionStage<Optional<INamedQuery<E>>>
+    protected <E> CompletionStage<INamedQuery<E>>
     doGetNamedQuery(Class<E> type,String queryName)
     {
         return
@@ -173,13 +175,12 @@ class HibernateUnitOfWork
                 {
                     if (doHasNamedQueryInternal(type,queryName))
                         return
-                            Optional.ofNullable(
-                                new HibernateNamedQuery<E>(
-                                    queryName,
-                                    type,
-                                    (HibernateUnitOfWorkProvider)getProvider()));
+                            new HibernateNamedQuery<E>(
+                                queryName,
+                                type,
+                                (HibernateUnitOfWorkProvider)getProvider());
 
-                    return Optional.empty();
+                    throw new NullPointerException(queryName + " not found");
                 },
                 itsExecutor);
     }

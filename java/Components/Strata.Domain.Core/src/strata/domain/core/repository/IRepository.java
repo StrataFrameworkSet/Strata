@@ -63,8 +63,9 @@ interface IRepository<K extends Serializable,E>
      *  
      *
      * @param existingEntity
+     * @return
      */
-    CompletionStage<Void>
+    CompletionStage<E>
     remove(E existingEntity);
     
     /************************************************************************
@@ -106,7 +107,7 @@ interface IRepository<K extends Serializable,E>
      * @param queryName
      * @return
      */
-    CompletionStage<Optional<INamedQuery<E>>>
+    CompletionStage<INamedQuery<E>>
     getNamedQuery(String queryName);
     
     /************************************************************************

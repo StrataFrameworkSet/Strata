@@ -17,11 +17,28 @@
         <sourceDirectory>${basedir}/src</sourceDirectory>
     </build>
 
+
     <dependencies>
+        <dependency>
+            <groupId>strataframework.org</groupId>
+            <artifactId>Strata.Application.CoreTest</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>strataframework.org</groupId>
+            <artifactId>Strata.Application.Vertx</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>strataframework.org</groupId>
+            <artifactId>Strata.Foundation.Kafka</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     

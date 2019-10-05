@@ -4,7 +4,7 @@
 
 package strata.domain.core.domainevent;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /*****************************************************************************
  * Base implementation of {@code IDomainEvent<S>} interface.
@@ -15,9 +15,9 @@ public abstract
 class AbstractDomainEvent<S>
     implements IDomainEvent<S>
 {
-    private final String name;
-    private final LocalDateTime timestamp;
-    private final S             source;
+    private final String  name;
+    private final Instant timestamp;
+    private final S       source;
 
     /*************************************************************************
      * Creates a new instance of {@code AbstractDomainEvent<S>}.
@@ -25,10 +25,11 @@ class AbstractDomainEvent<S>
      * @param nm  event name
      * @param src event source
      */
-    protected AbstractDomainEvent(String nm,S src)
+    protected
+    AbstractDomainEvent(String nm,S src)
     {
         name = nm;
-        timestamp = LocalDateTime.now();
+        timestamp = Instant.now();
         source = src;
     }
 
@@ -44,9 +45,10 @@ class AbstractDomainEvent<S>
 
     /*************************************************************************
      * {@inheritDoc}
+     * @return
      */
     @Override
-    public LocalDateTime
+    public Instant
     getTimestamp()
     {
         return timestamp;
