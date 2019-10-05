@@ -273,9 +273,13 @@ class AsynchronousUnitOfWorkInterceptor
         }
 
         return
-            CompletableFuture.failedFuture(
-                new IllegalStateException(
-                    "Must implement IUnitOfWorkPropertySupplier"));
+            CompletableFuture.supplyAsync(
+                () ->
+                {
+                    throw
+                        new IllegalStateException(
+                            "Must implement IUnitOfWorkPropertySupplier");
+                });
     }
 
     /*************************************************************************

@@ -4,10 +4,11 @@
 
 package strata.foundation.core.event;
 
-import java.util.concurrent.Flow;
+import org.reactivestreams.Subscriber;
 
 public
 interface IEventSubscriber<E>
-    extends Flow.Subscriber<E> {}
+    extends Subscriber<E>
+{}
 
 //////////////////////////////////////////////////////////////////////////////

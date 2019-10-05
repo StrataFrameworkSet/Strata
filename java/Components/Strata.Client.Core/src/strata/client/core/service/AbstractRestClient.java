@@ -166,11 +166,18 @@ class AbstractRestClient
     }
 
     protected <Request,Reply> CompletionStage<Reply>
-    doDeleteAsync(String methodPath,Class<Reply> replyType,Map<String,Object> params)
+    doDeleteAsync(
+        String             methodPath,
+        Class<Reply>       replyType,
+        Map<String,Object> pathParams,
+        Map<String,Object> queryParams)
     {
-        WebTarget target = itsBaseTarget.path(methodPath);
+        WebTarget target =
+            itsBaseTarget
+                .path(methodPath)
+                .resolveTemplates(pathParams);
 
-        for (Map.Entry<String,Object> param:params.entrySet())
+        for (Map.Entry<String,Object> param:queryParams.entrySet())
             target.queryParam(param.getKey(),param.getValue());
 
         return
@@ -186,11 +193,18 @@ class AbstractRestClient
     }
 
     protected <Request,Reply> CompletionStage<Reply>
-    doGetAsync(String methodPath,Class<Reply> replyType,Map<String,Object> params)
+    doGetAsync(
+        String             methodPath,
+        Class<Reply>       replyType,
+        Map<String,Object> pathParams,
+        Map<String,Object> queryParams)
     {
-        WebTarget target = itsBaseTarget.path(methodPath);
+        WebTarget target =
+            itsBaseTarget
+                .path(methodPath)
+                .resolveTemplates(pathParams);
 
-        for (Map.Entry<String,Object> param:params.entrySet())
+        for (Map.Entry<String,Object> param:queryParams.entrySet())
             target.queryParam(param.getKey(),param.getValue());
 
         return

@@ -18,7 +18,8 @@ class RestEasyRestClient
         String             endpointPath)
     {
         super(
-            ResteasyClientBuilder.newBuilder(),
+            ResteasyClientBuilder
+                .newBuilder(),
             baseUrl,
             endpointPath);
     }

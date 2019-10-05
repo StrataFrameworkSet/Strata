@@ -36,7 +36,7 @@ class KafkaAvroFooEventSender
     getProperties()
     {
         return
-            new HashMap<>()
+            new HashMap<String,Object>()
             {{
                 put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "dev-kafka.aws.hautelook.net:9093");
                 put(ProducerConfig.ACKS_CONFIG, "1");

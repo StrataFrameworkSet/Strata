@@ -17,8 +17,8 @@
     </pluginRepositories>
 
     <properties>
-        <maven.compiler.source>12</maven.compiler.source>
-        <maven.compiler.target>12</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <build>
@@ -146,6 +146,11 @@
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
             <version>1.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.reactivestreams</groupId>
+            <artifactId>reactive-streams</artifactId>
+            <version>1.0.3</version>
         </dependency>
     </dependencies>
 

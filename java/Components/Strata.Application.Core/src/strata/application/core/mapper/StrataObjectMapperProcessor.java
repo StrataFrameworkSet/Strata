@@ -1,29 +1,25 @@
 //////////////////////////////////////////////////////////////////////////////
-// ObjectMapperContextResolver.java
+// StrataObjectMapperProcessor.java
 //////////////////////////////////////////////////////////////////////////////
 
-package strata.foundation.core.mapper;
+package strata.application.core.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.swagger.v3.oas.integration.api.ObjectMapperProcessor;
 import org.apache.avro.specific.SpecificRecordBase;
+import strata.foundation.core.mapper.IExcludeAvroFieldsMixin;
 
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Provider;
-
-@Provider
 public
-class ObjectMapperContextResolver
-    implements ContextResolver<ObjectMapper>
+class StrataObjectMapperProcessor
+    implements ObjectMapperProcessor
 {
-    private final ObjectMapper mapper;
-
-    public
-    ObjectMapperContextResolver()
+    @Override
+    public void
+    processJsonObjectMapper(ObjectMapper mapper)
     {
-        mapper = new ObjectMapper();
         mapper
             .registerModule(new SimpleModule())
             .registerModule(new JavaTimeModule())
@@ -32,10 +28,8 @@ class ObjectMapperContextResolver
     }
 
     @Override
-    public ObjectMapper
-    getContext(Class<?> type) {
-        return mapper;
-    }
+    public void
+    processYamlObjectMapper(ObjectMapper mapper) {}
 }
 
 //////////////////////////////////////////////////////////////////////////////

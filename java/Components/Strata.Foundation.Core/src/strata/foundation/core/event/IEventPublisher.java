@@ -4,10 +4,11 @@
 
 package strata.foundation.core.event;
 
-import java.util.concurrent.Flow;
+import org.reactivestreams.Publisher;
 
 public
 interface IEventPublisher<E>
-    extends Flow.Publisher<E> {}
+    extends Publisher<E>
+{}
 
 //////////////////////////////////////////////////////////////////////////////

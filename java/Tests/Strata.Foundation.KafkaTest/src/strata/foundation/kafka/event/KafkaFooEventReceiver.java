@@ -35,7 +35,7 @@ class KafkaFooEventReceiver
     getProperties()
     {
         return
-            new HashMap<>()
+            new HashMap<String,String>()
             {{
                 put("bootstrap.servers", "dev-kafka.aws.hautelook.net:9093");
                 put("acks", "1");

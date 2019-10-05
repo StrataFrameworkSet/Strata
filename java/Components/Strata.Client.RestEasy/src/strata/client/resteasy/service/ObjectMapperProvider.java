@@ -2,28 +2,22 @@
 // ObjectMapperProvider.java
 //////////////////////////////////////////////////////////////////////////////
 
-package strata.client.core.service;
+package strata.client.resteasy.service;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider;
 import strata.foundation.core.mapper.ObjectMapperContextResolver;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.ext.Provider;
-
-@Provider
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public
 class ObjectMapperProvider
-    extends JacksonJsonProvider
+    extends ResteasyJackson2Provider
 {
+
     public
     ObjectMapperProvider()
     {
-        super(new ObjectMapperContextResolver().getContext(Object.class));
+        setMapper(new ObjectMapperContextResolver().getContext(Object.class));
     }
+
 }
 
 //////////////////////////////////////////////////////////////////////////////

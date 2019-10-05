@@ -94,6 +94,7 @@ class HibernateUnitOfWorkProvider
 			CompletableFuture.supplyAsync(
 				() ->
 				{
+					itsUnitOfWork.close();
 					itsUnitOfWork = null;
 					return null;
 				},

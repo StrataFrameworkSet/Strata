@@ -66,15 +66,23 @@ class CompletionStageTest
                     if (context.hasException())
                         context
                             .getException()
+                            .ifPresent(exception -> System.out.println(exception.toString()));
+                            /*
                             .ifPresentOrElse(
                                 exception -> System.out.println(exception.toString()),
                                 () -> System.out.println("error 1"));
+
+                             */
                     else
                         context
                             .getResult()
+                            .ifPresent(result -> System.out.println(result));
+                            /*
                             .ifPresentOrElse(
                                 result -> System.out.println(result),
                                 () -> System.out.println("error 2"));
+
+                             */
                 });
 
     }

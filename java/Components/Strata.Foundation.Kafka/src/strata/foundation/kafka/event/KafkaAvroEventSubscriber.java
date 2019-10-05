@@ -4,9 +4,8 @@
 
 package strata.foundation.kafka.event;
 
+import org.reactivestreams.Subscription;
 import strata.foundation.core.event.IEventSubscriber;
-
-import java.util.concurrent.Flow.Subscription;
 
 public
 class KafkaAvroEventSubscriber<E>
