@@ -5,6 +5,7 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/Tests/Strata.TestSuite.Stage/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Domain.Redis/pom.xml" />
       </list>
     </option>
   </component>

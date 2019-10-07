@@ -22,6 +22,7 @@
       <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Domain.InMemoryTest/Strata.Domain.InMemoryTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Domain.InMemoryTest/Strata.Domain.InMemoryTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/Components/Strata.Domain.Netty/Strata.Domain.Netty.iml" filepath="$PROJECT_DIR$/Components/Strata.Domain.Netty/Strata.Domain.Netty.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Domain.NettyTest/Strata.Domain.NettyTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Domain.NettyTest/Strata.Domain.NettyTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Components/Strata.Domain.Redis/Strata.Domain.Redis.iml" filepath="$PROJECT_DIR$/Components/Strata.Domain.Redis/Strata.Domain.Redis.iml" />
       <module fileurl="file://$PROJECT_DIR$/Components/Strata.Domain.Vertx/Strata.Domain.Vertx.iml" filepath="$PROJECT_DIR$/Components/Strata.Domain.Vertx/Strata.Domain.Vertx.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Domain.VertxTest/Strata.Domain.VertxTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Domain.VertxTest/Strata.Domain.VertxTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/Components/Strata.Foundation.Core/Strata.Foundation.Core.iml" filepath="$PROJECT_DIR$/Components/Strata.Foundation.Core/Strata.Foundation.Core.iml" />
