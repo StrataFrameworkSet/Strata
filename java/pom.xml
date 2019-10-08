@@ -20,8 +20,7 @@
         <module>Components/Strata.Domain.Core</module>
         <module>Components/Strata.Domain.InMemory</module>
         <module>Components/Strata.Domain.Hibernate</module>
-        <module>Components/Strata.Domain.Vertx</module>
-        <module>Components/Strata.Domain.Netty</module>
+        <module>Components/Strata.Domain.Redis</module>
         <module>Components/Strata.Application.Core</module>
         <module>Components/Strata.Application.Vertx</module>
         <module>Components/Strata.Application.Netty</module>
@@ -33,8 +32,7 @@
         <module>Tests/Strata.Domain.CoreTest</module>
         <module>Tests/Strata.Domain.InMemoryTest</module>
         <module>Tests/Strata.Domain.HibernateTest</module>
-        <module>Tests/Strata.Domain.VertxTest</module>
-        <module>Tests/Strata.Domain.NettyTest</module>
+        <module>Tests/Strata.Domain.RedisTest</module>
         <module>Tests/Strata.Application.CoreTest</module>
         <module>Tests/Strata.Application.VertxTest</module>
         <module>Tests/Strata.Application.NettyTest</module>

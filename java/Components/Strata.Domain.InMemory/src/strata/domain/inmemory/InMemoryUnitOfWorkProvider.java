@@ -30,13 +30,9 @@ import strata.domain.core.unitofwork.IUnitOfWorkProvider;
 import strata.foundation.core.utility.Pair;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionStage;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * Contains the shared lock and in-memory transactions used by related
@@ -65,14 +61,24 @@ class InMemoryUnitOfWorkProvider
 	public 
 	InMemoryUnitOfWorkProvider()
 	{
-		super();
-        itsEntities     = new HashMap<>();
-		itsNamedQueries = new NamedQueryMap();
-		itsReplicators  = new HashMap<>();
-		itsRetrievers   = new HashMap<>();
-		itsExecutor     = Executors.newSingleThreadExecutor();
-        itsUnitOfWork   = new InMemoryUnitOfWork(this,itsEntities);
+		this(new ConcurrentHashMap<>());
 	}
+
+    /************************************************************************
+     * Creates a new InMemoryUnitOfWorkProvider.
+     *
+     */
+    public
+    InMemoryUnitOfWorkProvider(Map<EntityIdentifier,Object> entities)
+    {
+        super();
+        itsEntities     = entities;
+        itsNamedQueries = new NamedQueryMap();
+        itsReplicators  = new ConcurrentHashMap<>();
+        itsRetrievers   = new ConcurrentHashMap<>();
+        itsExecutor     = Executors.newSingleThreadExecutor();
+        itsUnitOfWork   = new InMemoryUnitOfWork(this,itsEntities);
+    }
 
 	/************************************************************************
      * {@inheritDoc} 

@@ -22,9 +22,10 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata.domain.inmemory;
+package strata.domain.redis.unitofwork;
 
 
+import strata.domain.redis.namedquery.RedisNamedQuery;
 import strata.foundation.core.utility.Pair;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,7 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public 
 class NamedQueryMap
     extends    ConcurrentHashMap<
-                   Pair<Class<?>,String>,InMemoryNamedQuery<?>>
+                   Pair<Class<?>,String>,RedisNamedQuery<?>>
     implements INamedQueryMap
 {
     private static final long serialVersionUID = -4223770672095379723L;

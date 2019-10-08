@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>strataframework.org</groupId>
-    <artifactId>Strata.Domain.Netty</artifactId>
+    <artifactId>Strata.Domain.RedisTest</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -17,4 +17,18 @@
         <sourceDirectory>${basedir}/src</sourceDirectory>
     </build>
 
+    <dependencies>
+        <dependency>
+            <groupId>strataframework.org</groupId>
+            <artifactId>Strata.Domain.Redis</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+    </dependencies>
+
+    
 </project>

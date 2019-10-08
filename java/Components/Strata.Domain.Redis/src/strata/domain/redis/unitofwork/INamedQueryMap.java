@@ -1,5 +1,5 @@
 // ##########################################################################
-// # File Name:	NamedQueryMap.java
+// # File Name:	INamedQueryMap.java
 // #
 // # Copyright:	2017, Sapientia Systems, LLC. All Rights Reserved.
 // #
@@ -22,12 +22,12 @@
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata.domain.inmemory;
+package strata.domain.redis.unitofwork;
 
-
+import strata.domain.redis.namedquery.RedisNamedQuery;
 import strata.foundation.core.utility.Pair;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 /****************************************************************************
  * 
@@ -37,23 +37,8 @@ import java.util.concurrent.ConcurrentHashMap;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class NamedQueryMap
-    extends    ConcurrentHashMap<
-                   Pair<Class<?>,String>,InMemoryNamedQuery<?>>
-    implements INamedQueryMap
-{
-    private static final long serialVersionUID = -4223770672095379723L;
-
-    /************************************************************************
-     * Creates a new {@code NamedQueryMap}. 
-     *
-     */
-    public
-    NamedQueryMap()
-    {
-        super();
-    }
-    
-}
+interface INamedQueryMap
+    extends Map<Pair<Class<?>,String>,RedisNamedQuery<?>>
+{}
 
 // ##########################################################################

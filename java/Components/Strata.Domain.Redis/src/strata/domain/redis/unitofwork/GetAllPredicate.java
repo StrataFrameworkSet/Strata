@@ -1,33 +1,30 @@
 // ##########################################################################
-// # File Name:	NamedQueryMap.java
+// # File Name:	GetAllPredicate.java
 // #
-// # Copyright:	2017, Sapientia Systems, LLC. All Rights Reserved.
+// # Copyright:	2012, Sapientia Systems, LLC. All Rights Reserved.
 // #
-// # License:	This file is part of the StrataPersistence Framework.
+// # License:	This file is part of the StrataEntity Framework.
 // #
-// #   			The StrataPersistence Framework is free software: you 
+// #   			The StrataEntity Framework is free software: you 
 // #			can redistribute it and/or modify it under the terms of 
 // #			the GNU Lesser General Public License as published by
 // #    		the Free Software Foundation, either version 3 of the 
 // #			License, or (at your option) any later version.
 // #
-// #    		The StrataPersistence Framework is distributed in the 
+// #    		The StrataEntity Framework is distributed in the 
 // #			hope that it will be useful, but WITHOUT ANY WARRANTY; 
 // #			without even the implied warranty of MERCHANTABILITY or 
 // #			FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser 
 // #			General Public License for more details.
 // #
 // #    		You should have received a copy of the GNU Lesser 
-// #			General Public License along with the StrataPersistence
+// #			General Public License along with the StrataEntity
 // #			Framework. If not, see http://www.gnu.org/licenses/.
 // ##########################################################################
 
-package strata.domain.inmemory;
+package strata.domain.redis.unitofwork;
 
-
-import strata.foundation.core.utility.Pair;
-
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 /****************************************************************************
  * 
@@ -36,24 +33,27 @@ import java.util.concurrent.ConcurrentHashMap;
  * @conventions	
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
-public 
-class NamedQueryMap
-    extends    ConcurrentHashMap<
-                   Pair<Class<?>,String>,InMemoryNamedQuery<?>>
-    implements INamedQueryMap
+public class GetAllPredicate<T>
+    implements IPredicate<T>
 {
-    private static final long serialVersionUID = -4223770672095379723L;
 
     /************************************************************************
-     * Creates a new {@code NamedQueryMap}. 
+     * Creates a new {@code GetAllPredicate}. 
      *
      */
-    public
-    NamedQueryMap()
+    public 
+    GetAllPredicate() {}
+
+    /************************************************************************
+     * {@inheritDoc} 
+     */
+    @Override
+    public boolean 
+    evaluate(T target,Map<String,Object> inputs)
     {
-        super();
+        return true;
     }
-    
+
 }
 
 // ##########################################################################

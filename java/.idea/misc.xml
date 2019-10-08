@@ -6,7 +6,16 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/Tests/Strata.TestSuite.Stage/pom.xml" />
         <option value="$PROJECT_DIR$/Components/Strata.Domain.Redis/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Domain.RedisTest/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/Components/Strata.Domain.Netty/pom.xml" />
+        <option value="$PROJECT_DIR$/Components/Strata.Domain.Vertx/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Domain.NettyTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Domain.VertxTest/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8 (2)" project-jdk-type="JavaSDK" />

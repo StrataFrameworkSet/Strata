@@ -347,19 +347,21 @@ class InMemoryUnitOfWork
             CompletableFuture.supplyAsync(
                 () ->
                 {
-                    System.out.println("InMemoryUnitOfWork.doCommit: " + Thread.currentThread().getName());
-                    try
+                    synchronized (itsEntities)
                     {
-                        commitInserted();
-                        commitUpdated();
-                        commitRemoved();
-                        return null;
-                    }
-                    catch (Exception cause)
-                    {
-                        throw
-                            new CompletionException(
-                                new CommitFailedException(cause));
+                        try
+                        {
+                            commitInserted();
+                            commitUpdated();
+                            commitRemoved();
+                            return null;
+                        }
+                        catch (Exception cause)
+                        {
+                            throw
+                                new CompletionException(
+                                    new CommitFailedException(cause));
+                        }
                     }
                 },
                 itsExecutor);
@@ -376,7 +378,6 @@ class InMemoryUnitOfWork
             CompletableFuture.supplyAsync(
                 () ->
                 {
-                    System.out.println("InMemoryUnitOfWork.doRollback: " + Thread.currentThread().getName());
                     itsInserted.clear();
                     itsUpdated.clear();
                     itsRemoved.clear();
