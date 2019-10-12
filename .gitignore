@@ -123,3 +123,9 @@ buildNumber.properties
 
 # Test Results
 **/TEST-*.xml
+
+# Generated Code
+generated/
+
+# Imported Code
+imported/
