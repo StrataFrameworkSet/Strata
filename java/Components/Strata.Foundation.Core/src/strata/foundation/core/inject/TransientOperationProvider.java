@@ -1,0 +1,31 @@
+//////////////////////////////////////////////////////////////////////////////
+// TransientOperationProvider.java
+//////////////////////////////////////////////////////////////////////////////
+
+package strata.foundation.core.inject;
+
+import com.google.inject.Injector;
+
+import javax.inject.Inject;
+
+public
+class TransientOperationProvider
+    implements IOperationProvider
+{
+    private final Injector itsInjector;
+
+    @Inject
+    public
+    TransientOperationProvider(Injector injector)
+    {
+        itsInjector = injector;
+    }
+    @Override
+    public Operation
+    get()
+    {
+        return new Operation(itsInjector);
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////
