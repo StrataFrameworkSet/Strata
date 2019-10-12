@@ -21,6 +21,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutorService;
+import java.util.stream.Collectors;
 
 
 /****************************************************************************
@@ -29,6 +30,7 @@ import java.util.concurrent.ExecutorService;
 public 
 class RedisUnitOfWork
     extends AbstractUnitOfWork
+    implements IReadOnlyUnitOfWork
 {
     private Map<EntityIdentifier,Object> itsInserted;
     private Map<EntityIdentifier,Object> itsUpdated;
@@ -60,6 +62,84 @@ class RedisUnitOfWork
     public void 
     close()
     {
+    }
+
+    /************************************************************************
+     * {@inheritDoc}
+     */
+    @Override
+    public <E> Collection<E>
+    getEntitiesByType(Class<E> entityType)
+    {
+        Set<E> entities =
+            new HashSet<>(
+                itsEntities
+                    .getEntitiesByType(entityType));
+
+        entities.addAll(
+            itsInserted
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().getType().equals(entityType))
+                .map(entry -> entityType.cast(entry.getValue()))
+                .collect(Collectors.toSet()));
+
+        entities.addAll(
+            itsUpdated
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().getType().equals(entityType))
+                .map(entry -> entityType.cast(entry.getValue()))
+                .collect(Collectors.toSet()));
+
+        entities
+            .stream()
+            .filter(entry -> !itsRemoved.containsValue(entry))
+            .collect(Collectors.toSet());
+
+        return entities;
+
+    }
+
+    /************************************************************************
+     * {@inheritDoc}
+     */
+    @Override
+    public <K,E> Collection<E>
+    getEntitiesIn(
+        Class<E>              entityType,
+        Set<K>                keys,
+        IMembershipCheck<K,E> predicate)
+    {
+        Set<E> entities =
+            new HashSet<>(
+                itsEntities
+                    .getEntitiesIn(entityType,keys));
+
+        entities.addAll(
+            itsInserted
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().getType().equals(entityType))
+                .map(entry -> entityType.cast(entry.getValue()))
+                .filter(entity -> predicate.isMember(keys,entity))
+                .collect(Collectors.toSet()));
+
+        entities.addAll(
+            itsUpdated
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().getType().equals(entityType))
+                .map(entry -> entityType.cast(entry.getValue()))
+                .filter(entity -> predicate.isMember(keys,entity))
+                .collect(Collectors.toSet()));
+
+        entities
+            .stream()
+            .filter(entry -> !itsRemoved.containsValue(entry))
+            .collect(Collectors.toSet());
+
+        return entities;
     }
 
     /************************************************************************

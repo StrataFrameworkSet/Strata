@@ -24,7 +24,7 @@
 
 package strata.domain.redis.unitofwork;
 
-import strata.domain.redis.namedquery.RedisNamedQuery;
+import strata.domain.redis.namedquery.IRedisNamedQuery;
 import strata.foundation.core.utility.Pair;
 
 import java.util.Map;
@@ -38,7 +38,7 @@ import java.util.Map;
  */
 public 
 interface INamedQueryMap
-    extends Map<Pair<Class<?>,String>,RedisNamedQuery<?>>
+    extends Map<Pair<Class<?>,String>,IRedisNamedQuery<?>>
 {}
 
 // ##########################################################################

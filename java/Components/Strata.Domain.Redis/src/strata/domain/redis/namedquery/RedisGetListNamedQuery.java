@@ -28,10 +28,9 @@ package strata.domain.redis.namedquery;
 import strata.domain.core.namedquery.AbstractNamedQuery;
 import strata.domain.core.namedquery.INamedQuery;
 import strata.domain.core.namedquery.NotUniqueException;
-import strata.domain.redis.unitofwork.IPredicate;
-import strata.domain.redis.unitofwork.RedisEntityMap;
+import strata.domain.redis.unitofwork.IMembershipCheck;
+import strata.domain.redis.unitofwork.IReadOnlyUnitOfWork;
 import strata.domain.redis.unitofwork.RedisUnitOfWorkProvider;
-import strata.foundation.core.utility.JsonObjectMapper;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -48,16 +47,16 @@ import java.util.concurrent.CompletionStage;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class RedisNamedQuery<T>
+class RedisGetListNamedQuery<K,T>
     extends AbstractNamedQuery<T>
 	implements IRedisNamedQuery<T>
 {
 	private RedisUnitOfWorkProvider itsProvider;
-	private RedisEntityMap          itsEntities;
+	private Class<K> 				itsKeyType;
 	private Class<T> 				itsType;
-	private IPredicate<T> 			itsPredicate;
-	private Collection<T> 			itsObjects;
-	private List<T> 				itsResults;
+	private String 					itsIdsParameterName;
+	private IMembershipCheck<K,T>   itsMembershipCheck;
+	private List<T>   		        itsResults;
 	private Iterator<T> 			itsIterator;
 
 	/************************************************************************
@@ -66,20 +65,20 @@ class RedisNamedQuery<T>
 	 *
 	 */
 	public
-	RedisNamedQuery(
+	RedisGetListNamedQuery(
 		RedisUnitOfWorkProvider provider,
 		String 					name,
+		Class<K>				keyType,
 		Class<T> 				type,
-		IPredicate<T>			predicate)
+		String                  idsParameterName,
+		IMembershipCheck<K,T>   membershipCheck)
 	{
 		super(type.getCanonicalName() + "." + name);
 		itsProvider      = provider;
-		itsEntities      = new RedisEntityMap(
-								itsProvider.getClient(),
-								new JsonObjectMapper<>());
+		itsKeyType 		 = keyType;
 		itsType          = type;
-		itsPredicate	 = predicate;
-		itsObjects       = itsEntities.getEntitiesByType( itsType );
+		itsIdsParameterName = idsParameterName;
+		itsMembershipCheck = membershipCheck;
 		itsResults       = null;
 		itsIterator      = null;
 
@@ -91,13 +90,12 @@ class RedisNamedQuery<T>
 	 *
 	 */
 	public
-	RedisNamedQuery(RedisNamedQuery<T> other)
+	RedisGetListNamedQuery(RedisGetListNamedQuery<K,T> other)
 	{
 		super(other);
 		itsProvider       = other.itsProvider;
 		itsType          = other.itsType;
-		itsPredicate	 = other.itsPredicate;
-		itsObjects       = itsEntities.getEntitiesByType( itsType );
+		itsIdsParameterName = other.itsIdsParameterName;
 		itsResults       = null;
 		itsIterator      = null;
 	}
@@ -106,10 +104,10 @@ class RedisNamedQuery<T>
 	 * {@inheritDoc} 
 	 */
 	@Override
-	public RedisNamedQuery<T>
+	public RedisGetListNamedQuery<K,T>
 	copy()
 	{
-	    return new RedisNamedQuery<T>( this );
+	    return new RedisGetListNamedQuery<K,T>( this );
 	}
 
 	/************************************************************************
@@ -120,7 +118,6 @@ class RedisNamedQuery<T>
     public INamedQuery<T> 
     clear()
     {
-        itsObjects = itsEntities.getEntitiesByType( itsType );
         itsResults = null;
         itsIterator = null;
         return this;
@@ -243,9 +240,8 @@ class RedisNamedQuery<T>
 	{
 		if ( itsResults != null )
 			return;
-		
-		itsObjects  = itsEntities.getEntitiesByType( itsType );
-		itsResults  = getResults( getInputs().getNamedInputs(),itsObjects );
+
+		itsResults  = getResults( getInputs().getNamedInputs() );
 		itsIterator = itsResults.iterator();
 	}
 	
@@ -253,20 +249,35 @@ class RedisNamedQuery<T>
 	 *  
 	 *
 	 * @param inputs
-	 * @param objects
 	 * @return
 	 */
 	protected List<T>
-	getResults(Map<String,Object> inputs,Collection<T> objects)
+	getResults(Map<String,Object> inputs)
 	{
-		List<T> output = new ArrayList<T>();
-		
-		for (T entry : objects)
-			if ( itsPredicate.evaluate( entry,inputs ) )
-				output.add( entry );
-		
-		return output;
+		Set<K> keys = null;
+		Collection<T> output = null;
+
+		if (!inputs.containsKey(itsIdsParameterName))
+			throw
+				new IllegalArgumentException(
+					"query input does not contain '" +
+						itsIdsParameterName + "'");
+
+		keys = (Set<K>)inputs.get(itsIdsParameterName);
+		output = getUnitOfWork().getEntitiesIn(itsType,keys,itsMembershipCheck);
+
+		try
+		{
+			return (List<T>)output;
+		}
+		catch (ClassCastException e)
+		{
+			return new ArrayList<>(output);
+		}
 	}
+
+	protected IReadOnlyUnitOfWork
+	getUnitOfWork() { return itsProvider.getReadOnlyUnitOfWork(); }
 }
 
 

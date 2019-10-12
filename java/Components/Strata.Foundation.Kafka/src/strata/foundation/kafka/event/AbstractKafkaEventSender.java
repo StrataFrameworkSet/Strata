@@ -22,6 +22,7 @@ class AbstractKafkaEventSender<E>
 {
     private final Map<String,Object> itsProperties;
     private final IActionQueue       itsQueue;
+    private final IKeyProvider<E>    itsProvider;
     private final String             itsTopic;
     private final Class<E>           itsType;
     private Producer<String,E>       itsProducer;
@@ -30,11 +31,13 @@ class AbstractKafkaEventSender<E>
     AbstractKafkaEventSender(
         Map<String,Object> properties,
         IActionQueue       queue,
+        IKeyProvider<E>    provider,
         Class<E>           type,
         String             topic)
     {
         itsProperties = initializeProperties(properties);
         itsQueue = queue;
+        itsProvider = provider;
         itsTopic = topic;
         itsQueue.register(() -> open(),() -> close());
         itsType = type;
@@ -82,7 +85,7 @@ class AbstractKafkaEventSender<E>
             () ->
                 getProducer()
                     .send(
-                        createRecord(itsTopic,event),
+                        createRecord(itsTopic,getKey(event),event),
                         (result,exception) ->
                         {
                             if (result == null)
@@ -100,10 +103,22 @@ class AbstractKafkaEventSender<E>
         return itsProducer;
     }
 
-    protected ProducerRecord<String,E>
-    createRecord(String topic,E payload)
+    protected String
+    getKey(E event)
     {
-        return new ProducerRecord<>(itsTopic,payload);
+        try
+        {
+            return itsProvider.getKey(event);
+        }
+        catch (Throwable t)
+        {
+            return null;
+        }
+    }
+    protected ProducerRecord<String,E>
+    createRecord(String topic,String key,E payload)
+    {
+        return new ProducerRecord<>(itsTopic,key,payload);
     }
 
     protected Producer<String,E>

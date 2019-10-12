@@ -26,6 +26,7 @@ class KafkaJsonFooEventSender
         super(
             getProperties(),
             queue,
+            e -> e.getSource().getId(),
             FooEvent.class,
             "foo.events.json");
     }

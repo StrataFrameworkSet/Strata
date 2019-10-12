@@ -28,10 +28,11 @@ import io.lettuce.core.RedisClient;
 import strata.domain.core.repository.IKeyRetriever;
 import strata.domain.core.unitofwork.IUnitOfWork;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
-import strata.domain.redis.namedquery.RedisNamedQuery;
+import strata.domain.redis.inject.IRedisClientProvider;
+import strata.domain.redis.namedquery.IRedisNamedQuery;
 import strata.foundation.core.utility.Pair;
 
-import java.util.List;
+import javax.inject.Inject;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -55,6 +56,17 @@ class RedisUnitOfWorkProvider
 	private ExecutorService                      itsExecutor;
     private RedisUnitOfWork                      itsUnitOfWork;
 
+
+    /************************************************************************
+     * Creates a new RedisUnitOfWorkProvider.
+     *
+     */
+    @Inject
+    public
+    RedisUnitOfWorkProvider(IRedisClientProvider provider)
+    {
+        this(provider.get());
+    }
 
     /************************************************************************
      * Creates a new RedisUnitOfWorkProvider.
@@ -120,16 +132,30 @@ class RedisUnitOfWorkProvider
     }
 
     /************************************************************************
+     *
+     */
+    public RedisClient
+    getClient() { return itsClient; }
+
+    public IReadOnlyUnitOfWork
+    getReadOnlyUnitOfWork()
+    {
+        if ( itsUnitOfWork == null || !itsUnitOfWork.isActive() )
+            itsUnitOfWork = new RedisUnitOfWork(this,itsClient);
+
+        return itsUnitOfWork;
+    }
+
+    /************************************************************************
      *  
      *
      * @param type
      * @param query
      */
     public <T> RedisUnitOfWorkProvider
-    insertNamedQuery(Class<T> type,RedisNamedQuery<T> query)
+    insertNamedQuery(Class<T> type,IRedisNamedQuery<T> query)
     {
-        Pair<Class<?>,String> key =
-            new Pair<Class<?>,String>(type,query.getName());
+        Pair<Class<?>,String> key = Pair.create(type,query.getName());
         
         itsNamedQueries.put(key,query);
         return this;
@@ -162,33 +188,7 @@ class RedisUnitOfWorkProvider
         itsRetrievers.put( type,retriever );
         return this;
     }
-    
-    /************************************************************************
-     *  
-     *
-     * @param type
-     * @return
-     */
-    public <T> List<T>
-    getEntitiesByType(Class<T> type)
-    {
-        /*
-        List<T> entities = new ArrayList<T>();
-        
-        for (
-            Map.Entry<EntityIdentifier,Object> entry:
-                itsClient.entrySet())
-        {
-            if ( type.isAssignableFrom( entry.getKey().getType() ) )
-                entities.add( type.cast( entry.getValue() ) );
-        }
-        
-        return entities;
 
-         */
-        throw new UnsupportedOperationException("not implemented yet");
-    }
-    
     /************************************************************************
      *  
      *
@@ -196,13 +196,13 @@ class RedisUnitOfWorkProvider
      * @return
      */
     @SuppressWarnings("unchecked")
-    public <T> RedisNamedQuery<T>
+    public <T> IRedisNamedQuery<T>
     getNamedQuery(Class<T> type,String queryName)
     {
         Pair<Class<?>,String> key =
-            new Pair<Class<?>,String>( type,type.getName() + "." + queryName );
+            Pair.create(type,type.getName() + "." + queryName);
         
-        return (RedisNamedQuery<T>)itsNamedQueries.get( key );
+        return (IRedisNamedQuery<T>)itsNamedQueries.get( key );
     }
     
     /************************************************************************

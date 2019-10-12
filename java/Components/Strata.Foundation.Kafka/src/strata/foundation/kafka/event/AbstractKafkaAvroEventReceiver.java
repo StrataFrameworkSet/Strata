@@ -20,7 +20,7 @@ class AbstractKafkaAvroEventReceiver<E,L extends IEventListener<E>>
         Class<E>           type,
         String             topic)
     {
-        super(properties,type,topic);
+        super(initializeProperties(properties),type,topic);
     }
 
     private static Map<String,Object>

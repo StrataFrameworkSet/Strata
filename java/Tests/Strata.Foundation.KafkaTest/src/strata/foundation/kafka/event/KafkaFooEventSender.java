@@ -9,7 +9,6 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import strata.foundation.core.action.IActionQueue;
 import strata.foundation.core.event.FooEvent;
 import strata.foundation.core.event.IFooEventSender;
-import strata.foundation.core.utility.JsonObjectMapper;
 
 import javax.inject.Inject;
 import java.util.HashMap;
@@ -17,16 +16,18 @@ import java.util.Map;
 
 public
 class KafkaFooEventSender
-    extends KafkaEventSender<FooEvent>
+    extends AbstractKafkaEventSender<FooEvent>
     implements IFooEventSender
 {
     @Inject
-    public KafkaFooEventSender(IActionQueue q)
+    public
+    KafkaFooEventSender(IActionQueue q)
     {
         super(
             getProperties(),
-            new JsonObjectMapper<>(),
             q,
+            e -> e.getSource().getId(),
+            FooEvent.class,
             "foo.events");
     }
 

@@ -93,7 +93,7 @@ class UnitOfWorkCompletionContext
     public UnitOfWorkCompletionContext
     setRequest(ServiceRequest request)
     {
-        itsRequest = Optional.of(request);
+        itsRequest = Optional.ofNullable(request);
         return this;
     }
 

@@ -111,7 +111,9 @@ class AsynchronousUnitOfWorkInterceptor
                     {
                         System.out.println("initializing reply");
                         context.initializeReply();
+                        System.out.println("execution actions");
                         executeActions(result.getInvocation());
+                        System.out.println("returning context from proceed");
                         return context;
                     })
                 .exceptionally(

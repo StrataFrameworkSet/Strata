@@ -18,12 +18,14 @@ class AbstractKafkaAvroEventSender<E>
     AbstractKafkaAvroEventSender(
         Map<String,Object> properties,
         IActionQueue       queue,
+        IKeyProvider<E>    provider,
         Class<E>           type,
         String             topic)
     {
         super(
             initializeProperties(properties),
             queue,
+            provider,
             type,
             topic);
     }

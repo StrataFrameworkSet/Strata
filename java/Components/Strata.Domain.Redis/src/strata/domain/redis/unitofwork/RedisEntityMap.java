@@ -12,6 +12,9 @@ import strata.domain.core.unitofwork.CommitFailedException;
 import strata.domain.core.unitofwork.OptimisticLockException;
 import strata.foundation.core.utility.IObjectMapper;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 public
@@ -69,7 +72,65 @@ class RedisEntityMap
     public Object
     get(EntityIdentifier key)
     {
-        return itsMapper.toObject(key.getType(),itsReader.get(key.toString()));
+        try
+        {
+            return
+                itsMapper.toObject(
+                    key.getType(),itsReader.get(key.toString()));
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public <E,K> E
+    get(Class<E> entityType,K key)
+    {
+        try
+        {
+            return
+                itsMapper.toObject(
+                    entityType,
+                    itsReader.get(
+                        new EntityIdentifier(entityType,key).toString()));
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public <E> Collection<E>
+    getEntitiesByType(Class<E> entityType)
+    {
+        Collection<E> entities = new ArrayList<>();
+        List<String>  keys = itsReader.keys(entityType.getCanonicalName() + ":");
+
+        for (String key:keys)
+        {
+            E entity =
+                itsMapper.toObject(entityType,itsReader.get(key));
+
+            if (entity != null)
+                entities.add(entity);
+        }
+        return entities;
+    }
+
+    public <E,K> Collection<E>
+    getEntitiesIn(Class<E> entityType,Set<K> keys)
+    {
+        Collection<E> entities = new ArrayList<>();
+
+        for (K key:keys)
+        {
+            E entity = get(entityType,key);
+
+            if (entity != null)
+                entities.add(entity);
+        }
+        return entities;
     }
 
     public boolean

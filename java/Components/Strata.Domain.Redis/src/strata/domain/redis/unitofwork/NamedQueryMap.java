@@ -25,7 +25,7 @@
 package strata.domain.redis.unitofwork;
 
 
-import strata.domain.redis.namedquery.RedisNamedQuery;
+import strata.domain.redis.namedquery.IRedisNamedQuery;
 import strata.foundation.core.utility.Pair;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -40,7 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public 
 class NamedQueryMap
     extends    ConcurrentHashMap<
-                   Pair<Class<?>,String>,RedisNamedQuery<?>>
+                   Pair<Class<?>,String>,IRedisNamedQuery<?>>
     implements INamedQueryMap
 {
     private static final long serialVersionUID = -4223770672095379723L;

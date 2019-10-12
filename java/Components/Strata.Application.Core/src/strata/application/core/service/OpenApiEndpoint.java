@@ -20,10 +20,14 @@ import java.util.Scanner;
 public
 class OpenApiEndpoint
 {
-    private final String itsOpenApiJsonUrl;
+    private String itsOpenApiJsonUrl;
     private final static String TEMPLATE_PARAMETER = "{openapi.json.url}";
 
-    public OpenApiEndpoint(String openapiJsonUrl)
+    public
+    OpenApiEndpoint() { this(null); }
+
+    public
+    OpenApiEndpoint(String openapiJsonUrl)
     {
         itsOpenApiJsonUrl = openapiJsonUrl;
     }
@@ -74,6 +78,9 @@ class OpenApiEndpoint
         return result.toString();
 
     }
+
+    public void
+    setOpenApiUrl(String openApiUrl) { itsOpenApiJsonUrl = openApiUrl; }
 }
 
 //////////////////////////////////////////////////////////////////////////////
