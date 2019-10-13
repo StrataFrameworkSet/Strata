@@ -17,10 +17,11 @@ class RequestOrOperationScope
 {
     private final Scope itsImplementation;
 
-    public RequestOrOperationScope()
+    public
+    RequestOrOperationScope()
     {
         if (ResteasyContext.getContextDataMap() != null)
-            itsImplementation = new GuiceRequestScope();
+            itsImplementation = new RequestScope();
         else
             itsImplementation = new OperationScope();
     }

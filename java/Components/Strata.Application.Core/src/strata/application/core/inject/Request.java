@@ -2,23 +2,24 @@
 // Operation.java
 //////////////////////////////////////////////////////////////////////////////
 
-package strata.foundation.core.inject;
+package strata.application.core.inject;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
+import org.jboss.resteasy.core.ResteasyContext;
 
 public
-class Operation
+class Request
     implements AutoCloseable
 {
     private final Injector  itsInjector;
 
     public
-    Operation(Injector injector)
+    Request(Injector injector)
     {
         itsInjector = injector;
-        OperationContext.beginScope();
+        ResteasyContext.addContextDataLevel();
     }
 
     public <T> T
@@ -43,7 +44,7 @@ class Operation
     public void
     close()
     {
-        OperationContext.endScope();
+        ResteasyContext.removeContextDataLevel();
     }
 }
 

@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////
-// GuiceRequestScope.java
+// RequestScope.java
 //////////////////////////////////////////////////////////////////////////////
 
 package strata.application.core.inject;
@@ -13,7 +13,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 public
-class GuiceRequestScope
+class RequestScope
     implements Scope
 {
     @Override
