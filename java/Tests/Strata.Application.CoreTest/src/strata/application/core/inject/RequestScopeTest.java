@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////
-// OperationScopeTest.java
+// RequestScopeTest.java
 //////////////////////////////////////////////////////////////////////////////
 
-package strata.foundation.core.inject;
+package strata.application.core.inject;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -20,9 +20,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public
-class OperationScopeTest
+class RequestScopeTest
 {
-    private IOperationProvider itsProvider;
+    private IRequestProvider itsProvider;
 
     @Before
     public void
@@ -30,7 +30,7 @@ class OperationScopeTest
     {
         Injector injector = Guice.createInjector(new TestModule());
 
-        itsProvider = injector.getInstance(IOperationProvider.class);
+        itsProvider = injector.getInstance(IRequestProvider.class);
     }
 
     @After
@@ -42,16 +42,16 @@ class OperationScopeTest
 
     @Test
     public void
-    testOperationScope()
+    testRequestScope()
     {
         Map<Integer,List<Integer>> lists = new TreeMap<>();
 
         for (int i=0;i < 5;i++)
         {
-            try (Operation operation = itsProvider.get())
+            try (Request request = itsProvider.get())
             {
                 List<Integer> list =
-                    operation.getInstance(
+                    request.getInstance(
                         new TypeLiteral<List<Integer>>(){});
 
                 list.addAll(Arrays.asList(i,i,i,i,i));

@@ -21,7 +21,7 @@ class RequestOrThreadScope
     RequestOrThreadScope()
     {
         if (ResteasyContext.getContextDataMap() != null)
-            itsImplementation = new GuiceRequestScope();
+            itsImplementation = new RequestScope();
         else
             itsImplementation = new GuiceThreadScope();
     }
