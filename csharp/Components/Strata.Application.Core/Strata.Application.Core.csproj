@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Strata.Domain.Core\Strata.Domain.Core.csproj" />
+    <ProjectReference Include="..\Strata.Foundation.Core\Strata.Foundation.Core.csproj" />
+  </ItemGroup>
+
+</Project>
