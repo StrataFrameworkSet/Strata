@@ -5,6 +5,8 @@
 package strata.application.core.interception;
 
 import org.aopalliance.intercept.MethodInvocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
 import strata.domain.core.unitofwork.OptimisticLockException;
 import strata.foundation.core.action.IActionQueue;
@@ -26,7 +28,9 @@ public
 class AsynchronousUnitOfWorkInterceptor
     extends AsynchronousInterceptor
 {
-    private final int maxRetries;
+    private final int    maxRetries;
+    private final Logger logger =
+        LogManager.getLogger(AsynchronousUnitOfWorkInterceptor.class);
 
     /*************************************************************************
      * Creates a new instance of {@code UnitOfWorkInterceptor}.
@@ -74,6 +78,7 @@ class AsynchronousUnitOfWorkInterceptor
     protected CompletionStage<UnitOfWorkCompletionContext>
     getInitialStage(MethodInvocation invocation)
     {
+        logger.debug("getInitialStage");
         return
             getProvider(invocation)
                 .thenCompose(
@@ -89,6 +94,7 @@ class AsynchronousUnitOfWorkInterceptor
     protected CompletionStage<UnitOfWorkCompletionContext>
     getBeforeStage(final UnitOfWorkCompletionContext context)
     {
+        logger.debug("getBeforeStage");
         return
             CompletableFuture.supplyAsync(
                 () ->
@@ -104,22 +110,23 @@ class AsynchronousUnitOfWorkInterceptor
     protected CompletionStage<UnitOfWorkCompletionContext>
     getProceedStage(final UnitOfWorkCompletionContext context)
     {
+        logger.debug("getProceedStage");
         return
             getAttemptStage(context)
                .thenApply(
                     result ->
                     {
-                        System.out.println("initializing reply");
+                        logger.debug("initializing reply");
                         context.initializeReply();
-                        System.out.println("execution actions");
+                        logger.debug("execution actions");
                         executeActions(result.getInvocation());
-                        System.out.println("returning context from proceed");
+                        logger.debug("returning context from proceed");
                         return context;
                     })
                 .exceptionally(
                     e ->
                     {
-                        System.out.println("processing exception 2");
+                        logger.debug("processing exception in proceed stage");
                         onException(
                             context
                                 .setException(e)
@@ -133,6 +140,7 @@ class AsynchronousUnitOfWorkInterceptor
     protected CompletionStage<Object>
     getAfterStage(final UnitOfWorkCompletionContext context)
     {
+        logger.debug("getAfterStage");
         return
             CompletableFuture.supplyAsync(
                 () ->
@@ -148,9 +156,10 @@ class AsynchronousUnitOfWorkInterceptor
     protected CompletionStage<UnitOfWorkCompletionContext>
     getAttemptStage(final UnitOfWorkCompletionContext context)
     {
+        logger.debug("getAttemptStage");
         if (context.hasMoreAttempts())
         {
-            System.out.println("Attempt=" + (context.getAttempt()+1));
+            logger.debug("Attempt=" + (context.getAttempt()+1));
             context
                 .setRequest(getRequest(context.getInvocation()))
                 .clearException();
@@ -171,19 +180,19 @@ class AsynchronousUnitOfWorkInterceptor
                             .thenCompose(
                                 unitOfWork ->
                                 {
-                                    System.out.println("commit unit-of-work");
+                                    logger.debug("commit unit-of-work");
                                     return unitOfWork.commit();
                                 })
                             .thenCompose(
                                 ignore ->
                                 {
-                                    System.out.println("returning context");
+                                    logger.debug("returning context from attempt stage");
                                     return CompletableFuture.completedFuture(context);
                                 })
                             .exceptionally(
                                 exception ->
                                 {
-                                    System.out.println("processing exception 1");
+                                    logger.debug("processing exception in attempt stage");
                                     return
                                         await(
                                             context
@@ -193,15 +202,19 @@ class AsynchronousUnitOfWorkInterceptor
                                                 .thenCompose(
                                                     ignore ->
                                                     {
-                                                        System.out.println("debug 1: " + context.getExceptionIfPresent().getClass() );
+                                                        logger.debug(
+                                                            "exception: {}",
+                                                            context.getExceptionIfPresent().getClass() );
+
                                                         if (
                                                             context.getExceptionIfPresent()
                                                                 instanceof OptimisticLockException)
                                                         {
-                                                            System.out.println("debug 2");
+                                                            logger.debug("handling optimistic lock exception");
+
                                                             if (context.isLastAttempt())
                                                             {
-                                                                System.out.println("debug 3");
+                                                                logger.debug("last attempt - completing exceptionally");
                                                                 onException(
                                                                     context.getInvocation(),
                                                                     context.getExceptionIfPresent());
@@ -211,7 +224,7 @@ class AsynchronousUnitOfWorkInterceptor
                                                                         .completedFuture(context);
                                                             }
 
-                                                            System.out.println("retrying operation");
+                                                            logger.debug("retrying operation");
                                                             return
                                                                 getAttemptStage(
                                                                     context.incrementAttempt());
@@ -240,6 +253,7 @@ class AsynchronousUnitOfWorkInterceptor
     executeActions(MethodInvocation invocation)
         throws CompletionException
     {
+        logger.debug("executeActions");
         try
         {
             IActionQueue queue = getQueue(invocation);
@@ -263,6 +277,8 @@ class AsynchronousUnitOfWorkInterceptor
     protected CompletionStage<IUnitOfWorkProvider>
     getProvider(MethodInvocation invocation)
     {
+        logger.debug("getting unit of work provider");
+
         if (invocation.getThis() instanceof IUnitOfWorkPropertySupplier)
         {
             IUnitOfWorkProvider provider =
@@ -294,6 +310,8 @@ class AsynchronousUnitOfWorkInterceptor
     protected IActionQueue
     getQueue(MethodInvocation invocation)
     {
+        logger.debug("getting action queue");
+
         if (invocation.getThis() instanceof IUnitOfWorkPropertySupplier)
             return
                 ((IUnitOfWorkPropertySupplier)
@@ -316,7 +334,10 @@ class AsynchronousUnitOfWorkInterceptor
     {
         for (Object arg:invocation.getArguments())
             if (arg instanceof ServiceRequest)
+            {
+                logger.debug("getting service request");
                 return (ServiceRequest)arg;
+            }
 
         return null;
     }
@@ -325,6 +346,8 @@ class AsynchronousUnitOfWorkInterceptor
     protected void
     doBefore(MethodInvocation invocation)
     {
+        logger.debug("doBefore");
+
         try
         {
             super.doBefore(invocation);
@@ -339,6 +362,8 @@ class AsynchronousUnitOfWorkInterceptor
     protected CompletionStage<Object>
     doProceed(MethodInvocation invocation)
     {
+        logger.debug("doProceed");
+
         try
         {
             return (CompletionStage<Object>)super.doProceed(invocation);
@@ -353,6 +378,8 @@ class AsynchronousUnitOfWorkInterceptor
     protected void
     onException(MethodInvocation invocation,Throwable e)
     {
+        logger.debug("onException");
+
         try
         {
             super.onException(invocation,e);
@@ -367,6 +394,8 @@ class AsynchronousUnitOfWorkInterceptor
     protected void
     doAfter(MethodInvocation invocation)
     {
+        logger.debug("doAfter");
+
         try
         {
             super.doAfter(invocation);

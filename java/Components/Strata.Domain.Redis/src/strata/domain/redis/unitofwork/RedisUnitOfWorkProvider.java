@@ -28,11 +28,11 @@ import io.lettuce.core.RedisClient;
 import strata.domain.core.repository.IKeyRetriever;
 import strata.domain.core.unitofwork.IUnitOfWork;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
-import strata.domain.redis.inject.IRedisClientProvider;
 import strata.domain.redis.namedquery.IRedisNamedQuery;
+import strata.foundation.core.utility.IObjectMapper;
+import strata.foundation.core.utility.JsonObjectMapper;
 import strata.foundation.core.utility.Pair;
 
-import javax.inject.Inject;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -54,19 +54,8 @@ class RedisUnitOfWorkProvider
     private Map<Class<?>,IEntityReplicator<?,?>> itsReplicators;
 	private Map<Class<?>,IKeyRetriever<?,?>>     itsRetrievers;
 	private ExecutorService                      itsExecutor;
+	private IObjectMapper<Object,String>         itsMapper;
     private RedisUnitOfWork                      itsUnitOfWork;
-
-
-    /************************************************************************
-     * Creates a new RedisUnitOfWorkProvider.
-     *
-     */
-    @Inject
-    public
-    RedisUnitOfWorkProvider(IRedisClientProvider provider)
-    {
-        this(provider.get());
-    }
 
     /************************************************************************
      * Creates a new RedisUnitOfWorkProvider.
@@ -75,13 +64,26 @@ class RedisUnitOfWorkProvider
     public
     RedisUnitOfWorkProvider(RedisClient client)
     {
+        this(client,new JsonObjectMapper<>());
+    }
+
+    /************************************************************************
+     * Creates a new RedisUnitOfWorkProvider.
+     *
+     */
+    public
+    RedisUnitOfWorkProvider(
+        RedisClient                  client,
+        IObjectMapper<Object,String> mapper)
+    {
         super();
         itsClient       = client;
         itsNamedQueries = new NamedQueryMap();
         itsReplicators  = new ConcurrentHashMap<>();
         itsRetrievers   = new ConcurrentHashMap<>();
         itsExecutor     = Executors.newSingleThreadExecutor();
-        itsUnitOfWork   = new RedisUnitOfWork(this,itsClient);
+        itsMapper       = mapper;
+        itsUnitOfWork   = new RedisUnitOfWork(this);
     }
 
 	/************************************************************************
@@ -96,7 +98,7 @@ class RedisUnitOfWorkProvider
                 () ->
                 {
                     if ( itsUnitOfWork == null || !itsUnitOfWork.isActive() )
-                        itsUnitOfWork = new RedisUnitOfWork(this,itsClient);
+                        itsUnitOfWork = new RedisUnitOfWork(this);
 
                     return itsUnitOfWork;
                 },
@@ -137,11 +139,20 @@ class RedisUnitOfWorkProvider
     public RedisClient
     getClient() { return itsClient; }
 
+    /************************************************************************
+     *
+     */
+    public IObjectMapper<Object,String>
+    getMapper() { return itsMapper; }
+
+    /************************************************************************
+     *
+     */
     public IReadOnlyUnitOfWork
     getReadOnlyUnitOfWork()
     {
         if ( itsUnitOfWork == null || !itsUnitOfWork.isActive() )
-            itsUnitOfWork = new RedisUnitOfWork(this,itsClient);
+            itsUnitOfWork = new RedisUnitOfWork(this);
 
         return itsUnitOfWork;
     }

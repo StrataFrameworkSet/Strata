@@ -5,7 +5,6 @@
 
 package strata.domain.redis.unitofwork;
 
-import io.lettuce.core.RedisClient;
 import strata.domain.core.namedquery.INamedQuery;
 import strata.domain.core.repository.IKeyRetriever;
 import strata.domain.core.repository.InsertFailedException;
@@ -13,7 +12,6 @@ import strata.domain.core.repository.RemoveFailedException;
 import strata.domain.core.repository.UpdateFailedException;
 import strata.domain.core.unitofwork.AbstractUnitOfWork;
 import strata.domain.core.unitofwork.CommitFailedException;
-import strata.foundation.core.utility.JsonObjectMapper;
 
 import java.io.Serializable;
 import java.util.*;
@@ -43,15 +41,13 @@ class RedisUnitOfWork
      *
      */
     public
-    RedisUnitOfWork(
-        RedisUnitOfWorkProvider provider,
-        RedisClient             client)
+    RedisUnitOfWork(RedisUnitOfWorkProvider provider)
     {
         super( provider );
         itsInserted = new HashMap<>();
         itsUpdated  = new HashMap<>();
         itsRemoved  = new HashMap<>();
-        itsEntities = new RedisEntityMap(client,new JsonObjectMapper<>());
+        itsEntities = new RedisEntityMap(provider.getClient(),provider.getMapper());
         itsExecutor = provider.getExecutor();
     }
 
