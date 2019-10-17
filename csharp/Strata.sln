@@ -43,7 +43,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strata.Client.CoreTest", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strata.CodeGen.Plugin", "Applications\Strata.CodeGen.Plugin\Strata.CodeGen.Plugin.csproj", "{2718BBB1-D1E0-4522-BF70-9EBD246E7256}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strata.Foundation.Ninject", "Components\Strata.Foundation.Ninject\Strata.Foundation.Ninject.csproj", "{04971549-72AC-4B5B-8992-9789FABD45DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strata.Foundation.Ninject", "Components\Strata.Foundation.Ninject\Strata.Foundation.Ninject.csproj", "{04971549-72AC-4B5B-8992-9789FABD45DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strata.Foundation.StructureMap", "Components\Strata.Foundation.StructureMap\Strata.Foundation.StructureMap.csproj", "{AA4CF613-B0AA-4821-9F75-0A820CAA8083}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strata.Foundation.StructureMapTest", "Tests\Strata.Foundation.StructureMapTest\Strata.Foundation.StructureMapTest.csproj", "{ECCD1D42-EB70-4BA1-9130-8411F4C690EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strata.Foundation.NinjectTest", "Tests\Strata.Foundation.NinjectTest\Strata.Foundation.NinjectTest.csproj", "{C3D2BDC0-52C0-4D3A-A672-57C521DB55B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,6 +129,18 @@ Global
 		{04971549-72AC-4B5B-8992-9789FABD45DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04971549-72AC-4B5B-8992-9789FABD45DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04971549-72AC-4B5B-8992-9789FABD45DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA4CF613-B0AA-4821-9F75-0A820CAA8083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA4CF613-B0AA-4821-9F75-0A820CAA8083}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA4CF613-B0AA-4821-9F75-0A820CAA8083}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA4CF613-B0AA-4821-9F75-0A820CAA8083}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECCD1D42-EB70-4BA1-9130-8411F4C690EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECCD1D42-EB70-4BA1-9130-8411F4C690EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECCD1D42-EB70-4BA1-9130-8411F4C690EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECCD1D42-EB70-4BA1-9130-8411F4C690EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D2BDC0-52C0-4D3A-A672-57C521DB55B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D2BDC0-52C0-4D3A-A672-57C521DB55B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D2BDC0-52C0-4D3A-A672-57C521DB55B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D2BDC0-52C0-4D3A-A672-57C521DB55B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,6 +164,9 @@ Global
 		{60D1680E-63FD-4867-B6E8-810F35C3F405} = {689D29DB-704E-4406-9034-D9EA025DFCD5}
 		{2718BBB1-D1E0-4522-BF70-9EBD246E7256} = {EFD63325-1023-4C7A-BC5A-6B98B6F74CE5}
 		{04971549-72AC-4B5B-8992-9789FABD45DD} = {4925C41B-88E1-4B2D-89F7-FCC17C43FA65}
+		{AA4CF613-B0AA-4821-9F75-0A820CAA8083} = {4925C41B-88E1-4B2D-89F7-FCC17C43FA65}
+		{ECCD1D42-EB70-4BA1-9130-8411F4C690EE} = {689D29DB-704E-4406-9034-D9EA025DFCD5}
+		{C3D2BDC0-52C0-4D3A-A672-57C521DB55B4} = {689D29DB-704E-4406-9034-D9EA025DFCD5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74C7B511-B31A-4BF0-9397-B71F53232209}

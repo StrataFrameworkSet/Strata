@@ -8,4 +8,13 @@
     <ProjectReference Include="..\Strata.Foundation.Core\Strata.Foundation.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Bootstrap\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ninject.Extensions.Interception" Version="3.3.3" />
+    <PackageReference Include="Ninject.Web.Common" Version="3.3.1" />
+  </ItemGroup>
+
 </Project>
