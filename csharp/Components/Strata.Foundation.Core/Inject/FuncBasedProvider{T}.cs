@@ -1,6 +1,5 @@
 ﻿//  ##########################################################################
-//  # File Name: IModule.cs
-//  # Copyright: 2017, Sapientia Systems, LLC.
+//  # File Name: FuncBasedProvider{T}.cs
 //  ##########################################################################
 
 using System;
@@ -9,22 +8,32 @@ namespace Strata.Foundation.Core.Inject
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// Provides a mechanism for defining dependency injection bindings.
     /// </summary>
     ///  
     public
-    interface IModule
+    class FuncBasedProvider<T>:
+        IProvider<T>
     {
-        string Name { get; }
+        private readonly Func<T> itsImp;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
-        /// Initializes the module by defining a set of dependency injection
-        /// bindings for use in <c>IContainer</c> instances.
         /// </summary>
         /// 
-        void
-        Initialize();
+        public
+        FuncBasedProvider(Func<T> imp)
+        {
+            itsImp = imp;
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <inheritDoc/>
+        /// 
+        public T 
+        Get()
+        {
+            return itsImp.Invoke();
+        }
     }
 }
 

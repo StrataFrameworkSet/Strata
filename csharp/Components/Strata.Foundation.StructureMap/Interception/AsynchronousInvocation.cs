@@ -76,6 +76,13 @@ namespace Strata.Foundation.StructureMap.Interception
             return (argument != null && argument.Value is T);
         }
 
+        public virtual bool
+        HasReturnOfType<T>()
+        {
+            return
+                typeof(T).IsAssignableFrom(Adaptee.ActualReturnType);
+        }
+
         private static IList<object>
         ToList(IList<IArgument> input)
         {

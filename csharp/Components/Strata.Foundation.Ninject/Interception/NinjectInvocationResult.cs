@@ -2,6 +2,7 @@
 //  # File Name: NinjectInvocationResult.cs
 //  ##########################################################################
 
+using System.Threading.Tasks;
 using Strata.Foundation.Core.Interception;
 
 namespace Strata.Foundation.Ninject.Interception

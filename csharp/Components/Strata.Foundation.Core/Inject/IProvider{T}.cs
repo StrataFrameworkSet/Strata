@@ -1,39 +1,27 @@
 ﻿//  ##########################################################################
-//  # File Name: FuncBasedProvider{T}.cs
+//  # File Name: IProvider{T}.cs
 //  ##########################################################################
 
-using System;
-
-namespace Strata.Foundation.Core.Provider
+namespace Strata.Foundation.Core.Inject
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
+    /// An interface for factory-like objects used in
+    /// some dependency injection scenarios. 
     /// </summary>
     ///  
     public
-    class FuncBasedProvider<T>:
-        IProvider<T>
+    interface IProvider<T>
     {
-        private Func<T> itsImp;
-
         //////////////////////////////////////////////////////////////////////
         /// <summary>
+        /// Creates a new instance of type <c>T</c>.
         /// </summary>
+        ///
+        /// <returns>new instance of T</returns>
         /// 
-        public
-        FuncBasedProvider(Func<T> imp)
-        {
-            itsImp = imp;
-        }
-
-        //////////////////////////////////////////////////////////////////////
-        /// <inheritDoc/>
-        /// 
-        public T 
-        Get()
-        {
-            return itsImp.Invoke();
-        }
+        T
+        Get();
     }
 }
 

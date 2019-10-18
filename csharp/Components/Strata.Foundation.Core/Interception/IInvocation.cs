@@ -39,6 +39,13 @@ namespace Strata.Foundation.Core.Interception
         ///  
         bool
         HasArgumentOfType<T>(string name);
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        ///  
+        bool
+        HasReturnOfType<T>();
     }
 }
 

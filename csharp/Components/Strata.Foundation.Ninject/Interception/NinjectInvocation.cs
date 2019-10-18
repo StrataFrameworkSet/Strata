@@ -4,6 +4,7 @@
 
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Threading.Tasks;
 using Strata.Foundation.Core.Interception;
 
 namespace Strata.Foundation.Ninject.Interception
@@ -50,7 +51,6 @@ namespace Strata.Foundation.Ninject.Interception
         {
             Adaptee = adaptee;
             itsArgumentMap = InitializeArgumentsMap(Adaptee);
-           
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -60,6 +60,7 @@ namespace Strata.Foundation.Ninject.Interception
         Proceed()
         {
             Adaptee.Proceed();
+
             return new NinjectInvocationResult(Adaptee.ReturnValue);
         }
 
@@ -93,20 +94,34 @@ namespace Strata.Foundation.Ninject.Interception
         }
 
         //////////////////////////////////////////////////////////////////////
+        /// <inheritDoc/>
+        ///  
+        public virtual bool
+        HasReturnOfType<T>()
+        {
+            return
+                typeof(T).IsAssignableFrom(
+                    Adaptee
+                        .Request
+                        .Method
+                        .ReturnType);
+        }
+
+        //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>
         ///  
         protected IDictionary<string,object>
         InitializeArgumentsMap(INinjectInvocation adaptee)
         {
-            IDictionary<string,object> output = 
+            IDictionary<string,object> output =
                 new ConcurrentDictionary<string,object>();
-            ParameterInfo[] parameters = 
+            ParameterInfo[] parameters =
                 adaptee
                     .Request
                     .Method
                     .GetParameters();
-            object[] arguments = 
+            object[] arguments =
                 adaptee
                     .Request
                     .Arguments;
@@ -115,9 +130,19 @@ namespace Strata.Foundation.Ninject.Interception
 
             foreach (ParameterInfo parameter in parameters)
                 output[parameter.Name] = arguments[i++];
-                
-            
+
+
             return output;
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        ///  
+        protected static async Task
+        Await(Task result)
+        {
+            await result;
         }
     }
 }

@@ -18,6 +18,15 @@ namespace Strata.Foundation.Ninject.Inject
     public static
     class InjectionExtension
     {
+
+        public static IBindingWhenInNamedWithOrOnSyntax<T> 
+        ToProviderT<T>(
+            this IBindingToSyntax<T> binder,
+            IProvider<T>             provider)
+        {
+            return binder.ToProvider(new NinjectProvider<T>(provider));
+        }
+
         public static IBindingNamedWithOrOnSyntax<T>
         InDefaultScope<T>(this IBindingWhenInNamedWithOrOnSyntax<T> binder)
         {
