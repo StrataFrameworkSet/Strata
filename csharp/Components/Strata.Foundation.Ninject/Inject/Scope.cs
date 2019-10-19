@@ -20,11 +20,26 @@ namespace Strata.Foundation.Ninject.Inject
         public static readonly Scope REQUEST_SCOPE = new RequestScope();
         public static readonly Scope NULL_SCOPE = new NullScope();
 
-        public abstract bool 
+        public abstract bool
         Equals(Scope other);
 
+        public override bool
+        Equals(object other)
+        {
+            if (other is Scope)
+                return Equals((Scope)other);
+
+            return false;
+        }
+
+        public override int 
+        GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public static bool
-        operator ==(Scope x,Scope y)
+        operator==(Scope x,Scope y)
         {
             if (x == null)
                 if (y == null)

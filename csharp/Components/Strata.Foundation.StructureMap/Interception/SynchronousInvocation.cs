@@ -43,17 +43,21 @@ namespace Strata.Foundation.StructureMap.Interception
             return default;
         }
 
-        public bool 
+        public virtual bool
         HasArgumentOfType<T>(string name)
         {
-            throw new NotImplementedException();
+            IArgument argument = Adaptee.GetArgument(name);
+
+            return (argument != null && argument.Value is T);
         }
 
-        public bool 
+        public virtual bool
         HasReturnOfType<T>()
         {
-            throw new NotImplementedException();
+            return
+                typeof(T).IsAssignableFrom(Adaptee.ActualReturnType);
         }
+
     }
 }
 
