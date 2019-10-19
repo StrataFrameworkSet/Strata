@@ -48,6 +48,12 @@ namespace Strata.Foundation.StructureMap.Interception
         {
             throw new NotImplementedException();
         }
+
+        public bool 
+        HasReturnOfType<T>()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
