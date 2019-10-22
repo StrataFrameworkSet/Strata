@@ -168,7 +168,10 @@ class AsynchronousUnitOfWorkInterceptor
                 CompletableFuture
                     .completedFuture(context.getProviderIfPresent())
                     .thenCompose(p -> p.getUnitOfWork())
-                    .thenCompose(unitOfWork -> CompletableFuture.completedFuture(context.setUnitOfWork(unitOfWork)))
+                    .thenCompose(
+                        unitOfWork ->
+                            CompletableFuture.completedFuture(
+                                context.setUnitOfWork(unitOfWork)))
                     .thenCompose(c ->
                         doProceed(context.getInvocation())
                             .thenCompose(
