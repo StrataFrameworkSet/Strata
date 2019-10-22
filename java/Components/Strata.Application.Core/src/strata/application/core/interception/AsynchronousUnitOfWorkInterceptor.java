@@ -194,54 +194,8 @@ class AsynchronousUnitOfWorkInterceptor
                                 })
                             .exceptionally(
                                 exception ->
-                                {
-                                    logger.debug("processing exception in attempt stage");
-                                    return
-                                        await(
-                                            context
-                                                .setException(exception.getCause())
-                                                .getUnitOfWorkIfPresent()
-                                                .rollback()
-                                                .thenCompose(
-                                                    ignore ->
-                                                    {
-                                                        logger.debug(
-                                                            "exception: {}",
-                                                            context.getExceptionIfPresent().getClass() );
-
-                                                        if (
-                                                            context.getExceptionIfPresent()
-                                                                instanceof OptimisticLockException)
-                                                        {
-                                                            logger.debug("handling optimistic lock exception");
-
-                                                            if (context.isLastAttempt())
-                                                            {
-                                                                logger.debug("last attempt - completing exceptionally");
-                                                                onException(
-                                                                    context.getInvocation(),
-                                                                    context.getExceptionIfPresent());
-
-                                                                return
-                                                                    CompletableFuture
-                                                                        .completedFuture(context);
-                                                            }
-
-                                                            logger.debug("retrying operation");
-                                                            return
-                                                                getAttemptStage(
-                                                                    context.incrementAttempt());
-                                                        }
-
-                                                        onException(
-                                                            context.getInvocation(),
-                                                            context.getExceptionIfPresent());
-
-                                                        return
-                                                            CompletableFuture
-                                                                .completedFuture(context);
-                                                    }));
-                                }));
+                                    processException(context,exception)
+                                ));
         }
 
         return CompletableFuture.completedFuture(context);
@@ -408,6 +362,61 @@ class AsynchronousUnitOfWorkInterceptor
             throw new CompletionException(cause);
         }
     }
+
+    protected UnitOfWorkCompletionContext
+    processException(
+        UnitOfWorkCompletionContext context,
+        Throwable                   exception)
+    {
+        logger.debug("processing exception in attempt stage");
+        return
+            await(
+                context
+                    .setException(exception.getCause())
+                    .getUnitOfWorkIfPresent()
+                    .rollback()
+                    .thenCompose(
+                        ignore ->
+                        {
+                            logger.debug(
+                                "exception: {}",
+                                context.getExceptionIfPresent().getClass() );
+
+                            if (
+                                context.getExceptionIfPresent()
+                                    instanceof OptimisticLockException)
+                            {
+                                logger.debug("handling optimistic lock exception");
+
+                                if (context.isLastAttempt())
+                                {
+                                    logger.debug(
+                                        "last attempt - completing exceptionally");
+                                    onException(
+                                        context.getInvocation(),
+                                        context.getExceptionIfPresent());
+
+                                    return
+                                        CompletableFuture
+                                            .completedFuture(context);
+                                }
+
+                                logger.debug("retrying operation");
+                                return
+                                    getAttemptStage(
+                                        context.incrementAttempt());
+                            }
+
+                            onException(
+                                context.getInvocation(),
+                                context.getExceptionIfPresent());
+
+                            return
+                                CompletableFuture
+                                    .completedFuture(context);
+                        }));
+    }
+
 }
 
 //////////////////////////////////////////////////////////////////////////////
