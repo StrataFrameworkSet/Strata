@@ -28,7 +28,7 @@ namespace Strata.Foundation.Core.Utility
         }
 
         public static Task
-        ThenAccept<T>(this Task<T> source,Action<T> consumer)
+        ThenConsume<T>(this Task<T> source,Action<T> consumer)
         {
             return source.ContinueWith(t => consumer(t.Result));
         }
