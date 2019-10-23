@@ -18,7 +18,9 @@ namespace Strata.Foundation.Core.Utility
         public static Task<U> 
         ThenApply<T,U>(this Task<T> source,Func<T,U> transform)
         {
-            return source.ContinueWith(t => transform(t.Result));
+            return 
+                source.ContinueWith(
+                    t => transform(t.Result));
         }
 
         public static Task<U>
