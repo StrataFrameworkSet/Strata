@@ -4,12 +4,14 @@
 //  ##########################################################################
 
 using Strata.Domain.Core.NamedQuery;
-using Strata.Domain.Core.Shared;
 using Strata.Domain.Core.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Strata.Domain.Core.DomainEvent;
+using Strata.Foundation.Core.Utility;
 
 namespace Strata.Domain.Core.Repository
 {
@@ -43,10 +45,14 @@ namespace Strata.Domain.Core.Repository
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual S 
+        public virtual async Task<S> 
         Insert(S entity)
         {
-            S result = GetUnitOfWork().Insert<K,S>(entity);
+            S result = 
+                await 
+                    GetUnitOfWork()
+                        .Insert<K,S>(entity)
+                        .ConfigureAwait(false);
 
             if (result != null)
                 result.Attach(Observers);
@@ -57,10 +63,14 @@ namespace Strata.Domain.Core.Repository
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual S 
+        public virtual async Task<S> 
         Update(S entity)
         {
-            S result = GetUnitOfWork().Update<K,S>(entity);
+            S result = 
+                await 
+                    GetUnitOfWork()
+                        .Update<K,S>(entity)
+                        .ConfigureAwait(false);
 
             if (result != null)
                 result.Attach(Observers);
@@ -71,48 +81,60 @@ namespace Strata.Domain.Core.Repository
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual void 
+        public virtual Task
         Remove(S entity)
         {
-            GetUnitOfWork().Remove<K,S>(entity);
+            if (entity != null)
+                entity
+                    .Attach(Observers);
+
+            return GetUnitOfWork().Remove<K,S>(entity);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual S
+        public virtual async Task<Optional<S>> 
         GetUnique(K key)
         {
-            S result = GetUnitOfWork().GetUniqueWithKey<K,S>(key);
+            Optional<S> result =
+                await 
+                    GetUnitOfWork()
+                        .GetUnique<K,S>(key)
+                        .ConfigureAwait(false);
+            
+            return
+                result.IfPresent(entity => entity.Attach(Observers));
 
-            if (result != null)
-                result.Attach(Observers);
-
-            return result;
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual S
-        GetUnique(Expression<Func<S,bool>> predicate)
+        public virtual async Task<Optional<S>> 
+        GetUniqueMatching(Expression<Func<S,bool>> predicate)
         {
-            S result = GetUnitOfWork().GetUniqueWithPredicate(predicate);
+            Optional<S> result = 
+                await 
+                    GetUnitOfWork()
+                        .GetUniqueMatching(predicate)
+                        .ConfigureAwait(false);
 
-            if (result != null)
-                result.Attach(Observers);
-
-            return result;
+            return
+                result.IfPresent(entity => entity.Attach(Observers));
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual IList<S> 
-        GetAll(Expression<Func<S,bool>> predicate)
+        public virtual async Task<IList<S>> 
+        GetMatching(Expression<Func<S,bool>> predicate)
         {
             IList<S> results = 
-                GetUnitOfWork().GetAllWithPredicate(predicate);
+                await 
+                    GetUnitOfWork()
+                        .GetMatching(predicate)
+                        .ConfigureAwait(false);
 
             foreach (S result in results)
                 if (result != null)
@@ -124,10 +146,14 @@ namespace Strata.Domain.Core.Repository
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual IList<S> 
+        public virtual async Task<IList<S>> 
         GetAll()
         {
-            IList<S> results = GetUnitOfWork().GetAll<S>();
+            IList<S> results = 
+                await
+                    GetUnitOfWork()
+                        .GetAll<S>()
+                        .ConfigureAwait(false);
 
             foreach (S result in results)
                 if (result != null)
@@ -139,7 +165,7 @@ namespace Strata.Domain.Core.Repository
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual INamedQuery<S> 
+        public virtual Task<INamedQuery<S>> 
         GetNamedQuery(string queryName)
         {
             return GetUnitOfWork().GetNamedQuery<S>(queryName);
@@ -148,25 +174,25 @@ namespace Strata.Domain.Core.Repository
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual bool
+        public virtual Task<bool> 
         HasUnique(K key)
         {
-            return GetUnitOfWork().HasUniqueWithKey<K,S>(key);
+            return GetUnitOfWork().HasUnique<K,S>(key);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual bool
-        HasAny(Expression<Func<S,bool>> predicate)
+        public virtual Task<bool> 
+        HasMatching(Expression<Func<S,bool>> predicate)
         {
-            return GetUnitOfWork().HasUniqueWithPredicate<S>(predicate);
+            return GetUnitOfWork().HasUniqueMatching<S>(predicate);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual bool
+        public virtual Task<bool> 
         HasNamedQuery(string queryName)
         {
             return GetUnitOfWork().HasNamedQuery<S>(queryName);

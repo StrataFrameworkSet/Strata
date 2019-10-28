@@ -3,10 +3,10 @@
 //  # Copyright: 2018, Sapientia Systems, LLC.
 //  ##########################################################################
 
-using Strata.Foundation.Core.Utility;
 using System.Collections.Generic;
+using Strata.Foundation.Core.Utility;
 
-namespace Strata.Domain.Core.Shared
+namespace Strata.Domain.Core.DomainEvent
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>

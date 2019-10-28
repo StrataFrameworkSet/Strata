@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Strata.Domain.Core.Shared
+namespace Strata.Domain.Core.Entity
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>

@@ -7,6 +7,8 @@ using Strata.Domain.Core.NamedQuery;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Strata.Foundation.Core.Utility;
 
 namespace Strata.Domain.Core.UnitOfWork
 {
@@ -28,148 +30,136 @@ namespace Strata.Domain.Core.UnitOfWork
         /// Inserts an entity into the repository's underlying storage
         /// using the current unit-of-work. 
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
         /// <param name="entity">entity being inserted</param>
         /// <returns>the inserted entity</returns>
         /// 
-        T
-        Insert<K,T>(AbstractUnitOfWork context,T entity)
-            where T: class;
+        Task<E> 
+        Insert<K,E>(AbstractUnitOfWork context,E entity)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Updates an entity in the repository's underlying storage
         /// using the current unit-of-work. 
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
         /// <param name="entity"></param>
         /// <returns>the updated entity</returns>
         /// 
-        T
-        Update<K,T>(AbstractUnitOfWork context,T entity)
-            where T: class;
+        Task<E> 
+        Update<K,E>(AbstractUnitOfWork context,E entity)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Removes an entity from the repository's underlying storage
         /// using the current unit-of-work. 
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
         /// <param name="entity"></param>
-        /// 
-        void
-        Remove<K,T>(AbstractUnitOfWork context,T entity)
-            where T: class;
+        Task
+        Remove<K,E>(AbstractUnitOfWork context,E entity)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Retrieves the entity associated with the specified key. 
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
         /// <param name="key">an entity's key</param>
         /// <returns>the entity if it exists or null</returns>
         /// 
-        T
-        GetUniqueWithKey<K,T>(AbstractUnitOfWork context,K key)
-            where T: class;
+        Task<Optional<E>> 
+        GetUnique<K,E>(AbstractUnitOfWork context,K key)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Retrieves the entity that matches the specified predicate. 
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
         /// <param name="predicate">
-        /// a predicate that matches a unique entity
+        ///     a predicate that matches a unique entity
         /// </param>
         /// <returns>the uniquely matching entity or null</returns>
         /// 
-        T
-        GetUniqueWithPredicate<T>(
+        Task<Optional<E>> 
+        GetUniqueMatching<E>(
             AbstractUnitOfWork       context,
-            Expression<Func<T,bool>> predicate)
-            where T: class;
+            Expression<Func<E,bool>> predicate)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
         /// <param name="predicate"></param>
         /// 
-        IList<T>
-        GetAllWithPredicate<T>(
+        Task<IList<E>> 
+        GetMatching<E>(
             AbstractUnitOfWork       context,
-            Expression<Func<T,bool>> predicate)
-            where T: class;
+            Expression<Func<E,bool>> predicate)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
         /// 
-        IList<T>
-        GetAll<T>(AbstractUnitOfWork context)
-            where T: class;
+        Task<IList<E>> 
+        GetAll<E>(AbstractUnitOfWork context)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
         /// <param name="queryName">query's name</param>
         /// <returns>query or null</returns>
         /// 
-        INamedQuery<T> 
-        GetNamedQuery<T>(AbstractUnitOfWork context,string queryName)
-            where T: class;
+        Task<INamedQuery<E>> 
+        GetNamedQuery<E>(AbstractUnitOfWork context,string queryName)
+            where E: class;
         
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
         /// <param name="key"></param>
         /// 
-        bool
-        HasUniqueWithKey<K,T>(AbstractUnitOfWork context,K key)
-            where T: class;
+        Task<bool> 
+        HasUnique<K,E>(AbstractUnitOfWork context,K key)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
         /// <param name="predicate"></param>
         /// 
-        bool
-        HasUniqueWithPredicate<T>(
+        Task<bool> 
+        HasUniqueMatching<E>(
             AbstractUnitOfWork       context,
-            Expression<Func<T,bool>> predicate)
-            where T: class;
+            Expression<Func<E,bool>> predicate)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
         /// <param name="queryName">query's name</param>
         /// <returns>true if query exists, false otherwise</returns>
         /// 
-        bool 
-        HasNamedQuery<T>(AbstractUnitOfWork context,string queryName)
-            where T: class;
+        Task<bool> 
+        HasNamedQuery<E>(AbstractUnitOfWork context,string queryName)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -219,28 +209,24 @@ namespace Strata.Domain.Core.UnitOfWork
         /// <summary>
         /// Commits the current unit of work to the underlying storage.
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
-        /// 
         /// <exception cref="CommitFailedException">
         /// The unit of work failed to commit. 
         /// </exception>
         /// 
-        void
+        Task
         Commit(AbstractUnitOfWork context);
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Rolls back the current unit of work in the event of an error.
         /// </summary>
-        /// 
         /// <param name="context">context for the operation</param>
-        /// 
         /// <exception cref="RollbackFailedException">
         /// The unit of work failed to roll back. 
         /// </exception>
         /// 
-        void
+        Task
         Rollback(AbstractUnitOfWork context);
     }
 }

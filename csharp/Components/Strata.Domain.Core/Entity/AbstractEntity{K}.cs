@@ -1,42 +1,48 @@
 ﻿//  ##########################################################################
-//  # File Name: AbstractDomainEvent.cs
+//  # File Name: AbstractEntity.cs
 //  # Copyright: 2018, Sapientia Systems, LLC.
 //  ##########################################################################
 
 using System;
 
-namespace Strata.Domain.Core.Shared
+namespace Strata.Domain.Core.Entity
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
     /// </summary>
     ///  
-    public abstract
-    class AbstractDomainEvent<S>:
-        IDomainEvent<S>
+    public
+    class AbstractEntity<K>:
+        IEntity<K>
     {
-        public virtual string   Name { get; protected set; }
-        public virtual DateTime Timestamp { get; protected set; }
-        public virtual S        Source { get; protected set; }
+        public virtual K        PrimaryId { get; set; }
+        public virtual int      Version { get; set; }
+
+        public virtual DateTime Created { get; set; }
+        public virtual DateTime LastModified { get; set; }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>
         ///  
         protected
-        AbstractDomainEvent(string name,S source):
-            this(name,DateTime.Now,source) {}
-
-        //////////////////////////////////////////////////////////////////////
-        /// <summary>
-        /// </summary>
-        ///  
-        protected
-        AbstractDomainEvent(string name,DateTime timestamp,S source)
+        AbstractEntity()
         {
-            Name      = name;
-            Timestamp = timestamp;
-            Source    = source;
+            Created = DateTime.Now;
+            LastModified = Created;
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// </summary>
+        ///  
+        protected
+        AbstractEntity(AbstractEntity<K> other)
+        {
+            PrimaryId    = other.PrimaryId;
+            Version      = other.Version;
+            Created      = other.Created;
+            LastModified = other.LastModified;
         }
     }
 }

@@ -6,7 +6,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Strata.Domain.Core.NamedQuery;
+using Strata.Foundation.Core.Utility;
 
 namespace Strata.Domain.Core.UnitOfWork
 {
@@ -42,66 +44,60 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override T
-        Insert<K,T>(AbstractUnitOfWork context,T entity)
+        public override Task<E> 
+        Insert<K,E>(AbstractUnitOfWork context,E entity)
         {
-            return context.DoInsert<K,T>(entity);
+            return context.DoInsert<K,E>(entity);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override T
-        Update<K,T>(AbstractUnitOfWork context,T entity)
+        public override Task<E> 
+        Update<K,E>(AbstractUnitOfWork context,E entity)
         {
-            return context.DoUpdate<K,T>(entity);
+            return context.DoUpdate<K,E>(entity);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override void
-        Remove<K,T>(AbstractUnitOfWork context,T entity)
+        public override Task
+        Remove<K,E>(AbstractUnitOfWork context,E entity)
         {
-            context.DoRemove<K,T>(entity);
+            return context.DoRemove<K,E>(entity);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override T
-        GetUniqueWithKey<K,T>(AbstractUnitOfWork context,K key)
+        public override Task<Optional<T>> GetUnique<K,T>(AbstractUnitOfWork context,K key)
         {
-            return context.DoGetUniqueWithKey<K,T>( key );
+            return context.DoGetUnique<K,T>( key );
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override T
-        GetUniqueWithPredicate<T>(
-            AbstractUnitOfWork context,
+        public override Task<Optional<T>> GetUniqueMatching<T>(AbstractUnitOfWork context,
             Expression<Func<T,bool>> predicate)
         {
-            return context.DoGetUniqueWithPredicate<T>( predicate );
+            return context.DoGetUniqueMatching<T>( predicate );
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override IList<T>
-        GetAllWithPredicate<T>(
-            AbstractUnitOfWork context,
+        public override Task<IList<T>> GetMatching<T>(AbstractUnitOfWork context,
             Expression<Func<T,bool>> predicate)
         {
-            return context.DoGetAllWithPredicate<T>( predicate );
+            return context.DoGetMatching<T>( predicate );
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override IList<T>
-        GetAll<T>(AbstractUnitOfWork context)
+        public override Task<IList<T>> GetAll<T>(AbstractUnitOfWork context)
         {
             return context.DoGetAll<T>();
         }
@@ -109,8 +105,7 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override INamedQuery<T>
-        GetNamedQuery<T>(AbstractUnitOfWork context,string queryName)
+        public override Task<INamedQuery<T>> GetNamedQuery<T>(AbstractUnitOfWork context,string queryName)
         {
             return context.DoGetNamedQuery<T>( queryName );
         }
@@ -118,28 +113,24 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override bool
-        HasUniqueWithKey<K,T>(AbstractUnitOfWork context,K key)
+        public override Task<bool> HasUnique<K,T>(AbstractUnitOfWork context,K key)
         {
-            return context.DoHasUniqueWithKey<K,T>( key );
+            return context.DoHasUnique<K,T>( key );
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override bool
-        HasUniqueWithPredicate<T>(
-            AbstractUnitOfWork context,
+        public override Task<bool> HasUniqueMatching<T>(AbstractUnitOfWork context,
             Expression<Func<T,bool>> predicate)
         {
-            return context.DoHasAnyWithPredicate<T>( predicate );
+            return context.DoHasMatching<T>( predicate );
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override bool
-        HasNamedQuery<T>(AbstractUnitOfWork context,string queryName)
+        public override Task<bool> HasNamedQuery<T>(AbstractUnitOfWork context,string queryName)
         {
             return context.DoHasNamedQuery<T>( queryName );
         }
@@ -156,12 +147,12 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override void
+        public override async Task
         Commit(AbstractUnitOfWork context)
         {
             try
             {
-                context.DoCommit();
+                await context.DoCommit();
                 context.State = CommittedUnitOfWorkState.GetInstance();
             }
             catch (Exception e)
@@ -174,12 +165,12 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override void
+        public override async Task
         Rollback(AbstractUnitOfWork context)
         {
             try
             {
-                context.DoRollback();
+                await context.DoRollback();
                 context.State = RolledBackUnitOfWorkState.GetInstance();
             }
             catch (Exception e)

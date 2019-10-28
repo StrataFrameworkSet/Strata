@@ -7,6 +7,9 @@ using Strata.Domain.Core.NamedQuery;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Strata.Foundation.Core.Utility;
+using TaskFactory = Strata.Foundation.Core.Utility.TaskFactory;
 
 namespace Strata.Domain.Core.UnitOfWork
 {
@@ -45,111 +48,111 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public T 
-        Insert<K,T>(T entity) 
-            where T: class
+        public Task<E> 
+        Insert<K,E>(E entity) 
+            where E: class
         {
-            return State.Insert<K,T>(this,entity);
+            return State.Insert<K,E>(this,entity);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public T 
-        Update<K,T>(T entity) 
-            where T: class
+        public Task<E> 
+        Update<K,E>(E entity) 
+            where E: class
         {
-            return State.Update<K,T>(this,entity);
+            return State.Update<K,E>(this,entity);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public void 
-        Remove<K,T>(T entity) 
-            where T: class
+        public Task
+        Remove<K,E>(E entity) 
+            where E: class
         {
-            State.Remove<K,T>(this,entity);
+            return State.Remove<K,E>(this,entity);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public T 
-        GetUniqueWithKey<K,T>(K key) 
-            where T: class
+        public Task<Optional<E>> 
+        GetUnique<K,E>(K key) 
+            where E: class
         {
-            return State.GetUniqueWithKey<K,T>(this,key);
+            return State.GetUnique<K,E>(this,key);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public T 
-        GetUniqueWithPredicate<T>(Expression<Func<T, bool>> predicate) 
-            where T: class
+        public Task<Optional<E>> 
+        GetUniqueMatching<E>(Expression<Func<E,bool>> predicate) 
+            where E: class
         {
-            return State.GetUniqueWithPredicate(this,predicate);
+            return State.GetUniqueMatching(this,predicate);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public IList<T> 
-        GetAllWithPredicate<T>(Expression<Func<T, bool>> predicate) 
-            where T: class
+        public Task<IList<E>> 
+        GetMatching<E>(Expression<Func<E,bool>> predicate) 
+            where E: class
         {
-            return State.GetAllWithPredicate(this,predicate);
+            return State.GetMatching(this,predicate);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public IList<T> 
-        GetAll<T>() 
-            where T: class
+        public Task<IList<E>> 
+        GetAll<E>() 
+            where E: class
         {
-            return State.GetAll<T>(this);
+            return State.GetAll<E>(this);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public INamedQuery<T> 
-        GetNamedQuery<T>(string queryName) 
-            where T: class
+        public Task<INamedQuery<E>> 
+        GetNamedQuery<E>(string queryName) 
+            where E: class
         {
-            return State.GetNamedQuery<T>(this,queryName);
+            return State.GetNamedQuery<E>(this,queryName);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public bool 
-        HasUniqueWithKey<K,T>(K key) 
-            where T: class
+        public Task<bool> 
+        HasUnique<K,E>(K key) 
+            where E: class
         {
-            return State.HasUniqueWithKey<K,T>(this,key);
+            return State.HasUnique<K,E>(this,key);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public bool 
-        HasUniqueWithPredicate<T>(Expression<Func<T, bool>> predicate) 
-            where T: class
+        public Task<bool> 
+        HasUniqueMatching<E>(Expression<Func<E,bool>> predicate) 
+            where E: class
         {
-            return State.HasUniqueWithPredicate(this,predicate);
+            return State.HasUniqueMatching(this,predicate);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public bool 
-        HasNamedQuery<T>(string queryName)
-            where T: class
+        public Task<bool> 
+        HasNamedQuery<E>(string queryName)
+            where E: class
         {
-            return State.HasNamedQuery<T>(this,queryName);
+            return State.HasNamedQuery<E>(this,queryName);
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -200,148 +203,138 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public void 
+        public Task 
         Commit()
         {
-            State.Commit(this);
+            return State.Commit(this);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public void 
+        public Task 
         Rollback()
         {
-            State.Rollback(this);
+            return State.Rollback(this);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>/>
-        /// 
         /// <param name="entity">entity being inserted</param>
         /// <returns>the inserted entity</returns>
         /// 
-        public abstract T
-        DoInsert<K,T>(T entity)
-            where T: class;
+        public abstract Task<E> 
+        DoInsert<K,E>(E entity)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>/>
-        /// 
         /// <param name="entity">entity being updated</param>
         /// <returns>the updated entity</returns>
         /// 
-        public abstract T
-        DoUpdate<K,T>(T entity)
-            where T: class;
+        public abstract Task<E> 
+        DoUpdate<K,E>(E entity)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>/>
-        /// 
         /// <param name="entity">entity being removed</param>
-        /// 
-        public abstract void
-        DoRemove<K,T>(T entity)
-            where T: class;
+        public abstract Task
+        DoRemove<K,E>(E entity)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>/>
-        /// 
         /// <param name="key">an entity's key</param>
         /// <returns>the entity if it exists or null</returns>
         /// 
-        public abstract T
-        DoGetUniqueWithKey<K,T>(K key)
-            where T: class;
+        public abstract Task<Optional<E>> 
+        DoGetUnique<K,E>(K key)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Retrieves the entity that matches the specified predicate. 
         /// </summary>
-        /// 
         /// <param name="predicate">
-        /// a predicate that matches a unique entity
+        ///     a predicate that matches a unique entity
         /// </param>
         /// <returns>the uniquely matching entity or null</returns>
         /// 
-        public abstract T
-        DoGetUniqueWithPredicate<T>(Expression<Func<T,bool>> predicate)
-            where T: class;
+        public abstract Task<Optional<E>> 
+        DoGetUniqueMatching<E>(Expression<Func<E,bool>> predicate)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="predicate"></param>
-        public abstract IList<T>
-        DoGetAllWithPredicate<T>(Expression<Func<T,bool>> predicate)
-            where T: class;
-
-        //////////////////////////////////////////////////////////////////////
-        /// <summary>
-        ///  
-        /// </summary>
-        public abstract IList<T>
-        DoGetAll<T>()
-            where T: class;
-
-        //////////////////////////////////////////////////////////////////////
-        /// <summary>
-        ///  
-        /// </summary>
         /// 
+        public abstract Task<IList<E>> 
+        DoGetMatching<E>(Expression<Func<E,bool>> predicate)
+            where E: class;
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        ///  
+        /// </summary>
+        public abstract Task<IList<E>> 
+        DoGetAll<E>()
+            where E: class;
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        ///  
+        /// </summary>
         /// <param name="queryName">query's name</param>
         /// <returns>query or null</returns>
         /// 
-        public abstract INamedQuery<T> 
-        DoGetNamedQuery<T>(string queryName)
-            where T: class;
+        public abstract Task<INamedQuery<E>> 
+        DoGetNamedQuery<E>(string queryName)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="key"></param>
         /// 
-        public abstract bool
-        DoHasUniqueWithKey<K,T>(K key)
-            where T: class;
+        public abstract Task<bool> 
+        DoHasUnique<K,E>(K key)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="predicate"></param>
         /// 
-        public abstract bool
-        DoHasAnyWithPredicate<T>(Expression<Func<T,bool>> predicate)
-            where T: class;
+        public abstract Task<bool> 
+        DoHasMatching<E>(Expression<Func<E,bool>> predicate)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="queryName">query's name</param>
         /// <returns>true if query exists, false otherwise</returns>
         /// 
-        public abstract bool 
-        DoHasNamedQuery<T>(string queryName)
-            where T: class;
+        public abstract Task<bool> 
+        DoHasNamedQuery<E>(string queryName)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
         /// 
-        public abstract void 
+        public abstract Task 
         DoCommit();
 
         //////////////////////////////////////////////////////////////////////
@@ -349,32 +342,40 @@ namespace Strata.Domain.Core.UnitOfWork
         ///  
         /// </summary>
         /// 
-        public virtual void 
+        public virtual Task 
         DoRollback()
         {
-            RollbackFailedException failed = null;
+            Task task = 
+                new Task(
+                    () =>
+                    {
+                        RollbackFailedException failed = null;
 
-            while (RollbackActions.Count != 0)
-            {
-                try
-                {
-                    RollbackAction action = RollbackActions.Pop();
+                        while (RollbackActions.Count != 0)
+                        {
+                            try
+                            {
+                                RollbackAction action = RollbackActions.Pop();
 
-                    action.Invoke();
-                }
-                catch (Exception e)
-                {
-                    if (failed == null)
-                        failed = 
-                            new RollbackFailedException(
-                                "Rollback failed. See causes.");
+                                action.Invoke();
+                            }
+                            catch (Exception e)
+                            {
+                                if (failed == null)
+                                    failed =
+                                        new RollbackFailedException(
+                                            "Rollback failed. See causes.");
 
-                    failed.Causes.Add(e);
-                }
-            }
+                                failed.Causes.Add(e);
+                            }
+                        }
 
-            if (failed != null)
-                throw failed;
+                        if (failed != null)
+                            throw failed;
+                    });
+
+            task.Start();
+            return task;
         }
     }
 }

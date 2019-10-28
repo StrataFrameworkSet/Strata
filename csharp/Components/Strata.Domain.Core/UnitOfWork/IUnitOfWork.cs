@@ -7,6 +7,8 @@ using Strata.Domain.Core.NamedQuery;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Strata.Foundation.Core.Utility;
 
 namespace Strata.Domain.Core.UnitOfWork
 {
@@ -29,128 +31,118 @@ namespace Strata.Domain.Core.UnitOfWork
         /// Inserts an entity into the repository's underlying storage
         /// using the current unit-of-work. 
         /// </summary>
-        /// 
         /// <param name="entity">entity being inserted</param>
         /// <returns>the inserted entity</returns>
         /// 
-        T
-        Insert<K,T>(T entity)
-            where T: class;
+        Task<E> 
+        Insert<K,E>(E entity)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Updates an entity in the repository's underlying storage
         /// using the current unit-of-work. 
         /// </summary>
-        /// 
         /// <param name="entity"></param>
         /// <returns>the updated entity</returns>
         /// 
-        T
-        Update<K,T>(T entity)
-            where T: class;
+        Task<E> 
+        Update<K,E>(E entity)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Removes an entity from the repository's underlying storage
         /// using the current unit-of-work. 
         /// </summary>
-        /// 
         /// <param name="entity"></param>
-        /// 
-        void
-        Remove<K,T>(T entity)
-            where T: class;
+        Task
+        Remove<K,E>(E entity)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Retrieves the entity associated with the specified key. 
         /// </summary>
-        /// 
         /// <param name="key">an entity's key</param>
         /// <returns>the entity if it exists or null</returns>
         /// 
-        T
-        GetUniqueWithKey<K,T>(K key)
-            where T: class;
+        Task<Optional<E>> 
+        GetUnique<K,E>(K key)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Retrieves the entity that matches the specified predicate. 
         /// </summary>
-        /// 
         /// <param name="predicate">
-        /// a predicate that matches a unique entity
+        ///     a predicate that matches a unique entity
         /// </param>
         /// <returns>the uniquely matching entity or null</returns>
         /// 
-        T
-        GetUniqueWithPredicate<T>(Expression<Func<T,bool>> predicate)
-            where T: class;
+        Task<Optional<E>> 
+        GetUniqueMatching<E>(Expression<Func<E,bool>> predicate)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="predicate"></param>
-        IList<T>
-        GetAllWithPredicate<T>(Expression<Func<T,bool>> predicate)
-            where T: class;
+        /// 
+        Task<IList<E>> 
+        GetMatching<E>(Expression<Func<E,bool>> predicate)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
-        ///  
-        /// </summary>
-        IList<T>
-        GetAll<T>()
-            where T: class;
-
-        //////////////////////////////////////////////////////////////////////
-        /// <summary>
-        ///  
         /// </summary>
         /// 
+        Task<IList<E>> 
+        GetAll<E>()
+            where E: class;
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        ///  
+        /// </summary>
         /// <param name="queryName">query's name</param>
         /// <returns>query or null</returns>
         /// 
-        INamedQuery<T> 
-        GetNamedQuery<T>(string queryName)
-            where T: class;
+        Task<INamedQuery<E>> 
+        GetNamedQuery<E>(string queryName)
+            where E: class;
         
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="key"></param>
         /// 
-        bool
-        HasUniqueWithKey<K,T>(K key)
-            where T: class;
+        Task<bool> 
+        HasUnique<K,E>(K key)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="predicate"></param>
         /// 
-        bool
-        HasUniqueWithPredicate<T>(Expression<Func<T,bool>> predicate)
-            where T: class;
+        Task<bool> 
+        HasUniqueMatching<E>(Expression<Func<E,bool>> predicate)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="queryName">query's name</param>
         /// <returns>true if query exists, false otherwise</returns>
         /// 
-        bool 
-        HasNamedQuery<T>(string queryName)
-            where T: class;
+        Task<bool> 
+        HasNamedQuery<E>(string queryName)
+            where E: class;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -211,7 +203,7 @@ namespace Strata.Domain.Core.UnitOfWork
         /// The unit of work failed to commit. 
         /// </exception>
         /// 
-        void
+        Task
         Commit();
 
         //////////////////////////////////////////////////////////////////////
@@ -223,7 +215,7 @@ namespace Strata.Domain.Core.UnitOfWork
         /// The unit of work failed to roll back. 
         /// </exception>
         /// 
-        void
+        Task
         Rollback();
     }
 }

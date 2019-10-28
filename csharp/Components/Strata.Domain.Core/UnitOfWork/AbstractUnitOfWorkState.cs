@@ -6,7 +6,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Strata.Domain.Core.NamedQuery;
+using Strata.Foundation.Core.Utility;
 
 namespace Strata.Domain.Core.UnitOfWork
 {
@@ -41,9 +43,9 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual T 
-        Insert<K,T>(AbstractUnitOfWork context,T entity) 
-            where T: class
+        public virtual Task<E> 
+        Insert<K,E>(AbstractUnitOfWork context,E entity) 
+            where E: class
         {
             throw 
                 new InvalidOperationException(
@@ -53,9 +55,9 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual T 
-        Update<K,T>(AbstractUnitOfWork context,T entity) 
-            where T: class
+        public virtual Task<E> 
+        Update<K,E>(AbstractUnitOfWork context,E entity) 
+            where E: class
         {
             throw 
                 new InvalidOperationException(
@@ -65,9 +67,9 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual void 
-        Remove<K,T>(AbstractUnitOfWork context,T entity) 
-            where T: class
+        public virtual Task
+        Remove<K,E>(AbstractUnitOfWork context,E entity) 
+            where E: class
         {
             throw 
                 new InvalidOperationException(
@@ -77,8 +79,8 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual T 
-        GetUniqueWithKey<K,T>(AbstractUnitOfWork context,K key) 
+        public virtual Task<Optional<T>> 
+        GetUnique<K,T>(AbstractUnitOfWork context,K key) 
             where T: class
         {
             throw 
@@ -89,9 +91,8 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual T 
-        GetUniqueWithPredicate<T>(
-            AbstractUnitOfWork       context,
+        public virtual Task<Optional<T>> 
+        GetUniqueMatching<T>(AbstractUnitOfWork context,
             Expression<Func<T,bool>> predicate) 
             where T: class
         {
@@ -104,9 +105,7 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual IList<T> 
-        GetAllWithPredicate<T>(
-            AbstractUnitOfWork       context,
+        public virtual Task<IList<T>> GetMatching<T>(AbstractUnitOfWork context,
             Expression<Func<T,bool>> predicate) 
             where T: class
         {
@@ -119,20 +118,18 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual IList<T> 
-        GetAll<T>(AbstractUnitOfWork context) 
+        public virtual Task<IList<T>> GetAll<T>(AbstractUnitOfWork context) 
             where T: class
         {
             throw 
                 new InvalidOperationException(
-                    "Cannot call GetAll<T>() from state: " + Name );
+                    "Cannot call GetMatching<T>() from state: " + Name );
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual INamedQuery<T> 
-        GetNamedQuery<T>(AbstractUnitOfWork context,string queryName) 
+        public virtual Task<INamedQuery<T>> GetNamedQuery<T>(AbstractUnitOfWork context,string queryName) 
             where T: class
         {
             throw 
@@ -144,8 +141,7 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual bool 
-        HasUniqueWithKey<K,T>(AbstractUnitOfWork context,K key) 
+        public virtual Task<bool> HasUnique<K,T>(AbstractUnitOfWork context,K key) 
             where T: class
         {
             throw 
@@ -156,9 +152,7 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual bool 
-        HasUniqueWithPredicate<T>(
-            AbstractUnitOfWork       context,
+        public virtual Task<bool> HasUniqueMatching<T>(AbstractUnitOfWork context,
             Expression<Func<T,bool>> predicate) 
             where T: class
         {
@@ -171,8 +165,7 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual bool 
-        HasNamedQuery<T>(AbstractUnitOfWork context,string queryName)
+        public virtual Task<bool> HasNamedQuery<T>(AbstractUnitOfWork context,string queryName)
             where T: class
         {
             throw 
@@ -219,8 +212,8 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual void 
-        Commit(AbstractUnitOfWork context)
+        public virtual Task
+            Commit(AbstractUnitOfWork context)
         {
             throw 
                 new InvalidOperationException(
@@ -230,8 +223,8 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public virtual void 
-        Rollback(AbstractUnitOfWork context)
+        public virtual Task
+            Rollback(AbstractUnitOfWork context)
         {
             throw 
                 new InvalidOperationException(

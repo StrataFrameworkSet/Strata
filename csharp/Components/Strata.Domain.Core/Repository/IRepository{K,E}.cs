@@ -6,8 +6,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Strata.Domain.Core.NamedQuery;
 using Strata.Domain.Core.UnitOfWork;
+using Strata.Foundation.Core.Utility;
 
 namespace Strata.Domain.Core.Repository
 {
@@ -31,11 +33,10 @@ namespace Strata.Domain.Core.Repository
         /// Inserts an entity into the repository's underlying storage
         /// using the current unit-of-work. 
         /// </summary>
-        /// 
         /// <param name="entity">entity being inserted</param>
         /// <returns>the inserted entity</returns>
         /// 
-        E
+        Task<E> 
         Insert(E entity);
 
         //////////////////////////////////////////////////////////////////////
@@ -43,11 +44,10 @@ namespace Strata.Domain.Core.Repository
         /// Updates an entity in the repository's underlying storage
         /// using the current unit-of-work. 
         /// </summary>
-        /// 
         /// <param name="entity"></param>
         /// <returns>the updated entity</returns>
         /// 
-        E
+        Task<E> 
         Update(E entity);
 
         //////////////////////////////////////////////////////////////////////
@@ -55,92 +55,84 @@ namespace Strata.Domain.Core.Repository
         /// Removes an entity from the repository's underlying storage
         /// using the current unit-of-work. 
         /// </summary>
-        /// 
         /// <param name="entity"></param>
-        /// 
-        void
+        Task
         Remove(E entity);
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Retrieves the entity associated with the specified key. 
         /// </summary>
-        /// 
         /// <param name="key">an entity's key</param>
         /// <returns>the entity if it exists or null</returns>
         /// 
-        E
+        Task<Optional<E>> 
         GetUnique(K key);
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Retrieves the entity that matches the specified predicate. 
         /// </summary>
-        /// 
         /// <param name="predicate">
-        /// a predicate that matches a unique entity
+        ///     a predicate that matches a unique entity
         /// </param>
         /// <returns>the uniquely matching entity or null</returns>
         /// 
-        E
-        GetUnique(Expression<Func<E,bool>> predicate);
+        Task<Optional<E>> 
+        GetUniqueMatching(Expression<Func<E,bool>> predicate);
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="predicate"></param>
-        IList<E>
-        GetAll(Expression<Func<E,bool>> predicate);
+        /// 
+        Task<IList<E>> 
+        GetMatching(Expression<Func<E,bool>> predicate);
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        IList<E> 
+        Task<IList<E>> 
         GetAll();
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="queryName">query's name</param>
         /// <returns>finder or null</returns>
         /// 
-        INamedQuery<E> 
+        Task<INamedQuery<E>> 
         GetNamedQuery(string queryName);
         
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="key"></param>
         /// 
-        bool
+        Task<bool> 
         HasUnique(K key);
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="predicate"></param>
         /// 
-        bool
-        HasAny(Expression<Func<E,bool>> predicate);
+        Task<bool> 
+        HasMatching(Expression<Func<E,bool>> predicate);
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         ///  
         /// </summary>
-        /// 
         /// <param name="queryName">query's name</param>
         /// <returns>true if query exists, false otherwise</returns>
         /// 
-        bool 
+        Task<bool> 
         HasNamedQuery(string queryName);
     }
 }

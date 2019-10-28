@@ -1,48 +1,42 @@
 ﻿//  ##########################################################################
-//  # File Name: AbstractEntity.cs
+//  # File Name: AbstractDomainEvent.cs
 //  # Copyright: 2018, Sapientia Systems, LLC.
 //  ##########################################################################
 
 using System;
 
-namespace Strata.Domain.Core.Shared
+namespace Strata.Domain.Core.DomainEvent
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
     /// </summary>
     ///  
-    public
-    class AbstractEntity<K>:
-        IEntity<K>
+    public abstract
+    class AbstractDomainEvent<S>:
+        IDomainEvent<S>
     {
-        public virtual K        PrimaryId { get; set; }
-        public virtual int      Version { get; set; }
-
-        public virtual DateTime Created { get; set; }
-        public virtual DateTime LastModified { get; set; }
+        public virtual string   Name { get; protected set; }
+        public virtual DateTime Timestamp { get; protected set; }
+        public virtual S        Source { get; protected set; }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>
         ///  
         protected
-        AbstractEntity()
-        {
-            Created = DateTime.Now;
-            LastModified = Created;
-        }
+        AbstractDomainEvent(string name,S source):
+            this(name,DateTime.Now,source) {}
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>
         ///  
         protected
-        AbstractEntity(AbstractEntity<K> other)
+        AbstractDomainEvent(string name,DateTime timestamp,S source)
         {
-            PrimaryId    = other.PrimaryId;
-            Version      = other.Version;
-            Created      = other.Created;
-            LastModified = other.LastModified;
+            Name      = name;
+            Timestamp = timestamp;
+            Source    = source;
         }
     }
 }

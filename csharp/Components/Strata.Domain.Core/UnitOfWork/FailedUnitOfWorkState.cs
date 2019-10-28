@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Strata.Domain.Core.NamedQuery;
 
 namespace Strata.Domain.Core.UnitOfWork
@@ -51,12 +52,12 @@ namespace Strata.Domain.Core.UnitOfWork
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override void
+        public override async Task
         Rollback(AbstractUnitOfWork context)
         {
             try
             {
-                context.DoRollback();
+                await context.DoRollback();
                 context.State = RolledBackUnitOfWorkState.GetInstance();
             }
             catch (Exception e)

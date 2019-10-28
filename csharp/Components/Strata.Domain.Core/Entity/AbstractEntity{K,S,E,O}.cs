@@ -4,8 +4,9 @@
 //  ##########################################################################
 
 using System;
+using Strata.Domain.Core.DomainEvent;
 
-namespace Strata.Domain.Core.Shared
+namespace Strata.Domain.Core.Entity
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
