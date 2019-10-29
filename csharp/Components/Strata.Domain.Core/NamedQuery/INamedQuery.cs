@@ -4,6 +4,8 @@
 //  ##########################################################################
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Strata.Foundation.Core.Utility;
 
 namespace Strata.Domain.Core.NamedQuery
 {
@@ -13,14 +15,15 @@ namespace Strata.Domain.Core.NamedQuery
     /// and determining the existence of entities in a repository. 
     /// </summary>
     /// 
-    /// <typeparam name="T">Entity Type</typeparam>
+    /// <typeparam name="E">Entity Type</typeparam>
     /// 
     /// <author>JFL</author>
     /// <conventions>$conventionspath$</conventions>
     ///  
     public
-    interface INamedQuery<T>:
+    interface INamedQuery<E>:
         IMethod
+        where E: class
     {
 
         //////////////////////////////////////////////////////////////////////
@@ -30,8 +33,8 @@ namespace Strata.Domain.Core.NamedQuery
         /// 
         /// <returns>all results</returns>
         /// 
-	    ICollection<T> 
-	    GetAll();
+	    Task<ICollection<E>> 
+        GetAll();
 	
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -44,8 +47,8 @@ namespace Strata.Domain.Core.NamedQuery
         /// Result is not unique.
         /// </exception>
         /// 
-	    T 
-	    GetUnique();
+	    Task<Optional<E>> 
+        GetUnique();
 	
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -53,8 +56,9 @@ namespace Strata.Domain.Core.NamedQuery
         /// </summary>
         /// 
         /// <returns>the next entity in the result or null</returns>
-	    T 
-	    GetNext();
+        /// 
+	    Task<Optional<E>> 
+        GetNext();
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -63,8 +67,8 @@ namespace Strata.Domain.Core.NamedQuery
         /// 
         /// <returns>true if unique result, false otherwise</returns>
         /// 
-	    bool
-	    HasUnique();
+	    Task<bool> 
+        HasUnique();
 	
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -73,8 +77,8 @@ namespace Strata.Domain.Core.NamedQuery
         /// 
         /// <returns>true if any results, false otherwise</returns>
         /// 
-	    bool
-	    HasAny();
+	    Task<bool> 
+        HasAny();
 	
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -83,8 +87,8 @@ namespace Strata.Domain.Core.NamedQuery
         /// 
         /// <returns>true if next result, false otherwise</returns>
         /// 
-	    bool 
-	    HasNext();
+	    Task<bool> 
+        HasNext();
 
     }
 }

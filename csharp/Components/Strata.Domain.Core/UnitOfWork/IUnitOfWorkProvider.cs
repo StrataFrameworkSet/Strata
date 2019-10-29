@@ -5,8 +5,8 @@
 
 namespace Strata.Domain.Core.UnitOfWork
 {
-    public delegate K    KeyRetriever<K,T>(T entity);
-    public delegate void KeyAssigner<K,T>(T entity,K key);
+    public delegate K    KeyRetriever<K,E>(E entity);
+    public delegate void KeyAssigner<K,E>(E entity,K key);
 
     //////////////////////////////////////////////////////////////////////////
     /// <summary>

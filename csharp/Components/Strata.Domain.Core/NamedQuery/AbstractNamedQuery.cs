@@ -5,6 +5,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Strata.Foundation.Core.Utility;
 
 namespace Strata.Domain.Core.NamedQuery
 {
@@ -13,15 +15,16 @@ namespace Strata.Domain.Core.NamedQuery
     /// Base class of all <c>INamedQuery{T}</c> types.
     /// </summary>
     /// 
-    /// <typeparam name="T">Entity Type</typeparam>
+    /// <typeparam name="E">Entity Type</typeparam>
     /// 
     /// <author>JFL</author>
     /// <conventions>$conventionspath$</conventions>
     ///  
     public abstract
-    class AbstractNamedQuery<T>:
+    class AbstractNamedQuery<E>:
         AbstractMethod,
-        INamedQuery<T>
+        INamedQuery<E>
+        where E: class
     {
 
         //////////////////////////////////////////////////////////////////////
@@ -42,8 +45,8 @@ namespace Strata.Domain.Core.NamedQuery
         /// 
         /// <param name="other">other finder</param>
         /// 
-	    public 
-	    AbstractNamedQuery(AbstractNamedQuery<T> other):
+	    protected 
+	    AbstractNamedQuery(AbstractNamedQuery<E> other):
             base( other ) {}
 
 
@@ -53,7 +56,7 @@ namespace Strata.Domain.Core.NamedQuery
         /// Subclasses must implement this method.
         /// </summary>
         /// 
-        public abstract ICollection<T> 
+        public abstract Task<ICollection<E>> 
         GetAll();
 
         //////////////////////////////////////////////////////////////////////
@@ -62,7 +65,7 @@ namespace Strata.Domain.Core.NamedQuery
         /// Subclasses must implement this method.
         /// </summary>
         /// 
-        public abstract T 
+        public abstract Task<Optional<E>> 
         GetUnique();
 
         //////////////////////////////////////////////////////////////////////
@@ -71,7 +74,7 @@ namespace Strata.Domain.Core.NamedQuery
         /// Subclasses must implement this method.
         /// </summary>
         /// 
-        public abstract T 
+        public abstract Task<Optional<E>> 
         GetNext();
 
         //////////////////////////////////////////////////////////////////////
@@ -80,7 +83,7 @@ namespace Strata.Domain.Core.NamedQuery
         /// Subclasses must implement this method.
         /// </summary>
         /// 
-        public abstract bool 
+        public abstract Task<bool> 
         HasUnique();
 
         //////////////////////////////////////////////////////////////////////
@@ -89,7 +92,7 @@ namespace Strata.Domain.Core.NamedQuery
         /// Subclasses must implement this method.
         /// </summary>
         /// 
-        public abstract bool 
+        public abstract Task<bool> 
         HasAny();
 
         //////////////////////////////////////////////////////////////////////
@@ -98,7 +101,7 @@ namespace Strata.Domain.Core.NamedQuery
         /// Subclasses must implement this method.
         /// </summary>
         /// 
-        public abstract bool 
+        public abstract Task<bool> 
         HasNext();
     }
 }

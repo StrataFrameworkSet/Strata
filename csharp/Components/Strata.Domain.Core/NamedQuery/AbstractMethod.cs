@@ -4,6 +4,7 @@
 //  ##########################################################################
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Strata.Foundation.Core.Utility;
 
 namespace Strata.Domain.Core.NamedQuery
@@ -115,7 +116,7 @@ namespace Strata.Domain.Core.NamedQuery
         /// <see cref="IMethod.Execute()"/>
         /// </summary>
         /// 
-        public abstract void 
+        public abstract Task 
         Execute();
 	
         //////////////////////////////////////////////////////////////////////

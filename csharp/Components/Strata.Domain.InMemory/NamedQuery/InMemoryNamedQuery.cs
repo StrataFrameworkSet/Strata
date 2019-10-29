@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Strata.Domain.Core.NamedQuery;
 using Strata.Domain.InMemory.UnitOfWOrk;
 using Strata.Foundation.Core.Utility;
@@ -18,15 +19,15 @@ namespace Strata.Domain.InMemory.NamedQuery
     /// </summary>
     ///  
     public 
-    class InMemoryNamedQuery<T>:
-        AbstractNamedQuery<T>
-        where T:class
+    class InMemoryNamedQuery<E>:
+        AbstractNamedQuery<E>
+        where E:class
     {	
         private InMemoryUnitOfWorkProvider itsContext;
-	    private Type                      itsType;
-	    private IPredicate<T>			  itsPredicate;
-	    private IList<T>				  result;
-	    private IEnumerator<T>			  current;
+	    private Type                       itsType;
+	    private IPredicate<E>			   itsPredicate;
+	    private IList<E>				   result;
+	    private IEnumerator<E>			   current;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -37,16 +38,16 @@ namespace Strata.Domain.InMemory.NamedQuery
         InMemoryNamedQuery(
             InMemoryUnitOfWorkProvider cntx,
             String                     name,
-            IPredicate<T>              pred):
+            IPredicate<E>              pred):
             base(name)
         {
             itsContext   = cntx;
-		    itsType      = typeof(T);
+		    itsType      = typeof(E);
 		    itsPredicate = pred;
 		    result   = null;
 		    current  = null;
 		
-		    itsContext.InsertNamedQuery<T>(this);
+		    itsContext.InsertNamedQuery<E>(this);
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -55,7 +56,7 @@ namespace Strata.Domain.InMemory.NamedQuery
         /// </summary>
         /// 
         public   
-        InMemoryNamedQuery(InMemoryNamedQuery<T> other):
+        InMemoryNamedQuery(InMemoryNamedQuery<E> other):
             base( other )
         {
 		    itsContext   = other.itsContext;
@@ -71,7 +72,7 @@ namespace Strata.Domain.InMemory.NamedQuery
         public override ICopyable
         MakeCopy()
         {
-            return new InMemoryNamedQuery<T>( this );            
+            return new InMemoryNamedQuery<E>( this );            
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -88,43 +89,46 @@ namespace Strata.Domain.InMemory.NamedQuery
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-	    public override void
+	    public override Task
 	    Execute()
 	    {
 		    if ( result != null )
-			    return;
+			    return Task.CompletedTask;
 		
 		    result  = GetResults( 
                 GetInputs().GetNamedInputs(),
-                itsContext.GetEntitiesByType<T>() );
+                itsContext.GetEntitiesByType<E>() );
 		    current = result.GetEnumerator();
+            return Task.CompletedTask;
 	    }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override ICollection<T> 
+        public override Task<ICollection<E>> 
         GetAll()
         {
 		    Execute();
-		    return result;
+		    return Task.FromResult<ICollection<E>>(result);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override T 
+        public override Task<Optional<E>> 
         GetUnique()
         {
 		    Execute();
 
-            return result.SingleOrDefault();
+            return 
+                Task.FromResult(
+                    Optional<E>.OfNullable(result.SingleOrDefault()));
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override T 
+        public override Task<Optional<E>> 
         GetNext()
         {
 		    Execute();
@@ -132,9 +136,11 @@ namespace Strata.Domain.InMemory.NamedQuery
             try
             {
                 current.MoveNext();
-                T next = current.Current;
+                E next = current.Current;
                 
-                return next;
+                return 
+                    Task.FromResult(
+                        Optional<E>.OfNullable(next));
             }
             catch (InvalidOperationException)
             {
@@ -145,40 +151,40 @@ namespace Strata.Domain.InMemory.NamedQuery
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override bool 
+        public override Task<bool> 
         HasUnique()
         {
             Execute();
-            return result.Count == 1;
+            return Task.FromResult(result.Count == 1);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override bool 
+        public override Task<bool> 
         HasAny()
         {
             Execute();
-            return result.Count > 0;
+            return Task.FromResult(result.Count > 0);
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <inheritDoc/>
         /// 
-        public override bool 
+        public override Task<bool> 
         HasNext()
         {
 		    Execute();
 
             try
             {
-                T next = current.Current;
+                E next = current.Current;
                 
-                return true;
+                return Task.FromResult(true);
             }
             catch (InvalidOperationException)
             {
-                return false;
+                return Task.FromResult(false);
             }
         }
 	
@@ -187,12 +193,12 @@ namespace Strata.Domain.InMemory.NamedQuery
         /// 
         /// </summary>
         /// 
-	    protected IList<T> 
-	    GetResults(IDictionary<String,Object> inputs,IList<T> objects)
+	    protected IList<E> 
+	    GetResults(IDictionary<String,Object> inputs,IList<E> objects)
 	    {
-		    IList<T> output = new List<T>();
+		    IList<E> output = new List<E>();
 		
-		    foreach (T entry in objects)
+		    foreach (E entry in objects)
 			    if ( itsPredicate.Evaluate( entry,inputs ) )
 				    output.Add( entry );
 		

@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NHibernate;
 using NHibernate.Type;
 using Strata.Domain.Core.NamedQuery;
@@ -22,19 +23,19 @@ namespace Strata.Domain.Nhibernate.NamedQuery
     /// Named Queries.
     /// </summary>
     /// 
-    /// <typeparam name="T">Entity Type</typeparam>
+    /// <typeparam name="E">Entity Type</typeparam>
     /// 
     /// <author>JFL</author>
     /// <conventions>$conventionspath$</conventions>
     ///  
     public
-    class NhibernateNamedQuery<T>:
-        AbstractNamedQuery<T>
-        where T:class
+    class NhibernateNamedQuery<E>:
+        AbstractNamedQuery<E>
+        where E:class
     {
 	    private NhibernateUnitOfWork unitOfWork;
-	    private IList<T>	         result;
-	    private IEnumerator<T>	     current;
+	    private IList<E>	         result;
+	    private IEnumerator<E>	     current;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -43,7 +44,7 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         /// 
         public 
         NhibernateNamedQuery(
-            String               queryName,
+            string               queryName,
             NhibernateUnitOfWork uow):
             base(queryName)
         {
@@ -53,11 +54,11 @@ namespace Strata.Domain.Nhibernate.NamedQuery
             query = unitOfWork.DoGetNamedQuery(Name);
 
             if ( 
-                !HasReturnType( query,typeof(T) ) && 
+                !HasReturnType( query,typeof(E) ) && 
                 !HasIntegerReturnType( query ) )
                 throw 
                     new FinderCreationException( 
-                        "Implementation query must return " + typeof(T) +
+                        "Implementation query must return " + typeof(E) +
                         " or integer type (long, int, short)" );
 
 		    result      = null;
@@ -70,7 +71,7 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         /// </summary>
         /// 
         public 
-        NhibernateNamedQuery(NhibernateNamedQuery<T> other):
+        NhibernateNamedQuery(NhibernateNamedQuery<E> other):
             base( other )
         {
             IQuery query;
@@ -79,11 +80,11 @@ namespace Strata.Domain.Nhibernate.NamedQuery
             query      = unitOfWork.DoGetNamedQuery(Name);
 
             if ( 
-                !HasReturnType( query,typeof(T) ) && 
+                !HasReturnType( query,typeof(E) ) && 
                 !HasIntegerReturnType( query ) )
                 throw 
                     new FinderCreationException( 
-                        "Implementation query must return " + typeof(T) +
+                        "Implementation query must return " + typeof(E) +
                         " or integer type (long, int, short)" );
 
 		    result      = null;
@@ -96,7 +97,7 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         public override ICopyable 
         MakeCopy()
         {
-            return new NhibernateNamedQuery<T>( this );
+            return new NhibernateNamedQuery<E>( this );
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -117,10 +118,10 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         /// <see cref="IFinder{T}.Clear()"/>
         /// </summary>
         /// 
-        public override void 
+        public override async Task 
         Execute()
         {
-		    EvaluateGet(ResultCardinality.ZERO_TO_MANY);
+		    await EvaluateGet(ResultCardinality.ZERO_TO_MANY);
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -128,10 +129,10 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         /// <see cref="IFinder{T}.GetAll()"/>
         /// </summary>
         /// 
-        public override ICollection<T> 
+        public override async Task<ICollection<E>> 
         GetAll()
         {
-		    EvaluateGet(ResultCardinality.ZERO_TO_MANY);
+		    await EvaluateGet(ResultCardinality.ZERO_TO_MANY);
 		    return result;
         }
 
@@ -140,12 +141,12 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         /// <see cref="IFinder{T}.GetUnique()"/>
         /// </summary>
         /// 
-        public override T 
+        public override async Task<Optional<E>> 
         GetUnique()
         {
-		    EvaluateGet(ResultCardinality.ZERO_TO_ONE);
+		    await EvaluateGet(ResultCardinality.ZERO_TO_ONE);
 
-            return result.SingleOrDefault();
+            return Optional<E>.OfNullable(result.SingleOrDefault());
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -153,21 +154,21 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         /// <see cref="IFinder{T}.GetNext()"/>
         /// </summary>
         /// 
-        public override T 
+        public override async Task<Optional<E>> 
         GetNext()
         {
-		    EvaluateGet(ResultCardinality.ZERO_TO_MANY);
+		    await EvaluateGet(ResultCardinality.ZERO_TO_MANY);
 
             try
             {
-                T next = current.Current;
+                E next = current.Current;
                 
                 current.MoveNext();
-                return next;
+                return Optional<E>.OfNullable(next);
             }
             catch (InvalidOperationException)
             {
-                return null;
+                return Optional<E>.Empty();
             }
         }
 
@@ -176,10 +177,10 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         /// <see cref="IFinder{T}.HasUnique()"/>
         /// </summary>
         /// 
-        public override bool 
+        public override async Task<bool> 
         HasUnique()
         {
-            return EvaluateHas() == 1;
+            return (await EvaluateHas()) == 1;
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -187,10 +188,10 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         /// <see cref="IFinder{T}.HasAny()"/>
         /// </summary>
         /// 
-        public override bool 
+        public override async Task<bool> 
         HasAny()
         {
-            return EvaluateHas() > 0;
+            return (await EvaluateHas()) > 0;
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -198,14 +199,14 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         /// <see cref="IFinder{T}.HasNext()"/>
         /// </summary>
         /// 
-        public override bool 
+        public override async Task<bool> 
         HasNext()
         {
-		    EvaluateGet(ResultCardinality.ZERO_TO_MANY);
+		    await EvaluateGet(ResultCardinality.ZERO_TO_MANY);
 
             try
             {
-                T next = current.Current;
+                E next = current.Current;
                 
                 return true;
             }
@@ -220,11 +221,10 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         /// Evaluates the named query, sets the results, and intializes 
         /// the enumerator.
         /// </summary>
-        /// 
         /// <param name="cardinality">expected cardinality of results</param>
         /// 
-	    protected void
-	    EvaluateGet(ResultCardinality cardinality)
+        protected async Task
+        EvaluateGet(ResultCardinality cardinality)
 	    {
 		    if ( result == null )
 		    {
@@ -233,20 +233,23 @@ namespace Strata.Domain.Nhibernate.NamedQuery
 			    switch ( keeper.Mode )
 			    {
 			    case InputMode.NAMED:
-				    result = 
-				        EvaluateGetWithNamedInputs(
-                            unitOfWork, keeper, cardinality);
+				    result =
+                        await
+				            EvaluateGetWithNamedInputs(
+                                unitOfWork, keeper, cardinality);
 				    break;
 				
 			    case InputMode.POSITIONAL:
 				    result = 
-				        EvaluateGetWithPositionalInputs(
-                            unitOfWork, keeper, cardinality);
+                        await
+				            EvaluateGetWithPositionalInputs(
+                                unitOfWork, keeper, cardinality);
 				    break;
 				
 			    default:
 				    result =
-                        EvaluateGetWithNoInputs(unitOfWork, cardinality);
+                        await
+                            EvaluateGetWithNoInputs(unitOfWork, cardinality);
 				    break;
 			    }
 			
@@ -259,20 +262,20 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         /// <summary>
         /// Evaluates the named query using named inputs.
         /// </summary>
-        /// 
         /// <param name="unitOfWork">Nhibernate unit of work</param>
         /// <param name="keeper">input keeper</param>
         /// <param name="cardinality">expected result cardinality</param>
         /// <returns>query result</returns>
         /// 
-        private IList<T> 
+        private async Task<IList<E>> 
         EvaluateGetWithNamedInputs(
-    	    NhibernateUnitOfWork            unitOfWork,
-    	    InputKeeper                     keeper,
-    	    ResultCardinality               cardinality)
+            NhibernateUnitOfWork unitOfWork,
+            InputKeeper          keeper,
+            ResultCardinality    cardinality)
         {
             IQuery                     query  = unitOfWork.DoGetNamedQuery(Name);
     	    IDictionary<String,Object> inputs = keeper.GetNamedInputs();
+            IList<E>                   output = null;
 
             foreach (KeyValuePair<String,Object> input in inputs)
                 if (IsCollectionType(input.Value))
@@ -280,61 +283,97 @@ namespace Strata.Domain.Nhibernate.NamedQuery
                 else
     	            query.SetParameter( input.Key,input.Value );
     	
-    	    return 
+    	    output = 
                 cardinality == ResultCardinality.ZERO_TO_MANY
-                    ? query.List<T>()
-                    : new List<T>( new T[] { (T)query.UniqueResult()} );
+                    ? await 
+                        query
+                            .ListAsync<E>()
+                            .ConfigureAwait(false)
+                    : new List<E>( 
+                        new E[]
+                        {
+                            await 
+                                query
+                                    .UniqueResultAsync<E>()
+                                    .ConfigureAwait(false)
+                        } );
+
+            return output;
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Evaluates the named query using positional inputs.
         /// </summary>
-        /// 
-        /// <param name="session">Nhibernate session</param>
+        /// <param name="unitOfWork"></param>
         /// <param name="keeper">input keeper</param>
         /// <param name="cardinality">expected result cardinality</param>
+        /// <param name="session">Nhibernate session</param>
         /// <returns>query result</returns>
         /// 
-	    private IList<T> 
-	    EvaluateGetWithPositionalInputs(
+        private async Task<IList<E>> 
+        EvaluateGetWithPositionalInputs(
             NhibernateUnitOfWork unitOfWork,
-            InputKeeper          keeper, 
-		    ResultCardinality    cardinality)
+            InputKeeper          keeper,
+            ResultCardinality    cardinality)
 	    {
             IQuery              query    = unitOfWork.DoGetNamedQuery(Name);
 		    ICollection<Object> inputs   = keeper.GetPositionalInputs();
 		    int                 position = 0;
+            IList<E>            output = null;
 
             foreach (Object input in inputs)
 		        query.SetParameter( position++,input );
 		
-		    return 
+		    output = 
                 cardinality == ResultCardinality.ZERO_TO_MANY
-                    ? query.List<T>()
-                    : new List<T>( new T[] { (T)query.UniqueResult()} );
+                    ? await 
+                        query
+                            .ListAsync<E>()
+                            .ConfigureAwait(false)
+                    : new List<E>( 
+                        new E[]
+                        {
+                            await 
+                                query
+                                    .UniqueResultAsync<E>()
+                                    .ConfigureAwait(false)
+                        } );
+
+            return output;
 	    }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Evaluates the named query with no inputs.
         /// </summary>
-        /// 
-        /// <param name="session">Nhibernate session</param>
+        /// <param name="unitOfWork"></param>
         /// <param name="cardinality">expected result cardinality</param>
+        /// <param name="session">Nhibernate session</param>
         /// <returns>query result</returns>
         /// 
-	    private IList<T> 
-	    EvaluateGetWithNoInputs(
+        private async Task<IList<E>> 
+        EvaluateGetWithNoInputs(
             NhibernateUnitOfWork unitOfWork,
             ResultCardinality    cardinality)
 	    {
             IQuery query = unitOfWork.DoGetNamedQuery(Name);
-	    
-		    return
+            IList<E> output =
                 cardinality == ResultCardinality.ZERO_TO_MANY
-                    ? query.List<T>()
-                    : new List<T>( new T[] { (T)query.UniqueResult()} );
+                    ? await 
+                        query
+                            .ListAsync<E>()
+                            .ConfigureAwait(false)
+                    : new List<E>( 
+                        new E[]
+                        {
+                            await 
+                                query
+                                    .UniqueResultAsync<E>()
+                                    .ConfigureAwait(false)
+                        } );
+
+            return output;
 	    }
 
         //////////////////////////////////////////////////////////////////////
@@ -344,38 +383,45 @@ namespace Strata.Domain.Nhibernate.NamedQuery
         /// 
         /// <returns>the number of results</returns>
         /// 
-        protected long
+        protected async Task<long> 
         EvaluateHas()
         {
 			InputKeeper keeper  = GetInputs();
+            long        output;
         
             switch ( keeper.Mode )
             {
             case InputMode.NAMED:
-                return
-                    EvaluateHasWithNamedInputs(unitOfWork, keeper);
+                output = 
+                    await EvaluateHasWithNamedInputs(unitOfWork, keeper);
+                break;
             
             case InputMode.POSITIONAL:
-                return
-                    EvaluateHasWithPositionalInputs(unitOfWork, keeper);
+                output = 
+                    await EvaluateHasWithPositionalInputs(unitOfWork, keeper);
+                break;
             
             default:
-                return
-                    EvaluateHasWithNoInputs(unitOfWork);
+                output =
+                    await EvaluateHasWithNoInputs(unitOfWork);
+                break;
             }
+
+            return output;
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>
         /// 
-        private long 
+        private async Task<long> 
         EvaluateHasWithNamedInputs(
             NhibernateUnitOfWork unitOfWork,
             InputKeeper          keeper)
         {
             IQuery                     query  = unitOfWork.DoGetNamedQuery(Name);
             IDictionary<String,Object> inputs = keeper.GetNamedInputs();
+            long                       output;
 
             query.SetMaxResults( 2 );
             query.SetFetchSize( 2 );
@@ -386,24 +432,34 @@ namespace Strata.Domain.Nhibernate.NamedQuery
                 else
                     query.SetParameter( input.Key,input.Value );
         
-            return
+            output = 
                 HasIntegerReturnType(query)
-                    ? query.UniqueResult<long>()
-                    : query.List().Count;
+                    ? await 
+                        query
+                            .UniqueResultAsync<long>()
+                            .ConfigureAwait(false)
+                    : (await 
+                        query
+                            .ListAsync()
+                            .ConfigureAwait(false))
+                            .Count;
+
+            return output;
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>
         /// 
-        private long 
+        private async Task<long> 
         EvaluateHasWithPositionalInputs(
             NhibernateUnitOfWork unitOfWork,
-            InputKeeper keeper)
+            InputKeeper          keeper)
         {
             IQuery              query    = unitOfWork.DoGetNamedQuery(Name);
             ICollection<Object> inputs   = keeper.GetPositionalInputs();
             int                 position = 0;
+            long                output;
         
             query.SetMaxResults( 2 );
             query.SetFetchSize( 2 );
@@ -411,28 +467,47 @@ namespace Strata.Domain.Nhibernate.NamedQuery
             foreach (Object input in inputs)
                 query.SetParameter( position++,input );
         
-            return
+            output =
                 HasIntegerReturnType(query)
-                    ? query.UniqueResult<long>()
-                    : query.List().Count;
+                    ? await 
+                        query
+                            .UniqueResultAsync<long>()
+                            .ConfigureAwait(false)
+                    : (await 
+                        query
+                            .ListAsync()
+                            .ConfigureAwait(false))
+                            .Count;
+
+            return output;
         }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// </summary>
         /// 
-        private long 
+        private async Task<long> 
         EvaluateHasWithNoInputs(NhibernateUnitOfWork unitOfWork)
         {
             IQuery query = unitOfWork.DoGetNamedQuery(Name);
-        
+            long   output;
+
             query.SetMaxResults( 2 );
             query.SetFetchSize( 2 );
         
-            return
+            output =
                 HasIntegerReturnType(query)
-                    ? query.UniqueResult<long>()
-                    : query.List().Count;
+                    ? await
+                        query
+                            .UniqueResultAsync<long>()
+                            .ConfigureAwait(false)
+                    : (await 
+                        query
+                            .ListAsync()
+                            .ConfigureAwait(false))
+                            .Count;
+
+            return output;
         }
 
         //////////////////////////////////////////////////////////////////////
