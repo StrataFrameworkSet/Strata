@@ -19,6 +19,12 @@ namespace Strata.Domain.Core.TestDomain
     {
         public virtual ISet<IContactInformation> 
         ContactInformation { get; set; }
+
+        protected 
+        AbstractParty()
+        {
+            ContactInformation = new HashSet<IContactInformation>();
+        }
     }
 }
 

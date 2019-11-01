@@ -14,7 +14,8 @@ namespace Strata.Domain.Core.TestDomain
     ///  
     public
     class OrganizationRepository:
-        AbstractRepository<long,IOrganization>
+        AbstractRepository<long,IOrganization>,
+        IOrganizationRepository
     {
         public 
         OrganizationRepository(IUnitOfWorkProvider provider): 

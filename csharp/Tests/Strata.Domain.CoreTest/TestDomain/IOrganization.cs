@@ -12,7 +12,9 @@ namespace Strata.Domain.Core.TestDomain
     /// </summary>
     ///  
     public
-    interface IOrganization
+    interface IOrganization:
+        IParty,
+        IEquatable<IOrganization>
     {
         string     Name { get; set; }
         ISet<long> MemberIds { get; set; }

@@ -99,6 +99,7 @@ namespace Strata.Domain.InMemory.UnitOfWOrk
             E                updatedEntity = null;
             K                key           = default(K);
             EntityIdentifier id            = null;
+            bool             hasEntity     = false;
         
             updatedEntity = GetReplicator<E>().Replicate(entity);
             key =  GetRetriever<K,E>()(updatedEntity);
@@ -107,7 +108,9 @@ namespace Strata.Domain.InMemory.UnitOfWOrk
             if ( removed.ContainsKey( id ) )
                 throw new ArgumentException("entity is already removed");
 
-            if ( !inserted.ContainsKey(id) && !await DoHasUnique<K,E>(key))
+            hasEntity = await DoHasUnique<K,E>(key);
+
+            if ( !inserted.ContainsKey(id) && !hasEntity)
                 throw new ArgumentException("entity does not exist");
         
             updated.Add( id,updatedEntity );

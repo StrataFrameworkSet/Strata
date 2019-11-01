@@ -13,7 +13,8 @@ namespace Strata.Domain.Core.TestDomain
     ///  
     public
     interface IPerson:
-        IParty
+        IParty,
+        IEquatable<IPerson>
     {
         PersonName Name { get; set; }
         DateTime   DateOfBirth { get; set; }

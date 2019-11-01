@@ -14,7 +14,8 @@ namespace Strata.Domain.Core.TestDomain
     ///  
     public
     class PersonRepository:
-        AbstractRepository<long,IPerson>
+        AbstractRepository<long,IPerson>,
+        IPersonRepository
     {
         public 
         PersonRepository(IUnitOfWorkProvider provider): 

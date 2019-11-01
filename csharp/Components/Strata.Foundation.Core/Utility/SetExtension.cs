@@ -17,6 +17,13 @@ namespace Strata.Foundation.Core.Utility
     class SetExtension
     {
         public static void
+        AddAll<T>(this ISet<T> set,ICollection<T> other)
+        {
+            foreach (T item in other)
+                set.Add(item);
+        }
+
+        public static void
         ForEach<T>(this ISet<T> extendee,Action<T> action)
         {
             foreach (T element in extendee)

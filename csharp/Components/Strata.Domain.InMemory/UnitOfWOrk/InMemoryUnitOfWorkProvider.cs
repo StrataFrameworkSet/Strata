@@ -9,6 +9,7 @@ using System.Linq;
 using Strata.Domain.Core.NamedQuery;
 using Strata.Domain.Core.UnitOfWork;
 using Strata.Domain.InMemory.NamedQuery;
+using Strata.Foundation.Core.Utility;
 
 namespace Strata.Domain.InMemory.UnitOfWOrk
 {
@@ -166,7 +167,16 @@ namespace Strata.Domain.InMemory.UnitOfWOrk
         public IEntityReplicator<object>
         GetObjectReplicator(Type type) 
         {
-            return objectReplicators[type];
+            if (objectReplicators.ContainsKey(type))
+                return objectReplicators[type];
+
+            foreach (Type parentType in GetParentTypes(type))
+                if (objectReplicators.ContainsKey(parentType))
+                    return objectReplicators[parentType];
+
+            throw 
+                new KeyNotFoundException(
+                    "No replicator found for type:" + type);
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -224,6 +234,20 @@ namespace Strata.Domain.InMemory.UnitOfWOrk
                 !unitOfWork.IsActive();    
         }
 
+        private ISet<Type>
+        GetParentTypes(Type type)
+        {
+            ISet<Type> parents = new HashSet<Type>();
+
+            while (type.BaseType != null)
+            {
+                parents.AddAll(type.GetInterfaces());
+                parents.Add(type.BaseType);
+                type = type.BaseType;
+            }
+
+            return parents;
+        }
     }
 }
 
