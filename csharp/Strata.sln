@@ -49,7 +49,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strata.Foundation.Structure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strata.Foundation.StructureMapTest", "Tests\Strata.Foundation.StructureMapTest\Strata.Foundation.StructureMapTest.csproj", "{ECCD1D42-EB70-4BA1-9130-8411F4C690EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strata.Foundation.NinjectTest", "Tests\Strata.Foundation.NinjectTest\Strata.Foundation.NinjectTest.csproj", "{C3D2BDC0-52C0-4D3A-A672-57C521DB55B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strata.Foundation.NinjectTest", "Tests\Strata.Foundation.NinjectTest\Strata.Foundation.NinjectTest.csproj", "{C3D2BDC0-52C0-4D3A-A672-57C521DB55B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
