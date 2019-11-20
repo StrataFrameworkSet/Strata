@@ -1,0 +1,26 @@
+//////////////////////////////////////////////////////////////////////////////
+// IExecutorService.java
+//////////////////////////////////////////////////////////////////////////////
+
+package strata.foundation.core.concurrent;
+
+import java.util.concurrent.ExecutorService;
+
+public
+interface IExecutorService
+    extends ExecutorService
+{
+    IExecutorService
+    checkOut();
+
+    IExecutorService
+    checkIn();
+
+    boolean
+    isCheckedOut();
+
+    boolean
+    isCheckedIn();
+}
+
+//////////////////////////////////////////////////////////////////////////////

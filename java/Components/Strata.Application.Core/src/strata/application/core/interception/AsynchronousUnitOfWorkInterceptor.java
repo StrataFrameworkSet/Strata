@@ -146,6 +146,7 @@ class AsynchronousUnitOfWorkInterceptor
                 () ->
                 {
                     doAfter(context.getInvocation());
+
                     return
                         context
                             .stop()

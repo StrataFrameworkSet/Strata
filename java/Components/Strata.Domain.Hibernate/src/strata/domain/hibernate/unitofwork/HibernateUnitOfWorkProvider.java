@@ -25,8 +25,13 @@
 package strata.domain.hibernate.unitofwork;
 
 import org.hibernate.SessionFactory;
+import strata.domain.core.unitofwork.AbstractUnitOfWorkProvider;
 import strata.domain.core.unitofwork.IUnitOfWork;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
+import strata.foundation.core.utility.ISynchronizer;
+import strata.foundation.core.utility.ReadLock;
+import strata.foundation.core.utility.ReadWriteLockSynchronizer;
+import strata.foundation.core.utility.WriteLock;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -42,11 +47,13 @@ import java.util.concurrent.Executors;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class HibernateUnitOfWorkProvider 
+class HibernateUnitOfWorkProvider
+	extends    AbstractUnitOfWorkProvider
 	implements IUnitOfWorkProvider
 {
 	private SessionFactory      itsSessionFactory;
 	private ExecutorService     itsExecutor;
+	private final ISynchronizer itsSynchronizer;
 	private HibernateUnitOfWork itsUnitOfWork;
 
 	/************************************************************************
@@ -59,6 +66,7 @@ class HibernateUnitOfWorkProvider
 		super();
 		itsSessionFactory = factory;
 		itsExecutor       = Executors.newSingleThreadExecutor();
+		itsSynchronizer   = new ReadWriteLockSynchronizer();
 		itsUnitOfWork     = new HibernateUnitOfWork(this,itsSessionFactory,itsExecutor);
 	}
 
@@ -73,11 +81,17 @@ class HibernateUnitOfWorkProvider
 			CompletableFuture.supplyAsync(
 				() ->
 				{
-					if ( itsUnitOfWork == null || !itsUnitOfWork.isActive() )
-						itsUnitOfWork =
-							new HibernateUnitOfWork(this,itsSessionFactory,itsExecutor);
+					try (WriteLock lock = new WriteLock(itsSynchronizer))
+					{
+						if (itsUnitOfWork == null || !itsUnitOfWork.isActive())
+							itsUnitOfWork =
+								new HibernateUnitOfWork(
+									this,
+									itsSessionFactory,
+									itsExecutor);
 
-					return itsUnitOfWork;
+						return itsUnitOfWork;
+					}
 
 				},
 				itsExecutor);
@@ -94,9 +108,12 @@ class HibernateUnitOfWorkProvider
 			CompletableFuture.supplyAsync(
 				() ->
 				{
-					itsUnitOfWork.close();
-					itsUnitOfWork = null;
-					return null;
+					try (WriteLock lock = new WriteLock(itsSynchronizer))
+					{
+						itsUnitOfWork.close();
+						itsUnitOfWork = null;
+						return null;
+					}
 				},
 				itsExecutor);
     }
@@ -111,7 +128,37 @@ class HibernateUnitOfWorkProvider
 		return itsExecutor;
 	}
 
-    /************************************************************************
+	/************************************************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean
+	hasActiveUnitOfWork()
+	{
+		try (ReadLock lock = new ReadLock(itsSynchronizer))
+		{
+			return itsUnitOfWork != null && itsUnitOfWork.isActive();
+		}
+	}
+
+	/************************************************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean
+	isClosed()
+	{
+		return false;
+	}
+
+	/************************************************************************
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void
+	close() {}
+
+	/************************************************************************
 	 *  
 	 *
 	 * @return

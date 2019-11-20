@@ -26,6 +26,7 @@ package strata.domain.redis.unitofwork;
 
 import io.lettuce.core.RedisClient;
 import strata.domain.core.repository.IKeyRetriever;
+import strata.domain.core.unitofwork.AbstractUnitOfWorkProvider;
 import strata.domain.core.unitofwork.IUnitOfWork;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
 import strata.domain.redis.namedquery.IRedisNamedQuery;
@@ -47,6 +48,7 @@ import java.util.concurrent.*;
  */
 public 
 class RedisUnitOfWorkProvider
+    extends    AbstractUnitOfWorkProvider
 	implements IUnitOfWorkProvider
 {
     private RedisClient                          itsClient;
@@ -98,7 +100,13 @@ class RedisUnitOfWorkProvider
                 () ->
                 {
                     if ( itsUnitOfWork == null || !itsUnitOfWork.isActive() )
+                    {
+                        if (isClosed())
+                            throw
+                                new IllegalStateException("provider is closed");
+
                         itsUnitOfWork = new RedisUnitOfWork(this);
+                    }
 
                     return itsUnitOfWork;
                 },
@@ -131,6 +139,33 @@ class RedisUnitOfWorkProvider
     getExecutor()
     {
         return itsExecutor;
+    }
+
+    /************************************************************************
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean
+    hasActiveUnitOfWork()
+    {
+        return itsUnitOfWork != null && itsUnitOfWork.isActive();
+    }
+
+    /************************************************************************
+     * {@inheritDoc}
+     */
+    @Override
+    public void
+    close() {}
+
+    /************************************************************************
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean
+    isClosed()
+    {
+        return false;
     }
 
     /************************************************************************

@@ -24,6 +24,8 @@
 
 package strata.domain.core.unitofwork;
 
+import strata.foundation.core.pool.IPoolable;
+
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutorService;
 
@@ -37,6 +39,7 @@ import java.util.concurrent.ExecutorService;
  */
 public 
 interface IUnitOfWorkProvider
+    extends IPoolable<IUnitOfWorkProvider,IUnitOfWorkProviderPool>
 {
 	/************************************************************************
      * Returns the current unit of work associated with this
@@ -59,10 +62,21 @@ interface IUnitOfWorkProvider
 
     /************************************************************************
      *
-     *
      */
     ExecutorService
     getExecutor();
+
+    /************************************************************************
+     *
+     */
+    boolean
+    hasActiveUnitOfWork();
+
+    /************************************************************************
+     *
+     */
+    boolean
+    isClosed();
 }
 
 

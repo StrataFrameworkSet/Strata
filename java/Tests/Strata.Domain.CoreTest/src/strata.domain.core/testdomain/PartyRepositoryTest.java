@@ -74,6 +74,7 @@ class PartyRepositoryTest
         itsOrgRepository = null;
         itsPersonRepository = null;
         itsTarget = null;
+        itsProvider.close();
         itsProvider = null;
     }
 

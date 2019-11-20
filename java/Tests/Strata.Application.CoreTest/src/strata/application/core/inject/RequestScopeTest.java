@@ -43,6 +43,7 @@ class RequestScopeTest
     @Test
     public void
     testRequestScope()
+        throws Exception
     {
         Map<Integer,List<Integer>> lists = new TreeMap<>();
 

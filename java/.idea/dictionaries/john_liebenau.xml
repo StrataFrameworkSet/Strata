@@ -9,8 +9,11 @@
       <w>guice</w>
       <w>memb</w>
       <w>openapi</w>
+      <w>poolable</w>
+      <w>poolables</w>
       <w>resteasy</w>
       <w>strataframework</w>
+      <w>synchronizer</w>
       <w>teardowns</w>
       <w>testdomain</w>
     </words>

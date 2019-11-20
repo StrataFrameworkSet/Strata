@@ -38,6 +38,7 @@ class OrganizationRepositoryTest
         
         await(unitOfWork.commit());
         itsTarget = null;
+        itsProvider.close();
         itsProvider = null;
     }
 

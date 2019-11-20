@@ -41,6 +41,7 @@ class PersonRepositoryTest
         
         await(unitOfWork.commit());
         itsTarget = null;
+        itsProvider.close();
         itsProvider = null;
     }
 

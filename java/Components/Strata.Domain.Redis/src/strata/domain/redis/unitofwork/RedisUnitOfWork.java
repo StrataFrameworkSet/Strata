@@ -58,6 +58,9 @@ class RedisUnitOfWork
     public void 
     close()
     {
+        itsInserted.clear();
+        itsUpdated.clear();
+        itsRemoved.clear();
     }
 
     /************************************************************************

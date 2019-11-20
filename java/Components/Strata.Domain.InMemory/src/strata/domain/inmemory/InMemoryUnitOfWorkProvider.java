@@ -25,6 +25,7 @@
 package strata.domain.inmemory;
 
 import strata.domain.core.repository.IKeyRetriever;
+import strata.domain.core.unitofwork.AbstractUnitOfWorkProvider;
 import strata.domain.core.unitofwork.IUnitOfWork;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
 import strata.foundation.core.utility.Pair;
@@ -44,7 +45,8 @@ import java.util.concurrent.*;
  *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
  */
 public 
-class InMemoryUnitOfWorkProvider 
+class InMemoryUnitOfWorkProvider
+    extends    AbstractUnitOfWorkProvider
 	implements IUnitOfWorkProvider
 {
     private Map<EntityIdentifier,Object>         itsEntities;
@@ -92,7 +94,14 @@ class InMemoryUnitOfWorkProvider
                 () ->
                 {
                     if ( itsUnitOfWork == null || !itsUnitOfWork.isActive() )
-                        itsUnitOfWork = new InMemoryUnitOfWork(this,itsEntities);
+                    {
+                        if (isClosed())
+                            throw
+                                new IllegalStateException("provider is closed");
+
+                        itsUnitOfWork =
+                            new InMemoryUnitOfWork(this,itsEntities);
+                    }
 
                     return itsUnitOfWork;
                 },
@@ -125,6 +134,27 @@ class InMemoryUnitOfWorkProvider
     getExecutor()
     {
         return itsExecutor;
+    }
+
+    /************************************************************************
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean
+    hasActiveUnitOfWork()
+    {
+        return itsUnitOfWork != null && itsUnitOfWork.isActive();
+    }
+
+    @Override
+    public void
+    close() {}
+
+    @Override
+    public boolean
+    isClosed()
+    {
+        return false;
     }
 
     /************************************************************************
