@@ -11,19 +11,19 @@ import strata.foundation.core.utility.WriteLock;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public
-class Trigger<C>
-    implements ITrigger<C>
+class ConditionalExecutor<C>
+    implements IConditionalExecutor<C>
 {
     private final Map<C,AtomicBoolean> itsConditions;
-    private Runnable             itsAction;
-    private boolean              itsTriggerIndicator;
-    private final ISynchronizer  itsSynchronizer;
+    private Runnable                   itsAction;
+    private boolean                    itsTriggerIndicator;
+    private final ISynchronizer        itsSynchronizer;
 
-    public
-    Trigger()
+    public ConditionalExecutor()
     {
         itsConditions = new HashMap<>();
         itsAction = null;
@@ -32,7 +32,7 @@ class Trigger<C>
     }
 
     @Override
-    public ITrigger
+    public IConditionalExecutor
     insertCondition(C condition)
     {
         try (WriteLock lock = new WriteLock(itsSynchronizer))
@@ -43,7 +43,7 @@ class Trigger<C>
     }
 
     @Override
-    public ITrigger
+    public IConditionalExecutor
     removeCondition(C condition)
     {
         try (WriteLock lock = new WriteLock(itsSynchronizer))
@@ -54,18 +54,7 @@ class Trigger<C>
     }
 
     @Override
-    public ITrigger
-    setAction(Runnable action)
-    {
-        try (WriteLock lock = new WriteLock(itsSynchronizer))
-        {
-            itsAction = action;
-            return this;
-        }
-    }
-
-    @Override
-    public ITrigger
+    public IConditionalExecutor
     setCondition(C condition)
     {
         try (WriteLock lock = new WriteLock(itsSynchronizer))
@@ -75,7 +64,7 @@ class Trigger<C>
                 itsConditions
                     .get(condition)
                     .set(true);
-                if (mustTrigger())
+                if (mustExecute())
                     itsAction.run();
             }
 
@@ -84,7 +73,7 @@ class Trigger<C>
     }
 
     @Override
-    public ITrigger
+    public IConditionalExecutor
     clearCondition(C condition)
     {
         try (WriteLock lock = new WriteLock(itsSynchronizer))
@@ -99,30 +88,61 @@ class Trigger<C>
     }
 
     @Override
-    public boolean
-    hasCondition(C condition)
+    public IConditionalExecutor
+    setAction(Runnable action)
+    {
+        try (WriteLock lock = new WriteLock(itsSynchronizer))
+        {
+            itsAction = action;
+            return this;
+        }
+    }
+
+    @Override
+    public Set<C>
+    getConditions()
     {
         try (ReadLock lock = new ReadLock(itsSynchronizer))
         {
-            return
-                itsConditions
-                    .get(condition)
-                    .get();
+            return itsConditions.keySet();
         }
     }
 
     @Override
     public boolean
-    hasTriggered()
+    isConditionTrue(C condition)
     {
         try (ReadLock lock = new ReadLock(itsSynchronizer))
         {
-            return mustTrigger();
+            return
+                hasCondition(condition)
+                    ? itsConditions.get(condition).get()
+                    : false;
+        }
+    }
+
+    @Override
+    public boolean
+    hasCondition(C condition)
+    {
+        try (ReadLock lock = new ReadLock(itsSynchronizer))
+        {
+            return itsConditions.containsKey(condition);
+        }
+    }
+
+    @Override
+    public boolean
+    hasExecuted()
+    {
+        try (ReadLock lock = new ReadLock(itsSynchronizer))
+        {
+            return mustExecute();
         }
     }
 
     private boolean
-    mustTrigger()
+    mustExecute()
     {
         return
             itsConditions

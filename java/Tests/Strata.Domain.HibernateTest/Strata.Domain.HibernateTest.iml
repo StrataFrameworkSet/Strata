@@ -9,6 +9,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:5.4.6.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-tools:5.4.6.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-c3p0:5.4.6.Final" level="project" />
     <orderEntry type="module" module-name="Strata.Domain.CoreTest" />
     <orderEntry type="module" module-name="Strata.Domain.Core" />
     <orderEntry type="module" module-name="Strata.Foundation.Core" />

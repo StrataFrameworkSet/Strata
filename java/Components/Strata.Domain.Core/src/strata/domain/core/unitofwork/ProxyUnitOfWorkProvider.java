@@ -4,8 +4,8 @@
 
 package strata.domain.core.unitofwork;
 
-import strata.foundation.core.concurrent.ITrigger;
-import strata.foundation.core.concurrent.Trigger;
+import strata.foundation.core.concurrent.ConditionalExecutor;
+import strata.foundation.core.concurrent.IConditionalExecutor;
 
 import javax.inject.Inject;
 import java.util.UUID;
@@ -19,7 +19,7 @@ class ProxyUnitOfWorkProvider
     private final UUID                itsId;
     private IUnitOfWorkProviderPool   itsPool;
     private final IUnitOfWorkProvider itsDelegate;
-    private final ITrigger<String>    itsTrigger;
+    private final IConditionalExecutor<String> itsTrigger;
 
     @Inject
     public
@@ -28,7 +28,7 @@ class ProxyUnitOfWorkProvider
         itsId       = UUID.randomUUID();
         itsPool     = pool;
         itsDelegate = itsPool.checkOut();
-        itsTrigger  = new Trigger<>();
+        itsTrigger  = new ConditionalExecutor<>();
 
         itsTrigger
             .insertCondition("Closed")
@@ -124,7 +124,7 @@ class ProxyUnitOfWorkProvider
     {
         itsTrigger.setCondition("Completed");
 
-        if (itsTrigger.hasTriggered())
+        if (itsTrigger.hasExecuted())
             subject.detach(this);
     }
 

@@ -1,33 +1,40 @@
 //////////////////////////////////////////////////////////////////////////////
-// ITrigger.java
+// IConditionalExecutor.java
 //////////////////////////////////////////////////////////////////////////////
 
 package strata.foundation.core.concurrent;
 
+import java.util.Set;
+
 public
-interface ITrigger<C>
+interface IConditionalExecutor<C>
 {
-    ITrigger
+    IConditionalExecutor
     insertCondition(C condition);
 
-    ITrigger
+    IConditionalExecutor
     removeCondition(C condition);
 
-    ITrigger
-    setAction(Runnable action);
-
-    ITrigger
+    IConditionalExecutor
     setCondition(C condition);
 
-    ITrigger
+    IConditionalExecutor
     clearCondition(C condition);
+
+    IConditionalExecutor
+    setAction(Runnable action);
+
+    Set<C>
+    getConditions();
+
+    boolean
+    isConditionTrue(C condition);
 
     boolean
     hasCondition(C condition);
 
     boolean
-    hasTriggered();
-
+    hasExecuted();
 }
 
 //////////////////////////////////////////////////////////////////////////////
