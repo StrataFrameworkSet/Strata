@@ -4,19 +4,10 @@
 
 package strata.foundation.core.concurrent;
 
-import java.util.concurrent.ExecutorService;
+import strata.foundation.core.pool.IPool;
 
 public
 interface IExecutorServicePool
-{
-    IExecutorServicePool
-    setPoolSize(int poolSize);
-
-    int
-    getPoolSize();
-
-    ExecutorService
-    getExecutorService();
-}
+    extends IPool<IExecutorService,IExecutorServicePool> {}
 
 //////////////////////////////////////////////////////////////////////////////

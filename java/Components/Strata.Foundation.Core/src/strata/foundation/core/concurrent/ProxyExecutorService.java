@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////
-// PooledExecutorService.java
+// ProxyExecutorService.java
 //////////////////////////////////////////////////////////////////////////////
 
 package strata.foundation.core.concurrent;
@@ -9,75 +9,80 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public
-class PooledExecutorService
+class ProxyExecutorService
     implements IExecutorService
 {
-    private final ExecutorService itsImplementation;
-    private IExecutorServicePool  itsPool;
-    private boolean               itsAvailability;
+    private IExecutorServicePool   itsPool;
+    private final IExecutorService itsDelegate;
 
     public
-    PooledExecutorService()
+    ProxyExecutorService(IExecutorServicePool pool)
     {
-        itsImplementation = Executors.newSingleThreadExecutor();
-        itsPool = null;
-        itsAvailability = true;
+        itsPool = pool;
+        itsDelegate = pool.checkOut();
+    }
+
+    @Override
+    public void
+    close()
+    {
+        itsPool.checkIn(itsDelegate);
     }
 
     @Override
     public void
     shutdown()
     {
-        itsImplementation.shutdown();
+        itsDelegate.shutdown();
     }
 
     @Override
     public List<Runnable>
     shutdownNow()
     {
-        return itsImplementation.shutdownNow();
+        return itsDelegate.shutdownNow();
     }
 
     @Override
     public boolean
     isShutdown()
     {
-        return itsImplementation.isShutdown();
+        return itsDelegate.isShutdown();
     }
 
     @Override
     public boolean
     isTerminated()
     {
-        return itsImplementation.isTerminated();
+        return itsDelegate.isTerminated();
     }
 
     @Override
     public boolean
     awaitTermination(long timeout,TimeUnit unit) throws InterruptedException
     {
-        return itsImplementation.awaitTermination(timeout,unit);
+        return itsDelegate.awaitTermination(timeout,unit);
     }
 
     @Override
     public <T> Future<T>
     submit(Callable<T> task)
     {
-        return itsImplementation.submit(task);
+        return itsDelegate.submit(task);
     }
 
     @Override
     public <T> Future<T>
     submit(Runnable task,T result)
     {
-        return itsImplementation.submit(task,result);
+        return itsDelegate.submit(task,result);
     }
 
     @Override
     public Future<?>
     submit(Runnable task)
     {
-        return itsImplementation.submit(task);
+        return itsDelegate.submit(task);
     }
 
     @Override
@@ -85,7 +90,7 @@ class PooledExecutorService
     invokeAll(Collection<? extends Callable<T>> tasks)
         throws InterruptedException
     {
-        return itsImplementation.invokeAll(tasks);
+        return itsDelegate.invokeAll(tasks);
     }
 
     @Override
@@ -93,7 +98,7 @@ class PooledExecutorService
     invokeAll(Collection<? extends Callable<T>> tasks,long timeout,TimeUnit unit)
         throws InterruptedException
     {
-        return itsImplementation.invokeAll(tasks,timeout,unit);
+        return itsDelegate.invokeAll(tasks,timeout,unit);
     }
 
     @Override
@@ -101,7 +106,7 @@ class PooledExecutorService
     invokeAny(Collection<? extends Callable<T>> tasks)
         throws InterruptedException, ExecutionException
     {
-        return itsImplementation.invokeAny(tasks);
+        return itsDelegate.invokeAny(tasks);
     }
 
     @Override
@@ -109,21 +114,21 @@ class PooledExecutorService
     invokeAny(Collection<? extends Callable<T>> tasks,long timeout,TimeUnit unit)
         throws InterruptedException, ExecutionException, TimeoutException
     {
-        return itsImplementation.invokeAny(tasks,timeout,unit);
+        return itsDelegate.invokeAny(tasks,timeout,unit);
     }
 
     @Override
     public void
     execute(Runnable command)
     {
-        itsImplementation.execute(command);
+        itsDelegate.execute(command);
     }
 
     @Override
     public IExecutorService
     setPool(IExecutorServicePool pool)
     {
-        itsPool = pool;
+        itsDelegate.setPool(pool);
         return this;
     }
 
@@ -131,12 +136,8 @@ class PooledExecutorService
     public IExecutorServicePool
     getPool()
     {
-        return itsPool;
+        return itsDelegate.getPool();
     }
-
-    @Override
-    public void
-    close() {}
 }
 
 //////////////////////////////////////////////////////////////////////////////

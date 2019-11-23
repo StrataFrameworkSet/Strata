@@ -13,12 +13,6 @@ interface IPoolable<T extends IPoolable<T,P>,P extends IPool<T,P>>
 
     P
     getPool();
-
-    boolean
-    isCheckedOut();
-
-    boolean
-    isCheckedIn();
 }
 
 //////////////////////////////////////////////////////////////////////////////

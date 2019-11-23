@@ -33,9 +33,6 @@ class FixedSizePool<T extends IPoolable<T,P>,P extends IPool<T,P>>
                     ? itsPoolables.take()
                     : createAndTake();
 
-            if (poolable instanceof ICheckOutCheckIn)
-                ((ICheckOutCheckIn)poolable).checkOut();
-
             return poolable;
         }
         catch (InterruptedException e)
@@ -48,15 +45,9 @@ class FixedSizePool<T extends IPoolable<T,P>,P extends IPool<T,P>>
     public boolean
     checkIn(T poolable)
     {
-        if (poolable.getPool() == this && itsPoolables.offer(poolable))
-        {
-            if (poolable instanceof ICheckOutCheckIn)
-                ((ICheckOutCheckIn)poolable).checkIn();
-
-            return true;
-        }
-
-        return false;
+        return
+            poolable.getPool() == this &&
+                itsPoolables.offer(poolable);
     }
 
     @Override
@@ -78,6 +69,33 @@ class FixedSizePool<T extends IPoolable<T,P>,P extends IPool<T,P>>
     hasAvailability()
     {
         return getAvailability() > 0;
+    }
+
+    @Override
+    public boolean
+    isInPool(T poolable)
+    {
+        return poolable.getPool() == this;
+    }
+
+    @Override
+    public boolean
+    isCheckedIn(T poolable)
+    {
+        return
+            isInPool(poolable)
+                ? itsPoolables.contains(poolable)
+                : false;
+    }
+
+    @Override
+    public boolean
+    isCheckedOut(T poolable)
+    {
+        return
+            isInPool(poolable)
+                ? !itsPoolables.contains(poolable)
+                : false;
     }
 
     public FixedSizePool<T,P>

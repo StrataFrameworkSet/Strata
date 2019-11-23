@@ -4,23 +4,14 @@
 
 package strata.foundation.core.concurrent;
 
+import strata.foundation.core.pool.IPoolable;
+
 import java.util.concurrent.ExecutorService;
 
 public
 interface IExecutorService
-    extends ExecutorService
-{
-    IExecutorService
-    checkOut();
-
-    IExecutorService
-    checkIn();
-
-    boolean
-    isCheckedOut();
-
-    boolean
-    isCheckedIn();
-}
+    extends
+        ExecutorService,
+        IPoolable<IExecutorService,IExecutorServicePool> {}
 
 //////////////////////////////////////////////////////////////////////////////

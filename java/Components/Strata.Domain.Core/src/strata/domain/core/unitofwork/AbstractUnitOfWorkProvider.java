@@ -6,7 +6,6 @@ package strata.domain.core.unitofwork;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import strata.foundation.core.pool.ICheckOutCheckIn;
 import strata.foundation.core.utility.ISynchronizer;
 import strata.foundation.core.utility.ReadWriteLockSynchronizer;
 
@@ -15,11 +14,10 @@ import java.util.concurrent.Executors;
 
 public abstract
 class AbstractUnitOfWorkProvider
-    implements IUnitOfWorkProvider, ICheckOutCheckIn
+    implements IUnitOfWorkProvider
 {
     private IUnitOfWorkProviderPool itsPool;
     private ExecutorService         itsExecutor;
-    private boolean                 itsAvailability;
     private final ISynchronizer     itsSynchronizer;
     private Logger                  itsLogger;
 
@@ -27,7 +25,6 @@ class AbstractUnitOfWorkProvider
     AbstractUnitOfWorkProvider()
     {
         itsExecutor = Executors.newSingleThreadExecutor();
-        itsAvailability = true;
         itsSynchronizer = new ReadWriteLockSynchronizer();
         itsLogger = LogManager.getLogger(AbstractUnitOfWorkProvider.class);
     }
@@ -52,40 +49,6 @@ class AbstractUnitOfWorkProvider
     getPool()
     {
         return itsPool;
-    }
-
-    @Override
-    public boolean
-    isCheckedOut()
-    {
-        return itsAvailability == false;
-    }
-
-    @Override
-    public boolean
-    isCheckedIn()
-    {
-        return itsAvailability == true;
-    }
-
-    public void
-    checkOut()
-    {
-        if (isCheckedIn())
-        {
-            itsLogger.debug("checkOut");
-            itsAvailability = false;
-        }
-    }
-
-    public void
-    checkIn()
-    {
-        if (isCheckedOut())
-        {
-            itsLogger.debug("checkIn");
-            itsAvailability = true;
-        }
     }
 
     protected ISynchronizer

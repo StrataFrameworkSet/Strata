@@ -35,12 +35,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-/**
- * 
- * @author 		
- *     Sapientia Systems 
- * @conventions	
- *     <a href="{@docRoot}/NamingConventions.html">Naming Conventions</a>
+/****************************************************************************
+ *
  */
 public 
 class HibernateUnitOfWorkProvider
@@ -155,13 +151,6 @@ class HibernateUnitOfWorkProvider
 	getSessionFactory()
 	{
 	    return itsSessionFactory;
-	}
-
-	@Override
-	public void
-	onComplete(IUnitOfWork subject)
-	{
-
 	}
 }
 

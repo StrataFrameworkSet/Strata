@@ -101,20 +101,6 @@ class ProxyUnitOfWorkProvider
         return itsDelegate.getPool();
     }
 
-    @Override
-    public boolean
-    isCheckedOut()
-    {
-        return itsDelegate.isCheckedOut();
-    }
-
-    @Override
-    public boolean
-    isCheckedIn()
-    {
-        return itsDelegate.isCheckedIn();
-    }
-
     public IUnitOfWorkProvider
     getDelegate() { return itsDelegate; }
 

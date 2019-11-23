@@ -21,6 +21,15 @@ interface IPool<T extends IPoolable<T,P>,P extends IPool<T,P>>
 
     boolean
     hasAvailability();
+
+    boolean
+    isInPool(T poolable);
+
+    boolean
+    isCheckedIn(T poolable);
+
+    boolean
+    isCheckedOut(T poolable);
 }
 
 //////////////////////////////////////////////////////////////////////////////
