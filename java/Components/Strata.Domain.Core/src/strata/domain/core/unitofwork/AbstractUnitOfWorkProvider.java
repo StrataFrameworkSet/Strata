@@ -90,6 +90,10 @@ class AbstractUnitOfWorkProvider
 
     protected ISynchronizer
     getSynchronizer() { return itsSynchronizer; }
+
+    @Override
+    public void
+    onComplete(IUnitOfWork subject) {}
 }
 
 //////////////////////////////////////////////////////////////////////////////
