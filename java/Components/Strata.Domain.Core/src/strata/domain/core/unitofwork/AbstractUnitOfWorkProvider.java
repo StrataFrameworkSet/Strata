@@ -4,12 +4,14 @@
 
 package strata.domain.core.unitofwork;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import strata.foundation.core.pool.ICheckOutCheckIn;
+import strata.foundation.core.utility.ISynchronizer;
+import strata.foundation.core.utility.ReadWriteLockSynchronizer;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import static strata.foundation.core.utility.Awaiter.await;
 
 public abstract
 class AbstractUnitOfWorkProvider
@@ -18,12 +20,16 @@ class AbstractUnitOfWorkProvider
     private IUnitOfWorkProviderPool itsPool;
     private ExecutorService         itsExecutor;
     private boolean                 itsAvailability;
+    private final ISynchronizer     itsSynchronizer;
+    private Logger                  itsLogger;
 
     protected
     AbstractUnitOfWorkProvider()
     {
         itsExecutor = Executors.newSingleThreadExecutor();
         itsAvailability = true;
+        itsSynchronizer = new ReadWriteLockSynchronizer();
+        itsLogger = LogManager.getLogger(AbstractUnitOfWorkProvider.class);
     }
 
     @Override
@@ -49,36 +55,41 @@ class AbstractUnitOfWorkProvider
     }
 
     @Override
-    public synchronized boolean
+    public boolean
     isCheckedOut()
     {
         return itsAvailability == false;
     }
 
     @Override
-    public synchronized boolean
+    public boolean
     isCheckedIn()
     {
         return itsAvailability == true;
     }
 
-    public synchronized void
+    public void
     checkOut()
     {
         if (isCheckedIn())
+        {
+            itsLogger.debug("checkOut");
             itsAvailability = false;
+        }
     }
 
-    public synchronized void
+    public void
     checkIn()
     {
         if (isCheckedOut())
         {
-            await(clearUnitOfWork());
+            itsLogger.debug("checkIn");
             itsAvailability = true;
         }
     }
 
+    protected ISynchronizer
+    getSynchronizer() { return itsSynchronizer; }
 }
 
 //////////////////////////////////////////////////////////////////////////////

@@ -266,6 +266,13 @@ class InMemoryUnitOfWorkProvider
     {
         return (IKeyRetriever<K,T>)itsRetrievers.get( entityType );
     }
+
+    @Override
+    public void
+    onComplete(IUnitOfWork subject)
+    {
+
+    }
 }
 
 

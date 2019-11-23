@@ -25,6 +25,7 @@
 package strata.domain.core.unitofwork;
 
 import strata.domain.core.namedquery.INamedQuery;
+import strata.foundation.core.concurrent.AbstractCompletionSource;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -42,6 +43,7 @@ import java.util.concurrent.CompletionStage;
  */
 public abstract 
 class AbstractUnitOfWork
+    extends AbstractCompletionSource<IUnitOfWork>
     implements IUnitOfWork
 {
     private IUnitOfWorkProvider itsProvider;
@@ -297,7 +299,14 @@ class AbstractUnitOfWork
      */
     protected abstract <E> CompletionStage<Boolean>
     doHasNamedQuery(Class<E> type,String queryName);
-    
+
+    /************************************************************************
+     *
+     *
+     */
+    protected boolean
+    doIsActive() { return true; }
+
     /************************************************************************
      *  
      *
@@ -343,6 +352,16 @@ class AbstractUnitOfWork
 
                     return null;
                 });
+    }
+
+    /************************************************************************
+     * {@inheritDoc}
+     */
+    @Override
+    protected IUnitOfWork
+    getSelf()
+    {
+        return this;
     }
 }
 

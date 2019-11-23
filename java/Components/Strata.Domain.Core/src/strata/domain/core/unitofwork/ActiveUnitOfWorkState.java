@@ -151,7 +151,7 @@ class ActiveUnitOfWorkState
     public boolean 
     isActive(AbstractUnitOfWork context)
     {
-        return true;
+        return context.doIsActive();
     }
 
     /************************************************************************

@@ -55,11 +55,11 @@ class HibernateNamedQuery<T>
 	extends    AbstractNamedQuery<T>
 	implements INamedQuery<T>
 {
-	private Class<T> itsEntityClass;
+	private Class<T> 					itsEntityClass;
 	private HibernateUnitOfWorkProvider itsContext;
-	private List<T> itsResult;
-	private Iterator<T> itsCurrent;
-	private ExecutorService itsExecutor;
+	private List<T> 					itsResult;
+	private Iterator<T> 				itsCurrent;
+	private ExecutorService 			itsExecutor;
 	
 	/************************************************************************
 	 * Creates a new HibernateNamedQuery. 
@@ -240,30 +240,38 @@ class HibernateNamedQuery<T>
 		if ( itsResult == null )
 		{
 			SessionFactory factory = itsContext.getSessionFactory();
-			Session session = factory.openSession();
+			Session        session = factory.openSession();
 			InputKeeper    keeper  = getInputs();
-			
-			switch ( keeper.getMode() )
+
+			try
 			{
-			case NAMED:
-				itsResult = 
-				    evaluateGetWithNamedInputs(
-				        session,keeper,cardinality );
-				break;
-				
-			case POSITIONAL:
-				itsResult = 
-				    evaluateGetWithPositionalInputs(
-				        session,keeper,cardinality );
-				break;
-				
-			default:
-				itsResult = 
-				    evaluateGetWithNoInputs( session,cardinality );
-				break;
+				switch (keeper.getMode())
+				{
+					case NAMED:
+						itsResult =
+							evaluateGetWithNamedInputs(
+								session,keeper,cardinality);
+						break;
+
+					case POSITIONAL:
+						itsResult =
+							evaluateGetWithPositionalInputs(
+								session,keeper,cardinality);
+						break;
+
+					default:
+						itsResult =
+							evaluateGetWithNoInputs(session,cardinality);
+						break;
+				}
+
+				itsCurrent = itsResult.iterator();
 			}
-			
-			itsCurrent = itsResult.iterator();
+			finally
+			{
+				if (session != null & session.isOpen())
+					session.close();
+			}
 		}
 	}
 
@@ -277,7 +285,7 @@ class HibernateNamedQuery<T>
      */
     private List<T>
     evaluateGetWithNamedInputs(
-    	Session session,
+    	Session           session,
     	InputKeeper       keeper,
     	ResultCardinality cardinality)
     {
@@ -308,7 +316,7 @@ class HibernateNamedQuery<T>
 	 */
 	private List<T>
 	evaluateGetWithPositionalInputs(
-		Session session,
+		Session           session,
 		InputKeeper       keeper, 
 		ResultCardinality cardinality)
 	{
@@ -357,23 +365,31 @@ class HibernateNamedQuery<T>
     evaluateHas()
     {
         SessionFactory factory = itsContext.getSessionFactory();
-        Session session = factory.openSession();
+        Session 	   session = factory.openSession();
         InputKeeper    keeper  = getInputs();
-        
-        switch ( keeper.getMode() )
-        {
-        case NAMED:
-            return 
-                evaluateHasWithNamedInputs( session,keeper );
-            
-        case POSITIONAL:
-            return 
-                evaluateHasWithPositionalInputs( session,keeper );
-            
-        default:
-            return 
-                evaluateHasWithNoInputs( session );
-        }
+
+        try
+		{
+			switch (keeper.getMode())
+			{
+				case NAMED:
+					return
+						evaluateHasWithNamedInputs(session,keeper);
+
+				case POSITIONAL:
+					return
+						evaluateHasWithPositionalInputs(session,keeper);
+
+				default:
+					return
+						evaluateHasWithNoInputs(session);
+			}
+		}
+        finally
+		{
+			if (session != null && session.isOpen())
+				session.close();
+		}
     }
 
     /************************************************************************

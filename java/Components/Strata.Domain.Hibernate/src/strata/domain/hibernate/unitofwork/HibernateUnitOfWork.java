@@ -27,6 +27,7 @@ package strata.domain.hibernate.unitofwork;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import strata.domain.core.namedquery.INamedQuery;
 import strata.domain.core.unitofwork.*;
 import strata.domain.hibernate.namedquery.HibernateNamedQuery;
@@ -54,7 +55,7 @@ class HibernateUnitOfWork
     private Session         itsSession;
     private Transaction     itsTransaction;
     private ExecutorService itsExecutor;
-    
+
     /************************************************************************
      * Creates a new {@code HibernateUnitOfWork}. 
      *
@@ -217,15 +218,36 @@ class HibernateUnitOfWork
     doHasNamedQueryInternal(Class<E> type,String queryName)
     {
         SessionFactory factory = null;
-        Session session = null;
+        Session        session = null;
+        Query<E>       query   = null;
 
-        factory = ((HibernateUnitOfWorkProvider)getProvider()).getSessionFactory();
-        session = factory.openSession();
+        try
+        {
+            factory = ((HibernateUnitOfWorkProvider)getProvider()).getSessionFactory();
+            session = factory.openSession();
 
-        return
-            session
-                .getNamedQuery(
-                    getQualifiedQueryName(type,queryName)) != null;
+            query =
+                session
+                    .getNamedQuery(
+                        getQualifiedQueryName(type,queryName));
+
+            return query != null;
+        }
+        finally
+        {
+            if (session != null && session.isOpen())
+                session.close();
+        }
+    }
+
+    /************************************************************************
+     * {@inheritDoc}
+     */
+    @Override
+    protected boolean
+    doIsActive()
+    {
+        return itsSession != null && itsSession.isOpen();
     }
 
     /************************************************************************
@@ -247,6 +269,9 @@ class HibernateUnitOfWork
                         if (itsSession.isOpen())
                             itsSession.close();
 
+                        complete();
+                        itsSession = null;
+                        itsTransaction = null;
                         return null;
                     }
                     catch (Exception cause)
@@ -285,6 +310,10 @@ class HibernateUnitOfWork
                     {
                         if ( itsSession.isOpen() )
                             itsSession.close();
+
+                        complete();
+                        itsSession = null;
+                        itsTransaction = null;
                     }
                 },
                 itsExecutor);

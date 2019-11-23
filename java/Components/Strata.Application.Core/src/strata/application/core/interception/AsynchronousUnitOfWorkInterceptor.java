@@ -218,6 +218,8 @@ class AsynchronousUnitOfWorkInterceptor
 
             if (queue != null)
                 queue.execute();
+
+            queue.clear();
         }
         catch (Throwable cause)
         {

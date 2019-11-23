@@ -63,7 +63,7 @@ class Request
 
     @Override
     public void
-    close() throws Exception
+    close()
     {
         ResteasyContext.removeContextDataLevel();
 
@@ -71,7 +71,14 @@ class Request
         {
             AutoCloseable closeable = itsCloseables.remove();
 
-            closeable.close();
+            try
+            {
+                closeable.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 

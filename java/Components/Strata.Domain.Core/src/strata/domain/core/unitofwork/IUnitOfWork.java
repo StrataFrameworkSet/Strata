@@ -25,6 +25,7 @@
 package strata.domain.core.unitofwork;
 
 import strata.domain.core.namedquery.INamedQuery;
+import strata.foundation.core.concurrent.ICompletionSource;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -41,7 +42,7 @@ import java.util.concurrent.CompletionStage;
  */
 public 
 interface IUnitOfWork
-    extends AutoCloseable
+    extends AutoCloseable, ICompletionSource<IUnitOfWork>
 {
     /************************************************************************
      *  

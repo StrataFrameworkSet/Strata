@@ -28,10 +28,6 @@ import org.hibernate.SessionFactory;
 import strata.domain.core.unitofwork.AbstractUnitOfWorkProvider;
 import strata.domain.core.unitofwork.IUnitOfWork;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
-import strata.foundation.core.utility.ISynchronizer;
-import strata.foundation.core.utility.ReadLock;
-import strata.foundation.core.utility.ReadWriteLockSynchronizer;
-import strata.foundation.core.utility.WriteLock;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -53,7 +49,6 @@ class HibernateUnitOfWorkProvider
 {
 	private SessionFactory      itsSessionFactory;
 	private ExecutorService     itsExecutor;
-	private final ISynchronizer itsSynchronizer;
 	private HibernateUnitOfWork itsUnitOfWork;
 
 	/************************************************************************
@@ -66,8 +61,11 @@ class HibernateUnitOfWorkProvider
 		super();
 		itsSessionFactory = factory;
 		itsExecutor       = Executors.newSingleThreadExecutor();
-		itsSynchronizer   = new ReadWriteLockSynchronizer();
-		itsUnitOfWork     = new HibernateUnitOfWork(this,itsSessionFactory,itsExecutor);
+		itsUnitOfWork =
+			new HibernateUnitOfWork(
+				this,
+				itsSessionFactory,
+				itsExecutor);
 	}
 
 	/************************************************************************
@@ -81,18 +79,14 @@ class HibernateUnitOfWorkProvider
 			CompletableFuture.supplyAsync(
 				() ->
 				{
-					try (WriteLock lock = new WriteLock(itsSynchronizer))
-					{
-						if (itsUnitOfWork == null || !itsUnitOfWork.isActive())
-							itsUnitOfWork =
-								new HibernateUnitOfWork(
-									this,
-									itsSessionFactory,
-									itsExecutor);
+					if (itsUnitOfWork == null || !itsUnitOfWork.isActive())
+						itsUnitOfWork =
+							new HibernateUnitOfWork(
+								this,
+								itsSessionFactory,
+								itsExecutor);
 
-						return itsUnitOfWork;
-					}
-
+					return itsUnitOfWork;
 				},
 				itsExecutor);
     }
@@ -108,12 +102,9 @@ class HibernateUnitOfWorkProvider
 			CompletableFuture.supplyAsync(
 				() ->
 				{
-					try (WriteLock lock = new WriteLock(itsSynchronizer))
-					{
-						itsUnitOfWork.close();
-						itsUnitOfWork = null;
-						return null;
-					}
+					//itsUnitOfWork.close();
+					itsUnitOfWork = null;
+					return null;
 				},
 				itsExecutor);
     }
@@ -135,10 +126,7 @@ class HibernateUnitOfWorkProvider
 	public boolean
 	hasActiveUnitOfWork()
 	{
-		try (ReadLock lock = new ReadLock(itsSynchronizer))
-		{
-			return itsUnitOfWork != null && itsUnitOfWork.isActive();
-		}
+		return itsUnitOfWork != null && itsUnitOfWork.isActive();
 	}
 
 	/************************************************************************
@@ -167,6 +155,13 @@ class HibernateUnitOfWorkProvider
 	getSessionFactory()
 	{
 	    return itsSessionFactory;
+	}
+
+	@Override
+	public void
+	onComplete(IUnitOfWork subject)
+	{
+
 	}
 }
 

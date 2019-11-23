@@ -4,30 +4,51 @@
 
 package strata.domain.core.unitofwork;
 
+import strata.foundation.core.concurrent.ITrigger;
+import strata.foundation.core.concurrent.Trigger;
+
 import javax.inject.Inject;
+import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutorService;
 
 public
 class ProxyUnitOfWorkProvider
-    implements IUnitOfWorkProvider
+    implements IUnitOfWorkProvider,Comparable<ProxyUnitOfWorkProvider>
 {
+    private final UUID                itsId;
     private IUnitOfWorkProviderPool   itsPool;
     private final IUnitOfWorkProvider itsDelegate;
+    private final ITrigger<String>    itsTrigger;
 
     @Inject
     public
     ProxyUnitOfWorkProvider(IUnitOfWorkProviderPool pool)
     {
+        itsId       = UUID.randomUUID();
         itsPool     = pool;
         itsDelegate = itsPool.checkOut();
+        itsTrigger  = new Trigger<>();
+
+        itsTrigger
+            .insertCondition("Closed")
+            .insertCondition("Completed")
+            .setAction(() -> getPool().checkIn(itsDelegate));
     }
 
     @Override
     public CompletionStage<IUnitOfWork>
     getUnitOfWork()
     {
-        return itsDelegate.getUnitOfWork();
+        return
+            itsDelegate
+                .getUnitOfWork()
+                .thenApply(
+                    uow ->
+                    {
+                        itsTrigger.clearCondition("Completed");
+                        return uow.attach(this);
+                    });
     }
 
     @Override
@@ -62,7 +83,7 @@ class ProxyUnitOfWorkProvider
     public void
     close()
     {
-        getPool().checkIn(itsDelegate);
+        itsTrigger.setCondition("Closed");
     }
 
     @Override
@@ -96,6 +117,23 @@ class ProxyUnitOfWorkProvider
 
     public IUnitOfWorkProvider
     getDelegate() { return itsDelegate; }
+
+    @Override
+    public void
+    onComplete(IUnitOfWork subject)
+    {
+        itsTrigger.setCondition("Completed");
+
+        if (itsTrigger.hasTriggered())
+            subject.detach(this);
+    }
+
+    @Override
+    public int
+    compareTo(ProxyUnitOfWorkProvider other)
+    {
+        return itsId.compareTo(other.itsId);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////
