@@ -63,6 +63,12 @@ class AbstractRestClient
         itsResponseProcessor = processor;
     }
 
+    public void
+    close()
+    {
+        itsClient.close();
+    }
+
     protected <Request,Reply> Reply
     doPost(String methodPath,Class<Reply> replyType,Request request)
     {
