@@ -140,7 +140,14 @@ class HibernateUnitOfWorkProvider
 	 */
 	@Override
 	public void
-	close() {}
+	close()
+	{
+		if (itsUnitOfWork != null && itsUnitOfWork.isActive())
+		{
+			itsUnitOfWork.close();
+			itsUnitOfWork = null;
+		}
+	}
 
 	/************************************************************************
 	 *  

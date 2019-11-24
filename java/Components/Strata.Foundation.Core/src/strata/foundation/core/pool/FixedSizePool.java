@@ -51,6 +51,26 @@ class FixedSizePool<T extends IPoolable<T,P>,P extends IPool<T,P>>
     }
 
     @Override
+    public P
+    clear()
+    {
+        itsPoolables
+            .stream()
+            .forEach(poolable ->
+            {
+                try
+                {
+                    poolable.close();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            });
+        return getSelf();
+    }
+
+    @Override
     public int
     getCapacity()
     {

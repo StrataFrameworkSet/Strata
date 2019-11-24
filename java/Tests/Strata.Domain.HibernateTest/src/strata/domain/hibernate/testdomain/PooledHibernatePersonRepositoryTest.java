@@ -27,6 +27,8 @@ package strata.domain.hibernate.testdomain;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import strata.domain.core.testdomain.PersonRepositoryTest;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
 import strata.domain.core.unitofwork.IUnitOfWorkProviderPool;
@@ -45,25 +47,33 @@ public
 class PooledHibernatePersonRepositoryTest
     extends PersonRepositoryTest
 {
-    private IUnitOfWorkProviderPool itsPool;
-    private SessionFactory          itsSessionFactory;
+    private static IUnitOfWorkProviderPool theirPool;
+    private static SessionFactory          theirSessionFactory;
 
-    /************************************************************************
-     * Creates a new {@code InMemoryOrganizationRepositoryTest}.
-     *
-     */
-    public
-    PooledHibernatePersonRepositoryTest()
+
+    @BeforeClass
+    public static void
+    setUpStatic()
     {
         Configuration configuration = new Configuration();
 
         configuration.configure();
 
-        itsPool =
+        theirSessionFactory = configuration.buildSessionFactory();
+        theirPool =
             new UnitOfWorkProviderPool(
                 8,
                 () -> createHibernateUnitOfWorkProvider());
-        itsSessionFactory = configuration.buildSessionFactory();
+    }
+
+    @AfterClass
+    public static void
+    tearDownStatic()
+    {
+        theirPool.clear();
+        theirPool = null;
+        theirSessionFactory.close();
+        theirSessionFactory = null;
     }
 
     /************************************************************************
@@ -74,13 +84,13 @@ class PooledHibernatePersonRepositoryTest
     protected IUnitOfWorkProvider
     createUnitOfWorkProvider()
     {
-        return new ProxyUnitOfWorkProvider(itsPool);
+        return new ProxyUnitOfWorkProvider(theirPool);
     }
 
-    protected IUnitOfWorkProvider
+    protected static IUnitOfWorkProvider
     createHibernateUnitOfWorkProvider()
     {
-        return new HibernateUnitOfWorkProvider(itsSessionFactory);
+        return new HibernateUnitOfWorkProvider(theirSessionFactory);
     }
 }
 
