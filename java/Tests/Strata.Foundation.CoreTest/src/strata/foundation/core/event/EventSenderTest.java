@@ -73,7 +73,7 @@ class EventSenderTest
 
         itsTarget.send(expected);
         itsActionQueue.execute();
-        sleep(5);
+        sleep(7);
         assertFalse("Should have stopped listening at this point",itsReceiver.isListening());
         listener.checkAssertions();
     }
@@ -124,7 +124,7 @@ class EventSenderTest
         itsTarget.send(expected1);
         itsTarget.send(expected2);
         itsActionQueue.execute();
-        sleep(5);
+        sleep(7);
         assertFalse("Should have stopped listening at this point",itsReceiver.isListening());
         listener.checkAssertions();
     }
