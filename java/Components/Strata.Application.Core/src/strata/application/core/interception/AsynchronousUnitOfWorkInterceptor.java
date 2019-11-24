@@ -217,9 +217,10 @@ class AsynchronousUnitOfWorkInterceptor
             IActionQueue queue = getQueue(invocation);
 
             if (queue != null)
+            {
                 queue.execute();
-
-            queue.clear();
+                queue.clear();
+            }
         }
         catch (Throwable cause)
         {
