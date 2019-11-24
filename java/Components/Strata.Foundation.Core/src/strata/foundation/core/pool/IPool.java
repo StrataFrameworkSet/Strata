@@ -13,6 +13,9 @@ interface IPool<T extends IPoolable<T,P>,P extends IPool<T,P>>
     boolean
     checkIn(T poolable);
 
+    P
+    clear();
+
     int
     getCapacity();
 
