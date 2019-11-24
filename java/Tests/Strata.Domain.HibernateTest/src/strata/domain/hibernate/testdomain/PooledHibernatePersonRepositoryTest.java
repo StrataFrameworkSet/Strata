@@ -61,7 +61,7 @@ class PooledHibernatePersonRepositoryTest
 
         itsPool =
             new UnitOfWorkProviderPool(
-                16,
+                8,
                 () -> createHibernateUnitOfWorkProvider());
         itsSessionFactory = configuration.buildSessionFactory();
     }
