@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import strata.foundation.core.mapper.CompletableFutureDeserializer;
 import strata.foundation.core.mapper.CompletableFutureSerializer;
 import strata.foundation.core.mapper.CompletionStageDeserializer;
@@ -53,7 +52,6 @@ class ObjectMapperContextResolver
                 .addDeserializer(
                     CompletableFuture.class,
                     new CompletableFutureDeserializer()))
-            .registerModule(new JavaTimeModule())
             .registerModule(new Jdk8Module())
             .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
             .setVisibility(

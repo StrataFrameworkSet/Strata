@@ -29,6 +29,7 @@ import strata.domain.core.unitofwork.AbstractUnitOfWorkProvider;
 import strata.domain.core.unitofwork.IUnitOfWork;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
 
+import javax.inject.Provider;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutorService;
@@ -52,6 +53,16 @@ class HibernateUnitOfWorkProvider
 	 *
 	 */
 	public 
+	HibernateUnitOfWorkProvider(Provider<SessionFactory> provider)
+	{
+		this(provider.get());
+	}
+
+	/************************************************************************
+	 * Creates a new HibernateDomainObjectManagerContext.
+	 *
+	 */
+	public
 	HibernateUnitOfWorkProvider(SessionFactory factory)
 	{
 		super();

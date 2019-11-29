@@ -15,6 +15,7 @@ import org.jboss.resteasy.spi.ResteasyDeployment;
 import strata.application.core.main.AbstractApplication;
 
 import java.util.List;
+import java.util.Properties;
 
 public abstract
 class NettyApplication
@@ -23,6 +24,42 @@ class NettyApplication
     private final Injector           itsInjector;
     private final ResteasyDeployment itsDeployment;
     private final NettyJaxrsServer   itsServer;
+
+    protected
+    NettyApplication(
+        List<Class<?>> endpointClasses,
+        Info           info,
+        List<Module>   modules,
+        String         hostNameKey,
+        String         portKey)
+    {
+        super(endpointClasses,info);
+
+        Properties properties = null;
+
+        itsInjector = Guice.createInjector(modules);
+        properties = itsInjector.getInstance(Properties.class);
+
+        if (properties == null)
+            throw new NullPointerException("no properties provided.");
+
+        itsDeployment = new ResteasyDeploymentImpl();
+        itsServer = new NettyJaxrsServer();
+
+        itsDeployment.start();
+        itsDeployment.setApplication(this);
+
+        itsServer.setDeployment(itsDeployment);
+        itsServer.setHostname(properties.getProperty(hostNameKey));
+        itsServer.setPort(Integer.parseInt(properties.getProperty(portKey)));
+
+        ModuleProcessor processor =
+            new ModuleProcessor(
+                itsDeployment.getRegistry(),
+                itsDeployment.getProviderFactory());
+
+        processor.processInjector(itsInjector);
+    }
 
     protected
     NettyApplication(
