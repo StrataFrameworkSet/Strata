@@ -11,14 +11,12 @@ namespace Strata.Diagnostic.Core.Common
     /// <summary>
     /// $comments$
     /// </summary>
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public 
     class DiagnosticOutputGenerator
     {
-        public String                DiagnosticName { get; set; }
-        public String                Description { get; set; }
+        public string                DiagnosticName { get; set; }
+        public string                Description { get; set; }
         public DiagnosticResultState ResultState { get; set; }
         public Exception             Exception { get; set; }
 

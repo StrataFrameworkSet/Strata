@@ -9,8 +9,6 @@ namespace Strata.Diagnostic.Core.Common
     /// <summary>
     /// $comments$
     /// </summary>
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public 
     class DefaultDiagnosticResult:

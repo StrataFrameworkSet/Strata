@@ -4,6 +4,7 @@
 //  ##########################################################################
 
 using System;
+using System.Threading.Tasks;
 using Strata.Diagnostic.Core.Common;
 
 namespace Strata.Diagnostic.Core.Evaluation
@@ -14,9 +15,6 @@ namespace Strata.Diagnostic.Core.Evaluation
     /// state or processing logic, recovers from these problems if possible, 
     /// and reports diagnostic results.
     /// </summary>
-    /// 
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public abstract 
     class DiagnosticCheck:
@@ -32,22 +30,22 @@ namespace Strata.Diagnostic.Core.Evaluation
             base( name ) {}
 
         //////////////////////////////////////////////////////////////////////
+        /// <inheritDoc/>
         /// <summary>
-        /// <see cref="IDiagnostic.RunDiagnostic(IDiagnosticResult)"/>
         /// This method is a 
         /// <a href="http://en.wikipedia.org/wiki/Template_method_pattern">
         /// Template Method</a> that gets instantiated with functionality 
         /// from subclasses.
         /// </summary>
         /// 
-	    public override void 
-	    RunDiagnostic(IDiagnosticResult result)
+	    public override async Task<IDiagnosticResult> 
+        RunDiagnostic(IDiagnosticResult result)
 	    {
             try
             {
     		    result.BeginDiagnostic( this );
-        	    BeginDiagnosticMode();
-                result.ReportCheckSuccess( this,RunCheck() );
+        	    await BeginDiagnosticMode();
+                result.ReportCheckSuccess( this,await RunCheck() );
             }
             catch (DiagnosticAbortedException ae)
             {
@@ -61,7 +59,7 @@ namespace Strata.Diagnostic.Core.Evaluation
                 {
                     try
                     {
-                        result.ReportRecoverySuccess( this,RunRecovery() );
+                        result.ReportRecoverySuccess( this,await RunRecovery() );
                     }
                     catch (DiagnosticException re)
                     {
@@ -79,9 +77,11 @@ namespace Strata.Diagnostic.Core.Evaluation
             }
             finally
             {
-        	    EndDiagnosticMode();
+        	    await EndDiagnosticMode();
         	    result.EndDiagnostic( this );
             }
+
+            return result;
 	    }
 
         //////////////////////////////////////////////////////////////////////
@@ -96,7 +96,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// or error during its check.
         /// </exception>
         /// 
-        protected abstract String
+        protected abstract Task<string> 
         RunCheck();
 
         //////////////////////////////////////////////////////////////////////
@@ -111,7 +111,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// or error during its recovery.
         /// </exception>
         /// 
-        protected abstract String
+        protected abstract Task<string> 
         RunRecovery();
 
         //////////////////////////////////////////////////////////////////////

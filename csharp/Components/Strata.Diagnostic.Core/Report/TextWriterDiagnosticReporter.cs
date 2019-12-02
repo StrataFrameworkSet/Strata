@@ -11,14 +11,11 @@ namespace Strata.Diagnostic.Core.Report
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// Base class for <c>IDiagnosticReporter</c>s that output
-    /// string based messages for reporting purposes.
+    /// A <c>IDiagnosticReport</c> that sends the results from running
+    /// one or more diagnostics to a <c>TextWriter</c>.
     /// </summary>
-    /// 
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
-    public 
+    public
     class TextWriterDiagnosticReporter:
         AbstractDiagnosticReporter
     {
@@ -48,10 +45,7 @@ namespace Strata.Diagnostic.Core.Report
         }
 
         //////////////////////////////////////////////////////////////////////
-        /// <summary>
-        /// <see 
-        /// cref="IDiagnosticReporter.EndDiagnostic(DiagnosticOutput)"/>
-        /// </summary>
+        /// <inheritDoc/>
         /// 
         public override void 
         EndDiagnostic(DiagnosticOutput output)

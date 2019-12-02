@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Strata.Diagnostic.Core.Common
 {
@@ -36,20 +37,18 @@ namespace Strata.Diagnostic.Core.Common
         }
 
         //////////////////////////////////////////////////////////////////////
-        /// <summary>
+        /// <inheritDoc/>
         /// 
-        /// </summary>
-        /// 
-	    public override void 
-	    RunDiagnostic(IDiagnosticResult result)
+	    public override async Task<IDiagnosticResult> 
+        RunDiagnostic(IDiagnosticResult result)
 	    {
 		    try
 		    {
 			    result.BeginDiagnostic( this );
-			    BeginDiagnosticMode();
+			    await BeginDiagnosticMode();
 			
 			    foreach (IDiagnostic d in diagnostics.Values)
-				    d.RunDiagnostic( result );
+				    await d.RunDiagnostic( result );
 		    }
 		    catch (DiagnosticAbortedException ae)
 		    {
@@ -57,9 +56,11 @@ namespace Strata.Diagnostic.Core.Common
 		    }
 		    finally
 		    {
-			    EndDiagnosticMode();
+			    await EndDiagnosticMode();
 			    result.EndDiagnostic( this );
 		    }
+
+            return result;
 	    }
 
         //////////////////////////////////////////////////////////////////////

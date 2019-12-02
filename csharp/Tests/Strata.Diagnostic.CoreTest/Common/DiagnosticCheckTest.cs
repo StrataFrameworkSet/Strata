@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Strata.Diagnostic.Core.Evaluation;
@@ -10,7 +11,7 @@ namespace Strata.Diagnostic.Core.Common
     class DiagnosticCheckTest
     {
 	    private DiagnosticCheck target;
-	    private static String   NAME = "XYZ";
+	    private static string   NAME = "XYZ";
 
         [SetUp]
 	    public void 
@@ -36,14 +37,14 @@ namespace Strata.Diagnostic.Core.Common
 	    }
 
         [Test]
-	    public void 
+	    public async Task 
         TestRunDiagnostic()
 	    {
 		    MockDiagnosticResult result   = new MockDiagnosticResult();
 		    IDiagnosticReporter  reporter = new Mock<IDiagnosticReporter>().Object;
 		
 		    result.AttachReporter( reporter );
-		    target.RunDiagnostic( result );
+		    await target.RunDiagnostic( result );
 		    Assert.IsTrue( result.ActualRun.Contains( NAME )  );
 	    }
     }

@@ -5,22 +5,21 @@
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Strata.Diagnostic.Core.Common;
 
 namespace Strata.Diagnostic.Core.Evaluation
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// $comments$
+    /// Determines if a specified directory path exists.
     /// </summary>
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public 
     class DirectoryExistsCheck:
         DiagnosticCheck
     {
-        public String Path { get; set; }
+        public string Path { get; set; }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -31,7 +30,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         DirectoryExistsCheck(string name):
             base( name )
         {
-            Path = String.Empty;
+            Path = string.Empty;
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -39,14 +38,14 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// Determines if the specified directory path exists.
         /// </summary>
         /// 
-        protected override String 
+        protected override Task<string> 
         RunCheck()
         {
 		    if ( !Directory.Exists( Path ) )
 			    throw new DiagnosticException( 
 				    "Directory " + Path + " does not exist." );
 		
-		    return "Directory " + Path + " exists.";
+		    return Task.FromResult("Directory " + Path + " exists.");
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -54,7 +53,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// This diagnostic check does not perform recovery.
         /// </summary>
         /// 
-        protected override String 
+        protected override Task<string> 
         RunRecovery()
         {
             throw new NotImplementedException();

@@ -12,9 +12,6 @@ namespace Strata.Diagnostic.Core.Common
     /// Captures events or conditions that occur when an 
     /// <c>IDiagnostic</c> is run.
     /// </summary>
-    /// 
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public 
     interface IDiagnosticReceiver

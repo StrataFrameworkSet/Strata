@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System.Threading.Tasks;
+using Moq;
 using NUnit.Framework;
 using Strata.Diagnostic.Core.Common;
 
@@ -26,7 +27,7 @@ namespace Strata.Diagnostic.Core.Evaluation
 
         [Ignore("skipped")]
         [Test]
-	    public void 
+	    public async Task 
         TestRunDiagnosticSuccess()
 	    {
 		    MockDiagnosticResult result   = new MockDiagnosticResult();
@@ -34,14 +35,14 @@ namespace Strata.Diagnostic.Core.Evaluation
 		
 		    result.AttachReporter( reporter );
             target.ConnectionString = @"Server=PHX1VDEVSQL103\CGSQL;initial catalog=TbaManager;User Id=tbadbtest;Password=tbamm1sql;";
-		    target.RunDiagnostic( result );
+		    await target.RunDiagnostic( result );
 		    Assert.IsTrue( result.ActualRun.Contains( target.Name )  );
             Assert.AreEqual( 1,result.GetNumberOfSuccesses() );
             Assert.AreEqual( 0,result.GetNumberOfFailures() );
 	    }
 
         [Test]
-	    public void 
+	    public async Task
         TestRunDiagnosticFailure()
 	    {
 		    MockDiagnosticResult result   = new MockDiagnosticResult();
@@ -49,7 +50,7 @@ namespace Strata.Diagnostic.Core.Evaluation
 		
 		    result.AttachReporter( reporter );
             target.ConnectionString = @"Server=L0115057\NOSUCHSERVER;initial catalog=TbaManager1;Integrated Security=True";
-		    target.RunDiagnostic( result );
+		    await target.RunDiagnostic( result );
 		    Assert.IsTrue( result.ActualRun.Contains( target.Name )  );
             Assert.AreEqual( 0,result.GetNumberOfSuccesses() );
             Assert.AreEqual( 1,result.GetNumberOfFailures() );

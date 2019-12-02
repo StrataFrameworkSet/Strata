@@ -5,16 +5,15 @@
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Strata.Diagnostic.Core.Common;
 
 namespace Strata.Diagnostic.Core.Evaluation
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// $comments$
+    /// Determines if a specified file path exists.
     /// </summary>
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public 
     class FileExistsCheck:
@@ -39,14 +38,14 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// Determines if the specified directory path exists.
         /// </summary>
         /// 
-        protected override string 
+        protected override Task<string> 
         RunCheck()
         {
 		    if ( !File.Exists( Path ) )
 			    throw new DiagnosticException( 
 				    "File " + Path + " does not exist." );
 		
-		    return "File " + Path + " exists.";
+		    return Task.FromResult("File " + Path + " exists.");
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -54,7 +53,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// This diagnostic check does not perform recovery.
         /// </summary>
         /// 
-        protected override string 
+        protected override Task<string> 
         RunRecovery()
         {
             throw new NotImplementedException();

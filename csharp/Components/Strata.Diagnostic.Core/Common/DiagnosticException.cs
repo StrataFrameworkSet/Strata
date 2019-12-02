@@ -9,10 +9,8 @@ namespace Strata.Diagnostic.Core.Common
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// $comments$
+    /// Base class of all diagnostic exceptions.
     /// </summary>
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public
     class DiagnosticException:

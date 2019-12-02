@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System.Threading.Tasks;
+using Moq;
 using NUnit.Framework;
 using Strata.Diagnostic.Core.Common;
 
@@ -25,7 +26,7 @@ namespace Strata.Diagnostic.Core.Evaluation
 	    }
 
         [Test]
-	    public void 
+	    public async Task
         TestRunDiagnosticSuccess()
 	    {
 		    MockDiagnosticResult result   = new MockDiagnosticResult();
@@ -33,14 +34,14 @@ namespace Strata.Diagnostic.Core.Evaluation
 		
 		    result.AttachReporter( reporter );
             target.Path = @"C:\Temp";
-		    target.RunDiagnostic( result );
+		    await target.RunDiagnostic( result );
 		    Assert.IsTrue( result.ActualRun.Contains( target.Name )  );
             Assert.AreEqual( 1,result.GetNumberOfSuccesses() );
             Assert.AreEqual( 0,result.GetNumberOfFailures() );
 	    }
 
         [Test]
-	    public void 
+	    public async Task
         TestRunDiagnosticFailure()
 	    {
 		    MockDiagnosticResult result   = new MockDiagnosticResult();
@@ -48,7 +49,7 @@ namespace Strata.Diagnostic.Core.Evaluation
 		
 		    result.AttachReporter( reporter );
             target.Path = @"C:\NoSuchDirectory";
-		    target.RunDiagnostic( result );
+		    await target.RunDiagnostic( result );
 		    Assert.IsTrue( result.ActualRun.Contains( target.Name )  );
             Assert.AreEqual( 0,result.GetNumberOfSuccesses() );
             Assert.AreEqual( 1,result.GetNumberOfFailures() );

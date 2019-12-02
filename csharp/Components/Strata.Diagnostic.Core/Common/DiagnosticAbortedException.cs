@@ -9,11 +9,8 @@ namespace Strata.Diagnostic.Core.Common
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// Exception that indicates that removing an entity 
-    /// from a repository has failed.
+    /// Exception that indicates that a diagnostic was aborted.
     /// </summary>
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public
     class DiagnosticAbortedException:

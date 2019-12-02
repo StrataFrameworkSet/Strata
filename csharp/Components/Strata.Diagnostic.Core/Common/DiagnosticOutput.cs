@@ -9,16 +9,14 @@ namespace Strata.Diagnostic.Core.Common
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// $comments$
+    /// Contains the output of running a diagnostic. 
     /// </summary>
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public 
     class DiagnosticOutput
     {
-        public String                DiagnosticName { get; protected set; }
-        public String                Description { get; protected set; }
+        public string                DiagnosticName { get; protected set; }
+        public string                Description { get; protected set; }
         public DiagnosticResultState ResultState { get; protected set; }
         public Exception             Exception { get; protected set; }
 
@@ -28,8 +26,8 @@ namespace Strata.Diagnostic.Core.Common
         /// 
         public 
         DiagnosticOutput(
-            String                name,
-            String                description,
+            string                name,
+            string                description,
             DiagnosticResultState state,
             Exception             exception)
         {

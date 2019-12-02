@@ -3,7 +3,7 @@
 //  # Copyright: 2011-2018, Sapientia Systems, LLC.
 //  ##########################################################################
 
-using System;
+using System.Threading.Tasks;
 
 namespace Strata.Diagnostic.Core.Common
 {
@@ -35,23 +35,21 @@ namespace Strata.Diagnostic.Core.Common
     /// state of an application and report any diagnostic failures.
     /// </para>
     /// </summary>
-    /// 
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public 
     interface IDiagnostic
     {
-        String Name { get; }
+        string Name { get; }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Runs the diagnostic(s) and records the results.
         /// </summary>
-        /// 
         /// <param name="result">recorded diagnostics result</param>
+        ///
+        /// <returns>task resulting in diagnostic result</returns>
         /// 
-        void
+        Task<IDiagnosticResult> 
         RunDiagnostic(IDiagnosticResult result);
     }
 }

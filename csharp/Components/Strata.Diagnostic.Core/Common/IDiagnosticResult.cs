@@ -15,9 +15,6 @@ namespace Strata.Diagnostic.Core.Common
     /// number of diagnostics run, number of aborts, number of failures, 
     /// and number of successes.
     /// </summary>
-    /// 
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public 
     interface IDiagnosticResult:

@@ -4,6 +4,7 @@
 //  ##########################################################################
 
 using System;
+using System.Threading.Tasks;
 
 namespace Strata.Diagnostic.Core.Common
 {
@@ -11,15 +12,12 @@ namespace Strata.Diagnostic.Core.Common
     /// <summary>
     /// Base class for all <c>IDiagnostic</c>s.
     /// </summary>
-    /// 
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public abstract 
     class AbstractDiagnostic: 
         IDiagnostic
     {
-        public String Name { get; protected set; }
+        public string Name { get; protected set; }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -33,11 +31,9 @@ namespace Strata.Diagnostic.Core.Common
         }
 
         //////////////////////////////////////////////////////////////////////
-        /// <summary>
-        /// <see cref="IDiagnostic.RunDiagnostic(IDiagnosticResult)"/>
-        /// </summary>
+        /// <inheritDoc/>
         /// 
-        public abstract void 
+        public abstract Task<IDiagnosticResult> 
         RunDiagnostic(IDiagnosticResult result);
 
         //////////////////////////////////////////////////////////////////////
@@ -54,8 +50,8 @@ namespace Strata.Diagnostic.Core.Common
         /// safely transition to its diagnostic mode.
         /// </exception>
         /// 
-        protected virtual void
-        BeginDiagnosticMode() {}
+        protected virtual Task
+        BeginDiagnosticMode() { return Task.CompletedTask; }
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -65,8 +61,8 @@ namespace Strata.Diagnostic.Core.Common
         /// to its "normal" operating mode.
         /// </summary>
         /// 
-        protected virtual void
-        EndDiagnosticMode() {}
+        protected virtual Task
+        EndDiagnosticMode() { return Task.CompletedTask; }
 
     }
 }

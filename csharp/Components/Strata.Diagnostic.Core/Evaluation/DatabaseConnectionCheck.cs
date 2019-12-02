@@ -7,12 +7,13 @@ using Strata.Diagnostic.Core.Common;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Strata.Diagnostic.Core.Evaluation
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// $comments$
+    /// Checks if an application can connect to a specified database.
     /// </summary>
     ///  
     public 
@@ -30,7 +31,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         DatabaseConnectionCheck(string name):
             base( name )
         {
-            ConnectionString = String.Empty;
+            ConnectionString = string.Empty;
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -39,7 +40,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// connect to a database.
         /// </summary>
         /// 
-        protected override string 
+        protected override async Task<string> 
         RunCheck()
         {
 		    try
@@ -47,7 +48,7 @@ namespace Strata.Diagnostic.Core.Evaluation
 			   SqlConnection connection = 
                     new SqlConnection(ConnectionString);
 
-                connection.Open();
+                await connection.OpenAsync();
                 
                 if ( connection.State == ConnectionState.Open )
                 {
@@ -84,7 +85,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// <c>DatabaseConnectionCheck</c> is not recoverable.
         /// </exception>
         /// 
-        protected override string 
+        protected override Task<string> 
         RunRecovery()
         {
             throw new NotImplementedException();

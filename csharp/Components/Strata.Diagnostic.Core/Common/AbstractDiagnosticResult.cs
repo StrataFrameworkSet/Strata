@@ -14,9 +14,6 @@ namespace Strata.Diagnostic.Core.Common
     /// <summary>
     /// Base class of all <c>IDiagnosticResult</c> types.
     /// </summary>
-    /// 
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public abstract 
     class AbstractDiagnosticResult:

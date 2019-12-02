@@ -6,16 +6,15 @@
 using System;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 using Strata.Diagnostic.Core.Common;
 
 namespace Strata.Diagnostic.Core.Evaluation
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// $comments$
+    /// Determines if a specified network address is reachable.
     /// </summary>
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public 
     class NetworkAddressReachableCheck:
@@ -30,14 +29,14 @@ namespace Strata.Diagnostic.Core.Evaluation
             NetworkAddress = null;
         }
 
-        protected override String 
+        protected override async Task<string> 
         RunCheck()
         {
             try
             {
                 Ping      pinger = new Ping();
-                PingReply reply = pinger.Send( NetworkAddress );
-                    
+                PingReply reply = await pinger.SendPingAsync( NetworkAddress );
+
                 if ( reply != null && reply.Status == IPStatus.Success )
 				    return "Network address " + NetworkAddress + " is reachable.";
 		    }
@@ -51,10 +50,10 @@ namespace Strata.Diagnostic.Core.Evaluation
 					"Network address " + NetworkAddress + " is not reachable." );	
         }
 
-        protected override String 
+        protected override Task<string> 
         RunRecovery()
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         protected override bool 

@@ -4,6 +4,7 @@
 //  ##########################################################################
 
 using System;
+using System.Threading.Tasks;
 using Strata.Diagnostic.Core.Evaluation;
 
 namespace Strata.Diagnostic.Core.Common
@@ -12,8 +13,6 @@ namespace Strata.Diagnostic.Core.Common
     /// <summary>
     /// $comments$
     /// </summary>
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public 
     class MockDiagnosticCheck:
@@ -32,7 +31,7 @@ namespace Strata.Diagnostic.Core.Common
         /// 
         public 
         MockDiagnosticCheck(
-            String name,
+            string name,
             bool   check,
             bool   recover,
             bool   canRecover,
@@ -50,7 +49,7 @@ namespace Strata.Diagnostic.Core.Common
         /// Determines if the specified directory path exists.
         /// </summary>
         /// 
-        protected override String 
+        protected override Task<string>
         RunCheck()
         {
 		    if ( !CheckFlag )
@@ -61,7 +60,7 @@ namespace Strata.Diagnostic.Core.Common
 				    throw new Exception( "Check: Unknown Exception" );
 		    }
 		
-		    return GetCheckSuccessMessage();
+		    return Task.FromResult(GetCheckSuccessMessage());
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -69,7 +68,7 @@ namespace Strata.Diagnostic.Core.Common
         /// This diagnostic check does not perform recovery.
         /// </summary>
         /// 
-        protected override String 
+        protected override Task<string> 
         RunRecovery()
         {
 		    if ( !RecoveryFlag )
@@ -80,7 +79,7 @@ namespace Strata.Diagnostic.Core.Common
 				    throw new Exception( "Recovery: Unknown Exception" );
 		    }	
 			
-		    return GetRecoverySuccessMessage();
+		    return Task.FromResult(GetRecoverySuccessMessage());
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -99,7 +98,7 @@ namespace Strata.Diagnostic.Core.Common
 	     *
 	     * @return	success message
 	     */
-	    public String 
+	    public string 
         GetCheckSuccessMessage()
 	    {
 		    return Name + ": Check has succeeded.";
@@ -110,7 +109,7 @@ namespace Strata.Diagnostic.Core.Common
 	     *
 	     * @return	failure message
 	     */
-	    public String 
+	    public string 
         GetCheckFailureMessage()
 	    {
 		    return Name + ": Check has failed.";
@@ -121,7 +120,7 @@ namespace Strata.Diagnostic.Core.Common
 	     *
 	     * @return	success message
 	     */
-	    public String 
+	    public string 
         GetRecoverySuccessMessage()
 	    {
 		    return Name + ": Recovery has succeeded.";
@@ -132,7 +131,7 @@ namespace Strata.Diagnostic.Core.Common
 	     *
 	     * @return	failure message
 	     */
-	    public String 
+	    public string 
         GetRecoveryFailureMessage()
 	    {
 		    return Name + ": Recovery has failed.";

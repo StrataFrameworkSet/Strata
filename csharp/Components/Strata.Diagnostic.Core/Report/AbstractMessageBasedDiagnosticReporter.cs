@@ -14,9 +14,6 @@ namespace Strata.Diagnostic.Core.Report
     /// Base class for <c>IDiagnosticReporter</c>s that output
     /// string based messages for reporting purposes.
     /// </summary>
-    /// 
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public abstract 
     class AbstractMessageBasedDiagnosticReporter:
@@ -37,9 +34,7 @@ namespace Strata.Diagnostic.Core.Report
         }
 
         //////////////////////////////////////////////////////////////////////
-        /// <summary>
-        /// <see cref="IDiagnosticReporter.BeginReport()"/>
-        /// </summary>
+        /// <inheritDoc/>
         /// 
         public override void 
         BeginReport()
@@ -48,10 +43,7 @@ namespace Strata.Diagnostic.Core.Report
         }
 
         //////////////////////////////////////////////////////////////////////
-        /// <summary>
-        /// <see 
-        /// cref="IDiagnosticReporter.EndDiagnostic(DiagnosticOutput)"/>
-        /// </summary>
+        /// <inheritDoc/>
         /// 
         public override void 
         EndDiagnostic(DiagnosticOutput output)
@@ -86,7 +78,7 @@ namespace Strata.Diagnostic.Core.Report
         /// 
         /// <returns>formatted report message</returns>
         /// 
-        protected String
+        protected string
         GetMessage()
         {
             return writer.ToString();

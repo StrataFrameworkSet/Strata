@@ -9,10 +9,8 @@ namespace Strata.Diagnostic.Core.Report
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// $comments$
+    /// Base class of all <c>IDiagnosticReport</c> types.
     /// </summary>
-    /// <author>JFL</author>
-    /// <conventions>$conventionspath$</conventions>
     ///  
     public abstract 
     class AbstractDiagnosticReporter:

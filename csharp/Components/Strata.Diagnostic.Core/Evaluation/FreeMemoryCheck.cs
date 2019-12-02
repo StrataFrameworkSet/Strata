@@ -6,13 +6,14 @@
 using System;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using Strata.Diagnostic.Core.Common;
 
 namespace Strata.Diagnostic.Core.Evaluation
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// $comments$
+    /// Determines if there is a minimum specfied amount of free memory.
     /// </summary>
     ///  
     public 
@@ -38,7 +39,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// Free memory less than specified minimum
         /// </exception>
         /// 
-        protected override string 
+        protected override Task<string> 
         RunCheck()
         {
 		    StringBuilder success   = new StringBuilder();
@@ -47,7 +48,7 @@ namespace Strata.Diagnostic.Core.Evaluation
 		    if ( !CheckFreeMemory( success,failure ) )
 			    throw new DiagnosticException( failure.ToString() );
 		
-		    return success.ToString();          
+		    return Task.FromResult(success.ToString());          
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -59,7 +60,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// Free memory less than specified minimum
         /// </exception>
         /// 
-        protected override string 
+        protected override Task<string> 
         RunRecovery()
         {
 		    StringBuilder success = new StringBuilder();
@@ -70,7 +71,7 @@ namespace Strata.Diagnostic.Core.Evaluation
 		    if ( !CheckFreeMemory( success,failure ) )
 			    throw new DiagnosticException( failure.ToString() );
 		
-		    return success.ToString();          
+		    return Task.FromResult(success.ToString());          
 
         }
 

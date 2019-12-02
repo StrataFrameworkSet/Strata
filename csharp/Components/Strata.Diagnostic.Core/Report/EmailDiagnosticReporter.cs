@@ -10,7 +10,8 @@ namespace Strata.Diagnostic.Core.Report
 {
     //////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// $comments$
+    /// A <c>IDiagnosticReport</c> that sends an email containing the
+    /// results from running one or more diagnostics.
     /// </summary>
     ///  
     public 
@@ -24,7 +25,13 @@ namespace Strata.Diagnostic.Core.Report
 
         private readonly SmtpClient emailer;
 
-        public 
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Creates a new <c>EmaailDiagnosticReporter</c> with the
+        /// specified <c>SmtpClient</c>.
+        /// </summary>
+        /// 
+        public
         EmailDiagnosticReporter(SmtpClient e)
         {
             emailer     = e;
@@ -34,6 +41,9 @@ namespace Strata.Diagnostic.Core.Report
             Subject     = String.Empty;
         }
 
+        //////////////////////////////////////////////////////////////////////
+        /// <inheritDoc/>
+        /// 
         public override void 
         EndReport()
         {
@@ -46,6 +56,11 @@ namespace Strata.Diagnostic.Core.Report
 		    emailer.Send( message );      
         }
 
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Sets the CC field on the email.
+        /// </summary>
+        /// 
         private void
         SetCc(MailAddressCollection cc,string addresses)
         {
