@@ -24,9 +24,9 @@
 
 package strata.diagnostic.core.common;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * Represents a suite of {@code IDiagnostic}s that are meant to be 
@@ -58,29 +58,53 @@ class DiagnosticSuite
 	}
 
 	/************************************************************************
-	 * {@inheritDoc} 
+	 * {@inheritDoc}
+	 * @return
 	 */
 	@Override
-	public void 
+	public CompletionStage<IDiagnosticResult>
 	runDiagnostic(IDiagnosticResult result)
 	{
-		try
-		{
-			result.beginDiagnostic( this );
-			beginDiagnosticMode();
-			
-			for (IDiagnostic d:itsDiagnostics.values())
-				d.runDiagnostic( result );
-		}
-		catch (DiagnosticAbortedException ae)
-		{
-			result.reportBeginFailure( this,ae );
-		}
-		finally
-		{
-			endDiagnosticMode();
-			result.endDiagnostic( this );
-		}
+		return
+			CompletableFuture.supplyAsync(
+				() ->
+				{
+					try
+					{
+						List<CompletionStage<?>> results =
+							new ArrayList<>();
+
+						result.beginDiagnostic(this);
+						beginDiagnosticMode();
+
+						itsDiagnostics
+							.values()
+							.stream()
+							.forEach(
+								d -> results.add(d.runDiagnostic(result)));
+
+						CompletableFuture
+							.allOf(
+								results.toArray(
+									new CompletableFuture<?>[results.size()]))
+							.get();
+					}
+					catch (DiagnosticAbortedException ae)
+					{
+						result.reportBeginFailure(this,ae);
+					}
+					catch (Exception e)
+					{
+						result.reportUnknownFailure(this,e);
+					}
+					finally
+					{
+						endDiagnosticMode();
+						result.endDiagnostic(this);
+					}
+
+					return result;
+				});
 	}
 
 	/************************************************************************

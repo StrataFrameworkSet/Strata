@@ -24,6 +24,8 @@
 
 package strata.diagnostic.core.common;
 
+import java.util.concurrent.CompletionStage;
+
 /**
  * Performs diagnostic checks on running applications.
  * 
@@ -40,15 +42,16 @@ interface IDiagnostic
 	 *
 	 * @return	Returns the diagnostic's name.
 	 */
-	public String 
+	String
 	getName();
 
 	/************************************************************************
 	 * Starts the diagnostic checking. 
-	 * 
-	 * @param result	Captures the results of the diagnostic.
+	 *
+	 * @param result    Captures the results of the diagnostic.
+	 * @return
 	 */
-	public void 
+	CompletionStage<IDiagnosticResult>
 	runDiagnostic(IDiagnosticResult result);
 }
 

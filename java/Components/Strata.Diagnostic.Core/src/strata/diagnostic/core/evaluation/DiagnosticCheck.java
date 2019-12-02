@@ -26,6 +26,9 @@ package strata.diagnostic.core.evaluation;
 
 import strata.diagnostic.core.common.*;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+
 /**
  * Analyzes running applications, discovers problems with application state
  * or processing logic, recovers from these problems if possible, and 
@@ -57,50 +60,58 @@ class DiagnosticCheck
 	 * This method is a <b>Template Method</b> that gets instantiated with 
 	 * functionality from subclasses.
 	 * @see IDiagnostic#runDiagnostic(IDiagnosticResult)
+     * @return
 	 */
 
-	public void 
+	public CompletionStage<IDiagnosticResult>
 	runDiagnostic(IDiagnosticResult result)
 	{
-        try
-        {
-    		result.beginDiagnostic( this );
-        	beginDiagnosticMode();
-            result.reportCheckSuccess( this,runCheck() );
-        }
-        catch (DiagnosticAbortedException ae)
-        {
-        	result.reportBeginFailure( this,ae );
-        }
-        catch (DiagnosticException ce)
-        {
-            result.reportCheckFailure( this,ce );
+		return
+			CompletableFuture.supplyAsync(
+				() ->
+				{
+					try
+					{
+						result.beginDiagnostic(this);
+						beginDiagnosticMode();
+						result.reportCheckSuccess(this,runCheck());
+					}
+					catch (DiagnosticAbortedException ae)
+					{
+						result.reportBeginFailure(this,ae);
+					}
+					catch (DiagnosticException ce)
+					{
+						result.reportCheckFailure(this,ce);
 
-            if ( isRecoverable() )
-            {
-                try
-                {
-                    result.reportRecoverySuccess( this,runRecovery() );
-                }
-                catch (DiagnosticException re)
-                {
-                    result.reportRecoveryFailure( this,re );
-                }
-                catch (Exception ue)
-                {
-                	result.reportUnknownFailure( this,ue );
-                }
-            }
-        }
-        catch (Exception ue)
-        {
-            result.reportUnknownFailure( this,ue );
-        }
-        finally
-        {
-        	endDiagnosticMode();
-        	result.endDiagnostic( this );
-        }
+						if (isRecoverable())
+						{
+							try
+							{
+								result.reportRecoverySuccess(this,runRecovery());
+							}
+							catch (DiagnosticException re)
+							{
+								result.reportRecoveryFailure(this,re);
+							}
+							catch (Exception ue)
+							{
+								result.reportUnknownFailure(this,ue);
+							}
+						}
+					}
+					catch (Exception ue)
+					{
+						result.reportUnknownFailure(this,ue);
+					}
+					finally
+					{
+						endDiagnosticMode();
+						result.endDiagnostic(this);
+					}
+
+					return result;
+				});
 	}
 
 	/************************************************************************

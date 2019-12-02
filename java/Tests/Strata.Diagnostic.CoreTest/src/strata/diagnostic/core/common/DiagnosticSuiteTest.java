@@ -28,6 +28,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static strata.foundation.core.utility.Awaiter.await;
+
 /**
  * 
  * @author 		
@@ -66,48 +68,33 @@ class DiagnosticSuiteTest
 		itsTarget = null;
 	}
 
-	/**
-	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticSuite#runDiagnostic(strata1.inspector.diagnostic.IDiagnosticResult)}.
-	 */
 	@Test
 	public void 
 	testRunDiagnostic()
 	{
 		MockDiagnosticResult result = new MockDiagnosticResult();
 		
-		itsTarget.runDiagnostic( result );
+		await(itsTarget.runDiagnostic( result ));
 	}
 
-	/**
-	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticSuite#addDiagnostic(strata1.inspector.diagnostic.IDiagnostic)}.
-	 */
 	@Test
 	public void 
 	testAddDiagnostic()
 	{
 	}
 
-	/**
-	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticSuite#removeDiagnostic(String)}.
-	 */
 	@Test
 	public void 
 	testRemoveDiagnostic()
 	{
 	}
 
-	/**
-	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticSuite#getDiagnostic(String)}.
-	 */
 	@Test
 	public void 
 	testGetDiagnostic()
 	{
 	}
 
-	/**
-	 * Test method for {@link strata1.inspector.diagnostic.DiagnosticSuite#hasDiagnostic(String)}.
-	 */
 	@Test
 	public void 
 	testHasDiagnostic()

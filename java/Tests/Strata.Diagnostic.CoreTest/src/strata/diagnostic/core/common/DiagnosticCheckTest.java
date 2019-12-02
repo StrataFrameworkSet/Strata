@@ -12,6 +12,7 @@ import org.junit.Test;
 import strata.diagnostic.core.evaluation.DiagnosticCheck;
 
 import static org.junit.Assert.assertEquals;
+import static strata.foundation.core.utility.Awaiter.await;
 
 
 /**
@@ -43,7 +44,8 @@ public class DiagnosticCheckTest
 	 * @throws Exception
 	 */
 	@After
-	public void tearDown() throws Exception
+	public void
+	tearDown() throws Exception
 	{
 		itsTarget = null;
 	}
@@ -53,7 +55,8 @@ public class DiagnosticCheckTest
 	 * {@link DiagnosticCheck#DiagnosticCheck(String)}.
 	 */
 	@Test
-	public void testDiagnosticCheck()
+	public void
+	testDiagnosticCheck()
 	{
 		assertEquals( 
 		    NAME,
@@ -65,13 +68,14 @@ public class DiagnosticCheckTest
 	 * {@link DiagnosticCheck#runDiagnostic(IDiagnosticResult)}.
 	 */
 	@Test
-	public void testRunDiagnostic()
+	public void
+	testRunDiagnostic()
 	{
 		MockDiagnosticResult   result   = new MockDiagnosticResult();
 		MockDiagnosticReporter reporter = new MockDiagnosticReporter();
 		
 		result.attachReporter( reporter );
-		itsTarget.runDiagnostic( result );
+		await(itsTarget.runDiagnostic( result ));
 		result.verify();
 	}
 
