@@ -24,7 +24,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         public IPAddress NetworkAddress { get; set; }
 
         public 
-        NetworkAddressReachableCheck(String name):
+        NetworkAddressReachableCheck(string name):
             base( name )
         {
             NetworkAddress = null;

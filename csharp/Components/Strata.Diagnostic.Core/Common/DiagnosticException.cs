@@ -19,11 +19,11 @@ namespace Strata.Diagnostic.Core.Common
         Exception
     {
         public 
-        DiagnosticException(String message):
+        DiagnosticException(string message):
             base(message) {}
 
         public 
-        DiagnosticException(String message,Exception cause):
+        DiagnosticException(string message,Exception cause):
             base(message,cause) {}
     }
 }

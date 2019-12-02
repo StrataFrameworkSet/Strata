@@ -49,7 +49,7 @@ namespace Strata.Diagnostic.Core.Report
         private void
         SetCc(MailAddressCollection cc,string addresses)
         {
-            foreach (String a in addresses.Split(new char[] { ',' }))
+            foreach (string a in addresses.Split(new char[] { ',' }))
                 cc.Add(new MailAddress(a));
         }
 

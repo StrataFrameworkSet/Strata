@@ -28,7 +28,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// </summary>
         /// 
         public 
-        DirectoryExistsCheck(String name):
+        DirectoryExistsCheck(string name):
             base( name )
         {
             Path = String.Empty;

@@ -27,7 +27,7 @@ namespace Strata.Diagnostic.Core.Common
         /// </summary>
         /// 
         protected 
-        AbstractDiagnostic(String name)
+        AbstractDiagnostic(string name)
         {
             Name = name;
         }

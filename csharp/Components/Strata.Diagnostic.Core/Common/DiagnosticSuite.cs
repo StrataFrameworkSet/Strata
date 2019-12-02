@@ -21,7 +21,7 @@ namespace Strata.Diagnostic.Core.Common
     class DiagnosticSuite:
         AbstractDiagnostic
     {
-        private readonly IDictionary<String,IDiagnostic> diagnostics;
+        private readonly IDictionary<string,IDiagnostic> diagnostics;
 
         //////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -29,10 +29,10 @@ namespace Strata.Diagnostic.Core.Common
         /// </summary>
         /// 
         public 
-        DiagnosticSuite(String name):
+        DiagnosticSuite(string name):
             base( name )
         {
-            diagnostics = new Dictionary<String,IDiagnostic>();
+            diagnostics = new Dictionary<string,IDiagnostic>();
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -67,9 +67,7 @@ namespace Strata.Diagnostic.Core.Common
         /// Adds a <c>IDiagnostic</c> to 
         /// the <c>DiagnosticSuite</c>.
         /// </summary>
-        /// 
         /// <param name="d">diagnostic being added to suite</param>
-        /// 
         /// <precondition>
         /// this.HasDiagnostic( d.Name ) == false
         /// </precondition>
@@ -80,10 +78,11 @@ namespace Strata.Diagnostic.Core.Common
         /// this.GetDiagnostic( d.Name ) == d
         /// </postcondition>
         /// 
-	    public void 
-	    AddDiagnostic(IDiagnostic d)
+        public DiagnosticSuite
+        AddDiagnostic(IDiagnostic d)
 	    {
 		    diagnostics.Add( d.Name,d );
+            return this;
 	    }
 	
         //////////////////////////////////////////////////////////////////////
@@ -91,11 +90,9 @@ namespace Strata.Diagnostic.Core.Common
         /// Removes the <c>IDiagnostic</c> with the specified 
         /// name from the <c>DiagnosticSuite</c>.
         /// </summary>
-        /// 
         /// <param name="name">
-        /// Name of diagnostic begin removed from suite
+        ///     Name of diagnostic begin removed from suite
         /// </param>
-        /// 
         /// <precondition>
         /// this.HasDiagnostic( name ) == true
         /// </precondition>
@@ -103,10 +100,11 @@ namespace Strata.Diagnostic.Core.Common
         /// this.HasDiagnostic( name ) == false
         /// </postcondition>
         /// 
-	    public void 
-	    RemoveDiagnostic(String name)
+        public DiagnosticSuite
+        RemoveDiagnostic(string name)
 	    {
 		    diagnostics.Remove( name );
+            return this;
 	    }
 	
         //////////////////////////////////////////////////////////////////////
@@ -119,11 +117,26 @@ namespace Strata.Diagnostic.Core.Common
         /// <returns>diagnostic associated with name</returns>
         /// 
 	    public IDiagnostic 
-	    GetDiagnostic(String name)
+	    GetDiagnostic(string name)
 	    {
 		    return diagnostics[name];
 	    }
-	
+
+        //////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Returns the <c>IDiagnostic</c> associated 
+        /// with the specified name.
+        /// </summary>
+        /// 
+        /// <param name="name">Name of the diagnostic being queried</param>
+        /// <returns>diagnostic associated with name</returns>
+        /// 
+        public ICollection<IDiagnostic>
+        GetDiagnostics()
+        {
+            return diagnostics.Values;
+        }
+
         //////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Queries the <c>DiagnosticSuite</c> if it contains an
@@ -135,8 +148,8 @@ namespace Strata.Diagnostic.Core.Common
         /// True if the suite contains a diagnostic with the specified name.
         /// </returns>
         /// 
-	    public bool 
-	    HasDiagnostic(String name)
+        public bool 
+	    HasDiagnostic(string name)
 	    {
 		    return diagnostics.ContainsKey( name );
 	    }

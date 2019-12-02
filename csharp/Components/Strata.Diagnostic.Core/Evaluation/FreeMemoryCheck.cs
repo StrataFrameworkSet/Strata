@@ -22,7 +22,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         public long FreeMemoryBytesMinimum { get; set; }
 
         public 
-        FreeMemoryCheck(String name):
+        FreeMemoryCheck(string name):
             base( name )
         {
             FreeMemoryBytesMinimum = 0;

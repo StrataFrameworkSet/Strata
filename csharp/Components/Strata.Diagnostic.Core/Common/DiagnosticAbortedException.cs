@@ -20,11 +20,11 @@ namespace Strata.Diagnostic.Core.Common
         DiagnosticException
     {
         public 
-        DiagnosticAbortedException(String message):
+        DiagnosticAbortedException(string message):
             base(message) {}
 
         public 
-        DiagnosticAbortedException(String message,Exception cause):
+        DiagnosticAbortedException(string message,Exception cause):
             base(message,cause) {}
     }
 }

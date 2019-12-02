@@ -27,7 +27,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// </summary>
         /// 
         public 
-        DatabaseConnectionCheck(String name):
+        DatabaseConnectionCheck(string name):
             base( name )
         {
             ConnectionString = String.Empty;

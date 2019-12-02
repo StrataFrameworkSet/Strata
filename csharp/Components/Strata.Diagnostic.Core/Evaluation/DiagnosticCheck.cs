@@ -28,7 +28,7 @@ namespace Strata.Diagnostic.Core.Evaluation
         /// </summary>
         /// 
         protected 
-        DiagnosticCheck(String name):
+        DiagnosticCheck(string name):
             base( name ) {}
 
         //////////////////////////////////////////////////////////////////////
