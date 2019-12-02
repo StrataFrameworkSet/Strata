@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0</Version>
+    <Company>Sapientia Systems LLC</Company>
+    <Authors>JFL</Authors>
+    <Description>Framework that extends Strata.Domain.Core to implement NHibernated-based units-of-work and named-queries suitable for production applications.</Description>
+    <Copyright>Copyright (c) 2011-2019</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

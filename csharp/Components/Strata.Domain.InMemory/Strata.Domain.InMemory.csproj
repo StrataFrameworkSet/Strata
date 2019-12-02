@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Company>Sapientia Systems LLC</Company>
+    <Authors>JFL</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Framework that extends Strata.Domain.Core to implement in-memory units-of-work and name-query suitable for fake repositories used in testing.</Description>
+    <Copyright>Copyright (c) 2011-2019</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
