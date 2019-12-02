@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Framework that extends Strata.Foundation.Core with functionality for StructureMap dependency injection and interceptors.</Description>
-    <Authors>JFL</Authors>
+    <Authors>Sapientia Systems LLC</Authors>
     <Company>Sapientia Systems LLC</Company>
     <Copyright>Copyright (c) 2011-2019</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>

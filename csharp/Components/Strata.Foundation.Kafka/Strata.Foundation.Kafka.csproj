@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>0.1.0</Version>
     <Company>Sapientia Systems LLC</Company>
-    <Authors>JFL</Authors>
+    <Authors>Sapientia Systems LLC</Authors>
     <Description>Framework that extends Strata.Foundation.Core with functionality for Kafka mappers and Avro event objects.</Description>
     <Copyright>Copyright (c) 2011-2019</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>

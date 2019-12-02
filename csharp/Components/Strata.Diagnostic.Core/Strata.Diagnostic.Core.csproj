@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>JFL</Authors>
+    <Authors>Sapientia Systems LLC</Authors>
     <Company>Sapientia Systems LLC</Company>
     <Description>Framework for creating and running system and application diagnostics.</Description>
     <Copyright>Copyright (c) 2011-2019</Copyright>

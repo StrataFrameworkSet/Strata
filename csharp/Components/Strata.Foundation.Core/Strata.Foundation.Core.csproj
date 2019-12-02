@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>0.1.0</Version>
     <Company>Sapientia Systems LLC</Company>
-    <Authors>JFL</Authors>
+    <Authors>Sapientia Systems LLC</Authors>
     <Description>Foundational framework containing an assortment of utilities, mappers, value-objects, and extensions that support other Strata.*.* frameworks and providing useful functionality for general application development.</Description>
     <Copyright>Copyright (c) 2011-2019</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
