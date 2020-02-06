@@ -17,6 +17,7 @@
     <modules>
         <module>Components/Strata.Foundation.Core</module>
         <module>Components/Strata.Foundation.Kafka</module>
+        <module>Components/Strata.Diagnostic.Core</module>
         <module>Components/Strata.Domain.Core</module>
         <module>Components/Strata.Domain.InMemory</module>
         <module>Components/Strata.Domain.Hibernate</module>
@@ -29,6 +30,7 @@
 
         <module>Tests/Strata.Foundation.CoreTest</module>
         <module>Tests/Strata.Foundation.KafkaTest</module>
+        <module>Tests/Strata.Diagnostic.CoreTest</module>
         <module>Tests/Strata.Domain.CoreTest</module>
         <module>Tests/Strata.Domain.InMemoryTest</module>
         <module>Tests/Strata.Domain.HibernateTest</module>

@@ -24,10 +24,14 @@
 
 package strata.domain.hibernate.testdomain;
 
-import org.hibernate.cfg.Configuration;
+import org.hibernate.SessionFactory;
 import strata.domain.core.testdomain.OrganizationRepositoryTest;
 import strata.domain.core.unitofwork.IUnitOfWorkProvider;
+import strata.domain.hibernate.inject.PropertiesBasedSessionFactoryProvider;
 import strata.domain.hibernate.unitofwork.HibernateUnitOfWorkProvider;
+
+import java.util.Arrays;
+import java.util.Properties;
 
 /****************************************************************************
  * 
@@ -40,6 +44,8 @@ public
 class HibernateOrganizationRepositoryTest
     extends OrganizationRepositoryTest
 {
+    private static SessionFactory theirSessionFactory =
+        createSessionFactory();
 
     /************************************************************************
      * Creates a new {@code InMemoryOrganizationRepositoryTest}. 
@@ -58,12 +64,74 @@ class HibernateOrganizationRepositoryTest
     protected IUnitOfWorkProvider
     createUnitOfWorkProvider()
     {
+        return new HibernateUnitOfWorkProvider(theirSessionFactory);
+
+        /*
         Configuration configuration = new Configuration();
         
         configuration.configure();
         return new HibernateUnitOfWorkProvider(configuration.buildSessionFactory());
+         */
     }
 
+    private static SessionFactory
+    createSessionFactory()
+    {
+        Properties properties = new Properties();
+
+        properties.setProperty(
+            "hibernate.connection.driver_class",
+            "com.mysql.cj.jdbc.Driver");
+        properties.setProperty(
+            "hibernate.connection.url",
+            "jdbc:mysql://localhost:3306/denimtestdomain");
+        properties.setProperty(
+            "hibernate.connection.username",
+            "development");
+        properties.setProperty(
+            "hibernate.connection.password",
+            "development");
+        properties.setProperty(
+            "hibernate.default_schema",
+            "denimtestdomain");
+        properties.setProperty(
+            "hibernate.dialect",
+            "org.hibernate.dialect.MySQL8Dialect");
+        properties.setProperty(
+            "hibernate.bytecode.provider",
+            "javassist");
+        properties.setProperty(
+            "hbm2ddl.auto",
+            "update");
+        properties.setProperty(
+            "hibernate.c3p0.min_size",
+            "4");
+        properties.setProperty(
+            "hibernate.c3p0.max_size",
+            "16");
+        properties.setProperty(
+            "hibernate.c3p0.timeout",
+            "0");
+        properties.setProperty(
+            "hibernate.c3p0.max_statements",
+            "50");
+        properties.setProperty(
+            "hibernate.c3p0.idle_test_period",
+            "3000");
+        properties.setProperty(
+            "non-hibernate.property",
+            "foobar");
+
+        return
+            new PropertiesBasedSessionFactoryProvider(
+                properties,
+                Arrays.asList(
+                    "strata/domain/hibernate/testdomain/configuration2/IParty.hbm.xml",
+                    "strata/domain/hibernate/testdomain/configuration2/IContactInformation.hbm.xml",
+                    "strata/domain/hibernate/testdomain/configuration2/EmailAddress.hbm.xml",
+                    "strata/domain/hibernate/testdomain/configuration2/PhoneNumber.hbm.xml")).get();
+
+    }
 }
 
 // ##########################################################################

@@ -7,11 +7,13 @@
       <w>correl</w>
       <w>denimtestdomain</w>
       <w>guice</w>
+      <w>javassist</w>
       <w>memb</w>
       <w>openapi</w>
       <w>poolable</w>
       <w>poolables</w>
       <w>resteasy</w>
+      <w>sapientia</w>
       <w>strataframework</w>
       <w>synchronizer</w>
       <w>teardowns</w>

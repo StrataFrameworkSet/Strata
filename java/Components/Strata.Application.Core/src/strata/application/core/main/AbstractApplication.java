@@ -12,8 +12,8 @@ import io.swagger.v3.oas.integration.SwaggerConfiguration;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import strata.application.core.filter.ServiceReplyFilter;
+import strata.application.core.mapper.ObjectMapperProvider;
 import strata.application.core.mapper.StrataObjectMapperProcessor;
-import strata.foundation.core.mapper.ObjectMapperContextResolver;
 
 import javax.ws.rs.core.Application;
 import java.util.Arrays;
@@ -48,7 +48,7 @@ class AbstractApplication
                     OpenApiResource.class,
                     SwaggerSerializers.class,
                     ServiceReplyFilter.class,
-                    getObjectMapperContextResolverType()));
+                    getObjectMapperProviderType()));
 
         classes.addAll(itsEndpointClasses);
 
@@ -84,9 +84,9 @@ class AbstractApplication
     }
 
     protected Class<?>
-    getObjectMapperContextResolverType()
+    getObjectMapperProviderType()
     {
-        return ObjectMapperContextResolver.class;
+        return ObjectMapperProvider.class;
     }
 
 }

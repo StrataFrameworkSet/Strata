@@ -9,7 +9,7 @@ class ServiceException
     extends RuntimeException
 {
     private final String itsRequestPath;
-    private final int itsResponseStatus;
+    private final int    itsResponseStatus;
     private final String itsStatusReason;
 
     public
@@ -55,6 +55,9 @@ class ServiceException
 
         builder
             .append("Exception during response processing:\n")
+            .append("\tFrom request: ")
+            .append(response.getRequestPath())
+            .append('\n')
             .append("\tResponse status code: ")
             .append(response.getStatusAsInt())
             .append('\n')
@@ -63,9 +66,6 @@ class ServiceException
             .append('\n')
             .append("\tResponse media type: ")
             .append(response.getMediaType())
-            .append('\n')
-            .append("\tFrom request: ")
-            .append(response.getRequestPath())
             .append('\n');
 
         return builder.toString();

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Sapientia Systems LLC</Authors>
+    <Company>Sapientia Systems LLC</Company>
+    <Description>Framework for creating and running system and application diagnostics.</Description>
+    <Copyright>Copyright (c) 2011-2019</Copyright>
+    <Version>0.1.0</Version>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.6.0" />
+  </ItemGroup>
+
+</Project>
