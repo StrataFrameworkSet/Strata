@@ -6,15 +6,17 @@ package strata.foundation.core.utility;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 public
 class StreamTest
 {
+    /*
     @Test
     public void
     getTopTenA()
         throws Exception
     {
-/*
         String[] topTen =
             new Scanner(new File("C://tmp/hamlet.txt"))
                 .useDelimiter("[^a-zA-Z]+")
@@ -104,7 +106,82 @@ class StreamTest
         assertArrayEquals(
             new String[] {"the","and","to","of","i","you","a","my","hamlet","in"},
             result);
-*/
+
+    }
+    */
+
+    @Test
+    public void
+    leastCoins()
+    {
+        int total = 67;
+        int amount = total;
+        int fives = 0;
+        int threes = 0;
+        int ones = 0;
+        int numCoins = 0;
+
+        fives = amount/5;
+        amount %= 5;
+        threes = amount/3;
+        ones = amount %= 3;
+
+        numCoins = fives + threes + ones;
+        System.out.println("     fives = " + fives);
+        System.out.println("    threes = " + threes);
+        System.out.println("      ones = " + ones);
+        System.out.println("# of coins = " + numCoins);
+        assertEquals(total,fives*5+threes*3+ones);
+    }
+
+    @Test
+    public void
+    leastCoinsBenLi()
+    {
+        int value = 67;
+        int totalCoins = 0;
+        int fives = 0;
+
+        fives = value / 5;
+        totalCoins += fives;
+        value -= 5 * fives;
+
+        switch(value) {
+            case 4:
+                totalCoins += 2;
+                break;
+            case 3:
+                totalCoins += 1;
+                break;
+            case 2:
+                totalCoins += 2;
+                break;
+            case 1:
+                totalCoins += 1;
+                break;
+            default:
+                break;
+        }
+
+        System.out.println(totalCoins);
+
+    }
+
+    @Test
+    public void
+    leastCoinsJacky()
+    {
+        int[] numbers = {5,3,1};
+        int num = 67;
+        int res = 0;
+        for(int i = 0; i < numbers.length; i++){
+            while(num >= numbers[i]){
+                num = num - numbers[i];
+                res++;
+            }
+        }
+        System.out.println(res);
+
     }
 }
 

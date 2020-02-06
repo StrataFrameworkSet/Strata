@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.avro.specific.SpecificRecordBase;
+import strata.foundation.core.mapper.IExcludeAvroFieldsMixin;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -39,7 +41,8 @@ class JsonObjectMapper<T>
         itsMapper
             .setPropertyNamingStrategy( 
                 new PropertyNamingStrategy.UpperCamelCaseStrategy() )
-            .enableDefaultTypingAsProperty(
+            .activateDefaultTypingAsProperty(
+                itsMapper.getPolymorphicTypeValidator(),
                 ObjectMapper.DefaultTyping.OBJECT_AND_NON_CONCRETE,
                     "@class")
             .enable( MapperFeature.REQUIRE_SETTERS_FOR_GETTERS )
@@ -50,6 +53,7 @@ class JsonObjectMapper<T>
             .registerModule(new SimpleModule())
             .registerModule(new JavaTimeModule())
             .registerModule( new Jdk8Module())
+            .addMixIn(SpecificRecordBase.class,IExcludeAvroFieldsMixin.class)
             .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         itsTypeMappings = new HashMap<>();
     }
