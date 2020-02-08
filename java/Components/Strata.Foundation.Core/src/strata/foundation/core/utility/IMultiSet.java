@@ -8,8 +8,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 public
-interface IMultiSet<T>
-    extends Iterable<Pair<T,Long>>
+interface IMultiSet<T extends Comparable<T>>
+    extends Iterable<Pair<T,Long>>, Comparable<IMultiSet<T>>
 {
     IMultiSet<T>
     add(T element);
@@ -35,9 +35,6 @@ interface IMultiSet<T>
     long
     getCardinality();
 
-    boolean
-    isEmpty();
-
     long
     getMultiplicity(T element);
 
@@ -50,11 +47,15 @@ interface IMultiSet<T>
     IMultiSet<T>
     getSymmetricDifference(IMultiSet<T> other);
 
+    long
+    getDistance(IMultiSet<T> other);
+
+    boolean
+    isEmpty();
+
     Stream<Pair<T,Long>>
     stream();
 
-    long
-    compare(IMultiSet<T> other);
 }
 
 //////////////////////////////////////////////////////////////////////////////

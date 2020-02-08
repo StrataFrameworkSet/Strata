@@ -56,8 +56,9 @@ class RedisUnitOfWorkProvider
     private Map<Class<?>,IEntityReplicator<?,?>> itsReplicators;
 	private Map<Class<?>,IKeyRetriever<?,?>>     itsRetrievers;
 	private ExecutorService                      itsExecutor;
-	private IObjectMapper<Object,String>         itsMapper;
     private RedisUnitOfWork                      itsUnitOfWork;
+    private static IObjectMapper<Object,String>  theirMapper =
+        new JsonObjectMapper<>();
 
     /************************************************************************
      * Creates a new RedisUnitOfWorkProvider.
@@ -66,25 +67,12 @@ class RedisUnitOfWorkProvider
     public
     RedisUnitOfWorkProvider(RedisClient client)
     {
-        this(client,new JsonObjectMapper<>());
-    }
-
-    /************************************************************************
-     * Creates a new RedisUnitOfWorkProvider.
-     *
-     */
-    public
-    RedisUnitOfWorkProvider(
-        RedisClient                  client,
-        IObjectMapper<Object,String> mapper)
-    {
         super();
         itsClient       = client;
         itsNamedQueries = new NamedQueryMap();
         itsReplicators  = new ConcurrentHashMap<>();
         itsRetrievers   = new ConcurrentHashMap<>();
         itsExecutor     = Executors.newSingleThreadExecutor();
-        itsMapper       = mapper;
         itsUnitOfWork   = new RedisUnitOfWork(this);
     }
 
@@ -178,7 +166,7 @@ class RedisUnitOfWorkProvider
      *
      */
     public IObjectMapper<Object,String>
-    getMapper() { return itsMapper; }
+    getMapper() { return theirMapper; }
 
     /************************************************************************
      *
@@ -248,7 +236,7 @@ class RedisUnitOfWorkProvider
         Pair<Class<?>,String> key =
             Pair.create(type,type.getName() + "." + queryName);
         
-        return (IRedisNamedQuery<T>)itsNamedQueries.get( key );
+        return (IRedisNamedQuery<T>)itsNamedQueries.get( key ).copy();
     }
     
     /************************************************************************

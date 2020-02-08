@@ -28,6 +28,7 @@ class RedisFooBarRepositoryTest
     private RedisClient             itsClient;
     private RedisUnitOfWorkProvider itsProvider;
     private IFooBarRepository       itsTarget;
+    private Set<Long>               itsIds;
 
     @Before
     public void
@@ -60,12 +61,20 @@ class RedisFooBarRepositoryTest
                 (original) -> new FooBar(original));
 
         itsTarget = new FooBarRepository(itsProvider);
+        itsIds = new HashSet<>();
     }
 
     @After
     public void
     tearDown()
     {
+        IUnitOfWork unitOfWork = await(itsTarget.getProvider().getUnitOfWork());
+
+        for (FooBar f : await(itsTarget.getAllIn(itsIds)))
+            await(itsTarget.remove(f));
+
+        await(unitOfWork.commit());
+
         itsTarget = null;
         itsProvider.clearUnitOfWork();
         itsProvider = null;
