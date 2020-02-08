@@ -46,7 +46,12 @@ class MultiSetTest
 
     @After
     public void
-    tearDown() {}
+    tearDown()
+    {
+        itsZ = null;
+        itsY = null;
+        itsX = null;
+    }
 
     @Test
     public void
