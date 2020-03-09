@@ -6,14 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Strata.Domain.HibernateTest" />
         <module name="Strata.Application.Core" />
+        <module name="Strata.Domain.RedisTest" />
+        <module name="Strata.Diagnostic.CoreTest" />
         <module name="Strata.Foundation.KafkaTest" />
         <module name="Strata.Domain.CoreTest" />
-        <module name="Strata.Foundation.Core" />
         <module name="Strata.Application.NettyTest" />
         <module name="Strata.Domain.InMemory" />
-        <module name="Strata.Diagnostic.CoreTest" />
+        <module name="Strata.Domain.HibernateTest" />
         <module name="Strata.Application.VertxTest" />
         <module name="Strata.CodeGen.Plugin" />
         <module name="Strata.Client.CoreTest" />
@@ -21,56 +21,52 @@
         <module name="Strata.Domain.Hibernate" />
         <module name="Strata.Client.RestEasyTest" />
         <module name="Strata.Foundation.CoreTest" />
-        <module name="Strata.Diagnostic.Core" />
         <module name="Strata.Application.Vertx" />
         <module name="Strata.Domain.Core" />
-        <module name="Strata.Domain.RedisTest" />
+        <module name="Strata.Foundation.Core" />
         <module name="Strata.Application.CoreTest" />
-        <module name="Strata.TestSuite.Stage" />
+        <module name="Strata.Diagnostic.Core" />
         <module name="Strata.Domain.InMemoryTest" />
         <module name="Strata.Client.Core" />
         <module name="Strata.Application.Netty" />
+        <module name="Strata.TestSuite.Stage" />
         <module name="Strata.Domain.Redis" />
         <module name="Strata.Foundation.Kafka" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Strata" target="1.8" />
-      <module name="Strata.Application.Core" target="1.8" />
-      <module name="Strata.Application.CoreTest" target="1.8" />
-      <module name="Strata.Application.Netty" target="1.8" />
-      <module name="Strata.Application.NettyTest" target="1.8" />
-      <module name="Strata.Application.Undertow" target="12" />
-      <module name="Strata.Application.UndertowTest" target="12" />
-      <module name="Strata.Application.Vertx" target="1.8" />
-      <module name="Strata.Application.VertxTest" target="1.8" />
-      <module name="Strata.Client.Core" target="1.8" />
-      <module name="Strata.Client.CoreTest" target="1.8" />
-      <module name="Strata.Client.Kafka" target="12" />
-      <module name="Strata.Client.KafkaTest" target="12" />
-      <module name="Strata.Client.RestEasy" target="1.8" />
-      <module name="Strata.Client.RestEasyTest" target="1.8" />
-      <module name="Strata.CodeGen.Plugin" target="1.8" />
-      <module name="Strata.Diagnostic.Core" target="1.8" />
-      <module name="Strata.Diagnostic.CoreTest" target="1.8" />
-      <module name="Strata.Domain.Core" target="1.8" />
-      <module name="Strata.Domain.CoreTest" target="1.8" />
-      <module name="Strata.Domain.Hibernate" target="1.8" />
-      <module name="Strata.Domain.HibernateTest" target="1.8" />
-      <module name="Strata.Domain.InMemory" target="1.8" />
-      <module name="Strata.Domain.InMemoryTest" target="1.8" />
-      <module name="Strata.Domain.Netty" target="1.8" />
-      <module name="Strata.Domain.NettyTest" target="1.8" />
-      <module name="Strata.Domain.Redis" target="1.8" />
-      <module name="Strata.Domain.RedisTest" target="1.8" />
-      <module name="Strata.Domain.Vertx" target="1.8" />
-      <module name="Strata.Domain.VertxTest" target="1.8" />
-      <module name="Strata.Foundation.Core" target="1.8" />
-      <module name="Strata.Foundation.CoreTest" target="1.8" />
-      <module name="Strata.Foundation.Kafka" target="1.8" />
-      <module name="Strata.Foundation.KafkaTest" target="1.8" />
-      <module name="Strata.TestsSuite.CommitStage" target="12" />
-      <module name="Strata.TestSuite.Stage" target="1.8" />
+    <bytecodeTargetLevel target="11">
+      <module name="Strata" target="11" />
+      <module name="Strata.Application.Core" target="11" />
+      <module name="Strata.Application.CoreTest" target="11" />
+      <module name="Strata.Application.Netty" target="11" />
+      <module name="Strata.Application.NettyTest" target="11" />
+      <module name="Strata.Application.Vertx" target="11" />
+      <module name="Strata.Application.VertxTest" target="11" />
+      <module name="Strata.Client.Core" target="11" />
+      <module name="Strata.Client.CoreTest" target="11" />
+      <module name="Strata.Client.RestEasy" target="11" />
+      <module name="Strata.Client.RestEasyTest" target="11" />
+      <module name="Strata.CodeGen.Plugin" target="11" />
+      <module name="Strata.Diagnostic.Core" target="11" />
+      <module name="Strata.Diagnostic.CoreTest" target="11" />
+      <module name="Strata.Domain.Core" target="11" />
+      <module name="Strata.Domain.CoreTest" target="11" />
+      <module name="Strata.Domain.Hibernate" target="11" />
+      <module name="Strata.Domain.HibernateTest" target="11" />
+      <module name="Strata.Domain.InMemory" target="11" />
+      <module name="Strata.Domain.InMemoryTest" target="11" />
+      <module name="Strata.Domain.Redis" target="11" />
+      <module name="Strata.Domain.RedisTest" target="11" />
+      <module name="Strata.Foundation.Core" target="11" />
+      <module name="Strata.Foundation.CoreTest" target="11" />
+      <module name="Strata.Foundation.Kafka" target="11" />
+      <module name="Strata.Foundation.KafkaTest" target="11" />
+      <module name="Strata.TestSuite.Stage" target="11" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Strata.Foundation.Core" options="" />
+    </option>
   </component>
 </project>
