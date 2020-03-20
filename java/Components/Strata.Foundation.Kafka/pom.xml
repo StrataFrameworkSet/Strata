@@ -6,11 +6,12 @@
 
     <groupId>org.strataframework</groupId>
     <artifactId>Strata.Foundation.Kafka</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
+        <github.global.server>github</github.global.server>
         <encoding>UTF-8</encoding>
     </properties>
 
@@ -36,7 +37,7 @@
         <repository>
             <id>staging.repo</id>
             <name>Temporary Staging Repository</name>
-            <url>file://${project.basedir}/target/maven-repo</url>
+            <url>file://${project.basedir}/../../.maven-repo</url>
             <layout>default</layout>
         </repository>
         <snapshotRepository>
@@ -51,7 +52,7 @@
         <dependency>
             <groupId>org.strataframework</groupId>
             <artifactId>Strata.Foundation.Core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.avro</groupId>

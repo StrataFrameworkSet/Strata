@@ -6,7 +6,7 @@
 
     <groupId>org.strataframework</groupId>
     <artifactId>Strata.Client.CoreTest</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
@@ -23,13 +23,13 @@
         <dependency>
             <groupId>org.strataframework</groupId>
             <artifactId>Strata.Client.Core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.strataframework</groupId>
             <artifactId>Strata.Application.CoreTest</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

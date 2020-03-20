@@ -6,7 +6,7 @@
 
     <groupId>org.strataframework</groupId>
     <artifactId>Strata.Foundation.Core</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <pluginRepositories>
         <pluginRepository>
@@ -19,6 +19,7 @@
     <properties>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
+        <github.global.server>github</github.global.server>
         <encoding>UTF-8</encoding>
     </properties>
 
@@ -36,6 +37,19 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <followSymLinks>false</followSymLinks>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.basedir}/generated</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.avro</groupId>
@@ -111,7 +125,7 @@
         <repository>
             <id>staging.repo</id>
             <name>Temporary Staging Repository</name>
-            <url>file://${project.basedir}/target/maven-repo</url>
+            <url>file://${project.basedir}/../../.maven-repo</url>
             <layout>default</layout>
         </repository>
         <snapshotRepository>
