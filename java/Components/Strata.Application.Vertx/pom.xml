@@ -4,13 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>strataframework.org</groupId>
+    <groupId>org.strataframework</groupId>
     <artifactId>Strata.Application.Vertx</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>${jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${jdk.version}</maven.compiler.target>
+        <github.global.server>github</github.global.server>
+        <encoding>UTF-8</encoding>
     </properties>
 
     <repositories>
@@ -24,26 +26,47 @@
         <sourceDirectory>${basedir}/src</sourceDirectory>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>staging.repo</id>
+            <name>Temporary Staging Repository</name>
+            <url>file://${project.basedir}/../../.maven-repo</url>
+            <layout>default</layout>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot.repo</id>
+            <name>Temporary Snapshot Repository</name>
+            <url>file://${project.basedir}/target/maven-snapshot-repo</url>
+            <layout>default</layout>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
-            <groupId>strataframework.org</groupId>
+            <groupId>org.strataframework</groupId>
             <artifactId>Strata.Application.Core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-core</artifactId>
-            <version>4.3.1.Final</version>
+            <version>4.5.1.Final</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-guice</artifactId>
-            <version>4.3.1.Final</version>
+            <version>4.5.1.Final</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.inject</groupId>
+                    <artifactId>guice</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-vertx</artifactId>
-            <version>4.3.1.Final</version>
+            <version>4.5.1.Final</version>
         </dependency>
         <dependency>
             <groupId>io.vertx</groupId>

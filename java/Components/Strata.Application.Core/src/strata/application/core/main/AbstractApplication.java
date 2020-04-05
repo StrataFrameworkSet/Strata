@@ -35,6 +35,7 @@ class AbstractApplication
     {
         itsEndpointClasses = endpointClasses;
         itsInfo = info;
+        System.setProperty("com.google.inject.internal.cglib.$experimental_asm7", "true");
         configureSwagger();
     }
 
