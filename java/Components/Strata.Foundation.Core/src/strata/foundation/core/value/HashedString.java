@@ -20,13 +20,21 @@ class HashedString
     public
     HashedString(String unhashedValue)
     {
-        this(unhashedValue,UUID.randomUUID().toString().getBytes());
+        this(
+            unhashedValue,
+            UUID
+                .randomUUID()
+                .toString()
+                .getBytes(StandardCharsets.UTF_8));
     }
 
     public
     HashedString(String unhashedValue,byte[] salt)
     {
-        this(unhashedValue.getBytes(StandardCharsets.UTF_8),salt,false);
+        this(
+            unhashedValue.getBytes(StandardCharsets.UTF_8),
+            salt,
+            false);
     }
 
     public
