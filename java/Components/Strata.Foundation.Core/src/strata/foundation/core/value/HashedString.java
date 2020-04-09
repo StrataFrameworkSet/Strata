@@ -4,6 +4,7 @@
 
 package strata.foundation.core.value;
 
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 public
 class HashedString
-    implements Comparable<HashedString>
+    implements Serializable,Comparable<HashedString>
 {
     private byte[] itsValue;
     private byte[] itsSalt;
