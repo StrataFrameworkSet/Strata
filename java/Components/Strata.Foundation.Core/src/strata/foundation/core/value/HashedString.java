@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public
 class HashedString
-    implements Serializable,Comparable<HashedString>
+    implements Serializable
 {
     private byte[] itsValue;
     private byte[] itsSalt;
@@ -48,6 +48,7 @@ class HashedString
         itsValue = hashed ? value : hash(value,itsSalt);
     }
 
+    /*
     @Override
     public int
     compareTo(HashedString other)
@@ -59,6 +60,7 @@ class HashedString
                 ? comparison
                 : Arrays.compare(itsSalt,other.itsSalt);
     }
+    */
 
     public boolean
     equals(HashedString other)
