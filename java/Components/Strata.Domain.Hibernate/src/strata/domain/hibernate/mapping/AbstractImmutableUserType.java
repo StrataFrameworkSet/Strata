@@ -1,39 +1,58 @@
 //////////////////////////////////////////////////////////////////////////////
-// AbstractImmutableUserType.java
+// AbstractUserType.java
 //////////////////////////////////////////////////////////////////////////////
 
 package strata.domain.hibernate.mapping;
 
 import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.usertype.UserType;
 
 import java.io.Serializable;
 
 public abstract
 class AbstractImmutableUserType<T extends Serializable>
-    extends AbstractUserType<T>
+    implements UserType
 {
+    private final Class<T> itsType;
+
     protected
-    AbstractImmutableUserType(Class<T> type)
+    AbstractImmutableUserType(Class<T> type) { itsType = type; }
+
+    @Override
+    public Class<? extends Serializable>
+    returnedClass()
     {
-        super(type);
+        return itsType;
     }
 
     @Override
-    public void
-    setPropertyValue(Object component,int property,Object value)
+    public boolean
+    equals(Object x,Object y)
         throws HibernateException
     {
-        throw
-            new HibernateException(
-                returnedClass().getSimpleName() + " is immutable");
+        if (x == y)
+            return true;
+
+        if (x == null || y == null)
+            return false;
+
+        return x.equals(y);
+    }
+
+    @Override
+    public int
+    hashCode(Object x)
+        throws HibernateException
+    {
+        return x != null ? x.hashCode() : 0;
     }
 
     @Override
     public Object
-    deepCopy(Object original) throws HibernateException
+    deepCopy(Object original)
+        throws HibernateException
     {
-        return returnedClass().cast(original);
+        return itsType.cast(original);
     }
 
     @Override
@@ -45,35 +64,26 @@ class AbstractImmutableUserType<T extends Serializable>
 
     @Override
     public Serializable
-    disassemble(
-        Object                           original,
-        SharedSessionContractImplementor sharedSessionContractImplementor)
+    disassemble(Object original)
         throws HibernateException
     {
-        return returnedClass().cast(original);
+        return itsType.cast(original);
     }
 
     @Override
     public Object
-    assemble(
-        Serializable                     serializable,
-        SharedSessionContractImplementor sharedSessionContractImplementor,
-        Object                           owner)
+    assemble(Serializable serializable,Object owner)
         throws HibernateException
     {
-        return returnedClass().cast(serializable);
+        return itsType.cast(serializable);
     }
 
     @Override
     public Object
-    replace(
-        Object                           original,
-        Object                           target,
-        SharedSessionContractImplementor sharedSessionContractImplementor,
-        Object                           owner)
+    replace(Object original,Object target,Object owner)
         throws HibernateException
     {
-        return returnedClass().cast(original);
+        return itsType.cast(original);
     }
 }
 

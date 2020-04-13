@@ -58,8 +58,8 @@ class OpenApiEndpoint
     getFile(String fileName)
     {
         StringBuilder result = new StringBuilder();
-        ClassLoader classLoader = getClass().getClassLoader();
-        InputStream resource = classLoader.getResourceAsStream(fileName);
+        ClassLoader   classLoader = getClass().getClassLoader();
+        InputStream   resource = classLoader.getResourceAsStream(fileName);
 
         if (resource == null)
             return "file not found";

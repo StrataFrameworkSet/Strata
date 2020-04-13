@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 public
 class HashedStringType
-    extends AbstractImmutableUserType<HashedString>
+    extends AbstractImmutableCompositeUserType<HashedString>
 {
     public
     HashedStringType()
@@ -100,7 +100,7 @@ class HashedStringType
     @Override
     public void
     nullSafeSet(
-        PreparedStatement                st,
+        PreparedStatement                stmt,
         Object                           value,
         int                              index,
         SharedSessionContractImplementor session)
@@ -112,19 +112,19 @@ class HashedStringType
         {
             BinaryType
                 .INSTANCE
-                .set(st,null,index,session);
+                .set(stmt,null,index,session);
             BinaryType
                 .INSTANCE
-                .set(st,null,index+1,session);
+                .set(stmt,null,index+1,session);
             return;
         }
 
         BinaryType
             .INSTANCE
-            .set(st,hashed.getValue(),index,session);
+            .set(stmt,hashed.getValue(),index,session);
         BinaryType
             .INSTANCE
-            .set(st,hashed.getSalt(),index+1,session);
+            .set(stmt,hashed.getSalt(),index+1,session);
 
     }
 }

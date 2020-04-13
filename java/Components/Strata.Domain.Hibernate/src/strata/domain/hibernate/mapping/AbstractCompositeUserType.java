@@ -10,13 +10,13 @@ import org.hibernate.usertype.CompositeUserType;
 import java.io.Serializable;
 
 public abstract
-class AbstractUserType<T extends Serializable>
+class AbstractCompositeUserType<T extends Serializable>
     implements CompositeUserType
 {
     private final Class<T> itsType;
 
     protected
-    AbstractUserType(Class<T> type)
+    AbstractCompositeUserType(Class<T> type)
     {
         itsType = type;
     }
