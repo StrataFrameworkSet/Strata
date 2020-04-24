@@ -13,7 +13,7 @@ class PhoneNumber
     private String itsPhone;
 
     private static final String NANP_PATTERN =
-        "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+        "^([1][-.\\s]?)?\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
 
     private static final String ITU_T_PATTERN =
         "^\\+(?:[0-9] ?){6,14}[0-9]$";
@@ -54,6 +54,21 @@ class PhoneNumber
     toString()
     {
         return itsPhone;
+    }
+
+    public String
+    getDigitsOnly()
+    {
+        return
+            itsPhone
+                .chars()
+                .mapToObj(c -> (char)c)
+                .filter(Character::isDigit)
+                .collect(
+                    StringBuilder::new,
+                    StringBuilder::append,
+                    StringBuilder::append)
+                .toString();
     }
 
     private static void

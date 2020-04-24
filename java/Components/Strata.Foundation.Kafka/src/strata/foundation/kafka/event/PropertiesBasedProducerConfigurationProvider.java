@@ -80,6 +80,10 @@ class PropertiesBasedProducerConfigurationProvider
                 put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG,"SSL");
             }};
     }
+
+    protected Properties
+    getProperties() { return itsProperties; }
+
 }
 
 //////////////////////////////////////////////////////////////////////////////

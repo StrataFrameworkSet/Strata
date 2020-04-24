@@ -17,6 +17,14 @@
 
     <build>
         <sourceDirectory>${basedir}/src</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>${basedir}/src</directory>
+                <includes>
+                    <include>*.properties</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
     <dependencies>

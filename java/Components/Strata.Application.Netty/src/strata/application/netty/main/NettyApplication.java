@@ -14,6 +14,7 @@ import org.jboss.resteasy.plugins.server.netty.NettyJaxrsServer;
 import org.jboss.resteasy.spi.ResteasyDeployment;
 import strata.application.core.main.AbstractApplication;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -24,6 +25,16 @@ class NettyApplication
     private final Injector           itsInjector;
     private final ResteasyDeployment itsDeployment;
     private final NettyJaxrsServer   itsServer;
+
+    protected
+    NettyApplication(
+        Info           info,
+        List<Module>   modules,
+        String         hostNameKey,
+        String         portKey)
+    {
+        this(new ArrayList<>(),info,modules,hostNameKey,portKey);
+    }
 
     protected
     NettyApplication(
@@ -46,8 +57,8 @@ class NettyApplication
         itsDeployment = new ResteasyDeploymentImpl();
         itsServer = new NettyJaxrsServer();
 
-        itsDeployment.start();
         itsDeployment.setApplication(this);
+        itsDeployment.start();
 
         itsServer.setDeployment(itsDeployment);
         itsServer.setHostname(properties.getProperty(hostNameKey));
@@ -75,8 +86,8 @@ class NettyApplication
         itsDeployment = new ResteasyDeploymentImpl();
         itsServer = new NettyJaxrsServer();
 
-        itsDeployment.start();
         itsDeployment.setApplication(this);
+        itsDeployment.start();
 
         itsServer.setDeployment(itsDeployment);
         itsServer.setHostname(hostName);

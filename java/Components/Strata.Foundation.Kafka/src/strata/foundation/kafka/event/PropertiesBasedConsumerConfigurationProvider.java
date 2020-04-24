@@ -89,11 +89,10 @@ class PropertiesBasedConsumerConfigurationProvider
                     ConsumerConfig.GROUP_ID_CONFIG,
                     itsProperties.getProperty(itsConsumerGroupKey));
             }};
-
-
-
-
     }
+
+    protected Properties
+    getProperties() { return itsProperties; }
 }
 
 //////////////////////////////////////////////////////////////////////////////

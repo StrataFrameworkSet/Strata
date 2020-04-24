@@ -340,6 +340,7 @@ class AsynchronousUnitOfWorkInterceptor
     onException(MethodInvocation invocation,Throwable e)
     {
         logger.debug("onException");
+        logger.warn(e);
 
         try
         {

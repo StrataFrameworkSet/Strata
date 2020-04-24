@@ -175,7 +175,7 @@
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
-            <version>2.3.5</version>
+            <version>2.3.7</version>
         </dependency>
         <dependency>
             <groupId>org.apache.avro</groupId>
@@ -201,6 +201,11 @@
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>1.9.3</version>
         </dependency>
     </dependencies>
 

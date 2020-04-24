@@ -16,10 +16,7 @@ import strata.application.core.mapper.ObjectMapperProvider;
 import strata.application.core.mapper.StrataObjectMapperProcessor;
 
 import javax.ws.rs.core.Application;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public abstract
 class AbstractApplication
@@ -29,13 +26,18 @@ class AbstractApplication
     protected final Info           itsInfo;
 
     protected
+    AbstractApplication(Info info)
+    {
+        this(new ArrayList<>(),info);
+    }
+
+    protected
     AbstractApplication(
         List<Class<?>> endpointClasses,
         Info           info)
     {
         itsEndpointClasses = endpointClasses;
         itsInfo = info;
-        System.setProperty("com.google.inject.internal.cglib.$experimental_asm7", "true");
         configureSwagger();
     }
 

@@ -1,0 +1,27 @@
+//////////////////////////////////////////////////////////////////////////////
+// IEmailMessage.java
+//////////////////////////////////////////////////////////////////////////////
+
+package strata.application.core.notification;
+
+import strata.foundation.core.value.EmailAddress;
+
+import java.util.List;
+
+public
+interface IEmailMessage
+{
+    EmailAddress
+    getSender();
+
+    List<EmailAddress>
+    getRecipients();
+
+    String
+    getSubject();
+
+    String
+    getContent();
+}
+
+//////////////////////////////////////////////////////////////////////////////
