@@ -6,12 +6,12 @@ package strata.application.core.notification;
 
 import strata.foundation.core.value.PhoneNumber;
 
-import java.util.List;
+import java.util.Set;
 
 public
 interface ITextMessage
 {
-    List<PhoneNumber>
+    Set<PhoneNumber>
     getRecipients();
 
     String

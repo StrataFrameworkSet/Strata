@@ -6,18 +6,18 @@ package strata.application.core.notification;
 
 import strata.foundation.core.value.PhoneNumber;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract
 class AbstractTextMessage
     implements ITextMessage
 {
-    private final List<PhoneNumber> itsRecipients;
+    private final Set<PhoneNumber> itsRecipients;
 
     protected
-    AbstractTextMessage(List<PhoneNumber> recipients)
+    AbstractTextMessage(Set<PhoneNumber> recipients)
     {
         if (recipients == null)
             throw
@@ -27,14 +27,14 @@ class AbstractTextMessage
             throw
                 new IllegalArgumentException("recipients must be non-empty");
 
-        itsRecipients = new ArrayList<>(recipients);
+        itsRecipients = new HashSet<>(recipients);
     }
 
     @Override
-    public List<PhoneNumber>
+    public Set<PhoneNumber>
     getRecipients()
     {
-        return Collections.unmodifiableList(itsRecipients);
+        return Collections.unmodifiableSet(itsRecipients);
     }
 }
 

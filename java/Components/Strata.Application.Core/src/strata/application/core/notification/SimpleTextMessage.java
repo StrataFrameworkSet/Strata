@@ -6,7 +6,7 @@ package strata.application.core.notification;
 
 import strata.foundation.core.value.PhoneNumber;
 
-import java.util.List;
+import java.util.Set;
 
 public
 class SimpleTextMessage
@@ -15,7 +15,7 @@ class SimpleTextMessage
     private final String itsContent;
 
     public
-    SimpleTextMessage(List<PhoneNumber> recipients,String content)
+    SimpleTextMessage(Set<PhoneNumber> recipients,String content)
     {
         super(recipients);
         itsContent = content;

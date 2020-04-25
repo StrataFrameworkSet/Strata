@@ -7,7 +7,10 @@ package strata.application.core.notification;
 import org.apache.commons.lang3.StringUtils;
 import strata.foundation.core.value.PhoneNumber;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public
 class TemplatedTextMessage
@@ -19,7 +22,7 @@ class TemplatedTextMessage
 
     public
     TemplatedTextMessage(
-        List<PhoneNumber> recipients,
+        Set<PhoneNumber> recipients,
         ITemplateRepository repository,
         String templateKey,
         Map<String,String> parameters)

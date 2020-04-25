@@ -4,6 +4,7 @@
 
 package strata.application.core.notification;
 
+import com.google.gson.JsonObject;
 import com.telesign.MessagingClient;
 import com.telesign.RestClient;
 import strata.application.core.inject.IConfigurationProvider;
@@ -72,21 +73,35 @@ class TeleSignMessageSender
                                 message.getContent(),
                                 "OTP",
                                 null);
+                        int attempts = 1;
 
-                        if (!response.ok)
-                            throw
-                                new RuntimeException(
-                                    "send failed: status=" +
-                                        response.statusCode +
-                                    " body=" + response.body);
+                        while ((!response.ok) && (attempts++ < 3))
+                        {
+                            JsonObject data = response.json;
+
+                            if (
+                                data.has("code") &&
+                                data.getAsInt() == 10019)
+                            {
+                                Thread.currentThread().sleep(1100);
+                                response =
+                                    getClient().message(
+                                        recipient.getDigitsOnly(),
+                                        message.getContent(),
+                                        "OTP",
+                                        null);
+                            }
+                            else
+                                throw
+                                    new RuntimeException(
+                                        "send failed: status=" +
+                                            response.statusCode +
+                                            " body=" + response.body);
+                        }
                     }
                     catch (Exception e)
                     {
                         throw new RuntimeException(e);
-                    }
-                    finally
-                    {
-                        Thread.currentThread().sleep(1100);
                     }
                 }
             });

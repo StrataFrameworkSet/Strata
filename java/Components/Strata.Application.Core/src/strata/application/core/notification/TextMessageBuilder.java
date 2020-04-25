@@ -7,17 +7,17 @@ package strata.application.core.notification;
 import strata.foundation.core.value.PhoneNumber;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public
 class TextMessageBuilder
     implements ITextMessageBuilder
 {
     private final ITemplateRepository itsRepository;
-    private List<PhoneNumber>         itsRecipients;
+    private Set<PhoneNumber>          itsRecipients;
     private String                    itsContent;
     private String                    itsTemplateKey;
     private Map<String,String>        itsParameters;
@@ -27,7 +27,7 @@ class TextMessageBuilder
     TextMessageBuilder(ITemplateRepository repository)
     {
         itsRepository = repository;
-        itsRecipients = new ArrayList<>();
+        itsRecipients = new HashSet<>();
         itsContent = null;
         itsTemplateKey = null;
         itsParameters = new HashMap<>();
@@ -35,7 +35,7 @@ class TextMessageBuilder
 
     @Override
     public ITextMessageBuilder
-    setRecipients(List<PhoneNumber> recipients)
+    setRecipients(Set<PhoneNumber> recipients)
     {
         itsRecipients.clear();
         itsRecipients.addAll(recipients);

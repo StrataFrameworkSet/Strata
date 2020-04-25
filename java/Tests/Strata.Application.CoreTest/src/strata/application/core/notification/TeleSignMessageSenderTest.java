@@ -37,7 +37,7 @@ class TeleSignMessageSenderTest
                 new StandardTemplateRepository()
                     .insert(
                         "HelloWorld",
-                        "Hello {{name}} - {{greeting}}"));
+                        "Test Message: Hello {{name}} - {{greeting}}"));
     }
 
     @Test
@@ -47,9 +47,9 @@ class TeleSignMessageSenderTest
         ITextMessage message =
             itsBuilder
                 .addRecipient(new PhoneNumber("1-562-480-3895"))
-                .addRecipient(new PhoneNumber("1-562-810-8292"))
+                .addRecipient(new PhoneNumber("1-562-889-0909"))
                 .setTemplateKey("HelloWorld")
-                .addParameter("{{name}}","John and Lama")
+                .addParameter("{{name}}","John and Turath")
                 .addParameter("{{greeting}}","what's happening?")
                 .build();
 
