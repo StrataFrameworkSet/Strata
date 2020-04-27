@@ -28,12 +28,6 @@ interface IEmailMessageBuilder
     setContent(String content);
 
     IEmailMessageBuilder
-    setAttachments(Set<IAttachment> attachments);
-
-    IEmailMessageBuilder
-    addAttachment(IAttachment attachment);
-
-    IEmailMessageBuilder
     setTemplateKey(String templateKey);
 
     IEmailMessageBuilder
@@ -41,6 +35,12 @@ interface IEmailMessageBuilder
 
     IEmailMessageBuilder
     addParameter(String parameterKey,String parameterValue);
+
+    IEmailMessageBuilder
+    setAttachments(Set<IAttachment> attachments);
+
+    IEmailMessageBuilder
+    addAttachment(IAttachment attachment);
 
     IEmailMessage
     build();

@@ -85,23 +85,6 @@ class EmailMessageBuilder
 
     @Override
     public IEmailMessageBuilder
-    setAttachments(Set<IAttachment> attachments)
-    {
-        itsAttachments.clear();
-        itsAttachments.addAll(attachments);
-        return this;
-    }
-
-    @Override
-    public IEmailMessageBuilder
-    addAttachment(IAttachment attachment)
-    {
-        itsAttachments.add(attachment);
-        return this;
-    }
-
-    @Override
-    public IEmailMessageBuilder
     setTemplateKey(String templateKey)
     {
         if (isSimple())
@@ -131,6 +114,23 @@ class EmailMessageBuilder
             itsContent = null;
 
         itsParameters.put(parameterKey,parameterValue);
+        return this;
+    }
+
+    @Override
+    public IEmailMessageBuilder
+    setAttachments(Set<IAttachment> attachments)
+    {
+        itsAttachments.clear();
+        itsAttachments.addAll(attachments);
+        return this;
+    }
+
+    @Override
+    public IEmailMessageBuilder
+    addAttachment(IAttachment attachment)
+    {
+        itsAttachments.add(attachment);
         return this;
     }
 
