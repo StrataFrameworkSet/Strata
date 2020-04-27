@@ -24,6 +24,12 @@
                     <include>*.properties</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>${basedir}/resources</directory>
+                <includes>
+                    <include>logo.png</include>
+                </includes>
+            </resource>
         </resources>
     </build>
 

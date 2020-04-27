@@ -10,8 +10,11 @@ import strata.foundation.core.value.EmailAddress;
 
 import javax.inject.Inject;
 import javax.mail.*;
+import javax.mail.internet.InternetHeaders;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import java.util.List;
+import javax.mail.internet.MimeMultipart;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -81,17 +84,26 @@ class JavaMailMessageSender
         itsQueue.insert(
             () ->
             {
-                Session     session = getSession();
-                MimeMessage msg = new MimeMessage(session);
-                Transport   transport = session.getTransport("smtps");
+                Session       session = getSession();
+                MimeMessage   msg = new MimeMessage(session);
+                MimeMultipart multi = new MimeMultipart();
+                MimeBodyPart  content = new MimeBodyPart();
 
                 msg.setFrom(message.getSender().toString());
                 msg.setRecipients(
                     Message.RecipientType.TO,
                     toString(message.getRecipients()));
                 msg.setSubject(message.getSubject());
-                msg.setText(message.getContent(),"utf-8", "html");
 
+                content.setText(message.getContent(),"utf-8", "html");
+                multi.addBodyPart(content);
+
+                message
+                    .getAttachments()
+                    .stream()
+                    .forEach(attachment -> addAttachmentPart(multi,attachment));
+
+                msg.setContent(multi);
                 Transport.send(msg);
             });
         return this;
@@ -114,7 +126,7 @@ class JavaMailMessageSender
     }
 
     protected String
-    toString(List<EmailAddress> recipients)
+    toString(Collection<EmailAddress> recipients)
     {
         return
             recipients
@@ -122,6 +134,31 @@ class JavaMailMessageSender
                 .map( email -> email.toString())
                 .collect(Collectors.joining(","));
     }
+
+    protected void
+    addAttachmentPart(MimeMultipart multi,IAttachment attachment)
+    {
+        MimeBodyPart    part = null;
+        InternetHeaders headers = new InternetHeaders();
+
+        headers.addHeader("Content-Type", attachment.getContentType());
+        headers.addHeader("Content-Transfer-Encoding", "base64");
+
+        try
+        {
+            part = new MimeBodyPart(headers,attachment.getBytes());
+            part.setDisposition(MimeBodyPart.INLINE);
+            part.setContentID('<' + attachment.getContentId() + '>');
+            part.setFileName(attachment.getFileName());
+
+            multi.addBodyPart(part);
+        }
+        catch (MessagingException e)
+        {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
 }
 
 //////////////////////////////////////////////////////////////////////////////

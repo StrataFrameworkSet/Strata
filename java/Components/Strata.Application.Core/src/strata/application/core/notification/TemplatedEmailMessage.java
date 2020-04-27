@@ -20,13 +20,14 @@ class TemplatedEmailMessage
     public
     TemplatedEmailMessage(
         EmailAddress        sender,
-        List<EmailAddress>  recipients,
+        Set<EmailAddress>   recipients,
         String              subject,
+        List<IAttachment>   attachments,
         ITemplateRepository repository,
         String              templateKey,
         Map<String,String>  parameters)
     {
-        super(sender,recipients,subject);
+        super(sender,recipients,subject,attachments);
         itsRepository = repository;
         itsTemplateKey = templateKey;
         itsParameters = new HashMap<>(parameters);

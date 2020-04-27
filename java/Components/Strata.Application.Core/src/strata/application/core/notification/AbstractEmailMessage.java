@@ -6,23 +6,23 @@ package strata.application.core.notification;
 
 import strata.foundation.core.value.EmailAddress;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public abstract
 class AbstractEmailMessage
     implements IEmailMessage
 {
-    private final EmailAddress       itsSender;
-    private final List<EmailAddress> itsRecipients;
-    private final String             itsSubject;
+    private final EmailAddress      itsSender;
+    private final Set<EmailAddress> itsRecipients;
+    private final String            itsSubject;
+    private final List<IAttachment> itsAttachments;
 
     protected
     AbstractEmailMessage(
-        EmailAddress       sender,
-        List<EmailAddress> recipients,
-        String             subject)
+        EmailAddress      sender,
+        Set<EmailAddress> recipients,
+        String            subject,
+        List<IAttachment> attachments)
     {
         if (sender == null)
             throw new NullPointerException("sender must be provided");
@@ -36,8 +36,9 @@ class AbstractEmailMessage
                 new IllegalArgumentException("recipients must be non-empty");
 
         itsSender     = sender;
-        itsRecipients = new ArrayList<>(recipients);
+        itsRecipients = new HashSet<>(recipients);
         itsSubject    = subject;
+        itsAttachments = new ArrayList<>(attachments);
     }
 
     @Override
@@ -48,10 +49,10 @@ class AbstractEmailMessage
     }
 
     @Override
-    public List<EmailAddress>
+    public Set<EmailAddress>
     getRecipients()
     {
-        return Collections.unmodifiableList(itsRecipients);
+        return Collections.unmodifiableSet(itsRecipients);
     }
 
     @Override
@@ -59,6 +60,13 @@ class AbstractEmailMessage
     getSubject()
     {
         return itsSubject;
+    }
+
+    @Override
+    public List<IAttachment>
+    getAttachments()
+    {
+        return Collections.unmodifiableList(itsAttachments);
     }
 }
 

@@ -80,6 +80,8 @@ class JavaMailMessageSenderTest
                 .addParameter("{{userId}}",UUID.randomUUID().toString())
                 .addParameter("{{userName}}","johnliebenau")
                 .addParameter("{{confirmCode}}","235711")
+                .addAttachment(
+                    new ResourceAttachment("logo","image/png","logo.png"))
                 .build();
 
         itsTarget.send(message);

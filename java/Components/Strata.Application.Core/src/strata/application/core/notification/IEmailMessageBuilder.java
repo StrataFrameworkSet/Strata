@@ -6,8 +6,8 @@ package strata.application.core.notification;
 
 import strata.foundation.core.value.EmailAddress;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public
 interface IEmailMessageBuilder
@@ -16,7 +16,7 @@ interface IEmailMessageBuilder
     setSender(EmailAddress sender);
 
     IEmailMessageBuilder
-    setRecipients(List<EmailAddress> recipients);
+    setRecipients(Set<EmailAddress> recipients);
 
     IEmailMessageBuilder
     addRecipient(EmailAddress recipient);
@@ -26,6 +26,12 @@ interface IEmailMessageBuilder
 
     IEmailMessageBuilder
     setContent(String content);
+
+    IEmailMessageBuilder
+    setAttachments(Set<IAttachment> attachments);
+
+    IEmailMessageBuilder
+    addAttachment(IAttachment attachment);
 
     IEmailMessageBuilder
     setTemplateKey(String templateKey);

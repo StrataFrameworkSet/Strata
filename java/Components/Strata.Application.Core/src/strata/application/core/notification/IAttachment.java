@@ -1,31 +1,26 @@
 //////////////////////////////////////////////////////////////////////////////
-// IEmailMessage.java
+// IAttachment.java
 //////////////////////////////////////////////////////////////////////////////
 
 package strata.application.core.notification;
 
-import strata.foundation.core.value.EmailAddress;
-
-import java.util.List;
-import java.util.Set;
-
 public
-interface IEmailMessage
+interface IAttachment
 {
-    EmailAddress
-    getSender();
-
-    Set<EmailAddress>
-    getRecipients();
+    String
+    getContentId();
 
     String
-    getSubject();
+    getContentType();
 
     String
-    getContent();
+    getFileName();
 
-    List<IAttachment>
-    getAttachments();
+    byte[]
+    getBytes();
+
+    boolean
+    isImage();
 }
 
 //////////////////////////////////////////////////////////////////////////////

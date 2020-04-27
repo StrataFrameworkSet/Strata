@@ -7,10 +7,7 @@ package strata.application.core.notification;
 import strata.foundation.core.value.EmailAddress;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public
 class EmailMessageBuilder
@@ -18,9 +15,10 @@ class EmailMessageBuilder
 {
     private final ITemplateRepository itsRepository;
     private EmailAddress              itsSender;
-    private List<EmailAddress>        itsRecipients;
+    private Set<EmailAddress>         itsRecipients;
     private String                    itsSubject;
     private String                    itsContent;
+    private List<IAttachment>         itsAttachments;
     private String                    itsTemplateKey;
     private Map<String,String>        itsParameters;
 
@@ -30,9 +28,10 @@ class EmailMessageBuilder
     {
         itsRepository = repository;
         itsSender = null;
-        itsRecipients = new ArrayList<>();
+        itsRecipients = new HashSet<>();
         itsSubject = null;
         itsContent = null;
+        itsAttachments = new ArrayList<>();
         itsTemplateKey = null;
         itsParameters = new HashMap<>();
     }
@@ -47,7 +46,7 @@ class EmailMessageBuilder
 
     @Override
     public IEmailMessageBuilder
-    setRecipients(List<EmailAddress> recipients)
+    setRecipients(Set<EmailAddress> recipients)
     {
         itsRecipients.clear();
         itsRecipients.addAll(recipients);
@@ -81,6 +80,23 @@ class EmailMessageBuilder
         }
 
         itsContent = content;
+        return this;
+    }
+
+    @Override
+    public IEmailMessageBuilder
+    setAttachments(Set<IAttachment> attachments)
+    {
+        itsAttachments.clear();
+        itsAttachments.addAll(attachments);
+        return this;
+    }
+
+    @Override
+    public IEmailMessageBuilder
+    addAttachment(IAttachment attachment)
+    {
+        itsAttachments.add(attachment);
         return this;
     }
 
@@ -168,7 +184,8 @@ class EmailMessageBuilder
                     itsSender,
                     itsRecipients,
                     itsSubject != null ? itsSubject : "",
-                    itsContent);
+                    itsContent,
+                    itsAttachments);
         }
         finally
         {
@@ -186,6 +203,7 @@ class EmailMessageBuilder
                     itsSender,
                     itsRecipients,
                     itsSubject,
+                    itsAttachments,
                     itsRepository,
                     itsTemplateKey,
                     itsParameters);
