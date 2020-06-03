@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Strata.iml" filepath="$PROJECT_DIR$/Strata.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Components/Strata.Client.Core/Strata.Client.Core.iml" filepath="$PROJECT_DIR$/Components/Strata.Client.Core/Strata.Client.Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Components/Strata.Client.React/Strata.Client.React.iml" filepath="$PROJECT_DIR$/Components/Strata.Client.React/Strata.Client.React.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Client.ReactTest/Strata.Client.ReactTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Client.ReactTest/Strata.Client.ReactTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Components/Strata.Foundation.Core/Strata.Foundation.Core.iml" filepath="$PROJECT_DIR$/Components/Strata.Foundation.Core/Strata.Foundation.Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Foundation.CoreTest/Strata.Foundation.CoreTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Foundation.CoreTest/Strata.Foundation.CoreTest.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,20 @@
+{
+  "name": "strata.client.core",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "install-strata.foundation.core": "npm install ../Strata.Foundation.Core/strata.foundation.core-0.0.0.tgz",
+    "clean": "del-cli -f ./dist ./*.tgz",
+    "build": "npm run install-strata.foundation.core && tsc && npm pack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "rxjs": "^6.5.5",
+    "strata.foundation.core": "file:../Strata.Foundation.Core/strata.foundation.core-0.0.0.tgz"
+  }
+}
