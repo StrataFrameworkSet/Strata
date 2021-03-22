@@ -28,7 +28,6 @@ jobs:
       - name: maven-settings-xml-action
         uses: whelk-io/maven-settings-xml-action@v14
         with:
-          #servers: '[{ "id": "some-server", "username": "some.user", "password": "some.password" }]'
           profiles: '[{ "id": "jdk-11", "name": "Java 11", "properties": { "jdk.version": "11"} }]'
         
       # Runs a single command using the runners shell
