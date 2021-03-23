@@ -53,7 +53,7 @@ class StageRunner
             System.out.println("debug 3");
             runner.run(testSubject);
             System.out.println("StageRunner end");
-
+            System.exit(0);
         }
         catch (Exception e)
         {
