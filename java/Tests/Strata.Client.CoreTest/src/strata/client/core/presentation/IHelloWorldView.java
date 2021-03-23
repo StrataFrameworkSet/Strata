@@ -1,0 +1,26 @@
+//////////////////////////////////////////////////////////////////////////////
+// IHelloWorldView.java
+//////////////////////////////////////////////////////////////////////////////
+
+package strata.client.core.presentation;
+
+public
+interface IHelloWorldView
+{
+    IHelloWorldView
+    setName(String name);
+
+    IHelloWorldView
+    setGreeting(String greeting);
+
+    IHelloWorldView
+    setPersonalizedGreeting(String personalizedGreeting);
+
+    String
+    getName();
+
+    String
+    getGreeting();
+}
+
+//////////////////////////////////////////////////////////////////////////////

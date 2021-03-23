@@ -6,12 +6,13 @@ package strata.application.core.inject;
 
 import strata.foundation.core.configuration.IConfiguration;
 
+import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 
 public
 class SecureEmailConfigurationProvider
-    implements IConfigurationProvider
+    implements IEmailConfigurationProvider
 {
     private final IConfiguration itsConfiguration;
     private final String         itsMailHostKey;
@@ -19,6 +20,7 @@ class SecureEmailConfigurationProvider
     private final String         itsMailUserKey;
     private final String         itsMailPasswordKey;
 
+    @Inject
     public
     SecureEmailConfigurationProvider(IConfiguration configuration)
     {

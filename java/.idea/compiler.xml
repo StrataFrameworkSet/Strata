@@ -7,13 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Strata.Application.Core" />
+        <module name="Strata.Domain.RedisTest" />
         <module name="Strata.Diagnostic.CoreTest" />
         <module name="Strata.Foundation.KafkaTest" />
         <module name="Strata.Domain.CoreTest" />
-        <module name="Strata.Foundation.Core" />
         <module name="Strata.Application.NettyTest" />
         <module name="Strata.Domain.InMemory" />
         <module name="Strata.Domain.HibernateTest" />
+        <module name="Strata.Client.SwtTest" />
         <module name="Strata.Application.VertxTest" />
         <module name="Strata.CodeGen.Plugin" />
         <module name="Strata.Client.CoreTest" />
@@ -21,11 +22,11 @@
         <module name="Strata.Domain.Hibernate" />
         <module name="Strata.Client.RestEasyTest" />
         <module name="Strata.Foundation.CoreTest" />
-        <module name="Strata.Diagnostic.Core" />
         <module name="Strata.Application.Vertx" />
-        <module name="Strata.Domain.RedisTest" />
-        <module name="Strata.Application.CoreTest" />
         <module name="Strata.Domain.Core" />
+        <module name="Strata.Foundation.Core" />
+        <module name="Strata.Application.CoreTest" />
+        <module name="Strata.Diagnostic.Core" />
         <module name="Strata.Domain.InMemoryTest" />
         <module name="Strata.Client.Core" />
         <module name="Strata.Application.Netty" />
@@ -46,6 +47,7 @@
       <module name="Strata.Client.CoreTest" target="11" />
       <module name="Strata.Client.RestEasy" target="11" />
       <module name="Strata.Client.RestEasyTest" target="11" />
+      <module name="Strata.Client.SwtTest" target="11" />
       <module name="Strata.CodeGen.Plugin" target="11" />
       <module name="Strata.Diagnostic.Core" target="11" />
       <module name="Strata.Diagnostic.CoreTest" target="11" />

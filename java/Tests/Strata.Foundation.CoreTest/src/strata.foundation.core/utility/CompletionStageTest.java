@@ -46,7 +46,7 @@ class CompletionStageTest
                         System.out.println("Exception 1");
 
                         if (e.getCause() instanceof IllegalStateException)
-                            System.out.println("\tprocessing IllegalStageException");
+                            System.out.println("\tprocessing IllegalStateException");
 
                         return CompletionContext.of(e.getCause());
                     })

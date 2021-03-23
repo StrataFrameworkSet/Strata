@@ -22,6 +22,7 @@
                 <directory>${basedir}/src</directory>
                 <includes>
                     <include>*.properties</include>
+                    <include>*.xml</include>
                 </includes>
             </resource>
             <resource>

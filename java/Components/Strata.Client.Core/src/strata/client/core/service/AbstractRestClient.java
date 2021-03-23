@@ -6,6 +6,8 @@ package strata.client.core.service;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
@@ -13,9 +15,10 @@ import java.util.concurrent.CompletionStage;
 public abstract
 class AbstractRestClient
 {
-    private Client             itsClient;
-    private WebTarget          itsBaseTarget;
-    private IResponseProcessor itsResponseProcessor;
+    private Client                        itsClient;
+    private WebTarget                     itsBaseTarget;
+    private MultivaluedMap<String,Object> itsHeaders;
+    private IResponseProcessor            itsResponseProcessor;
 
     protected
     AbstractRestClient(
@@ -48,6 +51,7 @@ class AbstractRestClient
                     .build();
 
         itsBaseTarget = itsClient.target(initialize(baseUrl,endpointPath));
+        itsHeaders = new MultivaluedHashMap<>();
         itsResponseProcessor = processor;
     }
 
@@ -60,7 +64,35 @@ class AbstractRestClient
     {
         itsClient = client;
         itsBaseTarget = itsClient.target(initialize(baseUrl,endpointPath));
+        itsHeaders = new MultivaluedHashMap<>();
         itsResponseProcessor = processor;
+    }
+
+    public AbstractRestClient
+    setHeader(String headerKey,String headerValue)
+    {
+        itsHeaders.add(headerKey,headerValue);
+        return this;
+    }
+
+    public AbstractRestClient
+    clearHeader(String headerKey)
+    {
+        itsHeaders.remove(headerKey);
+        return this;
+    }
+
+    public AbstractRestClient
+    clearHeaders()
+    {
+        itsHeaders.clear();
+        return this;
+    }
+
+    public boolean
+    hasHeader(String headerKey)
+    {
+        return itsHeaders.containsKey(headerKey);
     }
 
     public void
@@ -232,6 +264,7 @@ class AbstractRestClient
             itsBaseTarget
                 .path(path)
                 .request(MediaType.APPLICATION_JSON)
+                .headers(itsHeaders)
                 .accept(MediaType.APPLICATION_JSON);
     }
 

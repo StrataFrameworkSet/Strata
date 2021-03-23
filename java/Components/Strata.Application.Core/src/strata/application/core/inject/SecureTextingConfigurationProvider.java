@@ -6,17 +6,19 @@ package strata.application.core.inject;
 
 import strata.foundation.core.configuration.IConfiguration;
 
+import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 
 public
 class SecureTextingConfigurationProvider
-    implements IConfigurationProvider
+    implements ITextingConfigurationProvider
 {
     private final IConfiguration itsConfiguration;
     private final String         itsCustomerId;
     private final String         itsApiKey;
 
+    @Inject
     public
     SecureTextingConfigurationProvider(IConfiguration configuration)
     {

@@ -6,9 +6,8 @@ package strata.application.netty.main;
 
 import io.swagger.v3.oas.models.info.Info;
 import strata.application.core.platform.HelloModule;
-import strata.application.core.platform.HelloOpenApiEndpoint;
-import strata.application.core.platform.HelloServiceEndpoint;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public
@@ -19,9 +18,7 @@ class HelloNettyApplication
     public HelloNettyApplication()
     {
         super(
-            Arrays.asList(
-                HelloOpenApiEndpoint.class,
-                HelloServiceEndpoint.class),
+            new ArrayList<>(),
             new Info()
                 .description("Strata Hello World")
                 .title("Strata Hello World")

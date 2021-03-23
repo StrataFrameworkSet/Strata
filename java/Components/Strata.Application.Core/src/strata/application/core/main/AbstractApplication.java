@@ -11,6 +11,7 @@ import io.swagger.v3.oas.integration.OpenApiConfigurationException;
 import io.swagger.v3.oas.integration.SwaggerConfiguration;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import strata.application.core.filter.CorsRequestAndReplyFilter;
 import strata.application.core.filter.ServiceReplyFilter;
 import strata.application.core.mapper.ObjectMapperProvider;
 import strata.application.core.mapper.StrataObjectMapperProcessor;
@@ -51,6 +52,7 @@ class AbstractApplication
                     OpenApiResource.class,
                     SwaggerSerializers.class,
                     ServiceReplyFilter.class,
+                    CorsRequestAndReplyFilter.class,
                     getObjectMapperProviderType()));
 
         classes.addAll(itsEndpointClasses);
@@ -58,6 +60,20 @@ class AbstractApplication
         return classes;
     }
 
+    /*
+    @Override
+    public Set<Object>
+    getSingletons()
+    {
+        Set<Object> singletons = new HashSet<>(super.getSingletons());
+        CorsFilter corsFilter = new CorsFilter();
+
+        corsFilter.getAllowedOrigins().add("*");
+        singletons.add(corsFilter);
+
+        return singletons;
+    }
+     */
 
     protected void
     configureSwagger()

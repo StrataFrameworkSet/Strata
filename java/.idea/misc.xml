@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/Tests/Strata.Domain.RedisTest/pom.xml" />
         <option value="$PROJECT_DIR$/Components/Strata.Diagnostic.Core/pom.xml" />
         <option value="$PROJECT_DIR$/Tests/Strata.Diagnostic.CoreTest/pom.xml" />
+        <option value="$PROJECT_DIR$/Tests/Strata.Client.SwtTest/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

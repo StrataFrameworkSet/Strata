@@ -84,7 +84,7 @@ class HibernateOrganizationRepositoryTest
             "com.mysql.cj.jdbc.Driver");
         properties.setProperty(
             "hibernate.connection.url",
-            "jdbc:mysql://localhost:3306/denimtestdomain");
+            "jdbc:mysql://localhost:3306/stratatest");
         properties.setProperty(
             "hibernate.connection.username",
             "development");

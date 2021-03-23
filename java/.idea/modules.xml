@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Client.CoreTest/Strata.Client.CoreTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Client.CoreTest/Strata.Client.CoreTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/Components/Strata.Client.RestEasy/Strata.Client.RestEasy.iml" filepath="$PROJECT_DIR$/Components/Strata.Client.RestEasy/Strata.Client.RestEasy.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Client.RestEasyTest/Strata.Client.RestEasyTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Client.RestEasyTest/Strata.Client.RestEasyTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Client.SwtTest/Strata.Client.SwtTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Client.SwtTest/Strata.Client.SwtTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/Applications/Strata.CodeGen.Plugin/Strata.CodeGen.Plugin.iml" filepath="$PROJECT_DIR$/Applications/Strata.CodeGen.Plugin/Strata.CodeGen.Plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/Components/Strata.Diagnostic.Core/Strata.Diagnostic.Core.iml" filepath="$PROJECT_DIR$/Components/Strata.Diagnostic.Core/Strata.Diagnostic.Core.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tests/Strata.Diagnostic.CoreTest/Strata.Diagnostic.CoreTest.iml" filepath="$PROJECT_DIR$/Tests/Strata.Diagnostic.CoreTest/Strata.Diagnostic.CoreTest.iml" />

@@ -4,7 +4,7 @@
 
 package strata.application.core.notification;
 
-import strata.application.core.inject.IConfigurationProvider;
+import strata.application.core.inject.IEmailConfigurationProvider;
 import strata.foundation.core.action.IActionQueue;
 import strata.foundation.core.value.EmailAddress;
 
@@ -23,14 +23,14 @@ public
 class JavaMailMessageSender
     implements IEmailMessageSender
 {
-    private final IActionQueue           itsQueue;
-    private final IConfigurationProvider itsConfiguration;
-    private Session                      itsSession;
+    private final IActionQueue                itsQueue;
+    private final IEmailConfigurationProvider itsConfiguration;
+    private Session                           itsSession;
 
     @Inject
     JavaMailMessageSender(
-        IActionQueue           queue,
-        IConfigurationProvider configuration)
+        IActionQueue                queue,
+        IEmailConfigurationProvider configuration)
     {
         itsQueue = queue;
         itsConfiguration = configuration;

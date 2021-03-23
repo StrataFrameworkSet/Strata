@@ -7,7 +7,7 @@ package strata.application.core.notification;
 import com.google.gson.JsonObject;
 import com.telesign.MessagingClient;
 import com.telesign.RestClient;
-import strata.application.core.inject.IConfigurationProvider;
+import strata.application.core.inject.ITextingConfigurationProvider;
 import strata.foundation.core.action.IActionQueue;
 import strata.foundation.core.value.PhoneNumber;
 
@@ -18,14 +18,14 @@ public
 class TeleSignMessageSender
     implements ITextMessageSender
 {
-    private final IActionQueue           itsQueue;
-    private final IConfigurationProvider itsConfiguration;
-    private MessagingClient              itsClient;
+    private final IActionQueue                  itsQueue;
+    private final ITextingConfigurationProvider itsConfiguration;
+    private MessagingClient                     itsClient;
 
     @Inject
     TeleSignMessageSender(
-        IActionQueue           queue,
-        IConfigurationProvider configuration)
+        IActionQueue                  queue,
+        ITextingConfigurationProvider configuration)
     {
         itsQueue = queue;
         itsConfiguration = configuration;

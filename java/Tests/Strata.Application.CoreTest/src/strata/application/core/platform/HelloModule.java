@@ -28,7 +28,11 @@ class HelloModule
             .to(GreeterService.class)
             .in(getDefaultScope());
 
-        bind(HelloServiceEndpoint.class);
+        bind(HelloOpenApiEndpoint.class)
+            .in(getDefaultScope());
+
+        bind(HelloServiceEndpoint.class)
+            .in(getDefaultScope());
 
         bindInterceptor(
             Matchers.any(),

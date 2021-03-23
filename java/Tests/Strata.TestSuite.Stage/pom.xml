@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.strataframework</groupId>
-    <artifactId>Strata.TestsSuite.Stage</artifactId>
+    <artifactId>Strata.TestSuite.Stage</artifactId>
     <version>1.0.0</version>
 
     <properties>

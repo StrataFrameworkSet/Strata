@@ -12,8 +12,6 @@ class Awaiter
     public static <T> T
     await(CompletionStage<T> stage)
     {
-        T output = stage.toCompletableFuture().join();
-
         if (stage.toCompletableFuture().isCompletedExceptionally())
         {
             throw
@@ -23,7 +21,7 @@ class Awaiter
                     .join();
         }
 
-        return output;
+        return stage.toCompletableFuture().join();
     }
 }
 
