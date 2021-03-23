@@ -24,7 +24,7 @@ class MainNavigationMenuBar
         return (
             <NavbarGroup align={Alignment.LEFT}>
                 <NavbarHeading className="app-name">
-                    <img src={logo} height="30" width="30"/>{this.props.heading}
+                    <img className="logo" src={logo} height="35" width="35"/>{this.props.heading}
                 </NavbarHeading>
                 <NavbarDivider/>
                 <NavigationMenu id="main.home" to="/home" text="Home" selected={true} menubar={this}/>

@@ -1,10 +1,10 @@
 {
   "name": "strata.foundation.coretest",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install-strata.foundation.core": "npm install ../../Components/Strata.Foundation.Core/strata.foundation.core-0.0.0.tgz",
+    "install-strata.foundation.core": "npm install strata.foundation.core",
     "clean": "del-cli -f ./dist",
     "build": "npm run install-strata.foundation.core && tsc",
     "test": "npm run build && ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json"
@@ -18,8 +18,8 @@
     "@types/jasmine": "^3.5.10",
     "jasmine": "^3.5.0",
     "rxjs": "^6.5.5",
-    "strata.foundation.core": "file:../../Components/Strata.Foundation.Core/strata.foundation.core-0.0.0.tgz",
-    "ts-node": "^8.10.1"
+    "strata.foundation.core": "0.0.1",
+    "ts-node": "^8.10.2"
   },
   "babel": {
     "presets": [

@@ -1,6 +1,6 @@
 {
   "name": "strata.client.reacttest",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "@blueprintjs/docs-theme": "^3.6.0",
@@ -15,10 +15,10 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
-    "strata.client.react": "file:../../Components/Strata.Client.React/strata.client.react-0.0.0.tgz"
+    "strata.client.react": "0.0.1"
   },
   "scripts": {
-    "install-strata.client.react": "npm install ../../Components/Strata.Client.React/strata.client.react-0.0.0.tgz",
+    "install-strata.client.react": "npm install strata.client.react",
     "start": "react-scripts start",
     "clean": "del-cli -f ./build",
     "build": "npm run install-strata.client.react && tsc",

@@ -109,6 +109,7 @@ hs_err_pid*
 
 ### Maven ###
 target/
+.maven-repo/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -453,3 +454,7 @@ healthchecksdb
 
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
+
+# Typescript/NodeModule
+dist/
+*.tgz

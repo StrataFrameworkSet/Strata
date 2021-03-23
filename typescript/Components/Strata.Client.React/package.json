@@ -1,11 +1,11 @@
 {
   "name": "strata.client.react",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "install-strata.client.core": "npm install ../Strata.Client.Core/strata.client.core-0.0.0.tgz",
+    "install-strata.client.core": "npm install strata.client.core",
     "clean": "del-cli -f ./dist ./*.tgz",
     "build": "npm run install-strata.client.core && tsc && npm pack",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,6 +26,6 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "strata.client.core": "file:../Strata.Client.Core/strata.client.core-0.0.0.tgz"
+    "strata.client.core": "0.0.1"
   }
 }
