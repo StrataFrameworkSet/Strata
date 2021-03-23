@@ -15,11 +15,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      - name: maven-settings-xml-action
-        uses: whelk-io/maven-settings-xml-action@v14
+      - name: Cache Maven packages
+        uses: actions/cache@v2
         with:
-          profiles: '[{ "id": "jdk-11", "name": "Java 11", "properties": { "jdk.version": "11"} }]'
-        
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
       - name: Install
         working-directory: ./java
         run: mvn -Djdk.version=11 install
