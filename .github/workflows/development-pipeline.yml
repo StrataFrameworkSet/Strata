@@ -32,6 +32,6 @@ jobs:
 
       - name: Publish Test Results (Commit Stage)
         uses: mikepenz/action-junit-report@v2
-          with:
-            report_paths: '/tmp/test-results/strata-commit-stage/TEST-*.xml'
-            github_token: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          report_paths: '/tmp/test-results/strata-commit-stage/TEST-*.xml'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
