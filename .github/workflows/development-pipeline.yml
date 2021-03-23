@@ -28,10 +28,10 @@ jobs:
 
       - name: Test (Commit Stage)
         working-directory: ./java
-        run: java -jar ./Tests/Strata.TestSuite.Stage/target/Strata.TestSuite.Stage-1.0.0-jar-with-dependencies.jar strata.testsuite.stage.commit.CommitSuite /tmp/test-results
+        run: java -jar ./Tests/Strata.TestSuite.Stage/target/Strata.TestSuite.Stage-1.0.0-jar-with-dependencies.jar strata.testsuite.stage.commit.CommitSuite /tmp/test-results/strata-commit-stage
 
       - name: Publish Test Results (Commit Stage)
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
-        with:
-          files: /tmp/test-results/**/*.xml
+        uses: mikepenz/action-junit-report@v2
+          with:
+            report_paths: '/tmp/test-results/strata-commit-stage/TEST-*.xml'
+            github_token: ${{ secrets.GITHUB_TOKEN }}
