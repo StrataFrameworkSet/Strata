@@ -1,0 +1,29 @@
+name: Development-Pipeline
+on:
+  push:
+    branches: [ development ]
+  pull_request:
+    branches: [ development ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: maven-settings-xml-action
+        uses: whelk-io/maven-settings-xml-action@v14
+        with:
+          profiles: '[{ "id": "jdk-11", "name": "Java 11", "properties": { "jdk.version": "11"} }]'
+        
+      - name: Install
+        working-directory: ./java
+        run: mvn -Djdk.version=11 install
+
+      - name: Test
+        working-directory: ./java
+        run: java -jar ./Tests/Strata.TestSuite.Stage/target/Strata.TestSuite.Stage-1.0.0-jar-with-dependencies.jar strata.testsuite.stage.commit.CommitStageSuite /tmp/test-results
