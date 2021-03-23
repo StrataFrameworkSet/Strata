@@ -46,11 +46,10 @@ class StageRunner
                     }
                 };
 
-            System.out.println("debug 1");
             runner.addListener(listener);
-            System.out.println("debug 2");
+            System.out.println("Loading test subject: " + testToRun + "...");
             testSubject = Class.forName(testToRun);
-            System.out.println("debug 3");
+            System.out.println("Running tests...");
             runner.run(testSubject);
             System.out.println("StageRunner end");
             System.exit(0);
