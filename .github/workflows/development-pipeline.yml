@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  run-commit-stage:
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -29,3 +29,9 @@ jobs:
       - name: Test (Commit Stage)
         working-directory: ./java
         run: java -jar ./Tests/Strata.TestSuite.Stage/target/Strata.TestSuite.Stage-1.0.0-jar-with-dependencies.jar strata.testsuite.stage.commit.CommitSuite /tmp/test-results
+
+      - name: Publish Test Results (Commit Stage)
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: /tmp/test-results/**/*.xml
