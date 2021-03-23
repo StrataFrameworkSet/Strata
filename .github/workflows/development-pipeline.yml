@@ -26,4 +26,4 @@ jobs:
 
       - name: Test
         working-directory: ./java
-        run: java -jar Tests/Strata.TestSuite.Stage/target/Strata.TestSuite.Stage-1.0.0-jar-with-dependencies.jar strata.testsuite.stage.commit.CommitStageSuite /tmp/test-results
+        run: java -jar ./Tests/Strata.TestSuite.Stage/target/Strata.TestSuite.Stage-1.0.0-jar-with-dependencies.jar strata.testsuite.stage.commit.CommitStageSuite /tmp/test-results
