@@ -11,6 +11,8 @@ import org.junit.runner.notification.RunListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public
 class StageRunner
@@ -36,12 +38,17 @@ class StageRunner
                     public void
                     testStarted(Description description) throws Exception
                     {
+                        Path parent = Path.of(reportDir);
+                        File testResult =
+                            new File(
+                                reportDir,
+                                "TEST-" + description.getDisplayName() + ".xml");
+
+                        Files.createDirectories(parent);
+                        testResult.createNewFile();
+
                         super.testStarted(description);
-                        formatter.setOutput(
-                            new FileOutputStream(
-                                new File(
-                                    reportDir,
-                                    "TEST-" + description.getDisplayName() + ".xml")));
+                        formatter.setOutput(new FileOutputStream(testResult));
                         super.testStarted(description);
                     }
                 };
